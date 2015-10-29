@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pojo.equals.EqualsTesterTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2015-09-14T16:19:58" hostname="orangutan" time="0.047">
+  <properties/>
+  <testcase name="shouldPassAllEqualsTests" classname="pojo.equals.EqualsTesterTest" time="0.037"/>
+  <testcase name="shouldTest" classname="pojo.equals.EqualsTesterTest" time="0.007"/>
+  <testcase name="shouldNotPassNullTest" classname="pojo.equals.EqualsTesterTest" time="0.0"/>
+  <testcase name="shouldNotPassItselfTest" classname="pojo.equals.EqualsTesterTest" time="0.001"/>
+  <testcase name="shouldNotPassDifferentTypeTest" classname="pojo.equals.EqualsTesterTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Equals test result by pojo >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+class pojo.equals.test.pojos.BadPojoEqualsNull has bad 'equals' method implementation. The equals method should return false if object is comparing to null. Current implementation returns true.
+class pojo.equals.test.pojos.BadPojoEqualsDifferentType has bad 'equals' method implementation. The equals method should return false if object is comparing to object with different type. Current implementation returns true.
+class pojo.equals.test.pojos.BadPojoEqualsItself has bad 'equals' method implementation. The equals method should return true if object is comparing with itself. Current implementation returns false.
+Equals test result by pojo. <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+]]></system-err>
+</testsuite>
