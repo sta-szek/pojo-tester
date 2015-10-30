@@ -22,6 +22,7 @@ public class EqualsTester {
     public EqualsTester() {
         try {
             fieldsValuesChanger = PrimitiveValueChanger.instance();
+            //TODO zaloguj wyj¹tek, pomiñ test jezeli siê nie uda
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InstantiationException e) {
@@ -88,9 +89,9 @@ public class EqualsTester {
         // when
         boolean result1 = object.equals(objectToCompare);
         boolean result2 = objectToCompare.equals(object);
+        boolean totalResult = result1 && result2;
 
         // then
-        boolean totalResult = result1 && result2;
         checkConstraint(!totalResult, object, CONSTRAINT_SAME_OBJECT_TYPE);
         return totalResult;
     }
@@ -98,16 +99,17 @@ public class EqualsTester {
     //a.equals(b) == true && b.equals(c) == true => a.equals(c) == true.
     private boolean shouldEqualObjectCifObjectBisEqualToObjectAndC(Object object) {
         // given
-        Object b = createInstance(object.getClass());
-        Object c = createInstance(object.getClass());
+        Class<?> objectClass = object.getClass();
+        Object b = createInstance(objectClass);
+        Object c = createInstance(objectClass);
 
         // when
         boolean result1 = object.equals(b);
         boolean result2 = b.equals(c);
         boolean result3 = object.equals(c);
+        boolean totalResult = result1 && result2 && result3;
 
         // then
-        boolean totalResult = result1 && result2 && result3;
         checkConstraint(!totalResult, object, CONSTRAINT_A_B_C);
         return totalResult;
     }
@@ -130,6 +132,7 @@ public class EqualsTester {
             object = clazz.newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
+            //TODO zrób w³asny exception + obs³uz go wyzej
             throw new AssertionError("Unable to create object for class: " + clazz);
         }
         return object;

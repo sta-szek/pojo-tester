@@ -10,20 +10,20 @@ import java.util.stream.Collectors;
 public class TestResult {
     private static final String TEST_RESULT_BEGIN = "Equals test result by pojo >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>";
     private static final String TEST_RESULT_END = "Equals test result by pojo. <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<";
-    private Collection<Class> testedCalsses;
+    private Collection<Class> testedClasses;
     private Collection<Class> classesThatPassedTests;
     private Collection<Class> classesThatFailedTests;
     private Collection<String> messages;
 
     private TestResult(Builder builder) {
-        this.testedCalsses = builder.testedCalsses;
+        this.testedClasses = builder.testedCalsses;
         this.classesThatPassedTests = builder.classesThatPassedTests;
         this.classesThatFailedTests = builder.classesThatFailedTests;
         this.messages = builder.messages;
     }
 
-    public Collection<Class> getTestedCalsses() {
-        return testedCalsses;
+    public Collection<Class> getTestedClasses() {
+        return testedClasses;
     }
 
     public Collection<Class> getClassesThatPassedTests() {
