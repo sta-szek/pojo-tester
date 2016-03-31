@@ -8,7 +8,6 @@ import pojo.equals.test.pojos.GoodPojo_Equals_HashCode_ToString;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
 public class EqualsTesterTest {
 
     private static final EqualsTester equalsTester = new EqualsTester();
