@@ -1,26 +1,31 @@
 package pojo.equals.field.primitive;
 
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.powermock.reflect.Whitebox;
 import pojo.equals.field.FieldsValuesChanger;
 import pojo.equals.test.pojos.TestHelper;
 
-import static org.assertj.core.api.StrictAssertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
+@RunWith(JUnitParamsRunner.class)
 public class ShortValueChangerTest {
 
-    FieldsValuesChanger<Short> shortValueChanger = new ShortValueChanger();
+    private final FieldsValuesChanger<Short> shortValueChanger = new ShortValueChanger();
 
     @Test
-    public void shouldChangeValue() {
+    @Parameters(method = "getValuesForTest")
+    public void shouldChangeValue(final Short value) {
         // given
-        TestHelper helpClass1 = new TestHelper();
-        TestHelper helpClass2 = new TestHelper();
+        final TestHelper helpClass1 = new TestHelper(value);
+        final TestHelper helpClass2 = new TestHelper(value);
 
         // when
         shortValueChanger.changeFieldsValues(helpClass1, helpClass2);
-        Short result = Whitebox.getInternalState(helpClass1, "shortType");
-        Short result2 = Whitebox.getInternalState(helpClass2, "shortType");
+        final Short result = Whitebox.getInternalState(helpClass1, "shortType");
+        final Short result2 = Whitebox.getInternalState(helpClass2, "shortType");
 
         // then
         assertThat(result).isNotEqualTo(result2);
@@ -29,11 +34,11 @@ public class ShortValueChangerTest {
     @Test
     public void shouldReturnFalseForSameValues() {
         // given
-        Short value1 = 0;
-        Short value2 = 0;
+        final Short value1 = 0;
+        final Short value2 = 0;
 
         // when
-        boolean result = shortValueChanger.areDifferentValues(value1, value2);
+        final boolean result = shortValueChanger.areDifferentValues(value1, value2);
 
         // then
         assertThat(result).isFalse();
@@ -42,13 +47,21 @@ public class ShortValueChangerTest {
     @Test
     public void shouldReturnTrueForDifferentValues() {
         // given
-        Short value1 = 0;
-        Short value2 = 1;
+        final Short value1 = 0;
+        final Short value2 = 1;
 
         // when
-        boolean result = shortValueChanger.areDifferentValues(value1, value2);
+        final boolean result = shortValueChanger.areDifferentValues(value1, value2);
 
         // then
         assertThat(result).isTrue();
+    }
+
+    private Object[] getValuesForTest() {
+        return new Object[]{Short.MAX_VALUE,
+                            Short.MIN_VALUE,
+                            new Short((short) 0),
+                            new Short((short) -1),
+                            new Short((short) 1)};
     }
 }

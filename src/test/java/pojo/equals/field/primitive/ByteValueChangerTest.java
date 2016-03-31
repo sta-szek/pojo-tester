@@ -1,27 +1,32 @@
 package pojo.equals.field.primitive;
 
 
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
 import org.junit.Test;
-import org.powermock.reflect.Whitebox;
+import org.junit.runner.RunWith;
 import pojo.equals.field.FieldsValuesChanger;
 import pojo.equals.test.pojos.TestHelper;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.powermock.reflect.Whitebox.getInternalState;
 
+@RunWith(JUnitParamsRunner.class)
 public class ByteValueChangerTest {
 
-    FieldsValuesChanger<Byte> byteValueChanger = new ByteValueChanger();
+    private final FieldsValuesChanger<Byte> byteValueChanger = new ByteValueChanger();
 
     @Test
-    public void shouldChangeValue() {
+    @Parameters(method = "getValuesForTest")
+    public void shouldChangeValue(final Byte value) {
         // given
-        TestHelper helpClass1 = new TestHelper();
-        TestHelper helpClass2 = new TestHelper();
+        final TestHelper helpClass1 = new TestHelper(value);
+        final TestHelper helpClass2 = new TestHelper(value);
 
         // when
         byteValueChanger.changeFieldsValues(helpClass1, helpClass2);
-        Byte result = Whitebox.getInternalState(helpClass1, "byteType");
-        Byte result2 = Whitebox.getInternalState(helpClass2, "byteType");
+        final Byte result = getInternalState(helpClass1, "byteType");
+        final Byte result2 = getInternalState(helpClass2, "byteType");
 
         // then
         assertThat(result).isNotEqualTo(result2);
@@ -30,11 +35,11 @@ public class ByteValueChangerTest {
     @Test
     public void shouldReturnFalseForSameValues() {
         // given
-        Byte value1 = 0;
-        Byte value2 = 0;
+        final Byte value1 = 0;
+        final Byte value2 = 0;
 
         // when
-        boolean result = byteValueChanger.areDifferentValues(value1, value2);
+        final boolean result = byteValueChanger.areDifferentValues(value1, value2);
 
         // then
         assertThat(result).isFalse();
@@ -43,14 +48,22 @@ public class ByteValueChangerTest {
     @Test
     public void shouldReturnTrueForDifferentValues() {
         // given
-        Byte value1 = 0;
-        Byte value2 = 1;
+        final Byte value1 = 0;
+        final Byte value2 = 1;
 
         // when
-        boolean result = byteValueChanger.areDifferentValues(value1, value2);
+        final boolean result = byteValueChanger.areDifferentValues(value1, value2);
 
         // then
         assertThat(result).isTrue();
+    }
+
+    private Object[] getValuesForTest() {
+        return new Object[]{Byte.MAX_VALUE,
+                            Byte.MIN_VALUE,
+                            new Byte((byte) 0),
+                            new Byte((byte) -1),
+                            new Byte((byte) 1)};
     }
 
 }

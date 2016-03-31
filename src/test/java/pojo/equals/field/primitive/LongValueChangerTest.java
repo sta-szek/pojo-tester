@@ -1,26 +1,31 @@
 package pojo.equals.field.primitive;
 
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.powermock.reflect.Whitebox;
 import pojo.equals.field.FieldsValuesChanger;
 import pojo.equals.test.pojos.TestHelper;
 
-import static org.assertj.core.api.StrictAssertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
+@RunWith(JUnitParamsRunner.class)
 public class LongValueChangerTest {
 
-    FieldsValuesChanger<Long> longValueChanger = new LongValueChanger();
+    private final FieldsValuesChanger<Long> longValueChanger = new LongValueChanger();
 
     @Test
-    public void shouldChangeValue() {
+    @Parameters(method = "getValuesForTest")
+    public void shouldChangeValue(final Long value) {
         // given
-        TestHelper helpClass1 = new TestHelper();
-        TestHelper helpClass2 = new TestHelper();
+        final TestHelper helpClass1 = new TestHelper(value);
+        final TestHelper helpClass2 = new TestHelper(value);
 
         // when
         longValueChanger.changeFieldsValues(helpClass1, helpClass2);
-        Long result = Whitebox.getInternalState(helpClass1, "longType");
-        Long result2 = Whitebox.getInternalState(helpClass2, "longType");
+        final Long result = Whitebox.getInternalState(helpClass1, "longType");
+        final Long result2 = Whitebox.getInternalState(helpClass2, "longType");
 
         // then
         assertThat(result).isNotEqualTo(result2);
@@ -29,11 +34,11 @@ public class LongValueChangerTest {
     @Test
     public void shouldReturnFalseForSameValues() {
         // given
-        Long value1 = 0l;
-        Long value2 = 0l;
+        final Long value1 = 0L;
+        final Long value2 = 0L;
 
         // when
-        boolean result = longValueChanger.areDifferentValues(value1, value2);
+        final boolean result = longValueChanger.areDifferentValues(value1, value2);
 
         // then
         assertThat(result).isFalse();
@@ -42,13 +47,21 @@ public class LongValueChangerTest {
     @Test
     public void shouldReturnTrueForDifferentValues() {
         // given
-        Long value1 = 0l;
-        Long value2 = 1l;
+        final Long value1 = 0L;
+        final Long value2 = 1L;
 
         // when
-        boolean result = longValueChanger.areDifferentValues(value1, value2);
+        final boolean result = longValueChanger.areDifferentValues(value1, value2);
 
         // then
         assertThat(result).isTrue();
+    }
+
+    private Object[] getValuesForTest() {
+        return new Object[]{Long.MAX_VALUE,
+                            Long.MIN_VALUE,
+                            0L,
+                            -1L,
+                            1L};
     }
 }

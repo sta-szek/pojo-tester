@@ -6,16 +6,17 @@ import org.mockito.Mockito;
 import pojo.equals.test.pojos.TestHelper;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.powermock.reflect.internal.WhiteboxImpl.getInternalState;
 
 public class FieldsValuesChangerTest {
 
-    static FieldsValuesChanger fieldsValuesChanger;
+    private static FieldsValuesChanger fieldsValuesChanger;
 
     @BeforeClass
     public static void beforeClass() {
-        fieldsValuesChanger = Mockito.mock(FieldsValuesChanger.class, Mockito.CALLS_REAL_METHODS);
+        fieldsValuesChanger = mock(FieldsValuesChanger.class, Mockito.CALLS_REAL_METHODS);
     }
 
     @Test
@@ -24,7 +25,7 @@ public class FieldsValuesChangerTest {
 
         // when
         fieldsValuesChanger.register(fieldsValuesChanger);
-        FieldsValuesChanger result = getInternalState(fieldsValuesChanger, "fieldsValuesChanger");
+        final FieldsValuesChanger result = getInternalState(fieldsValuesChanger, "fieldsValuesChanger");
 
         // then
         assertThat(result).isNotNull();
@@ -33,8 +34,8 @@ public class FieldsValuesChangerTest {
     @Test
     public void shouldRegisterFieldsValuesChangerToNextFieldRegisterValuesChanger() {
         // given
-        FieldsValuesChanger first = Mockito.mock(FieldsValuesChanger.class, Mockito.CALLS_REAL_METHODS);
-        FieldsValuesChanger second = Mockito.mock(FieldsValuesChanger.class, Mockito.CALLS_REAL_METHODS);
+        final FieldsValuesChanger first = mock(FieldsValuesChanger.class, Mockito.CALLS_REAL_METHODS);
+        final FieldsValuesChanger second = mock(FieldsValuesChanger.class, Mockito.CALLS_REAL_METHODS);
 
         // when
         fieldsValuesChanger.register(first)
@@ -49,7 +50,7 @@ public class FieldsValuesChangerTest {
         // given
 
         // when
-        boolean result = fieldsValuesChanger.canChange(TestHelper.class.getDeclaredField("intType"));
+        final boolean result = fieldsValuesChanger.canChange(TestHelper.class.getDeclaredField("intType"));
 
         // then
         assertThat(result).isTrue();
@@ -60,7 +61,7 @@ public class FieldsValuesChangerTest {
         // given
 
         // when
-        boolean result = fieldsValuesChanger.canChange(TestHelper.class.getDeclaredField("finalIntType"));
+        final boolean result = fieldsValuesChanger.canChange(TestHelper.class.getDeclaredField("finalIntType"));
 
         // then
         assertThat(result).isFalse();

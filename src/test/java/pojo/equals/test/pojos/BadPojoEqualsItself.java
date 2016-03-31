@@ -9,6 +9,7 @@ public class BadPojoEqualsItself {
     private double doubleType;
     private boolean booleanType;
     private char charType;
+    private float floatType;
 
     @Override
     public String toString() {
@@ -16,7 +17,7 @@ public class BadPojoEqualsItself {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (o == null || o.getClass() != getClass()) {
             return false;
         }

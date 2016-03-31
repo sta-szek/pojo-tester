@@ -1,26 +1,31 @@
 package pojo.equals.field.primitive;
 
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
 import org.junit.Test;
-import org.powermock.reflect.Whitebox;
+import org.junit.runner.RunWith;
 import pojo.equals.field.FieldsValuesChanger;
 import pojo.equals.test.pojos.TestHelper;
 
-import static org.assertj.core.api.StrictAssertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.powermock.reflect.Whitebox.getInternalState;
 
+@RunWith(JUnitParamsRunner.class)
 public class CharacterValueChangerTest {
 
-    FieldsValuesChanger<Character> charValueChanger = new CharacterValueChanger();
+    private final FieldsValuesChanger<Character> charValueChanger = new CharacterValueChanger();
 
     @Test
-    public void shouldChangeValue() {
+    @Parameters(method = "getValuesForTest")
+    public void shouldChangeValue(final Character value) {
         // given
-        TestHelper helpClass1 = new TestHelper();
-        TestHelper helpClass2 = new TestHelper();
+        final TestHelper helpClass1 = new TestHelper(value);
+        final TestHelper helpClass2 = new TestHelper(value);
 
         // when
         charValueChanger.changeFieldsValues(helpClass1, helpClass2);
-        Character result = Whitebox.getInternalState(helpClass1, "characterType");
-        Character result2 = Whitebox.getInternalState(helpClass2, "characterType");
+        final Character result = getInternalState(helpClass1, "characterType");
+        final Character result2 = getInternalState(helpClass2, "characterType");
 
         // then
         assertThat(result).isNotEqualTo(result2);
@@ -29,11 +34,11 @@ public class CharacterValueChangerTest {
     @Test
     public void shouldReturnFalseForSameValues() {
         // given
-        Character value1 = 0;
-        Character value2 = 0;
+        final Character value1 = 0;
+        final Character value2 = 0;
 
         // when
-        boolean result = charValueChanger.areDifferentValues(value1, value2);
+        final boolean result = charValueChanger.areDifferentValues(value1, value2);
 
         // then
         assertThat(result).isFalse();
@@ -42,13 +47,28 @@ public class CharacterValueChangerTest {
     @Test
     public void shouldReturnTrueForDifferentValues() {
         // given
-        Character value1 = 0;
-        Character value2 = 1;
+        final Character value1 = 0;
+        final Character value2 = 1;
 
         // when
-        boolean result = charValueChanger.areDifferentValues(value1, value2);
+        final boolean result = charValueChanger.areDifferentValues(value1, value2);
 
         // then
         assertThat(result).isTrue();
+    }
+
+    private Object[] getValuesForTest() {
+        return new Object[]{Character.MAX_CODE_POINT,
+                            Character.MAX_HIGH_SURROGATE,
+                            Character.MAX_LOW_SURROGATE,
+                            Character.MAX_RADIX,
+                            Character.MAX_SURROGATE,
+                            Character.MAX_VALUE,
+                            Character.MIN_CODE_POINT,
+                            Character.MIN_HIGH_SURROGATE,
+                            Character.MIN_LOW_SURROGATE,
+                            Character.MIN_RADIX,
+                            Character.MIN_SURROGATE,
+                            Character.MIN_VALUE};
     }
 }

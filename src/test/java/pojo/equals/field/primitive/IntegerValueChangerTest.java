@@ -1,27 +1,32 @@
 package pojo.equals.field.primitive;
 
 
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import pojo.equals.field.FieldsValuesChanger;
 import pojo.equals.test.pojos.TestHelper;
 
-import static org.assertj.core.api.StrictAssertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.powermock.reflect.Whitebox.getInternalState;
 
+@RunWith(JUnitParamsRunner.class)
 public class IntegerValueChangerTest {
 
-    FieldsValuesChanger<Integer> integerValueChanger = new IntegerValueChanger();
+    private final FieldsValuesChanger<Integer> integerValueChanger = new IntegerValueChanger();
 
     @Test
-    public void shouldChangeValue() {
+    @Parameters(method = "getValuesForTest")
+    public void shouldChangeValue(final Integer value) {
         // given
-        TestHelper helpClass1 = new TestHelper();
-        TestHelper helpClass2 = new TestHelper();
+        final TestHelper helpClass1 = new TestHelper(value);
+        final TestHelper helpClass2 = new TestHelper(value);
 
         // when
         integerValueChanger.changeFieldsValues(helpClass1, helpClass2);
-        Integer result = getInternalState(helpClass1, "intType");
-        Integer result2 = getInternalState(helpClass2, "intType");
+        final Integer result = getInternalState(helpClass1, "intType");
+        final Integer result2 = getInternalState(helpClass2, "intType");
 
         // then
         assertThat(result).isNotEqualTo(result2);
@@ -30,11 +35,11 @@ public class IntegerValueChangerTest {
     @Test
     public void shouldReturnFalseForSameValues() {
         // given
-        Integer value1 = 0;
-        Integer value2 = 0;
+        final Integer value1 = 0;
+        final Integer value2 = 0;
 
         // when
-        boolean result = integerValueChanger.areDifferentValues(value1, value2);
+        final boolean result = integerValueChanger.areDifferentValues(value1, value2);
 
         // then
         assertThat(result).isFalse();
@@ -43,13 +48,21 @@ public class IntegerValueChangerTest {
     @Test
     public void shouldReturnTrueForDifferentValues() {
         // given
-        Integer value1 = 0;
-        Integer value2 = 1;
+        final Integer value1 = 0;
+        final Integer value2 = 1;
 
         // when
-        boolean result = integerValueChanger.areDifferentValues(value1, value2);
+        final boolean result = integerValueChanger.areDifferentValues(value1, value2);
 
         // then
         assertThat(result).isTrue();
+    }
+
+    private Object[] getValuesForTest() {
+        return new Object[]{Integer.MAX_VALUE,
+                            Integer.MIN_VALUE,
+                            0,
+                            -1,
+                            1};
     }
 }

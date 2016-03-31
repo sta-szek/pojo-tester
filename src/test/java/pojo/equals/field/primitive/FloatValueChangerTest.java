@@ -12,21 +12,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.powermock.reflect.Whitebox.getInternalState;
 
 @RunWith(JUnitParamsRunner.class)
-public class DoubleValueChangerTest {
+public class FloatValueChangerTest {
 
-    private final FieldsValuesChanger<Double> doubleValueChanger = new DoubleValueChanger();
+    private final FieldsValuesChanger<Float> floatValueChanger = new FloatValueChanger();
 
     @Test
     @Parameters(method = "getValuesForTest")
-    public void shouldChangeValue(final Double value) {
+    public void shouldChangeValue(final Float value) {
         // given
         final TestHelper helpClass1 = new TestHelper(value);
         final TestHelper helpClass2 = new TestHelper(value);
 
         // when
-        doubleValueChanger.changeFieldsValues(helpClass1, helpClass2);
-        final Double result = getInternalState(helpClass1, "doubleType");
-        final Double result2 = getInternalState(helpClass2, "doubleType");
+        floatValueChanger.changeFieldsValues(helpClass1, helpClass2);
+        final Float result = getInternalState(helpClass1, "floatType");
+        final Float result2 = getInternalState(helpClass2, "floatType");
 
         // then
         assertThat(result).isNotEqualTo(result2);
@@ -35,11 +35,11 @@ public class DoubleValueChangerTest {
     @Test
     public void shouldReturnFalseForSameValues() {
         // given
-        final Double value1 = 0d;
-        final Double value2 = 0d;
+        final Float value1 = 0f;
+        final Float value2 = 0f;
 
         // when
-        final boolean result = doubleValueChanger.areDifferentValues(value1, value2);
+        final boolean result = floatValueChanger.areDifferentValues(value1, value2);
 
         // then
         assertThat(result).isFalse();
@@ -48,22 +48,22 @@ public class DoubleValueChangerTest {
     @Test
     public void shouldReturnTrueForDifferentValues() {
         // given
-        final Double value1 = 0d;
-        final Double value2 = 1d;
+        final Float value1 = 0f;
+        final Float value2 = 1f;
 
         // when
-        final boolean result = doubleValueChanger.areDifferentValues(value1, value2);
+        final boolean result = floatValueChanger.areDifferentValues(value1, value2);
 
         // then
         assertThat(result).isTrue();
     }
 
     private Object[] getValuesForTest() {
-        return new Object[]{Double.MAX_VALUE,
-                            Double.MIN_VALUE,
-                            Double.MIN_NORMAL,
-                            0D,
-                            1D,
-                            -1D};
+        return new Object[]{Float.MAX_VALUE,
+                            Float.MIN_VALUE,
+                            Float.MIN_NORMAL,
+                            0f,
+                            1f,
+                            -1f};
     }
 }

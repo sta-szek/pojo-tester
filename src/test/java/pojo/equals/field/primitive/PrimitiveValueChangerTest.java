@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PrimitiveValueChangerTest {
 
     @Test
-    public void shouldCreateInstaceWithPrimitiveChangers() throws InstantiationException, IllegalAccessException {
+    public void shouldCreateInstanceWithPrimitiveChangers() throws InstantiationException, IllegalAccessException {
         // given
 
         // when

@@ -13,23 +13,24 @@ public abstract class PrimitiveValueChanger<T> extends FieldsValuesChanger<T> {
                                                            DoubleValueChanger.class,
                                                            IntegerValueChanger.class,
                                                            LongValueChanger.class,
+                                                           FloatValueChanger.class,
                                                            ShortValueChanger.class};
 
     public static FieldsValuesChanger instance() throws IllegalAccessException, InstantiationException {
-        FieldsValuesChanger firstObject = (FieldsValuesChanger) primitiveValueChangers[0].newInstance();
+        final FieldsValuesChanger firstObject = (FieldsValuesChanger) primitiveValueChangers[0].newInstance();
         for (int i = 1; i < primitiveValueChangers.length; i++) {
-            FieldsValuesChanger next = (FieldsValuesChanger) primitiveValueChangers[i].newInstance();
+            final FieldsValuesChanger next = (FieldsValuesChanger) primitiveValueChangers[i].newInstance();
             firstObject.register(next);
         }
         return firstObject;
     }
 
     @Override
-    protected boolean canChange(Field field) {
+    protected boolean canChange(final Field field) {
         return super.canChange(field) && isCompatibleType(field);
     }
 
-    private boolean isCompatibleType(Field field) {
+    private boolean isCompatibleType(final Field field) {
         try {
             return getGenericTypeClass().getField("TYPE")
                                         .get(null)

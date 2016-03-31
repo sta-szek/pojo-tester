@@ -1,26 +1,31 @@
 package pojo.equals.field.primitive;
 
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
 import org.junit.Test;
-import org.powermock.reflect.Whitebox;
+import org.junit.runner.RunWith;
 import pojo.equals.field.FieldsValuesChanger;
 import pojo.equals.test.pojos.TestHelper;
 
-import static org.assertj.core.api.StrictAssertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.powermock.reflect.Whitebox.getInternalState;
 
+@RunWith(JUnitParamsRunner.class)
 public class BooleanValueChangerTest {
 
-    FieldsValuesChanger<Boolean> booleanValueChanger = new BooleanValueChanger();
+    private final FieldsValuesChanger<Boolean> booleanValueChanger = new BooleanValueChanger();
 
     @Test
-    public void shouldChangeValue() {
+    @Parameters(method = "getValuesForTest")
+    public void shouldChangeValue(final Boolean value) {
         // given
-        TestHelper helpClass1 = new TestHelper();
-        TestHelper helpClass2 = new TestHelper();
+        final TestHelper helpClass1 = new TestHelper(value);
+        final TestHelper helpClass2 = new TestHelper(value);
 
         // when
         booleanValueChanger.changeFieldsValues(helpClass1, helpClass2);
-        Boolean result = Whitebox.getInternalState(helpClass1, "booleanType");
-        Boolean result2 = Whitebox.getInternalState(helpClass2, "booleanType");
+        final Boolean result = getInternalState(helpClass1, "booleanType");
+        final Boolean result2 = getInternalState(helpClass2, "booleanType");
 
         // then
         assertThat(result).isNotEqualTo(result2);
@@ -29,11 +34,9 @@ public class BooleanValueChangerTest {
     @Test
     public void shouldReturnFalseForSameValues() {
         // given
-        Boolean value1 = false;
-        Boolean value2 = false;
 
         // when
-        boolean result = booleanValueChanger.areDifferentValues(value1, value2);
+        final boolean result = booleanValueChanger.areDifferentValues(false, false);
 
         // then
         assertThat(result).isFalse();
@@ -42,13 +45,16 @@ public class BooleanValueChangerTest {
     @Test
     public void shouldReturnTrueForDifferentValues() {
         // given
-        Boolean value1 = false;
-        Boolean value2 = true;
 
         // when
-        boolean result = booleanValueChanger.areDifferentValues(value1, value2);
+        final boolean result = booleanValueChanger.areDifferentValues(false, true);
 
         // then
         assertThat(result).isTrue();
+    }
+
+    private Object[] getValuesForTest() {
+        return new Object[]{Boolean.FALSE,
+                            Boolean.TRUE};
     }
 }

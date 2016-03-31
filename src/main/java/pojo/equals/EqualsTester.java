@@ -9,12 +9,23 @@ import java.util.stream.Collectors;
 public class EqualsTester {
 
     //Whenever a.equals(b), then a.hashCode() must be same as b.hashCode().
-    private static final String CONSTRAINT_NULL = "%s has bad 'equals' method implementation. The equals method should return false if object is comparing to null. Current implementation returns true.";
-    private static final String CONSTRAINT_OTHER_TYPE = "%s has bad 'equals' method implementation. The equals method should return false if object is comparing to object with different type. Current implementation returns true.";
-    private static final String CONSTRAINT_SAME_OBJECT = "%s has bad 'equals' method implementation. The equals method should return true if object is comparing with itself. Current implementation returns false.";
-    private static final String CONSTRAINT_SAME_OBJECT_TYPE = "%s has bad 'equals' method implementation. The equals method should return true for both a.equals(b) and b.equals(a). Current implementation returns false.";
-    private static final String CONSTRAINT_A_B_C = "%s has bad 'equals' method implementation. The equals method should return true in all cases: a.equals(b), b.equals(c) and a.equals(c) . Current implementation returns false.";
-    private static final String CONSTRAINT_SAME_OBJECT_DIFFERENT_VALUES = "%s has bad 'equals' method implementation. The equals method should return true if object is comparing with another object that has same field values. Current implementation returns false.";
+    private static final String CONSTRAINT_NULL = "%s has bad 'equals' method implementation. The equals method should return false if " +
+                                                  "object is comparing to null. Current implementation returns true.";
+    private static final String CONSTRAINT_OTHER_TYPE = "%s has bad 'equals' method implementation. The equals method should return false" +
+                                                        " if object is comparing to object with different type. Current implementation " +
+                                                        "returns true.";
+    private static final String CONSTRAINT_SAME_OBJECT = "%s has bad 'equals' method implementation. The equals method should return true" +
+                                                         " if object is comparing with itself. Current implementation returns false.";
+    private static final String CONSTRAINT_SAME_OBJECT_TYPE = "%s has bad 'equals' method implementation. The equals method should return" +
+                                                              " true for both a.equals(b) and b.equals(a). Current implementation returns" +
+                                                              " false.";
+    private static final String CONSTRAINT_A_B_C = "%s has bad 'equals' method implementation. The equals method should return true in " +
+                                                   "all cases: a.equals(b), b.equals(c) and a.equals(c) . Current implementation returns " +
+                                                   "false.";
+    private static final String CONSTRAINT_SAME_OBJECT_DIFFERENT_VALUES = "%s has bad 'equals' method implementation. The equals method " +
+                                                                          "should return true if object is comparing with another object " +
+                                                                          "that has same field values. Current implementation returns " +
+                                                                          "false.";
 
     private FieldsValuesChanger fieldsValuesChanger;
     private TestResult.Builder testResultBuilder;
@@ -22,15 +33,13 @@ public class EqualsTester {
     public EqualsTester() {
         try {
             fieldsValuesChanger = PrimitiveValueChanger.instance();
-            //TODO zaloguj wyj¹tek, pomiñ test jezeli siê nie uda
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
+            //TODO zaloguj wyjÄ…tek, pomiï¿½ test jezeli siï¿½ nie uda
+        } catch (IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
         }
     }
 
-    public TestResult testEquals(Class... classes) {
+    public TestResult testEquals(final Class... classes) {
         testResultBuilder = TestResult.Builder.forClasses(classes);
         Arrays.stream(classes)
               .map(this::createInstance)
@@ -46,23 +55,23 @@ public class EqualsTester {
     }
 
     //object.equals(null) == false
-    private boolean shouldNotEqualNull(Object object) {
+    private boolean shouldNotEqualNull(final Object object) {
         // given
 
         // when
-        boolean result = object.equals(null);
+        final boolean result = object.equals(null);
 
         // then
         checkConstraint(result, object, CONSTRAINT_NULL);
         return !result;
     }
 
-    private boolean shouldNotEqualObjectWithDifferentType(Object object) {
+    private boolean shouldNotEqualObjectWithDifferentType(final Object object) {
         // given
-        Object objectToCompare = this;
+        final Object objectToCompare = this;
 
         // when
-        boolean result = object.equals(objectToCompare);
+        final boolean result = object.equals(objectToCompare);
 
         // then
         checkConstraint(result, object, CONSTRAINT_OTHER_TYPE);
@@ -70,11 +79,11 @@ public class EqualsTester {
     }
 
     //object.equals(object) == true
-    private boolean shouldEqualSameObject(Object object) {
+    private boolean shouldEqualSameObject(final Object object) {
         // given
 
         // when
-        boolean result = object.equals(object);
+        final boolean result = object.equals(object);
 
         // then
         checkConstraint(!result, object, CONSTRAINT_SAME_OBJECT);
@@ -82,14 +91,14 @@ public class EqualsTester {
     }
 
     //object.equals(other) == other.equals(object)
-    private boolean shouldEqualDifferentObjectWithSameType(Object object) {
+    private boolean shouldEqualDifferentObjectWithSameType(final Object object) {
         // given
-        Object objectToCompare = createInstance(object.getClass());
+        final Object objectToCompare = createInstance(object.getClass());
 
         // when
-        boolean result1 = object.equals(objectToCompare);
-        boolean result2 = objectToCompare.equals(object);
-        boolean totalResult = result1 && result2;
+        final boolean result1 = object.equals(objectToCompare);
+        final boolean result2 = objectToCompare.equals(object);
+        final boolean totalResult = result1 && result2;
 
         // then
         checkConstraint(!totalResult, object, CONSTRAINT_SAME_OBJECT_TYPE);
@@ -97,49 +106,49 @@ public class EqualsTester {
     }
 
     //a.equals(b) == true && b.equals(c) == true => a.equals(c) == true.
-    private boolean shouldEqualObjectCifObjectBisEqualToObjectAndC(Object object) {
+    private boolean shouldEqualObjectCifObjectBisEqualToObjectAndC(final Object object) {
         // given
-        Class<?> objectClass = object.getClass();
-        Object b = createInstance(objectClass);
-        Object c = createInstance(objectClass);
+        final Class<?> objectClass = object.getClass();
+        final Object b = createInstance(objectClass);
+        final Object c = createInstance(objectClass);
 
         // when
-        boolean result1 = object.equals(b);
-        boolean result2 = b.equals(c);
-        boolean result3 = object.equals(c);
-        boolean totalResult = result1 && result2 && result3;
+        final boolean result1 = object.equals(b);
+        final boolean result2 = b.equals(c);
+        final boolean result3 = object.equals(c);
+        final boolean totalResult = result1 && result2 && result3;
 
         // then
         checkConstraint(!totalResult, object, CONSTRAINT_A_B_C);
         return totalResult;
     }
 
-    private boolean shouldNotEqualDifferentObjectWithSameTypeAndDifferentFieldsValues(Object object) {
+    private boolean shouldNotEqualDifferentObjectWithSameTypeAndDifferentFieldsValues(final Object object) {
         // given
-        Object objectToCompare = createInstanceWithDifferentFieldValues(object);
+        final Object objectToCompare = createInstanceWithDifferentFieldValues(object);
 
         // when
-        boolean result = object.equals(objectToCompare);
+        final boolean result = object.equals(objectToCompare);
 
         // then
         checkConstraint(result, object, CONSTRAINT_SAME_OBJECT_DIFFERENT_VALUES);
         return !result;
     }
 
-    private Object createInstance(Class clazz) {
-        Object object;
+    private Object createInstance(final Class clazz) {
+        final Object object;
         try {
             object = clazz.newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
-            //TODO zrób w³asny exception + obs³uz go wyzej
+            //TODO zrï¿½b wï¿½asny exception + obsï¿½uz go wyzej
             throw new AssertionError("Unable to create object for class: " + clazz);
         }
         return object;
     }
 
-    private Object createInstanceWithDifferentFieldValues(Object object) {
-        Object otherObject = createInstance(object.getClass());
+    private Object createInstanceWithDifferentFieldValues(final Object object) {
+        final Object otherObject = createInstance(object.getClass());
 
         if (fieldsValuesChanger != null) {
             fieldsValuesChanger.changeFieldsValues(object, otherObject);
@@ -148,15 +157,15 @@ public class EqualsTester {
         return otherObject;
     }
 
-    private void checkConstraint(boolean result, Object object, String message) {
-        Class clazz = object.getClass();
+    private void checkConstraint(final boolean result, final Object object, final String message) {
+        final Class clazz = object.getClass();
         if (result) {
             testResultBuilder.fail(clazz);
             testResultBuilder.message(clazz, String.format(message, clazz));
         }
     }
 
-    private Object passTest(Object object) {
+    private Object passTest(final Object object) {
         testResultBuilder.pass(object.getClass());
         return object;
     }

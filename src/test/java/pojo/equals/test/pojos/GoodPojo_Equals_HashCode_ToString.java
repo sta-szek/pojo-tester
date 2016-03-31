@@ -7,40 +7,45 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import java.util.Random;
 
 public class GoodPojo_Equals_HashCode_ToString {
+    private final long random;
     private byte byteField;
     private short shortType;
     private int intType;
     private long longType;
     private double doubleType;
     private boolean booleanType;
+    private float floatType;
     private char charType;
-    private long random;
 
     public GoodPojo_Equals_HashCode_ToString() {
-        Random random = new Random();
+        final Random random = new Random();
         this.random = random.nextLong();
     }
 
     @Override
     public String toString() {
         return "PojoWithWellImplementedMethods{" +
-                "byteField=" + byteField +
-                ", shortType=" + shortType +
-                ", intType=" + intType +
-                ", longType=" + longType +
-                ", doubleType=" + doubleType +
-                ", booleanType=" + booleanType +
-                ", charType=" + charType +
-                '}';
+               "byteField=" + byteField +
+               ", shortType=" + shortType +
+               ", intType=" + intType +
+               ", longType=" + longType +
+               ", doubleType=" + doubleType +
+               ", booleanType=" + booleanType +
+               ", charType=" + charType +
+               '}';
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
 
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
-        GoodPojo_Equals_HashCode_ToString that = (GoodPojo_Equals_HashCode_ToString) o;
+        final GoodPojo_Equals_HashCode_ToString that = (GoodPojo_Equals_HashCode_ToString) o;
 
         return new EqualsBuilder()
                 .append(byteField, that.byteField)

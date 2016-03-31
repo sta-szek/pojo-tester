@@ -9,6 +9,7 @@ public class BadPojoEqualsDifferentObjectSameType {
     private double doubleType;
     private boolean booleanType;
     private char charType;
+    private float floatType;
 
     @Override
     public String toString() {
@@ -16,17 +17,14 @@ public class BadPojoEqualsDifferentObjectSameType {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (o == null) {
             return false;
         }
         if (o == this) {
             return true;
         }
-        if (o.getClass() == getClass()) {
-            return false;
-        }
-        return true;
+        return o.getClass() != getClass();
     }
 
     @Override
