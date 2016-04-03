@@ -7,15 +7,15 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import java.util.Random;
 
 public class GoodPojo_Equals_HashCode_ToString {
-    private final long random;
-    private byte byteField;
-    private short shortType;
-    private int intType;
-    private long longType;
-    private double doubleType;
-    private boolean booleanType;
-    private float floatType;
-    private char charType;
+    public final long random;
+    public byte byteField;
+    public short shortType;
+    public int intType;
+    public long longType;
+    public double doubleType;
+    public boolean booleanType;
+    public float floatType;
+    public char charType;
 
     public GoodPojo_Equals_HashCode_ToString() {
         final Random random = new Random();

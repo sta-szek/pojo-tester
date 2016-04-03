@@ -7,6 +7,7 @@ import test.utils.BadPojoEqualsNull;
 import test.utils.GoodPojo_Equals_HashCode_ToString;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 public class EqualsTesterTest {
 
@@ -18,10 +19,9 @@ public class EqualsTesterTest {
         final Class[] classesToTest = {GoodPojo_Equals_HashCode_ToString.class};
 
         // when
-        final TestResult testResult = equalsTester.testEquals(classesToTest);
+        equalsTester.testEquals(classesToTest);
 
         // then
-        assertThat(testResult.getPassedSize()).isEqualTo(classesToTest.length);
     }
 
     @Test
@@ -30,10 +30,10 @@ public class EqualsTesterTest {
         final Class[] classesToTest = {BadPojoEqualsNull.class};
 
         // when
-        final TestResult testResult = equalsTester.testEquals(classesToTest);
+        final Throwable result = catchThrowable(() -> equalsTester.testEquals(classesToTest));
 
         // then
-        assertThat(testResult.getFailedSize()).isEqualTo(classesToTest.length);
+        assertThat(result).isInstanceOf(AssertionError.class);
     }
 
     @Test
@@ -42,10 +42,10 @@ public class EqualsTesterTest {
         final Class[] classesToTest = {BadPojoEqualsItself.class};
 
         // when
-        final TestResult testResult = equalsTester.testEquals(classesToTest);
+        final Throwable result = catchThrowable(() -> equalsTester.testEquals(classesToTest));
 
         // then
-        assertThat(testResult.getFailedSize()).isEqualTo(classesToTest.length);
+        assertThat(result).isInstanceOf(AssertionError.class);
     }
 
     @Test
@@ -54,31 +54,22 @@ public class EqualsTesterTest {
         final Class[] classesToTest = {BadPojoEqualsDifferentType.class};
 
         // when
-        final TestResult testResult = equalsTester.testEquals(classesToTest);
+        final Throwable result = catchThrowable(() -> equalsTester.testEquals(classesToTest));
 
         // then
-        assertThat(testResult.getFailedSize()).as(testResult.getFormattedMessage())
-                                              .isEqualTo(classesToTest.length);
+        assertThat(result).isInstanceOf(AssertionError.class);
     }
 
     @Test
     public void shouldTest() {
         // given
-        final Class[] classesToTest = {BadPojoEqualsNull.class,
-                                       BadPojoEqualsDifferentType.class,
-                                       BadPojoEqualsItself.class};
+        final Class[] classesToTest = {BadPojoEqualsNull.class, BadPojoEqualsDifferentType.class, BadPojoEqualsItself.class};
 
         // when
-        final TestResult testResult = equalsTester.testEquals(classesToTest);
+        final Throwable result = catchThrowable(() -> equalsTester.testEquals(classesToTest));
 
         // then
-        try {
-            assertThat(testResult.getPassedSize())
-                    .isEqualTo(classesToTest.length);
-        } catch (final AssertionError e) {
-            System.err.println(testResult.getFormattedMessage());
-        }
+        assertThat(result).isInstanceOf(AssertionError.class);
     }
-
-
+    
 }

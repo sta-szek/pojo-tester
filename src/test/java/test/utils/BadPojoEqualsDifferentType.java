@@ -20,10 +20,10 @@ public class BadPojoEqualsDifferentType {
         if (o == null) {
             return false;
         }
-        if (o.getClass() == getClass()) {
-            return false;
+        if (o.getClass() != getClass()) {
+            return true;
         }
-        return true;
+        return false;
     }
 
     @Override
