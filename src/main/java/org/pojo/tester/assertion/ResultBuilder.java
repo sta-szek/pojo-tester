@@ -12,17 +12,15 @@ public class ResultBuilder {
     private final List<Class> passedClasses = new ArrayList<>();
     private final Set<Class> testedClasses = new HashSet<>();
 
-    public void fail(final String message, final Object... objects) {
+    public void fail(final String message, final Class<?> failedClass) {
         cumulativeMessage.append(message);
-        final Class<?> failedClass = objects[0].getClass();
         failedClasses.add(failedClass);
         testedClasses.add(failedClass);
     }
 
-    public void pass(final Object... objects) {
-        final Class<?> failedClass = objects[0].getClass();
-        passedClasses.add(failedClass);
-        testedClasses.add(failedClass);
+    public void pass(final Class<?> passedClass) {
+        passedClasses.add(passedClass);
+        testedClasses.add(passedClass);
     }
 
     public Result build() {

@@ -30,7 +30,7 @@ public class AssertionsTest {
     }
 
     @Test
-    public void shouldThrowException_IfAnyTastFailed() {
+    public void shouldThrowException_IfAnyTestFailed() {
         // given
         final Assertions assertions = new Assertions();
         final ResultBuilder resultBuilder = mock(ResultBuilder.class);

@@ -118,7 +118,7 @@ public class EqualAssertions {
         return String.format(message, objects);
     }
 
-    private void appendResult(final boolean pass, final String message, final Class testedClass) {
+    private void appendResult(final boolean pass, final String message, final Class<?> testedClass) {
         if (pass) {
             appendPass(testedClass);
         } else {
@@ -126,11 +126,11 @@ public class EqualAssertions {
         }
     }
 
-    private void appendFail(final String message, final Class testedClass) {
+    private void appendFail(final String message, final Class<?> testedClass) {
         resultBuilder.fail(message, testedClass);
     }
 
-    private void appendPass(final Class testedClass) {
+    private void appendPass(final Class<?> testedClass) {
         resultBuilder.pass(testedClass);
     }
 }

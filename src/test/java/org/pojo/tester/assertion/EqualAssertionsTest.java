@@ -8,6 +8,7 @@ import test.utils.GoodPojo_Equals_HashCode_ToString;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
@@ -15,7 +16,7 @@ import static org.mockito.Mockito.verify;
 public class EqualAssertionsTest {
 
     @Test
-    public void shouldAppendFail_WhenEqualsMethodIsNotReflexive() {
+    public void shouldFail_WhenEqualsMethodIsNotReflexive() {
         // given
         final BadPojoEqualsNull objectUnderAssert = new BadPojoEqualsNull();
         final ResultBuilder resultBuilder = spy(ResultBuilder.class);
@@ -25,11 +26,11 @@ public class EqualAssertionsTest {
         equalAssertions.isReflexive();
 
         // then
-        verify(resultBuilder).fail(anyString(), any(BadPojoEqualsNull.class));
+        verify(resultBuilder).fail(anyString(), eq(BadPojoEqualsNull.class));
     }
 
     @Test
-    public void shouldAppendFail_WhenEqualsMethodIsNotSymmetric() {
+    public void shouldFail_WhenEqualsMethodIsNotSymmetric() {
         // given
         final BadPojoEquals_NotSymmetric objectUnderAssert = new BadPojoEquals_NotSymmetric();
         final ResultBuilder resultBuilder = spy(ResultBuilder.class);
@@ -39,11 +40,11 @@ public class EqualAssertionsTest {
         equalAssertions.isSymmetric(objectUnderAssert);
 
         // then
-        verify(resultBuilder).fail(anyString(), any(BadPojoEquals_NotSymmetric.class));
+        verify(resultBuilder).fail(anyString(), eq(BadPojoEquals_NotSymmetric.class));
     }
 
     @Test
-    public void shouldAppendFail_WhenEqualsMethodIsNotTransitive() {
+    public void shouldFail_WhenEqualsMethodIsNotTransitive() {
         // given
         final BadPojoEquals_NotSymmetric objectUnderAssert = new BadPojoEquals_NotSymmetric();
         final ResultBuilder resultBuilder = spy(ResultBuilder.class);
@@ -53,11 +54,11 @@ public class EqualAssertionsTest {
         equalAssertions.isTransitive(objectUnderAssert, objectUnderAssert);
 
         // then
-        verify(resultBuilder).fail(anyString(), any(BadPojoEquals_NotSymmetric.class));
+        verify(resultBuilder).fail(anyString(), eq(BadPojoEquals_NotSymmetric.class));
     }
 
     @Test
-    public void shouldAppendFail_WhenEqualsMethodReturnTrue_ComparedToNull() {
+    public void shouldFail_WhenEqualsMethodReturnTrue_ComparedToNull() {
         // given
         final BadPojoEqualsNull objectUnderAssert = new BadPojoEqualsNull();
         final ResultBuilder resultBuilder = spy(ResultBuilder.class);
@@ -67,11 +68,11 @@ public class EqualAssertionsTest {
         equalAssertions.isNotEqualToNull();
 
         // then
-        verify(resultBuilder).fail(anyString(), any(BadPojoEqualsNull.class));
+        verify(resultBuilder).fail(anyString(), eq(BadPojoEqualsNull.class));
     }
 
     @Test
-    public void shouldAppendFail_WhenEqualsMethodReturnTrue_ComparedToDifferentType() {
+    public void shouldFail_WhenEqualsMethodReturnTrue_ComparedToDifferentType() {
         // given
         final BadPojoEqualsDifferentType objectUnderAssert = new BadPojoEqualsDifferentType();
         final ResultBuilder resultBuilder = spy(ResultBuilder.class);
@@ -81,11 +82,11 @@ public class EqualAssertionsTest {
         equalAssertions.isNotEqualToObjectWithDifferentType(this);
 
         // then
-        verify(resultBuilder).fail(anyString(), any(BadPojoEqualsDifferentType.class));
+        verify(resultBuilder).fail(anyString(), eq(BadPojoEqualsDifferentType.class));
     }
 
     @Test
-    public void shouldAppendFail_WhenEqualsMethodReturnTrue_ComparedToNotEqualObject() {
+    public void shouldFail_WhenEqualsMethodReturnTrue_ComparedToNotEqualObject() {
         // given
         final GoodPojo_Equals_HashCode_ToString objectUnderAssert = new GoodPojo_Equals_HashCode_ToString();
         final GoodPojo_Equals_HashCode_ToString otherObject = new GoodPojo_Equals_HashCode_ToString();
@@ -97,11 +98,11 @@ public class EqualAssertionsTest {
         equalAssertions.isNotEqualTo(otherObject);
 
         // then
-        verify(resultBuilder).fail(anyString(), any(GoodPojo_Equals_HashCode_ToString.class));
+        verify(resultBuilder).fail(anyString(), eq(GoodPojo_Equals_HashCode_ToString.class));
     }
 
     @Test
-    public void shouldAppendPass_WhenEqualsMethodIsReflexive() {
+    public void shouldPass_WhenEqualsMethodIsReflexive() {
         // given
         final GoodPojo_Equals_HashCode_ToString objectUnderAssert = new GoodPojo_Equals_HashCode_ToString();
         final ResultBuilder resultBuilder = spy(ResultBuilder.class);
@@ -115,7 +116,7 @@ public class EqualAssertionsTest {
     }
 
     @Test
-    public void shouldAppendPass_WhenEqualsMethodIsSymmetric() {
+    public void shouldPass_WhenEqualsMethodIsSymmetric() {
         // given
         final GoodPojo_Equals_HashCode_ToString objectUnderAssert = new GoodPojo_Equals_HashCode_ToString();
         final ResultBuilder resultBuilder = spy(ResultBuilder.class);
@@ -129,7 +130,7 @@ public class EqualAssertionsTest {
     }
 
     @Test
-    public void shouldAppendPass_WhenEqualsMethodIsTransitive() {
+    public void shouldPass_WhenEqualsMethodIsTransitive() {
         // given
         final GoodPojo_Equals_HashCode_ToString objectUnderAssert = new GoodPojo_Equals_HashCode_ToString();
         final ResultBuilder resultBuilder = spy(ResultBuilder.class);
@@ -143,7 +144,7 @@ public class EqualAssertionsTest {
     }
 
     @Test
-    public void shouldAppendPass_WhenEqualsMethodReturnFalse_ComparedToNull() {
+    public void shouldPass_WhenEqualsMethodReturnFalse_ComparedToNull() {
         // given
         final GoodPojo_Equals_HashCode_ToString objectUnderAssert = new GoodPojo_Equals_HashCode_ToString();
         final ResultBuilder resultBuilder = spy(ResultBuilder.class);
@@ -157,7 +158,7 @@ public class EqualAssertionsTest {
     }
 
     @Test
-    public void shouldAppendPass_WhenEqualsMethodReturnFalse_ComparedToDifferentType() {
+    public void shouldPass_WhenEqualsMethodReturnFalse_ComparedToDifferentType() {
         // given
         final GoodPojo_Equals_HashCode_ToString objectUnderAssert = new GoodPojo_Equals_HashCode_ToString();
         final ResultBuilder resultBuilder = spy(ResultBuilder.class);
@@ -171,7 +172,7 @@ public class EqualAssertionsTest {
     }
 
     @Test
-    public void shouldAppendPass_WhenEqualsMethodReturnFalse_ComparedToNotEqualObject() {
+    public void shouldPass_WhenEqualsMethodReturnFalse_ComparedToNotEqualObject() {
         // given
         final GoodPojo_Equals_HashCode_ToString objectUnderAssert = new GoodPojo_Equals_HashCode_ToString();
         final GoodPojo_Equals_HashCode_ToString otherObject = new GoodPojo_Equals_HashCode_ToString();
