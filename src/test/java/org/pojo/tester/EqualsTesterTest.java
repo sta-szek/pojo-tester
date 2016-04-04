@@ -11,23 +11,24 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 
 public class EqualsTesterTest {
 
-    private static final EqualsTester equalsTester = new EqualsTester();
-
     @Test
     public void shouldPassAllEqualsTests() {
         // given
         final Class[] classesToTest = {GoodPojo_Equals_HashCode_ToString.class};
+        EqualsTester equalsTester = new EqualsTester();
 
         // when
-        equalsTester.testEquals(classesToTest);
+        final Throwable result = catchThrowable(() -> equalsTester.testEquals(classesToTest));
 
         // then
+        assertThat(result).isNull();
     }
 
     @Test
     public void shouldNotPassNullTest() {
         // given
         final Class[] classesToTest = {BadPojoEqualsNull.class};
+        EqualsTester equalsTester = new EqualsTester();
 
         // when
         final Throwable result = catchThrowable(() -> equalsTester.testEquals(classesToTest));
@@ -40,6 +41,7 @@ public class EqualsTesterTest {
     public void shouldNotPassItselfTest() {
         // given
         final Class[] classesToTest = {BadPojoEqualsItself.class};
+        EqualsTester equalsTester = new EqualsTester();
 
         // when
         final Throwable result = catchThrowable(() -> equalsTester.testEquals(classesToTest));
@@ -52,6 +54,7 @@ public class EqualsTesterTest {
     public void shouldNotPassDifferentTypeTest() {
         // given
         final Class[] classesToTest = {BadPojoEqualsDifferentType.class};
+        EqualsTester equalsTester = new EqualsTester();
 
         // when
         final Throwable result = catchThrowable(() -> equalsTester.testEquals(classesToTest));
@@ -64,6 +67,7 @@ public class EqualsTesterTest {
     public void shouldTest() {
         // given
         final Class[] classesToTest = {BadPojoEqualsNull.class, BadPojoEqualsDifferentType.class, BadPojoEqualsItself.class};
+        EqualsTester equalsTester = new EqualsTester();
 
         // when
         final Throwable result = catchThrowable(() -> equalsTester.testEquals(classesToTest));
@@ -71,5 +75,5 @@ public class EqualsTesterTest {
         // then
         assertThat(result).isInstanceOf(AssertionError.class);
     }
-    
+
 }

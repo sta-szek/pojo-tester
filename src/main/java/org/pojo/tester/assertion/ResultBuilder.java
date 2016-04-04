@@ -8,18 +8,18 @@ import java.util.Set;
 
 public class ResultBuilder {
     private final StringBuilder cumulativeMessage = new StringBuilder();
-    private final List<Class> failedClasses = new ArrayList<>();
-    private final List<Class> passedClasses = new ArrayList<>();
+    private final List<TestPair> failedClasses = new ArrayList<>();
+    private final List<TestPair> passedClasses = new ArrayList<>();
     private final Set<Class> testedClasses = new HashSet<>();
 
-    public void fail(final String message, final Class<?> failedClass) {
-        cumulativeMessage.append(message);
-        failedClasses.add(failedClass);
+    public void fail(final Class<?> failedClass, final String testName, final String errorMessage) {
+        cumulativeMessage.append(errorMessage);
+        failedClasses.add(new TestPair(testName, failedClass));
         testedClasses.add(failedClass);
     }
 
-    public void pass(final Class<?> passedClass) {
-        passedClasses.add(passedClass);
+    public void pass(final Class<?> passedClass, final String testName) {
+        passedClasses.add(new TestPair(testName, passedClass));
         testedClasses.add(passedClass);
     }
 

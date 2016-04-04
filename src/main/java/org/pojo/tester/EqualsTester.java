@@ -30,8 +30,24 @@ public class EqualsTester {
               .peek(this::shouldNotEqualNull)
               .peek(this::shouldNotEqualObjectWithDifferentType)
               .peek(this::shouldNotEqualDifferentObjectWithSameTypeAndDifferentFieldsValues)
-              .close();
+              .forEach(this::killEveryone);
         assertions.assertAll();
+    }
+
+    private void killEveryone(Object o) {
+        o = null;
+    }
+
+    private Object createInstance(final Class clazz) {
+        final Object object;
+        try {
+            object = clazz.newInstance();
+        } catch (InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+            //TODO zr�b w�asny exception + obs�uz go wyzej
+            throw new AssertionError("Unable to create object for class: " + clazz);
+        }
+        return object;
     }
 
     private void shouldEqualSameObject(final Object object) {
@@ -75,18 +91,6 @@ public class EqualsTester {
         final Object objectToCompare = createInstanceWithDifferentFieldValues(object);
         assertions.assertThat(object)
                   .isNotEqualTo(objectToCompare);
-    }
-
-    private Object createInstance(final Class clazz) {
-        final Object object;
-        try {
-            object = clazz.newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
-            e.printStackTrace();
-            //TODO zr�b w�asny exception + obs�uz go wyzej
-            throw new AssertionError("Unable to create object for class: " + clazz);
-        }
-        return object;
     }
 
     private Object createInstanceWithDifferentFieldValues(final Object object) {

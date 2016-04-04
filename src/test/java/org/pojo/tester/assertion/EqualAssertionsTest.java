@@ -6,7 +6,6 @@ import test.utils.BadPojoEqualsNull;
 import test.utils.BadPojoEquals_NotSymmetric;
 import test.utils.GoodPojo_Equals_HashCode_ToString;
 
-import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.spy;
@@ -26,7 +25,7 @@ public class EqualAssertionsTest {
         equalAssertions.isReflexive();
 
         // then
-        verify(resultBuilder).fail(anyString(), eq(BadPojoEqualsNull.class));
+        verify(resultBuilder).fail(eq(BadPojoEqualsNull.class),anyString(),anyString());
     }
 
     @Test
@@ -40,7 +39,7 @@ public class EqualAssertionsTest {
         equalAssertions.isSymmetric(objectUnderAssert);
 
         // then
-        verify(resultBuilder).fail(anyString(), eq(BadPojoEquals_NotSymmetric.class));
+        verify(resultBuilder).fail(eq(BadPojoEquals_NotSymmetric.class),anyString(),anyString());
     }
 
     @Test
@@ -54,7 +53,7 @@ public class EqualAssertionsTest {
         equalAssertions.isTransitive(objectUnderAssert, objectUnderAssert);
 
         // then
-        verify(resultBuilder).fail(anyString(), eq(BadPojoEquals_NotSymmetric.class));
+        verify(resultBuilder).fail(eq(BadPojoEquals_NotSymmetric.class),anyString(),anyString());
     }
 
     @Test
@@ -68,7 +67,7 @@ public class EqualAssertionsTest {
         equalAssertions.isNotEqualToNull();
 
         // then
-        verify(resultBuilder).fail(anyString(), eq(BadPojoEqualsNull.class));
+        verify(resultBuilder).fail(eq(BadPojoEqualsNull.class),anyString(),anyString());
     }
 
     @Test
@@ -82,7 +81,7 @@ public class EqualAssertionsTest {
         equalAssertions.isNotEqualToObjectWithDifferentType(this);
 
         // then
-        verify(resultBuilder).fail(anyString(), eq(BadPojoEqualsDifferentType.class));
+        verify(resultBuilder).fail(eq(BadPojoEqualsDifferentType.class),anyString(),anyString());
     }
 
     @Test
@@ -98,7 +97,7 @@ public class EqualAssertionsTest {
         equalAssertions.isNotEqualTo(otherObject);
 
         // then
-        verify(resultBuilder).fail(anyString(), eq(GoodPojo_Equals_HashCode_ToString.class));
+        verify(resultBuilder).fail(eq(GoodPojo_Equals_HashCode_ToString.class),anyString(),anyString());
     }
 
     @Test
@@ -112,7 +111,7 @@ public class EqualAssertionsTest {
         equalAssertions.isReflexive();
 
         // then
-        verify(resultBuilder).pass(GoodPojo_Equals_HashCode_ToString.class);
+        verify(resultBuilder).pass(eq(GoodPojo_Equals_HashCode_ToString.class), anyString());
     }
 
     @Test
@@ -126,7 +125,7 @@ public class EqualAssertionsTest {
         equalAssertions.isSymmetric(objectUnderAssert);
 
         // then
-        verify(resultBuilder).pass(GoodPojo_Equals_HashCode_ToString.class);
+        verify(resultBuilder).pass(eq(GoodPojo_Equals_HashCode_ToString.class), anyString());
     }
 
     @Test
@@ -140,7 +139,7 @@ public class EqualAssertionsTest {
         equalAssertions.isTransitive(objectUnderAssert, objectUnderAssert);
 
         // then
-        verify(resultBuilder).pass(GoodPojo_Equals_HashCode_ToString.class);
+        verify(resultBuilder).pass(eq(GoodPojo_Equals_HashCode_ToString.class), anyString());
     }
 
     @Test
@@ -154,7 +153,7 @@ public class EqualAssertionsTest {
         equalAssertions.isNotEqualToNull();
 
         // then
-        verify(resultBuilder).pass(GoodPojo_Equals_HashCode_ToString.class);
+        verify(resultBuilder).pass(eq(GoodPojo_Equals_HashCode_ToString.class), anyString());
     }
 
     @Test
@@ -168,7 +167,7 @@ public class EqualAssertionsTest {
         equalAssertions.isNotEqualToObjectWithDifferentType(this);
 
         // then
-        verify(resultBuilder).pass(GoodPojo_Equals_HashCode_ToString.class);
+        verify(resultBuilder).pass(eq(GoodPojo_Equals_HashCode_ToString.class), anyString());
     }
 
     @Test
@@ -183,6 +182,6 @@ public class EqualAssertionsTest {
         equalAssertions.isNotEqualTo(otherObject);
 
         // then
-        verify(resultBuilder).pass(GoodPojo_Equals_HashCode_ToString.class);
+        verify(resultBuilder).pass(eq(GoodPojo_Equals_HashCode_ToString.class), anyString());
     }
 }

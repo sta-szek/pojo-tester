@@ -64,7 +64,7 @@ public class EqualAssertions {
     public void isReflexive() {
         final boolean result = objectUnderAssert.equals(objectUnderAssert);
         final String message = formatMessage(CONSTRAINT_REFLEXIVE, classUnderTest.getCanonicalName(), objectUnderAssert, objectUnderAssert);
-        appendResult(result, message, classUnderTest);
+        appendResult(result, "isReflexive", message);
     }
 
     public void isSymmetric(final Object otherObject) {
@@ -77,7 +77,7 @@ public class EqualAssertions {
                                              result2,
                                              objectUnderAssert,
                                              otherObject);
-        appendResult(result, message, classUnderTest);
+        appendResult(result, "isSymmetric", message);
     }
 
     public void isTransitive(final Object b, final Object c) {
@@ -93,44 +93,44 @@ public class EqualAssertions {
                                              objectUnderAssert,
                                              b,
                                              c);
-        appendResult(result, message, classUnderTest);
+        appendResult(result, "isTransitive", message);
     }
 
     public void isNotEqualToNull() {
         final boolean result = !objectUnderAssert.equals(null);
         final String message = formatMessage(CONSTRAINT_NULL, classUnderTest);
-        appendResult(result, message, classUnderTest);
+        appendResult(result, "isNotEqualToNull", message);
     }
 
     public void isNotEqualToObjectWithDifferentType(final Object otherObject) {
         final boolean result = !objectUnderAssert.equals(otherObject);
         final String message = formatMessage(CONSTRAINT_OTHER_TYPE, classUnderTest, objectUnderAssert, otherObject);
-        appendResult(result, message, classUnderTest);
+        appendResult(result, "isNotEqualToObjectWithDifferentType", message);
     }
 
     public void isNotEqualTo(final Object objectToCompare) {
         final boolean result = objectUnderAssert.equals(objectToCompare);
         final String message = formatMessage(CONSTRAINT_NOT_EQUAL, classUnderTest, objectUnderAssert, objectToCompare);
-        appendResult(result, message, classUnderTest);
+        appendResult(result, "isNotEqualTo", message);
     }
 
     private String formatMessage(final String message, final Object... objects) {
         return String.format(message, objects);
     }
 
-    private void appendResult(final boolean pass, final String message, final Class<?> testedClass) {
+    private void appendResult(final boolean pass, final String testName, final String errorMessage) {
         if (pass) {
-            appendPass(testedClass);
+            appendPass(classUnderTest, testName);
         } else {
-            appendFail(message, testedClass);
+            appendFail(classUnderTest, testName, errorMessage);
         }
     }
 
-    private void appendFail(final String message, final Class<?> testedClass) {
-        resultBuilder.fail(message, testedClass);
+    private void appendFail(final Class<?> testedClass, final String testName, final String errorMessage) {
+        resultBuilder.fail(testedClass, testName, errorMessage);
     }
 
-    private void appendPass(final Class<?> testedClass) {
-        resultBuilder.pass(testedClass);
+    private void appendPass(final Class<?> testedClass, final String testName) {
+        resultBuilder.pass(testedClass, testName);
     }
 }

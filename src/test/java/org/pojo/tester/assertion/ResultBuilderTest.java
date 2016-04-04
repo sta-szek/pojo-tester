@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -16,8 +17,8 @@ public class ResultBuilderTest {
     public void shouldBuildEmptyResult() {
         // given
         final HashSet<Class> testedClasses = new HashSet<>();
-        final ArrayList<Class> passedClasses = new ArrayList<>();
-        final ArrayList<Class> failedClasses = new ArrayList<>();
+        final List<TestPair> passedClasses = new ArrayList<>();
+        final List<TestPair> failedClasses = new ArrayList<>();
         final String message = "";
         final Result expectedResult = new Result(testedClasses, passedClasses, failedClasses, message);
 
@@ -34,15 +35,16 @@ public class ResultBuilderTest {
     public void shouldBuildResultWithPassAndTestedClass() {
         // given
         final HashSet<Class> testedClasses = Sets.newLinkedHashSet(Object.class);
-        final ArrayList<Class> passedClasses = Lists.newArrayList(Object.class);
-        final ArrayList<Class> failedClasses = new ArrayList<>();
+        final List<TestPair> passedClasses = Lists.newArrayList(new TestPair("testName", Object.class));
+        final List<TestPair> failedClasses = new ArrayList<>();
         final String message = "";
         final Result expectedResult = new Result(testedClasses, passedClasses, failedClasses, message);
+        String testName = "testName";
 
         final ResultBuilder resultBuilder = new ResultBuilder();
 
         // when
-        resultBuilder.pass(Object.class);
+        resultBuilder.pass(Object.class, testName);
         final Result result = resultBuilder.build();
 
         // then
@@ -53,15 +55,16 @@ public class ResultBuilderTest {
     public void shouldBuildResultWithFailAndTestedClassAndMessage() {
         // given
         final HashSet<Class> testedClasses = Sets.newLinkedHashSet(Object.class);
-        final ArrayList<Class> passedClasses = new ArrayList<>();
-        final ArrayList<Class> failedClasses = Lists.newArrayList(Object.class);
+        final List<TestPair> passedClasses = new ArrayList<>();
+        final List<TestPair> failedClasses = Lists.newArrayList(new TestPair("testName",Object.class));
         final String message = "message";
         final Result expectedResult = new Result(testedClasses, passedClasses, failedClasses, message);
+        String testName = "testName";
 
         final ResultBuilder resultBuilder = new ResultBuilder();
 
         // when
-        resultBuilder.fail(message,Object.class);
+        resultBuilder.fail(Object.class, testName, message);
         final Result result = resultBuilder.build();
 
         // then

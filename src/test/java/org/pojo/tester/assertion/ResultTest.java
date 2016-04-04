@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -19,8 +20,8 @@ public class ResultTest {
     public void shouldReturnTrueIfResultIsFailed() {
         // given
         final HashSet<Class> testedClasses = Sets.newLinkedHashSet(Object.class);
-        final ArrayList<Class> passedClasses = new ArrayList<>();
-        final ArrayList<Class> failedClasses = Lists.newArrayList(Object.class);
+        final List<TestPair> passedClasses = new ArrayList<>();
+        final List<TestPair> failedClasses =  Lists.newArrayList(new TestPair("testName", Object.class));
         final String message = "";
         final Result result = new Result(testedClasses, passedClasses, failedClasses, message);
 
@@ -35,8 +36,8 @@ public class ResultTest {
     public void shouldReturnFalseIfResultIsNotFailed() {
         // given
         final HashSet<Class> testedClasses = Sets.newLinkedHashSet(Object.class);
-        final ArrayList<Class> passedClasses = Lists.newArrayList(Object.class);
-        final ArrayList<Class> failedClasses = new ArrayList<>();
+        final List<TestPair> passedClasses =  Lists.newArrayList(new TestPair("testName", Object.class));
+        final List<TestPair> failedClasses = new ArrayList<>();
         final String message = "";
         final Result result = new Result(testedClasses, passedClasses, failedClasses, message);
 
@@ -61,9 +62,9 @@ public class ResultTest {
 
     private Object objectsForMessageTest() {
         final HashSet<Class> testedClasses = Sets.newLinkedHashSet(Object.class);
-        final ArrayList<Class> passedClasses = Lists.newArrayList(Object.class);
-        final ArrayList<Class> failedClasses = Lists.newArrayList(Object.class);
-        final ArrayList<Class> emptyList = Lists.newArrayList();
+        final List<TestPair> passedClasses =  Lists.newArrayList(new TestPair("testName", Object.class));
+        final List<TestPair> failedClasses =  Lists.newArrayList(new TestPair("testName", Object.class));
+        final List<TestPair> emptyList = Lists.newArrayList();
 
         final Result result1 = new Result(testedClasses, passedClasses, emptyList, "");
         final String message1 = "\n" +
