@@ -3,6 +3,7 @@ package test.utils;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.Random;
 
@@ -24,15 +25,17 @@ public class GoodPojo_Equals_HashCode_ToString {
 
     @Override
     public String toString() {
-        return "PojoWithWellImplementedMethods{" +
-               "byteField=" + byteField +
-               ", shortType=" + shortType +
-               ", intType=" + intType +
-               ", longType=" + longType +
-               ", doubleType=" + doubleType +
-               ", booleanType=" + booleanType +
-               ", charType=" + charType +
-               '}';
+        return new ToStringBuilder(this)
+                .append("random", random)
+                .append("byteField", byteField)
+                .append("shortType", shortType)
+                .append("intType", intType)
+                .append("longType", longType)
+                .append("doubleType", doubleType)
+                .append("booleanType", booleanType)
+                .append("floatType", floatType)
+                .append("charType", charType)
+                .toString();
     }
 
     @Override
@@ -47,28 +50,29 @@ public class GoodPojo_Equals_HashCode_ToString {
 
         final GoodPojo_Equals_HashCode_ToString that = (GoodPojo_Equals_HashCode_ToString) o;
 
-        return new EqualsBuilder()
-                .append(byteField, that.byteField)
-                .append(shortType, that.shortType)
-                .append(intType, that.intType)
-                .append(longType, that.longType)
-                .append(doubleType, that.doubleType)
-                .append(booleanType, that.booleanType)
-                .append(charType, that.charType)
-                .isEquals();
+        return new EqualsBuilder().append(random, that.random)
+                                  .append(byteField, that.byteField)
+                                  .append(shortType, that.shortType)
+                                  .append(intType, that.intType)
+                                  .append(longType, that.longType)
+                                  .append(doubleType, that.doubleType)
+                                  .append(booleanType, that.booleanType)
+                                  .append(floatType, that.floatType)
+                                  .append(charType, that.charType)
+                                  .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .append(byteField)
-                .append(shortType)
-                .append(intType)
-                .append(longType)
-                .append(doubleType)
-                .append(booleanType)
-                .append(charType)
-                .toHashCode();
+        return new HashCodeBuilder().append(random)
+                                    .append(byteField)
+                                    .append(shortType)
+                                    .append(intType)
+                                    .append(longType)
+                                    .append(doubleType)
+                                    .append(booleanType)
+                                    .append(floatType)
+                                    .append(charType)
+                                    .toHashCode();
     }
-
 }

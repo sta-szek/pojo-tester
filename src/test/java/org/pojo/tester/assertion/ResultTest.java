@@ -67,42 +67,38 @@ public class ResultTest {
         final List<TestPair> emptyList = Lists.newArrayList();
 
         final Result result1 = new Result(testedClasses, passedClasses, emptyList, "");
-        final String message1 = "\n" +
-                                "Classes that were tested:\n" +
-                                "class java.lang.Object\n" +
+        final String message1 = "Classes that were tested:\n" +
+                                "java.lang.Object\n" +
                                 "\n" +
-                                "Classes that passed all tests:\n" +
-                                "class java.lang.Object\n";
+                                "Passed tests:\n" +
+                                "java.lang.Object \t equals - testName [passed]";
 
         final Result result2 = new Result(testedClasses, emptyList, failedClasses, "");
-        final String message2 = "\n" +
-                                "Classes that were tested:\n" +
-                                "class java.lang.Object\n" +
+        final String message2 = "Classes that were tested:\n" +
+                                "java.lang.Object\n" +
                                 "\n" +
-                                "Classes that failed tests:\n" +
-                                "class java.lang.Object\n";
+                                "Failed tests:\n" +
+                                "java.lang.Object \t equals - testName [failed]";
 
         final Result result3 = new Result(testedClasses, passedClasses, failedClasses, "");
-        final String message3 = "\n" +
-                                "Classes that were tested:\n" +
-                                "class java.lang.Object\n" +
+        final String message3 = "Classes that were tested:\n" +
+                                "java.lang.Object\n" +
                                 "\n" +
-                                "Classes that passed all tests:\n" +
-                                "class java.lang.Object\n" +
+                                "Passed tests:\n" +
+                                "java.lang.Object \t equals - testName [passed]\n" +
                                 "\n" +
-                                "Classes that failed tests:\n" +
-                                "class java.lang.Object\n";
+                                "Failed tests:\n" +
+                                "java.lang.Object \t equals - testName [failed]";
 
         final Result result4 = new Result(testedClasses, passedClasses, failedClasses, "message");
-        final String message4 = "\n" +
-                                "Classes that were tested:\n" +
-                                "class java.lang.Object\n" +
+        final String message4 = "Classes that were tested:\n" +
+                                "java.lang.Object\n" +
                                 "\n" +
-                                "Classes that passed all tests:\n" +
-                                "class java.lang.Object\n" +
+                                "Passed tests:\n" +
+                                "java.lang.Object \t equals - testName [passed]\n" +
                                 "\n" +
-                                "Classes that failed tests:\n" +
-                                "class java.lang.Object\n" +
+                                "Failed tests:\n" +
+                                "java.lang.Object \t equals - testName [failed]\n" +
                                 "\n" +
                                 "What went wrong:\n" +
                                 "message";

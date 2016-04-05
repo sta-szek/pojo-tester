@@ -57,9 +57,7 @@ public class EqualsTester {
 
     private void shouldEqualSameObjectFewTimes(final Object object) {
         assertions.assertThat(object)
-                  .isReflexive();
-        assertions.assertThat(object)
-                  .isReflexive();
+                  .isConsistent();
     }
 
     private void shouldEqualDifferentObjectWithSameType(final Object object) {
