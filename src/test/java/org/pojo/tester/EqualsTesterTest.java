@@ -7,78 +7,73 @@ import test.utils.BadPojoEqualsNull;
 import test.utils.GoodPojo_Equals_HashCode_ToString;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 public class EqualsTesterTest {
-
-    private static final EqualsTester equalsTester = new EqualsTester();
 
     @Test
     public void shouldPassAllEqualsTests() {
         // given
         final Class[] classesToTest = {GoodPojo_Equals_HashCode_ToString.class};
+        EqualsTester equalsTester = new EqualsTester();
 
         // when
-        final TestResult testResult = equalsTester.testEquals(classesToTest);
+        final Throwable result = catchThrowable(() -> equalsTester.testEquals(classesToTest));
 
         // then
-        assertThat(testResult.getPassedSize()).isEqualTo(classesToTest.length);
+        assertThat(result).isNull();
     }
 
     @Test
     public void shouldNotPassNullTest() {
         // given
         final Class[] classesToTest = {BadPojoEqualsNull.class};
+        EqualsTester equalsTester = new EqualsTester();
 
         // when
-        final TestResult testResult = equalsTester.testEquals(classesToTest);
+        final Throwable result = catchThrowable(() -> equalsTester.testEquals(classesToTest));
 
         // then
-        assertThat(testResult.getFailedSize()).isEqualTo(classesToTest.length);
+        assertThat(result).isInstanceOf(AssertionError.class);
     }
 
     @Test
     public void shouldNotPassItselfTest() {
         // given
         final Class[] classesToTest = {BadPojoEqualsItself.class};
+        EqualsTester equalsTester = new EqualsTester();
 
         // when
-        final TestResult testResult = equalsTester.testEquals(classesToTest);
+        final Throwable result = catchThrowable(() -> equalsTester.testEquals(classesToTest));
 
         // then
-        assertThat(testResult.getFailedSize()).isEqualTo(classesToTest.length);
+        assertThat(result).isInstanceOf(AssertionError.class);
     }
 
     @Test
     public void shouldNotPassDifferentTypeTest() {
         // given
         final Class[] classesToTest = {BadPojoEqualsDifferentType.class};
+        EqualsTester equalsTester = new EqualsTester();
 
         // when
-        final TestResult testResult = equalsTester.testEquals(classesToTest);
+        final Throwable result = catchThrowable(() -> equalsTester.testEquals(classesToTest));
 
         // then
-        assertThat(testResult.getFailedSize()).as(testResult.getFormattedMessage())
-                                              .isEqualTo(classesToTest.length);
+        assertThat(result).isInstanceOf(AssertionError.class);
     }
 
     @Test
     public void shouldTest() {
         // given
-        final Class[] classesToTest = {BadPojoEqualsNull.class,
-                                       BadPojoEqualsDifferentType.class,
-                                       BadPojoEqualsItself.class};
+        final Class[] classesToTest = {BadPojoEqualsNull.class, BadPojoEqualsDifferentType.class, BadPojoEqualsItself.class};
+        EqualsTester equalsTester = new EqualsTester();
 
         // when
-        final TestResult testResult = equalsTester.testEquals(classesToTest);
+        final Throwable result = catchThrowable(() -> equalsTester.testEquals(classesToTest));
 
         // then
-        try {
-            assertThat(testResult.getPassedSize())
-                    .isEqualTo(classesToTest.length);
-        } catch (final AssertionError e) {
-            System.err.println(testResult.getFormattedMessage());
-        }
+        assertThat(result).isInstanceOf(AssertionError.class);
     }
-
 
 }

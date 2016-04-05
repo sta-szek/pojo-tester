@@ -1,7 +1,12 @@
-group 'pojo'
+plugins {
+    id "info.solidsoft.pitest" version "1.1.4"
+}
+
+group 'pojo-tester'
 version '0.0.1'
 
 apply plugin: 'java'
+apply plugin: 'jacoco'
 
 sourceCompatibility = 1.8
 
@@ -17,4 +22,27 @@ dependencies {
     testCompile 'pl.pragmatists:JUnitParams:1.0.4'
     testCompile 'org.powermock:powermock-api-mockito:1.6.4'
 
+}
+
+jacoco {
+    toolVersion = "0.7.1.201405082137"
+    reportsDir = file("$buildDir/reports")
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination "${buildDir}/reports/jacocoHtml"
+    }
+}
+
+jacocoTestReport.mustRunAfter(test)
+check.dependsOn jacocoTestReport
+
+pitest {
+    pitestVersion = '1.1.9'
+    targetClasses = ['org.pojo.tester.*']
+    threads = 4
+    outputFormats = ['HTML']
 }
