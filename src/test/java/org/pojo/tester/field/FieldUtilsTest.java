@@ -6,7 +6,9 @@ import org.junit.runner.RunWith;
 import test.fields.ClassWithAllAvailableFieldModifiers;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.util.Lists.newArrayList;
@@ -17,14 +19,14 @@ public class FieldUtilsTest {
     @Test
     public void shouldReturnAllFields() {
         // given
-        final Field[] expectedFields = ClassWithAllAvailableFieldModifiers.class.getDeclaredFields();
+        final List<Field> expectedFields = getAllFieldsExceptDummyJacocoField(ClassWithAllAvailableFieldModifiers.class);
 
         // when
         final List<Field> result = FieldUtils.getAllFields(ClassWithAllAvailableFieldModifiers.class);
 
         // then
         assertThat(result).hasSize(16)
-                          .containsExactly(expectedFields);
+                          .containsExactlyElementsOf(expectedFields);
     }
 
     @Test
@@ -42,7 +44,7 @@ public class FieldUtilsTest {
     }
 
     @Test
-    public void shouldReturnFieldsExceptFieldsWithGivenNames() {
+    public void shouldReturnFields_ExceptFieldsWithGivenNames() {
         // given
         final String fieldName = "a";
 
@@ -51,6 +53,12 @@ public class FieldUtilsTest {
 
         // then
         assertThat(result).hasSize(15);
+    }
+
+    private List<Field> getAllFieldsExceptDummyJacocoField(final Class<?> clazz) {
+        return Arrays.stream(clazz.getDeclaredFields())
+                     .filter(field -> field.getName() != "$jacocoData")
+                     .collect(Collectors.toList());
     }
 
 }

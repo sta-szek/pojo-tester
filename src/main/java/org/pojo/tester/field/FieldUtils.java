@@ -1,8 +1,7 @@
 package org.pojo.tester.field;
 
-import com.google.common.collect.Lists;
-
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,7 +9,9 @@ public class FieldUtils {
 
 
     public static List<Field> getAllFields(final Class<?> clazz) {
-        return Lists.newArrayList(clazz.getDeclaredFields());
+        return Arrays.stream(clazz.getDeclaredFields())
+                     .filter(FieldUtils::isNotSynthetic)
+                     .collect(Collectors.toList());
     }
 
     public static List<Field> getAllFieldsExcluding(final Class<?> clazz, final List<String> excludedFields) {
@@ -23,6 +24,10 @@ public class FieldUtils {
         return names.stream()
                     .map(name -> FieldUtils.getField(clazz, name))
                     .collect(Collectors.toList());
+    }
+
+    private static boolean isNotSynthetic(final Field field) {
+        return !field.isSynthetic();
     }
 
     private static boolean doesNotContain(final Field field, final List<String> excludedFields) {
