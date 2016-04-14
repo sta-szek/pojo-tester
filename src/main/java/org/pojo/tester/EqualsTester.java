@@ -93,7 +93,6 @@ public class EqualsTester {
 
     private Object createInstanceWithDifferentFieldValues(final Object object) {
         final Object otherObject = createInstance(object.getClass());
-
         if (fieldsValuesChanger != null) {
             fieldsValuesChanger.changeFieldsValues(object, otherObject);
         }

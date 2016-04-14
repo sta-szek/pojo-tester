@@ -56,7 +56,7 @@ public class ResultBuilderTest {
         // given
         final HashSet<Class> testedClasses = Sets.newLinkedHashSet(Object.class);
         final List<TestPair> passedClasses = new ArrayList<>();
-        final List<TestPair> failedClasses = Lists.newArrayList(new TestPair("testName",Object.class));
+        final List<TestPair> failedClasses = Lists.newArrayList(new TestPair("testName", Object.class));
         final String message = "message";
         final Result expectedResult = new Result(testedClasses, passedClasses, failedClasses, message);
         String testName = "testName";

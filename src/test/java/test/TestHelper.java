@@ -1,4 +1,4 @@
-package test.utils;
+package test;
 
 
 public class TestHelper {

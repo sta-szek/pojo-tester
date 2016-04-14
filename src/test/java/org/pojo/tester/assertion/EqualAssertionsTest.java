@@ -1,7 +1,7 @@
 package org.pojo.tester.assertion;
 
 import org.junit.Test;
-import test.utils.*;
+import test.equals.*;
 
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
@@ -94,7 +94,7 @@ public class EqualAssertionsTest {
         equalAssertions.isNotEqualTo(otherObject);
 
         // then
-        verify(resultBuilder).fail(eq(BadPojoEqualsWithEqualObject.class), anyString(),anyString());
+        verify(resultBuilder).fail(eq(BadPojoEqualsWithEqualObject.class), anyString(), anyString());
     }
 
     @Test

@@ -1,10 +1,10 @@
 package org.pojo.tester;
 
 import org.junit.Test;
-import test.utils.BadPojoEqualsDifferentType;
-import test.utils.BadPojoEqualsItself;
-import test.utils.BadPojoEqualsNull;
-import test.utils.GoodPojo_Equals_HashCode_ToString;
+import test.equals.BadPojoEqualsDifferentType;
+import test.equals.BadPojoEqualsItself;
+import test.equals.BadPojoEqualsNull;
+import test.equals.GoodPojo_Equals_HashCode_ToString;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;

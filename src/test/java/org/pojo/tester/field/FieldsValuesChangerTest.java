@@ -3,7 +3,9 @@ package org.pojo.tester.field;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
-import test.utils.TestHelper;
+import test.TestHelper;
+
+import java.lang.NoSuchFieldException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -46,7 +48,7 @@ public class FieldsValuesChangerTest {
     }
 
     @Test
-    public void shouldReturnTrueIfCanChange() throws NoSuchFieldException {
+    public void shouldReturnTrueIfCanChange() throws java.lang.NoSuchFieldException {
         // given
 
         // when
