@@ -1,9 +1,9 @@
-package test.utils;
+package test.equals;
 
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class BadPojoEqualsNull {
+public class BadPojoEquals_NotSymmetric {
     private byte byteField;
     private short shortType;
     private int intType;
@@ -13,12 +13,12 @@ public class BadPojoEqualsNull {
     private char charType;
     private float floatType;
 
+    private boolean flipFlop;
+
     @Override
     public boolean equals(final Object o) {
-        if (o == null) {
-            return true;
-        }
-        return false;
+        flipFlop = !flipFlop;
+        return flipFlop;
     }
 
     @Override

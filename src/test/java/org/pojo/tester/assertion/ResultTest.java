@@ -21,7 +21,7 @@ public class ResultTest {
         // given
         final HashSet<Class> testedClasses = Sets.newLinkedHashSet(Object.class);
         final List<TestPair> passedClasses = new ArrayList<>();
-        final List<TestPair> failedClasses =  Lists.newArrayList(new TestPair("testName", Object.class));
+        final List<TestPair> failedClasses = Lists.newArrayList(new TestPair("testName", Object.class));
         final String message = "";
         final Result result = new Result(testedClasses, passedClasses, failedClasses, message);
 
@@ -36,7 +36,7 @@ public class ResultTest {
     public void shouldReturnFalseIfResultIsNotFailed() {
         // given
         final HashSet<Class> testedClasses = Sets.newLinkedHashSet(Object.class);
-        final List<TestPair> passedClasses =  Lists.newArrayList(new TestPair("testName", Object.class));
+        final List<TestPair> passedClasses = Lists.newArrayList(new TestPair("testName", Object.class));
         final List<TestPair> failedClasses = new ArrayList<>();
         final String message = "";
         final Result result = new Result(testedClasses, passedClasses, failedClasses, message);
@@ -62,8 +62,8 @@ public class ResultTest {
 
     private Object objectsForMessageTest() {
         final HashSet<Class> testedClasses = Sets.newLinkedHashSet(Object.class);
-        final List<TestPair> passedClasses =  Lists.newArrayList(new TestPair("testName", Object.class));
-        final List<TestPair> failedClasses =  Lists.newArrayList(new TestPair("testName", Object.class));
+        final List<TestPair> passedClasses = Lists.newArrayList(new TestPair("testName", Object.class));
+        final List<TestPair> failedClasses = Lists.newArrayList(new TestPair("testName", Object.class));
         final List<TestPair> emptyList = Lists.newArrayList();
 
         final Result result1 = new Result(testedClasses, passedClasses, emptyList, "");

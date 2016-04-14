@@ -3,7 +3,7 @@ package org.pojo.tester.field;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
-import test.utils.TestHelper;
+import test.TestHelper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;

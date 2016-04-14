@@ -1,4 +1,4 @@
-package test.utils;
+package test.equals;
 
 public class BadPojoEqualsDifferentType {
     private byte byteField;
@@ -20,10 +20,7 @@ public class BadPojoEqualsDifferentType {
         if (o == null) {
             return false;
         }
-        if (o.getClass() != getClass()) {
-            return true;
-        }
-        return false;
+        return o.getClass() != getClass();
     }
 
     @Override

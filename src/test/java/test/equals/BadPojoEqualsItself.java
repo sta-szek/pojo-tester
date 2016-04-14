@@ -1,4 +1,4 @@
-package test.utils;
+package test.equals;
 
 
 public class BadPojoEqualsItself {
@@ -21,10 +21,7 @@ public class BadPojoEqualsItself {
         if (o == null || o.getClass() != getClass()) {
             return false;
         }
-        if (o == this) {
-            return false;
-        }
-        return true;
+        return o != this;
     }
 
     @Override

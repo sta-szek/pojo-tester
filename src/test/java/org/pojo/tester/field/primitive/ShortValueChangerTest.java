@@ -5,8 +5,8 @@ import junitparams.Parameters;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pojo.tester.field.FieldsValuesChanger;
-import test.utils.TestHelper;
 import org.powermock.reflect.Whitebox;
+import test.TestHelper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
