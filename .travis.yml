@@ -2,10 +2,7 @@ language: java
 jdk:
   - oraclejdk8
 after_success:
-  - export 8df7f84ec4b94a1189e7f122553a1598
-test:
-  post:
-    - curl http://www.jpm4j.org/install/script > jpmInstall.sh
-    - sudo sh jpmInstall.sh
-    - sudo jpm install com.codacy:codacy-coverage-reporter:assembly
-    - codacy-coverage-reporter -l Java -r build/reports/test/jacocoTestReport.xml
+  - curl http://www.jpm4j.org/install/script > jpmInstall.sh
+  - sudo sh jpmInstall.sh
+  - sudo jpm install com.codacy:codacy-coverage-reporter:assembly
+  - codacy-coverage-reporter -l Java -r build/reports/test/jacocoTestReport.xml
