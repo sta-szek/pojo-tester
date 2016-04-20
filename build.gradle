@@ -18,6 +18,7 @@ dependencies {
     compile 'org.apache.commons:commons-lang3:3.4'
     compile 'org.apache.commons:commons-collections4:4.1'
     compile 'com.google.collections:google-collections:1.0'
+    compile 'com.googlecode.combinatoricslib:combinatoricslib:2.1'
     compile 'org.projectlombok:lombok:1.16.8'
 
     testCompile 'org.assertj:assertj-core:3.4.0'

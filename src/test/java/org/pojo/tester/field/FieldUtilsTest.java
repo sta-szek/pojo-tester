@@ -1,9 +1,12 @@
 package org.pojo.tester.field;
 
 import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import test.fields.ClassWithAllAvailableFieldModifiers;
+import test.fields.Permutation1;
+import test.fields.Permutation2;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -53,6 +56,45 @@ public class FieldUtilsTest {
 
         // then
         assertThat(result).hasSize(15);
+    }
+
+    @Test
+    @Parameters(method = "permutationFields")
+    public void shouldReturnAllPermutations(final Class<?> clazz, final List<List<Field>> expectedPermutations) {
+        // given
+        final List<Field> fields = getAllFieldsExceptDummyJacocoField(clazz);
+
+        // when
+        final List<List<Field>> permutations = FieldUtils.permutations(fields);
+
+        // then
+        assertThat(permutations).hasSameSizeAs(expectedPermutations)
+                                .containsAll(expectedPermutations);
+    }
+
+    private Object[][] permutationFields() throws java.lang.NoSuchFieldException {
+        return new Object[][]{
+                {Permutation1.class, newArrayList(newArrayList(fieldFromPermutation1Class("a")),
+                                                  newArrayList(fieldFromPermutation1Class("b")),
+                                                  newArrayList(fieldFromPermutation1Class("a"), fieldFromPermutation1Class("b")))},
+                {Permutation2.class, newArrayList(newArrayList(fieldFromPermutation2Class("a")),
+                                                  newArrayList(fieldFromPermutation2Class("b")),
+                                                  newArrayList(fieldFromPermutation2Class("c")),
+                                                  newArrayList(fieldFromPermutation2Class("a"), fieldFromPermutation2Class("b")),
+                                                  newArrayList(fieldFromPermutation2Class("a"), fieldFromPermutation2Class("c")),
+                                                  newArrayList(fieldFromPermutation2Class("b"), fieldFromPermutation2Class("c")),
+                                                  newArrayList(fieldFromPermutation2Class("a"),
+                                                               fieldFromPermutation2Class("b"),
+                                                               fieldFromPermutation2Class("c")))}
+        };
+    }
+
+    private Field fieldFromPermutation1Class(final String name) throws java.lang.NoSuchFieldException {
+        return Permutation1.class.getDeclaredField(name);
+    }
+
+    private Field fieldFromPermutation2Class(final String name) throws java.lang.NoSuchFieldException {
+        return Permutation2.class.getDeclaredField(name);
     }
 
     private List<Field> getAllFieldsExceptDummyJacocoField(final Class<?> clazz) {

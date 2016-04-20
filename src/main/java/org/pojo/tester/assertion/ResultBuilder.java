@@ -13,7 +13,8 @@ public class ResultBuilder {
     private final Set<Class> testedClasses = new HashSet<>();
 
     public void fail(final Class<?> failedClass, final String testName, final String errorMessage) {
-        cumulativeMessage.append(errorMessage);
+        cumulativeMessage.append(errorMessage)
+                         .append("\n");
         failedClasses.add(new TestPair(testName, failedClass));
         testedClasses.add(failedClass);
     }

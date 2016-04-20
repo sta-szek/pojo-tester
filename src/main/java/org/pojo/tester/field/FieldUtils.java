@@ -1,5 +1,9 @@
 package org.pojo.tester.field;
 
+import org.paukov.combinatorics.Factory;
+import org.paukov.combinatorics.Generator;
+import org.paukov.combinatorics.ICombinatoricsVector;
+
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
@@ -7,6 +11,7 @@ import java.util.stream.Collectors;
 
 public class FieldUtils {
 
+    private FieldUtils() {}
 
     public static List<Field> getAllFields(final Class<?> clazz) {
         return Arrays.stream(clazz.getDeclaredFields())
@@ -26,6 +31,20 @@ public class FieldUtils {
                     .collect(Collectors.toList());
     }
 
+    public static List<List<Field>> permutations(final List<Field> fields) {
+        final ICombinatoricsVector<Field> vector = Factory.createVector(fields);
+        final Generator<Field> subSetGenerator = Factory.createSubSetGenerator(vector);
+        return subSetGenerator.generateAllObjects()
+                              .stream()
+                              .map(ICombinatoricsVector::getVector)
+                              .filter(FieldUtils::excludeEmptySet)
+                              .collect(Collectors.toList());
+    }
+
+    private static boolean excludeEmptySet(final List<Field> fields) {
+        return !fields.isEmpty();
+    }
+
     private static boolean isNotSynthetic(final Field field) {
         return !field.isSynthetic();
     }
@@ -41,6 +60,5 @@ public class FieldUtils {
             throw new NoSuchFieldException("Could not get field " + name + " from class " + clazz.getSimpleName(), e);
         }
     }
-
 
 }

@@ -9,14 +9,14 @@ public class EqualAssertions {
                                                        "Object:\n" +
                                                        "%s\n" +
                                                        "should be equal to:\n" +
-                                                       "%s";
+                                                       "%s\n";
     private static final String CONSTRAINT_CONSISTENT = "Class %s has bad 'equals' method implementation." +
                                                         "The equals method should be consistent when comparing same objects multiple " +
                                                         "times.\n" +
                                                         "Current implementation returns different results.\n" +
                                                         "When comparing object:\n" +
                                                         "%s\n" +
-                                                        "First result was: %s and second time was: %s\n.";
+                                                        "First result was: %s and second time was: %s\n.\n";
     private static final String CONSTRAINT_SYMMETRIC = "Class %s has bad 'equals' method implementation.\n" +
                                                        "The equals method should return true for both a.equals(b) and b.equals(a).\n" +
                                                        "Current implementation returns:\n" +
@@ -25,7 +25,7 @@ public class EqualAssertions {
                                                        "where a is:\n" +
                                                        "%s\n" +
                                                        "b is:\n" +
-                                                       "%s";
+                                                       "%s\n";
     private static final String CONSTRAINT_TRANSITIVE = "Class %s has bad 'equals' method implementation.\n" +
                                                         "The equals method should return true in all cases: a.equals(b), b.equals(c) and " +
                                                         "a.equals(c).\n" +
@@ -38,10 +38,10 @@ public class EqualAssertions {
                                                         "b is:\n" +
                                                         "%s\n" +
                                                         "c is:\n" +
-                                                        "%s";
+                                                        "%s\n";
     private static final String CONSTRAINT_NULL = "Class %s has bad 'equals' method implementation.\n" +
                                                   "The equals method should return false if object is comparing to null.\n" +
-                                                  "Current implementation returns true.";
+                                                  "Current implementation returns true.\n";
     private static final String CONSTRAINT_OTHER_TYPE = "Class %s has bad 'equals' method implementation.\n" +
                                                         "The equals method should return false if object is comparing to object with " +
                                                         "different type.\n" +
@@ -49,14 +49,14 @@ public class EqualAssertions {
                                                         "Object:\n" +
                                                         "%s\n" +
                                                         "should not be equal to:\n" +
-                                                        "%s";
+                                                        "%s\n";
     private static final String CONSTRAINT_NOT_EQUAL = "Class %s has bad 'equals' method implementation.\n" +
                                                        "The equals method should return false if objects should not be equal.\n" +
                                                        "Current implementation returns true.\n" +
                                                        "Object:\n" +
                                                        "%s\n" +
                                                        "should not be equal to:\n" +
-                                                       "%s";
+                                                       "%s\n";
 
     private final ResultBuilder resultBuilder;
     private final Object objectUnderAssert;

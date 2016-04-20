@@ -3,7 +3,7 @@ package org.pojo.tester.field;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
-import test.TestHelper;
+import test.fields.AllFiledTypes;
 
 import java.lang.NoSuchFieldException;
 
@@ -52,7 +52,7 @@ public class FieldsValuesChangerTest {
         // given
 
         // when
-        final boolean result = fieldsValuesChanger.canChange(TestHelper.class.getDeclaredField("intType"));
+        final boolean result = fieldsValuesChanger.canChange(AllFiledTypes.class.getDeclaredField("intType"));
 
         // then
         assertThat(result).isTrue();
@@ -63,7 +63,7 @@ public class FieldsValuesChangerTest {
         // given
 
         // when
-        final boolean result = fieldsValuesChanger.canChange(TestHelper.class.getDeclaredField("finalIntType"));
+        final boolean result = fieldsValuesChanger.canChange(AllFiledTypes.class.getDeclaredField("finalIntType"));
 
         // then
         assertThat(result).isFalse();

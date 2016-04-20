@@ -1,10 +1,14 @@
 package org.pojo.tester;
 
 import org.pojo.tester.assertion.Assertions;
+import org.pojo.tester.field.FieldUtils;
 import org.pojo.tester.field.FieldsValuesChanger;
 import org.pojo.tester.field.primitive.PrimitiveValueChanger;
 
+import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.List;
+import java.util.function.Consumer;
 
 public class EqualsTester {
 
@@ -85,17 +89,22 @@ public class EqualsTester {
                   .isNotEqualToObjectWithDifferentType(objectToCompare);
     }
 
-    private void shouldNotEqualDifferentObjectWithSameTypeAndDifferentFieldsValues(final Object object) {
-        final Object objectToCompare = createInstanceWithDifferentFieldValues(object);
-        assertions.assertThat(object)
-                  .isNotEqualTo(objectToCompare);
+    private void shouldNotEqualDifferentObjectWithSameTypeAndDifferentFieldsValues(final Object baseObject) {
+        final List<Field> allFields = FieldUtils.getAllFields(baseObject.getClass());
+        final List<List<Field>> permutationFields = FieldUtils.permutations(allFields);
+        permutationFields.stream()
+                         .map(fields -> createInstanceWithDifferentFieldValues(baseObject, fields))
+                         .forEach(assertIsNotEqualTo(baseObject));
     }
 
-    private Object createInstanceWithDifferentFieldValues(final Object object) {
+    private Consumer<Object> assertIsNotEqualTo(final Object object) {
+        return eachDifferentObject -> assertions.assertThat(object)
+                                                .isNotEqualTo(eachDifferentObject);
+    }
+
+    private Object createInstanceWithDifferentFieldValues(final Object object, final List<Field> fieldsToChange) {
         final Object otherObject = createInstance(object.getClass());
-        if (fieldsValuesChanger != null) {
-            fieldsValuesChanger.changeFieldsValues(object, otherObject);
-        }
+        fieldsValuesChanger.changeFieldsValues(object, otherObject, fieldsToChange);
 
         return otherObject;
     }

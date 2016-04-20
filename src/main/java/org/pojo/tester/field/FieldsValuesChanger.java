@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
+import java.util.List;
 
 @Slf4j
 public abstract class FieldsValuesChanger<T> {
@@ -20,13 +21,9 @@ public abstract class FieldsValuesChanger<T> {
         return this;
     }
 
-    public void changeFieldsValues(final Object sourceObject, final Object targetObject) {
-        final Field[] declaredFields = targetObject.getClass()
-                                                   .getDeclaredFields();
-        for (final Field field : declaredFields) {
-            checkAndChange(sourceObject, targetObject, field);
-        }
-        callNextValuesChanger(sourceObject, targetObject);
+    public void changeFieldsValues(final Object sourceObject, final Object targetObject, final List<Field> fieldsToChange) {
+        fieldsToChange.forEach(eachField -> checkAndChange(sourceObject, targetObject, eachField));
+        callNextValuesChanger(sourceObject, targetObject, fieldsToChange);
     }
 
     public abstract boolean areDifferentValues(T sourceValue, T targetValue);
@@ -48,9 +45,9 @@ public abstract class FieldsValuesChanger<T> {
         }
     }
 
-    private void callNextValuesChanger(final Object sourceObject, final Object targetObject) {
+    private void callNextValuesChanger(final Object sourceObject, final Object targetObject, final List<Field> fieldsToChange) {
         if (fieldsValuesChanger != null) {
-            fieldsValuesChanger.changeFieldsValues(sourceObject, targetObject);
+            fieldsValuesChanger.changeFieldsValues(sourceObject, targetObject, fieldsToChange);
         }
     }
 
