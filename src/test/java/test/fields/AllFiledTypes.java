@@ -1,7 +1,7 @@
-package test;
+package test.fields;
 
 
-public class TestHelper {
+public class AllFiledTypes {
     private final int finalIntType = 0;
     private byte byteType;
     private short shortType;
@@ -12,38 +12,38 @@ public class TestHelper {
     private char characterType;
     private float floatType;
 
-    public TestHelper(final byte byteType) {
+    public AllFiledTypes(final byte byteType) {
         this.byteType = byteType;
     }
 
-    public TestHelper(final float floatType) {
+    public AllFiledTypes(final float floatType) {
         this.floatType = floatType;
     }
 
-    public TestHelper(final char characterType) {
+    public AllFiledTypes(final char characterType) {
         this.characterType = characterType;
     }
 
-    public TestHelper(final boolean booleanType) {
+    public AllFiledTypes(final boolean booleanType) {
         this.booleanType = booleanType;
     }
 
-    public TestHelper(final double doubleType) {
+    public AllFiledTypes(final double doubleType) {
         this.doubleType = doubleType;
     }
 
-    public TestHelper(final long longType) {
+    public AllFiledTypes(final long longType) {
         this.longType = longType;
     }
 
-    public TestHelper(final int intType) {
+    public AllFiledTypes(final int intType) {
         this.intType = intType;
     }
 
-    public TestHelper(final short shortType) {
+    public AllFiledTypes(final short shortType) {
         this.shortType = shortType;
     }
 
-    public TestHelper() {
+    public AllFiledTypes() {
     }
 }

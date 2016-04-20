@@ -2,10 +2,11 @@ package org.pojo.tester.field.primitive;
 
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
+import org.assertj.core.util.Lists;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pojo.tester.field.FieldsValuesChanger;
-import test.TestHelper;
+import test.fields.AllFiledTypes;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.powermock.reflect.Whitebox.getInternalState;
@@ -19,11 +20,11 @@ public class CharacterValueChangerTest {
     @Parameters(method = "getValuesForTest")
     public void shouldChangeValue(final Character value) {
         // given
-        final TestHelper helpClass1 = new TestHelper(value);
-        final TestHelper helpClass2 = new TestHelper(value);
+        final AllFiledTypes helpClass1 = new AllFiledTypes(value);
+        final AllFiledTypes helpClass2 = new AllFiledTypes(value);
 
         // when
-        charValueChanger.changeFieldsValues(helpClass1, helpClass2);
+        charValueChanger.changeFieldsValues(helpClass1, helpClass2, Lists.newArrayList(AllFiledTypes.class.getDeclaredFields()));
         final Character result = getInternalState(helpClass1, "characterType");
         final Character result2 = getInternalState(helpClass2, "characterType");
 

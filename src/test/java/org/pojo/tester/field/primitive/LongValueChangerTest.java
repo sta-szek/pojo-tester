@@ -2,13 +2,14 @@ package org.pojo.tester.field.primitive;
 
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
+import org.assertj.core.util.Lists;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pojo.tester.field.FieldsValuesChanger;
-import org.powermock.reflect.Whitebox;
-import test.TestHelper;
+import test.fields.AllFiledTypes;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.powermock.reflect.Whitebox.getInternalState;
 
 @RunWith(JUnitParamsRunner.class)
 public class LongValueChangerTest {
@@ -19,13 +20,13 @@ public class LongValueChangerTest {
     @Parameters(method = "getValuesForTest")
     public void shouldChangeValue(final Long value) {
         // given
-        final TestHelper helpClass1 = new TestHelper(value);
-        final TestHelper helpClass2 = new TestHelper(value);
+        final AllFiledTypes helpClass1 = new AllFiledTypes(value);
+        final AllFiledTypes helpClass2 = new AllFiledTypes(value);
 
         // when
-        longValueChanger.changeFieldsValues(helpClass1, helpClass2);
-        final Long result = Whitebox.getInternalState(helpClass1, "longType");
-        final Long result2 = Whitebox.getInternalState(helpClass2, "longType");
+        longValueChanger.changeFieldsValues(helpClass1, helpClass2, Lists.newArrayList(AllFiledTypes.class.getDeclaredFields()));
+        final Long result = getInternalState(helpClass1, "longType");
+        final Long result2 = getInternalState(helpClass2, "longType");
 
         // then
         assertThat(result).isNotEqualTo(result2);

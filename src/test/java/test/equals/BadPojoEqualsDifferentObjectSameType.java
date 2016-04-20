@@ -1,35 +1,44 @@
 package test.equals;
 
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 public class BadPojoEqualsDifferentObjectSameType {
     private byte byteField;
     private short shortType;
-    private int intType;
-    private long longType;
-    private double doubleType;
-    private boolean booleanType;
-    private char charType;
-    private float floatType;
+    private byte notIncludedToEqual_byteField;
+    private short notIncludedToEqual_shortType;
 
     @Override
     public String toString() {
-        return "";
+        return byteField + " " +
+               shortType + " " +
+               notIncludedToEqual_byteField + " " +
+               notIncludedToEqual_shortType;
     }
 
     @Override
     public boolean equals(final Object o) {
-        if (o == null) {
-            return false;
-        }
-        if (o == this) {
+        if (this == o) {
             return true;
         }
-        return o.getClass() != getClass();
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        final BadPojoEqualsDifferentObjectSameType that = (BadPojoEqualsDifferentObjectSameType) o;
+
+        return new EqualsBuilder().append(byteField, that.byteField)
+                                  .append(shortType, that.shortType)
+                                  .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return 1;
+        return new HashCodeBuilder().append(byteField)
+                                    .append(shortType)
+                                    .toHashCode();
     }
-
 }

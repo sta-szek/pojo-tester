@@ -39,7 +39,7 @@ public class ResultBuilderTest {
         final List<TestPair> failedClasses = new ArrayList<>();
         final String message = "";
         final Result expectedResult = new Result(testedClasses, passedClasses, failedClasses, message);
-        String testName = "testName";
+        final String testName = "testName";
 
         final ResultBuilder resultBuilder = new ResultBuilder();
 
@@ -58,8 +58,8 @@ public class ResultBuilderTest {
         final List<TestPair> passedClasses = new ArrayList<>();
         final List<TestPair> failedClasses = Lists.newArrayList(new TestPair("testName", Object.class));
         final String message = "message";
-        final Result expectedResult = new Result(testedClasses, passedClasses, failedClasses, message);
-        String testName = "testName";
+        final Result expectedResult = new Result(testedClasses, passedClasses, failedClasses, message + "\n");
+        final String testName = "testName";
 
         final ResultBuilder resultBuilder = new ResultBuilder();
 

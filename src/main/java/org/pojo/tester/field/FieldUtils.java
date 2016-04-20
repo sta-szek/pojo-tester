@@ -32,7 +32,6 @@ public class FieldUtils {
     }
 
     public static List<List<Field>> permutations(final List<Field> fields) {
-
         final ICombinatoricsVector<Field> vector = Factory.createVector(fields);
         final Generator<Field> subSetGenerator = Factory.createSubSetGenerator(vector);
         return subSetGenerator.generateAllObjects()
