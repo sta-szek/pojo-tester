@@ -9,7 +9,6 @@ import test.fields.Permutation1;
 import test.fields.Permutation2;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -63,7 +62,7 @@ public class FieldUtilsTest {
     @Parameters(method = "permutationFields")
     public void shouldReturnAllPermutations(final Class<?> clazz, final List<List<Field>> expectedPermutations) {
         // given
-        final ArrayList<Field> fields = newArrayList(clazz.getDeclaredFields());
+        final List<Field> fields = getAllFieldsExceptDummyJacocoField(clazz);
 
         // when
         final List<List<Field>> permutations = FieldUtils.permutations(fields);
@@ -71,12 +70,6 @@ public class FieldUtilsTest {
         // then
         assertThat(permutations).hasSameSizeAs(expectedPermutations)
                                 .containsAll(expectedPermutations);
-    }
-
-    private List<Field> getAllFieldsExceptDummyJacocoField(final Class<?> clazz) {
-        return Arrays.stream(clazz.getDeclaredFields())
-                     .filter(field -> field.getName() != "$jacocoData")
-                     .collect(Collectors.toList());
     }
 
     private Object[][] permutationFields() throws java.lang.NoSuchFieldException {
@@ -102,6 +95,12 @@ public class FieldUtilsTest {
 
     private Field fieldFromPermutation2Class(final String name) throws java.lang.NoSuchFieldException {
         return Permutation2.class.getDeclaredField(name);
+    }
+
+    private List<Field> getAllFieldsExceptDummyJacocoField(final Class<?> clazz) {
+        return Arrays.stream(clazz.getDeclaredFields())
+                     .filter(field -> field.getName() != "$jacocoData")
+                     .collect(Collectors.toList());
     }
 
 }
