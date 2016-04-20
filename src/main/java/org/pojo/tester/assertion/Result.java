@@ -24,7 +24,7 @@ class Result {
         this.message = message;
     }
 
-    String getMessage() {
+    protected String getMessage() {
         final StringBuilder stringBuilder = new StringBuilder();
         appendTestedClasses(stringBuilder);
         appendPassedClasses(stringBuilder);
@@ -33,7 +33,7 @@ class Result {
         return stringBuilder.toString();
     }
 
-    boolean failed() {
+    protected boolean failed() {
         return !failedClasses.isEmpty();
     }
 
