@@ -3,7 +3,7 @@ package org.pojo.tester;
 import org.pojo.tester.assertion.Assertions;
 import org.pojo.tester.field.FieldUtils;
 import org.pojo.tester.field.FieldsValuesChanger;
-import org.pojo.tester.field.primitive.PrimitiveValueChanger;
+import org.pojo.tester.field.primitive.AbstractPrimitiveValueChanger;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -17,7 +17,7 @@ public class EqualsTester {
 
     public EqualsTester() {
         try {
-            fieldsValuesChanger = PrimitiveValueChanger.instance();
+            fieldsValuesChanger = AbstractPrimitiveValueChanger.getInstance();
             //TODO zaloguj wyjątek, pomi� test jezeli si� nie uda
         } catch (IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
@@ -43,15 +43,13 @@ public class EqualsTester {
     }
 
     private Object createInstance(final Class clazz) {
-        final Object object;
         try {
-            object = clazz.newInstance();
+            return clazz.newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
             //TODO zr�b w�asny exception + obs�uz go wyzej
-            throw new AssertionError("Unable to create object for class: " + clazz);
+            throw new AssertionError("Unable to create object for class: " + clazz, e);
         }
-        return object;
     }
 
     private void shouldEqualSameObject(final Object object) {

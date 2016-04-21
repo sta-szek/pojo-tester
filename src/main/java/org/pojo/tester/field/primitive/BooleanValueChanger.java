@@ -1,6 +1,6 @@
 package org.pojo.tester.field.primitive;
 
-class BooleanValueChanger extends PrimitiveValueChanger<Boolean> {
+class BooleanValueChanger extends AbstractPrimitiveValueChanger<Boolean> {
 
     @Override
     public boolean areDifferentValues(final Boolean sourceValue, final Boolean targetValue) {

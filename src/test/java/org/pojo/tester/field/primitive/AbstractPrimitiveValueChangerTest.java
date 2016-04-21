@@ -6,14 +6,14 @@ import org.pojo.tester.field.FieldsValuesChanger;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class PrimitiveValueChangerTest {
+public class AbstractPrimitiveValueChangerTest {
 
     @Test
     public void shouldCreateInstanceWithPrimitiveChangers() throws InstantiationException, IllegalAccessException {
         // given
 
         // when
-        FieldsValuesChanger fieldsValuesChanger = PrimitiveValueChanger.instance();
+        FieldsValuesChanger fieldsValuesChanger = AbstractPrimitiveValueChanger.getInstance();
 
         // then
         assertThat(fieldsValuesChanger).isNotNull();

@@ -6,7 +6,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 
 
-public abstract class PrimitiveValueChanger<T> extends FieldsValuesChanger<T> {
+public abstract class AbstractPrimitiveValueChanger<T> extends FieldsValuesChanger<T> {
 
     private static final FieldsValuesChanger INSTANCE = new BooleanValueChanger().register(new BooleanValueChanger())
                                                                                  .register(new ByteValueChanger())
@@ -18,7 +18,7 @@ public abstract class PrimitiveValueChanger<T> extends FieldsValuesChanger<T> {
                                                                                  .register(new FloatValueChanger());
 
 
-    public static FieldsValuesChanger instance() throws IllegalAccessException, InstantiationException {
+    public static FieldsValuesChanger getInstance() throws IllegalAccessException, InstantiationException {
         return INSTANCE;
     }
 

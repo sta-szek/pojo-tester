@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class TestPair {
+class TestPair {
 
     private final String testName;
     private final Class<?> testClass;
