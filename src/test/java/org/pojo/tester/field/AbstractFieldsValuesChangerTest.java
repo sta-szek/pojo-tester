@@ -12,13 +12,13 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.powermock.reflect.internal.WhiteboxImpl.getInternalState;
 
-public class FieldsValuesChangerTest {
+public class AbstractFieldsValuesChangerTest {
 
-    private static FieldsValuesChanger fieldsValuesChanger;
+    private static AbstractFieldsValuesChanger abstractFieldsValuesChanger;
 
     @BeforeClass
     public static void beforeClass() {
-        fieldsValuesChanger = mock(FieldsValuesChanger.class, Mockito.CALLS_REAL_METHODS);
+        abstractFieldsValuesChanger = mock(AbstractFieldsValuesChanger.class, Mockito.CALLS_REAL_METHODS);
     }
 
     @Test
@@ -26,8 +26,8 @@ public class FieldsValuesChangerTest {
         // given
 
         // when
-        fieldsValuesChanger.register(fieldsValuesChanger);
-        final FieldsValuesChanger result = getInternalState(fieldsValuesChanger, "fieldsValuesChanger");
+        abstractFieldsValuesChanger.register(abstractFieldsValuesChanger);
+        final AbstractFieldsValuesChanger result = getInternalState(abstractFieldsValuesChanger, "abstractFieldsValuesChanger");
 
         // then
         assertThat(result).isNotNull();
@@ -36,12 +36,12 @@ public class FieldsValuesChangerTest {
     @Test
     public void shouldRegisterFieldsValuesChangerToNextFieldRegisterValuesChanger() {
         // given
-        final FieldsValuesChanger first = mock(FieldsValuesChanger.class, Mockito.CALLS_REAL_METHODS);
-        final FieldsValuesChanger second = mock(FieldsValuesChanger.class, Mockito.CALLS_REAL_METHODS);
+        final AbstractFieldsValuesChanger first = mock(AbstractFieldsValuesChanger.class, Mockito.CALLS_REAL_METHODS);
+        final AbstractFieldsValuesChanger second = mock(AbstractFieldsValuesChanger.class, Mockito.CALLS_REAL_METHODS);
 
         // when
-        fieldsValuesChanger.register(first)
-                           .register(second);
+        abstractFieldsValuesChanger.register(first)
+                                   .register(second);
 
         // then
         verify(first).register(second);
@@ -52,7 +52,7 @@ public class FieldsValuesChangerTest {
         // given
 
         // when
-        final boolean result = fieldsValuesChanger.canChange(AllFiledTypes.class.getDeclaredField("intType"));
+        final boolean result = abstractFieldsValuesChanger.canChange(AllFiledTypes.class.getDeclaredField("intType"));
 
         // then
         assertThat(result).isTrue();
@@ -63,7 +63,7 @@ public class FieldsValuesChangerTest {
         // given
 
         // when
-        final boolean result = fieldsValuesChanger.canChange(AllFiledTypes.class.getDeclaredField("finalIntType"));
+        final boolean result = abstractFieldsValuesChanger.canChange(AllFiledTypes.class.getDeclaredField("finalIntType"));
 
         // then
         assertThat(result).isFalse();

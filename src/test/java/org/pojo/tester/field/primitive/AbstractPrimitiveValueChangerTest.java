@@ -2,7 +2,7 @@ package org.pojo.tester.field.primitive;
 
 
 import org.junit.Test;
-import org.pojo.tester.field.FieldsValuesChanger;
+import org.pojo.tester.field.AbstractFieldsValuesChanger;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -13,10 +13,10 @@ public class AbstractPrimitiveValueChangerTest {
         // given
 
         // when
-        FieldsValuesChanger fieldsValuesChanger = AbstractPrimitiveValueChanger.getInstance();
+        AbstractFieldsValuesChanger abstractFieldsValuesChanger = AbstractPrimitiveValueChanger.getInstance();
 
         // then
-        assertThat(fieldsValuesChanger).isNotNull();
+        assertThat(abstractFieldsValuesChanger).isNotNull();
     }
 
 }

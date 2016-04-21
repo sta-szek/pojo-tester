@@ -7,15 +7,15 @@ import java.lang.reflect.Modifier;
 import java.util.List;
 
 @Slf4j
-public abstract class FieldsValuesChanger<T> {
+public abstract class AbstractFieldsValuesChanger<T> {
 
-    private FieldsValuesChanger fieldsValuesChanger;
+    private AbstractFieldsValuesChanger abstractFieldsValuesChanger;
 
-    public FieldsValuesChanger register(final FieldsValuesChanger fieldsValuesChanger) {
-        if (this.fieldsValuesChanger == null) {
-            this.fieldsValuesChanger = fieldsValuesChanger;
+    public AbstractFieldsValuesChanger register(final AbstractFieldsValuesChanger abstractFieldsValuesChanger) {
+        if (this.abstractFieldsValuesChanger == null) {
+            this.abstractFieldsValuesChanger = abstractFieldsValuesChanger;
         } else {
-            this.fieldsValuesChanger.register(fieldsValuesChanger);
+            this.abstractFieldsValuesChanger.register(abstractFieldsValuesChanger);
         }
         return this;
     }
@@ -40,8 +40,8 @@ public abstract class FieldsValuesChanger<T> {
     }
 
     private void callNextValuesChanger(final Object sourceObject, final Object targetObject, final List<Field> fieldsToChange) {
-        if (fieldsValuesChanger != null) {
-            fieldsValuesChanger.changeFieldsValues(sourceObject, targetObject, fieldsToChange);
+        if (abstractFieldsValuesChanger != null) {
+            abstractFieldsValuesChanger.changeFieldsValues(sourceObject, targetObject, fieldsToChange);
         }
     }
 

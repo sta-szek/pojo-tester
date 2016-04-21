@@ -1,24 +1,24 @@
 package org.pojo.tester.field.primitive;
 
-import org.pojo.tester.field.FieldsValuesChanger;
+import org.pojo.tester.field.AbstractFieldsValuesChanger;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 
 
-public abstract class AbstractPrimitiveValueChanger<T> extends FieldsValuesChanger<T> {
+public abstract class AbstractPrimitiveValueChanger<T> extends AbstractFieldsValuesChanger<T> {
 
-    private static final FieldsValuesChanger INSTANCE = new BooleanValueChanger().register(new BooleanValueChanger())
-                                                                                 .register(new ByteValueChanger())
-                                                                                 .register(new CharacterValueChanger())
-                                                                                 .register(new DoubleValueChanger())
-                                                                                 .register(new IntegerValueChanger())
-                                                                                 .register(new LongValueChanger())
-                                                                                 .register(new ShortValueChanger())
-                                                                                 .register(new FloatValueChanger());
+    private static final AbstractFieldsValuesChanger INSTANCE = new BooleanValueChanger().register(new BooleanValueChanger())
+                                                                                         .register(new ByteValueChanger())
+                                                                                         .register(new CharacterValueChanger())
+                                                                                         .register(new DoubleValueChanger())
+                                                                                         .register(new IntegerValueChanger())
+                                                                                         .register(new LongValueChanger())
+                                                                                         .register(new ShortValueChanger())
+                                                                                         .register(new FloatValueChanger());
 
 
-    public static FieldsValuesChanger getInstance() throws IllegalAccessException, InstantiationException {
+    public static AbstractFieldsValuesChanger getInstance() throws IllegalAccessException, InstantiationException {
         return INSTANCE;
     }
 

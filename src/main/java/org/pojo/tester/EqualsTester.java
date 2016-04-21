@@ -1,8 +1,8 @@
 package org.pojo.tester;
 
 import org.pojo.tester.assertion.Assertions;
+import org.pojo.tester.field.AbstractFieldsValuesChanger;
 import org.pojo.tester.field.FieldUtils;
-import org.pojo.tester.field.FieldsValuesChanger;
 import org.pojo.tester.field.primitive.AbstractPrimitiveValueChanger;
 
 import java.lang.reflect.Field;
@@ -13,11 +13,11 @@ import java.util.function.Consumer;
 public class EqualsTester {
 
     private final Assertions assertions = new Assertions();
-    private FieldsValuesChanger fieldsValuesChanger;
+    private AbstractFieldsValuesChanger abstractFieldsValuesChanger;
 
     public EqualsTester() {
         try {
-            fieldsValuesChanger = AbstractPrimitiveValueChanger.getInstance();
+            abstractFieldsValuesChanger = AbstractPrimitiveValueChanger.getInstance();
             //TODO zaloguj wyjątek, pomi� test jezeli si� nie uda
         } catch (IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
@@ -102,7 +102,7 @@ public class EqualsTester {
 
     private Object createInstanceWithDifferentFieldValues(final Object object, final List<Field> fieldsToChange) {
         final Object otherObject = createInstance(object.getClass());
-        fieldsValuesChanger.changeFieldsValues(object, otherObject, fieldsToChange);
+        abstractFieldsValuesChanger.changeFieldsValues(object, otherObject, fieldsToChange);
 
         return otherObject;
     }
