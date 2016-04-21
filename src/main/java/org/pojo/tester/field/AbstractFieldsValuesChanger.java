@@ -4,19 +4,18 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 @Slf4j
-public abstract class FieldsValuesChanger<T> {
+public abstract class AbstractFieldsValuesChanger<T> {
 
-    private FieldsValuesChanger fieldsValuesChanger;
+    private AbstractFieldsValuesChanger abstractFieldsValuesChanger;
 
-    public FieldsValuesChanger register(final FieldsValuesChanger fieldsValuesChanger) {
-        if (this.fieldsValuesChanger == null) {
-            this.fieldsValuesChanger = fieldsValuesChanger;
+    public AbstractFieldsValuesChanger register(final AbstractFieldsValuesChanger abstractFieldsValuesChanger) {
+        if (this.abstractFieldsValuesChanger == null) {
+            this.abstractFieldsValuesChanger = abstractFieldsValuesChanger;
         } else {
-            this.fieldsValuesChanger.register(fieldsValuesChanger);
+            this.abstractFieldsValuesChanger.register(abstractFieldsValuesChanger);
         }
         return this;
     }
@@ -34,11 +33,6 @@ public abstract class FieldsValuesChanger<T> {
 
     protected abstract T increaseValue(T value);
 
-    protected Class getGenericTypeClass() {
-        return ((Class) ((ParameterizedType) getClass()
-                .getGenericSuperclass()).getActualTypeArguments()[0]);
-    }
-
     private void checkAndChange(final Object sourceObject, final Object targetObject, final Field field) {
         if (canChange(field)) {
             changeField(sourceObject, targetObject, field);
@@ -46,8 +40,8 @@ public abstract class FieldsValuesChanger<T> {
     }
 
     private void callNextValuesChanger(final Object sourceObject, final Object targetObject, final List<Field> fieldsToChange) {
-        if (fieldsValuesChanger != null) {
-            fieldsValuesChanger.changeFieldsValues(sourceObject, targetObject, fieldsToChange);
+        if (abstractFieldsValuesChanger != null) {
+            abstractFieldsValuesChanger.changeFieldsValues(sourceObject, targetObject, fieldsToChange);
         }
     }
 

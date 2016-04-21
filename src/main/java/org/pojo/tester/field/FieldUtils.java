@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class FieldUtils {
+public final class FieldUtils {
 
     private FieldUtils() {}
 

@@ -3,60 +3,62 @@ package org.pojo.tester.assertion;
 
 public class EqualAssertions {
 
-    private static final String CONSTRAINT_REFLEXIVE = "Class %s has bad 'equals' method implementation." +
-                                                       "The equals method should return true if object is comparing to itself." +
-                                                       "Current implementation returns false.\n" +
-                                                       "Object:\n" +
-                                                       "%s\n" +
-                                                       "should be equal to:\n" +
-                                                       "%s\n";
-    private static final String CONSTRAINT_CONSISTENT = "Class %s has bad 'equals' method implementation." +
-                                                        "The equals method should be consistent when comparing same objects multiple " +
-                                                        "times.\n" +
-                                                        "Current implementation returns different results.\n" +
-                                                        "When comparing object:\n" +
-                                                        "%s\n" +
-                                                        "First result was: %s and second time was: %s\n.\n";
-    private static final String CONSTRAINT_SYMMETRIC = "Class %s has bad 'equals' method implementation.\n" +
-                                                       "The equals method should return true for both a.equals(b) and b.equals(a).\n" +
-                                                       "Current implementation returns:\n" +
-                                                       "%s for a.equals(b),\n" +
-                                                       "%s for b.equals(a),\n" +
-                                                       "where a is:\n" +
-                                                       "%s\n" +
-                                                       "b is:\n" +
-                                                       "%s\n";
-    private static final String CONSTRAINT_TRANSITIVE = "Class %s has bad 'equals' method implementation.\n" +
-                                                        "The equals method should return true in all cases: a.equals(b), b.equals(c) and " +
-                                                        "a.equals(c).\n" +
-                                                        "Current implementation returns:\n" +
-                                                        "%s for a.equals(b),\n" +
-                                                        "%s for b.equals(c),\n" +
-                                                        "%s for a.equals(c),\n" +
-                                                        "where a is:\n" +
-                                                        "%s\n" +
-                                                        "b is:\n" +
-                                                        "%s\n" +
-                                                        "c is:\n" +
-                                                        "%s\n";
-    private static final String CONSTRAINT_NULL = "Class %s has bad 'equals' method implementation.\n" +
-                                                  "The equals method should return false if object is comparing to null.\n" +
-                                                  "Current implementation returns true.\n";
-    private static final String CONSTRAINT_OTHER_TYPE = "Class %s has bad 'equals' method implementation.\n" +
-                                                        "The equals method should return false if object is comparing to object with " +
-                                                        "different type.\n" +
-                                                        "Current implementation returns true.\n" +
-                                                        "Object:\n" +
-                                                        "%s\n" +
-                                                        "should not be equal to:\n" +
-                                                        "%s\n";
-    private static final String CONSTRAINT_NOT_EQUAL = "Class %s has bad 'equals' method implementation.\n" +
-                                                       "The equals method should return false if objects should not be equal.\n" +
-                                                       "Current implementation returns true.\n" +
-                                                       "Object:\n" +
-                                                       "%s\n" +
-                                                       "should not be equal to:\n" +
-                                                       "%s\n";
+    private static final String BAD_EQUALS = "Class %s has bad 'equals' method implementation.";
+    private static final String OBJECT_AND_NEW_LINE = "%s\n";
+    private static final String CONSTRAINT_REFLEXIVE = BAD_EQUALS
+                                                       + "The equals method should return true if object is comparing to itself."
+                                                       + "Current implementation returns false.\n"
+                                                       + "Object:\n"
+                                                       + OBJECT_AND_NEW_LINE
+                                                       + "should be equal to:\n"
+                                                       + OBJECT_AND_NEW_LINE;
+    private static final String CONSTRAINT_CONSISTENT = BAD_EQUALS
+                                                        + "The equals method should be consistent when comparing same objects multiple "
+                                                        + "times.\n"
+                                                        + "Current implementation returns different results.\n"
+                                                        + "When comparing object:\n"
+                                                        + OBJECT_AND_NEW_LINE
+                                                        + "First result was: %s and second time was: %s\n.\n";
+    private static final String CONSTRAINT_SYMMETRIC = BAD_EQUALS
+                                                       + "The equals method should return true for both a.equals(b) and b.equals(a).\n"
+                                                       + "Current implementation returns:\n"
+                                                       + "%s for a.equals(b),\n"
+                                                       + "%s for b.equals(a),\n"
+                                                       + "where a is:\n"
+                                                       + OBJECT_AND_NEW_LINE
+                                                       + "b is:\n"
+                                                       + OBJECT_AND_NEW_LINE;
+    private static final String CONSTRAINT_TRANSITIVE = BAD_EQUALS
+                                                        + "The equals method should return true in all cases: a.equals(b), b.equals(c) and "
+                                                        + "a.equals(c).\n"
+                                                        + "Current implementation returns:\n"
+                                                        + "%s for a.equals(b),\n"
+                                                        + "%s for b.equals(c),\n"
+                                                        + "%s for a.equals(c),\n"
+                                                        + "where a is:\n"
+                                                        + OBJECT_AND_NEW_LINE
+                                                        + "b is:\n"
+                                                        + OBJECT_AND_NEW_LINE
+                                                        + "c is:\n"
+                                                        + OBJECT_AND_NEW_LINE;
+    private static final String CONSTRAINT_NULL = BAD_EQUALS
+                                                  + "The equals method should return false if object is comparing to null.\n"
+                                                  + "Current implementation returns true.\n";
+    private static final String CONSTRAINT_OTHER_TYPE = BAD_EQUALS
+                                                        + "The equals method should return false if object is comparing to object with "
+                                                        + "different type.\n"
+                                                        + "Current implementation returns true.\n"
+                                                        + "Object:\n"
+                                                        + OBJECT_AND_NEW_LINE
+                                                        + "should not be equal to:\n"
+                                                        + OBJECT_AND_NEW_LINE;
+    private static final String CONSTRAINT_NOT_EQUAL = BAD_EQUALS
+                                                       + "The equals method should return false if objects should not be equal.\n"
+                                                       + "Current implementation returns true.\n"
+                                                       + "Object:\n"
+                                                       + OBJECT_AND_NEW_LINE
+                                                       + "should not be equal to:\n"
+                                                       + OBJECT_AND_NEW_LINE;
 
     private final ResultBuilder resultBuilder;
     private final Object objectUnderAssert;

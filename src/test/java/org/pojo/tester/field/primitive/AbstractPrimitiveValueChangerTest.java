@@ -2,21 +2,21 @@ package org.pojo.tester.field.primitive;
 
 
 import org.junit.Test;
-import org.pojo.tester.field.FieldsValuesChanger;
+import org.pojo.tester.field.AbstractFieldsValuesChanger;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class PrimitiveValueChangerTest {
+public class AbstractPrimitiveValueChangerTest {
 
     @Test
     public void shouldCreateInstanceWithPrimitiveChangers() throws InstantiationException, IllegalAccessException {
         // given
 
         // when
-        FieldsValuesChanger fieldsValuesChanger = PrimitiveValueChanger.instance();
+        AbstractFieldsValuesChanger abstractFieldsValuesChanger = AbstractPrimitiveValueChanger.getInstance();
 
         // then
-        assertThat(fieldsValuesChanger).isNotNull();
+        assertThat(abstractFieldsValuesChanger).isNotNull();
     }
 
 }

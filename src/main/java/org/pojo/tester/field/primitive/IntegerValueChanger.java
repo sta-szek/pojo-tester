@@ -1,6 +1,6 @@
 package org.pojo.tester.field.primitive;
 
-class IntegerValueChanger extends PrimitiveValueChanger<Integer> {
+class IntegerValueChanger extends AbstractPrimitiveValueChanger<Integer> {
     @Override
     public boolean areDifferentValues(final Integer sourceValue, final Integer targetValue) {
         return sourceValue.intValue() != targetValue.intValue();

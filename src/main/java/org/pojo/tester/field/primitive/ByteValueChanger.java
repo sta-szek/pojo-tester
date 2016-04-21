@@ -1,7 +1,7 @@
 package org.pojo.tester.field.primitive;
 
 
-class ByteValueChanger extends PrimitiveValueChanger<Byte> {
+class ByteValueChanger extends AbstractPrimitiveValueChanger<Byte> {
 
     @Override
     public boolean areDifferentValues(final Byte sourceValue, final Byte targetValue) {
