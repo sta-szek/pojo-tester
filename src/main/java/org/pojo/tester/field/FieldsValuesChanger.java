@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 @Slf4j
@@ -33,11 +32,6 @@ public abstract class FieldsValuesChanger<T> {
     }
 
     protected abstract T increaseValue(T value);
-
-    protected Class getGenericTypeClass() {
-        return ((Class) ((ParameterizedType) getClass()
-                .getGenericSuperclass()).getActualTypeArguments()[0]);
-    }
 
     private void checkAndChange(final Object sourceObject, final Object targetObject, final Field field) {
         if (canChange(field)) {
