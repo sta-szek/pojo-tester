@@ -15,13 +15,16 @@ class Result {
     private final Set<Class> testedClasses;
     private final List<TestPair> passedClasses;
     private final List<TestPair> failedClasses;
-    private final String message;
+    private final String detailedMessage;
 
-    Result(final Set<Class> testedClasses, final List<TestPair> passedClasses, final List<TestPair> failedClasses, final String message) {
+    Result(final Set<Class> testedClasses,
+           final List<TestPair> passedClasses,
+           final List<TestPair> failedClasses,
+           final String detailedMessage) {
         this.testedClasses = testedClasses;
         this.passedClasses = passedClasses;
         this.failedClasses = failedClasses;
-        this.message = message;
+        this.detailedMessage = detailedMessage;
     }
 
     protected String getMessage() {
@@ -84,11 +87,11 @@ class Result {
     }
 
     private void appendDetailedMessage(final StringBuilder stringBuilder) {
-        if (StringUtils.isNotBlank(message)) {
+        if (StringUtils.isNotBlank(detailedMessage)) {
             stringBuilder.append(DOUBLE_NEW_LINE);
             stringBuilder.append("What went wrong:")
                          .append(NEW_LINE)
-                         .append(message);
+                         .append(detailedMessage);
         }
     }
 

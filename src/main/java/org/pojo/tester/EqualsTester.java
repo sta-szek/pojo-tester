@@ -38,8 +38,8 @@ public class EqualsTester {
         assertions.assertAll();
     }
 
-    private void killEveryone(Object o) {
-        o = null;
+    private void killEveryone(Object object) {
+        object = null;
     }
 
     private Object createInstance(final Class clazz) {

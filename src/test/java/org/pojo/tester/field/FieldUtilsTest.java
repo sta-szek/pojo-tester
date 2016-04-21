@@ -73,19 +73,20 @@ public class FieldUtilsTest {
     }
 
     private Object[][] permutationFields() throws java.lang.NoSuchFieldException {
+        final Field perm1A = fieldFromPermutation1Class("a");
+        final Field perm1B = fieldFromPermutation1Class("b");
+        final Field perm2A = fieldFromPermutation2Class("a");
+        final Field perm2B = fieldFromPermutation2Class("b");
+        final Field perm2C = fieldFromPermutation2Class("c");
         return new Object[][]{
-                {Permutation1.class, newArrayList(newArrayList(fieldFromPermutation1Class("a")),
-                                                  newArrayList(fieldFromPermutation1Class("b")),
-                                                  newArrayList(fieldFromPermutation1Class("a"), fieldFromPermutation1Class("b")))},
-                {Permutation2.class, newArrayList(newArrayList(fieldFromPermutation2Class("a")),
-                                                  newArrayList(fieldFromPermutation2Class("b")),
-                                                  newArrayList(fieldFromPermutation2Class("c")),
-                                                  newArrayList(fieldFromPermutation2Class("a"), fieldFromPermutation2Class("b")),
-                                                  newArrayList(fieldFromPermutation2Class("a"), fieldFromPermutation2Class("c")),
-                                                  newArrayList(fieldFromPermutation2Class("b"), fieldFromPermutation2Class("c")),
-                                                  newArrayList(fieldFromPermutation2Class("a"),
-                                                               fieldFromPermutation2Class("b"),
-                                                               fieldFromPermutation2Class("c")))}
+                {Permutation1.class, newArrayList(newArrayList(perm1A), newArrayList(perm1B), newArrayList(perm1A, perm1B))},
+                {Permutation2.class, newArrayList(newArrayList(perm2A),
+                                                  newArrayList(perm2B),
+                                                  newArrayList(perm2C),
+                                                  newArrayList(perm2A, perm2B),
+                                                  newArrayList(perm2A, perm2C),
+                                                  newArrayList(perm2B, perm2C),
+                                                  newArrayList(perm2A, perm2B, perm2C))}
         };
     }
 
@@ -99,7 +100,8 @@ public class FieldUtilsTest {
 
     private List<Field> getAllFieldsExceptDummyJacocoField(final Class<?> clazz) {
         return Arrays.stream(clazz.getDeclaredFields())
-                     .filter(field -> field.getName() != "$jacocoData")
+                     .filter(field -> !field.getName()
+                                            .equals("$jacocoData"))
                      .collect(Collectors.toList());
     }
 
