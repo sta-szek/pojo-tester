@@ -18,7 +18,7 @@ public abstract class AbstractPrimitiveValueChanger<T> extends AbstractFieldsVal
                                                                                          .register(new FloatValueChanger());
 
 
-    public static AbstractFieldsValuesChanger getInstance() throws IllegalAccessException, InstantiationException {
+    public static AbstractFieldsValuesChanger getInstance() {
         return INSTANCE;
     }
 

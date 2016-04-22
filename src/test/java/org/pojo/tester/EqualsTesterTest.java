@@ -3,8 +3,11 @@ package org.pojo.tester;
 import org.junit.Test;
 import test.equals.*;
 
+import java.util.ArrayList;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
+import static org.assertj.core.util.Lists.newArrayList;
 
 public class EqualsTesterTest {
 
@@ -20,6 +23,35 @@ public class EqualsTesterTest {
         // then
         assertThat(result).isNull();
     }
+
+    @Test
+    public void shouldPassAllEqualsTestsExcludingFields() {
+        // given
+        final EqualsTester equalsTester = new EqualsTester();
+        final Class<GoodPojo_Equals_HashCode_ToString> clazz = GoodPojo_Equals_HashCode_ToString.class;
+        final ArrayList<String> excludedFields = newArrayList("notIncludedToEqual_byteField", "notIncludedToEqual_shortType");
+
+        // when
+        final Throwable result = catchThrowable(() -> equalsTester.testEqualsExcludingFields(clazz, excludedFields));
+
+        // then
+        assertThat(result).isNull();
+    }
+
+    @Test
+    public void shouldPassAllEqualsTestsIncludingFields() {
+        // given
+        final EqualsTester equalsTester = new EqualsTester();
+        final Class<GoodPojo_Equals_HashCode_ToString> clazz = GoodPojo_Equals_HashCode_ToString.class;
+        final ArrayList<String> includedFields = newArrayList("byteField", "shortType");
+
+        // when
+        final Throwable result = catchThrowable(() -> equalsTester.testEqualsIncludingFields(clazz, includedFields));
+
+        // then
+        assertThat(result).isNull();
+    }
+
 
     @Test
     public void shouldNotPassNullTest() {

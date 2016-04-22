@@ -41,6 +41,12 @@ public final class FieldUtils {
                               .collect(Collectors.toList());
     }
 
+    public static List<String> getAllFieldNames(final Class<?> clazz) {
+        return getAllFields(clazz).stream()
+                                  .map(Field::getName)
+                                  .collect(Collectors.toList());
+    }
+
     private static boolean excludeEmptySet(final List<Field> fields) {
         return !fields.isEmpty();
     }
@@ -60,5 +66,4 @@ public final class FieldUtils {
             throw new NoSuchFieldException("Could not get field " + name + " from class " + clazz.getSimpleName(), e);
         }
     }
-
 }
