@@ -28,7 +28,7 @@ public class EqualsTesterTest {
     public void shouldPassAllEqualsTestsExcludingFields() {
         // given
         final EqualsTester equalsTester = new EqualsTester();
-        final Class<GoodPojo_Equals_HashCode_ToString> clazz = GoodPojo_Equals_HashCode_ToString.class;
+        final Class<?> clazz = BadPojoEqualsDifferentObjectSameType.class;
         final ArrayList<String> excludedFields = newArrayList("notIncludedToEqual_byteField", "notIncludedToEqual_shortType");
 
         // when
@@ -42,7 +42,7 @@ public class EqualsTesterTest {
     public void shouldPassAllEqualsTestsIncludingFields() {
         // given
         final EqualsTester equalsTester = new EqualsTester();
-        final Class<GoodPojo_Equals_HashCode_ToString> clazz = GoodPojo_Equals_HashCode_ToString.class;
+        final Class<?> clazz = BadPojoEqualsDifferentObjectSameType.class;
         final ArrayList<String> includedFields = newArrayList("byteField", "shortType");
 
         // when

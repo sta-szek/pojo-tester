@@ -48,8 +48,6 @@ public class ResultBuilderTest {
         final Result result = resultBuilder.build();
 
         // then
-        System.out.println(result);
-        System.out.println(expectedResult);
         assertThat(result).isEqualToComparingFieldByFieldRecursively(expectedResult);
     }
 
