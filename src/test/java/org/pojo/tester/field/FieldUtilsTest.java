@@ -59,6 +59,21 @@ public class FieldUtilsTest {
     }
 
     @Test
+    public void shouldReturnAllFieldsNames() {
+        // given
+        final List<String> expectedFields = getAllFieldsExceptDummyJacocoField(ClassWithAllAvailableFieldModifiers.class).stream()
+                                                                                                                         .map(Field::getName)
+                                                                                                                         .collect(Collectors.toList());
+
+        // when
+        final List<String> result = FieldUtils.getAllFieldNames(ClassWithAllAvailableFieldModifiers.class);
+
+        // then
+        assertThat(result).hasSize(16)
+                          .containsExactlyElementsOf(expectedFields);
+    }
+
+    @Test
     @Parameters(method = "permutationFields")
     public void shouldReturnAllPermutations(final Class<?> clazz, final List<List<Field>> expectedPermutations) {
         // given

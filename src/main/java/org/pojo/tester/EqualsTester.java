@@ -13,33 +13,62 @@ import java.util.function.Consumer;
 public class EqualsTester {
 
     private final Assertions assertions = new Assertions();
-    private AbstractFieldsValuesChanger abstractFieldsValuesChanger;
+    private final AbstractFieldsValuesChanger abstractFieldsValuesChanger;
 
     public EqualsTester() {
-        try {
-            abstractFieldsValuesChanger = AbstractPrimitiveValueChanger.getInstance();
-            //TODO zaloguj wyjątek, pomi� test jezeli si� nie uda
-        } catch (IllegalAccessException | InstantiationException e) {
-            e.printStackTrace();
-        }
+        this(AbstractPrimitiveValueChanger.getInstance());
+    }
+
+    public EqualsTester(final AbstractFieldsValuesChanger abstractFieldsValuesChanger) {
+        this.abstractFieldsValuesChanger = abstractFieldsValuesChanger;
+    }
+
+    public void testEqualsIncludingFields(final Class<?> clazz, final List<String> includedFields) {
+        testEquals(clazz, includingFields(includedFields));
+    }
+
+    public void testEqualsExcludingFields(final Class<?> clazz, final List<String> excludedFields) {
+        testEquals(clazz, excludingFields(excludedFields));
     }
 
     public void testEquals(final Class... classes) {
         Arrays.stream(classes)
-              .map(this::createInstance)
-              .peek(this::shouldEqualSameObject)
-              .peek(this::shouldEqualSameObjectFewTimes)
-              .peek(this::shouldEqualDifferentObjectWithSameType)
-              .peek(this::shouldEqualObjectCifObjectBisEqualToObjectAndC)
-              .peek(this::shouldNotEqualNull)
-              .peek(this::shouldNotEqualObjectWithDifferentType)
-              .peek(this::shouldNotEqualDifferentObjectWithSameTypeAndDifferentFieldsValues)
-              .forEach(this::killEveryone);
+              .map(this::toClassWithConsumerAcceptingAllFields)
+              .forEach(this::testEquals);
         assertions.assertAll();
     }
 
-    private void killEveryone(Object object) {
-        object = null;
+    private ClassAndFieldConsumerPair toClassWithConsumerAcceptingAllFields(final Class<?> clazz) {
+        final List<String> allFields = FieldUtils.getAllFieldNames(clazz);
+        return new ClassAndFieldConsumerPair(clazz, includingFields(allFields));
+    }
+
+    private void testEquals(final Class<?> clazz, final Consumer<Object> consumer) {
+        final ClassAndFieldConsumerPair classAndFieldConsumerPair = new ClassAndFieldConsumerPair(clazz, consumer);
+        testEquals(classAndFieldConsumerPair);
+    }
+
+    private void testEquals(final ClassAndFieldConsumerPair classAndFieldConsumerPair) {
+        final Object instance = createInstance(classAndFieldConsumerPair.getTestedClass());
+
+        shouldEqualSameObject(instance);
+        shouldEqualSameObjectFewTimes(instance);
+        shouldEqualDifferentObjectWithSameType(instance);
+        shouldEqualObjectCifObjectBisEqualToObjectAndC(instance);
+        shouldNotEqualNull(instance);
+        shouldNotEqualObjectWithDifferentType(instance);
+        classAndFieldConsumerPair.getConsumer()
+                                 .accept(instance);
+
+        assertions.assertAll();
+    }
+
+    private Consumer<Object> includingFields(final List<String> includedFields) {
+        return object -> shouldNotEqualDifferentObjectWithSameTypeAndDifferentFieldsValuesIncludingFields(object, includedFields);
+    }
+
+    private Consumer<Object> excludingFields(final List<String> excludedFields) {
+        return object -> shouldNotEqualDifferentObjectWithSameTypeAndDifferentFieldsValuesExcludingFields(object, excludedFields);
     }
 
     private Object createInstance(final Class clazz) {
@@ -87,9 +116,21 @@ public class EqualsTester {
                   .isNotEqualToObjectWithDifferentType(objectToCompare);
     }
 
-    private void shouldNotEqualDifferentObjectWithSameTypeAndDifferentFieldsValues(final Object baseObject) {
-        final List<Field> allFields = FieldUtils.getAllFields(baseObject.getClass());
-        final List<List<Field>> permutationFields = FieldUtils.permutations(allFields);
+    private void shouldNotEqualDifferentObjectWithSameTypeAndDifferentFieldsValuesExcludingFields(final Object baseObject,
+                                                                                                  final List<String> excludedFields) {
+        final List<Field> allFields = FieldUtils.getAllFieldsExcluding(baseObject.getClass(), excludedFields);
+        shouldNotEqualDifferentObjectWithSameTypeAndDifferentFieldsValuesWithSpecifiedFields(baseObject, allFields);
+    }
+
+    private void shouldNotEqualDifferentObjectWithSameTypeAndDifferentFieldsValuesIncludingFields(final Object baseObject,
+                                                                                                  final List<String> includedFields) {
+        final List<Field> allFields = FieldUtils.getSpecifiedFields(baseObject.getClass(), includedFields);
+        shouldNotEqualDifferentObjectWithSameTypeAndDifferentFieldsValuesWithSpecifiedFields(baseObject, allFields);
+    }
+
+    private void shouldNotEqualDifferentObjectWithSameTypeAndDifferentFieldsValuesWithSpecifiedFields(final Object baseObject,
+                                                                                                      final List<Field> specifiedFields) {
+        final List<List<Field>> permutationFields = FieldUtils.permutations(specifiedFields);
         permutationFields.stream()
                          .map(fields -> createInstanceWithDifferentFieldValues(baseObject, fields))
                          .forEach(assertIsNotEqualTo(baseObject));
@@ -105,6 +146,27 @@ public class EqualsTester {
         abstractFieldsValuesChanger.changeFieldsValues(object, otherObject, fieldsToChange);
 
         return otherObject;
+    }
+
+    private static class ClassAndFieldConsumerPair {
+
+        private final Class<?> testedClass;
+        private final Consumer<Object> consumer;
+
+        ClassAndFieldConsumerPair(final Class<?> testedClass, final Consumer<Object> consumer) {
+            this.testedClass = testedClass;
+            this.consumer = consumer;
+        }
+
+        Class<?> getTestedClass() {
+            return testedClass;
+        }
+
+
+        Consumer<Object> getConsumer() {
+            return consumer;
+        }
+
     }
 
 }

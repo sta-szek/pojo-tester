@@ -1,6 +1,7 @@
 package org.pojo.tester.assertion;
 
 
+import lombok.ToString;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Collection;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@ToString
 class Result {
     private static final String NEW_LINE = "\n";
     private static final String DOUBLE_NEW_LINE = NEW_LINE + NEW_LINE;
