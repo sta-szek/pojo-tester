@@ -1,12 +1,19 @@
-plugins {
-    id "info.solidsoft.pitest" version "1.1.4"
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.1.9'
+    }
 }
+
 
 group 'pojo-tester'
 version '0.0.1'
 
 apply plugin: 'java'
 apply plugin: 'jacoco'
+apply plugin: 'info.solidsoft.pitest'
 
 sourceCompatibility = 1.8
 
@@ -25,7 +32,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'pl.pragmatists:JUnitParams:1.0.4'
     testCompile 'org.powermock:powermock-api-mockito:1.6.4'
-
 }
 
 jacoco {
@@ -41,12 +47,15 @@ jacocoTestReport {
     }
 }
 
-jacocoTestReport.mustRunAfter(test)
-check.dependsOn jacocoTestReport
 
 pitest {
     pitestVersion = '1.1.9'
+    exportLineCoverage = true
+    timestampedReports = false
     targetClasses = ['org.pojo.tester.*']
     threads = 4
-    outputFormats = ['HTML']
+    outputFormats = ['XML', 'HTML']
 }
+
+jacocoTestReport.mustRunAfter(test)
+check.dependsOn jacocoTestReport
