@@ -55,10 +55,11 @@ public final class FieldUtils {
         final Class<? extends Field> clazz = field.getClass();
         try {
             field.setAccessible(true);
-            int modifiers = field.getModifiers();
             final Field modifierField = clazz.getDeclaredField(FIELD_CLASS_MODIFIER_FIELD_NAME);
-            modifiers = modifiers & ~Modifier.FINAL;
             modifierField.setAccessible(true);
+
+            int modifiers = field.getModifiers();
+            modifiers = modifiers & ~Modifier.FINAL;
             modifierField.setInt(field, modifiers);
         } catch (IllegalAccessException | NoSuchFieldException e) {
             throw new GetOrSetValueException(FIELD_CLASS_MODIFIER_FIELD_NAME, clazz, e);

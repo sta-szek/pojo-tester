@@ -7,5 +7,7 @@ public class ObjectInstantiationException extends RuntimeException {
         super(createMessage(clazz), cause);
     }
 
-    private static String createMessage(final Class<?> clazz) {return "Unable to create object for class: " + clazz;}
+    private static String createMessage(final Class<?> clazz) {
+        return "Unable to create object for class: " + clazz;
+    }
 }
