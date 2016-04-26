@@ -47,16 +47,19 @@ public class EqualsTester {
     private void testEquals(final ClassAndFieldConsumerPair classAndFieldConsumerPair) {
         final Object instance = objectGenerator.createNewInstance(classAndFieldConsumerPair.getTestedClass());
 
-        shouldEqualSameObject(instance);
-        shouldEqualSameObjectFewTimes(instance);
-        shouldEqualDifferentObjectWithSameType(instance);
+        shouldEqualSameInstance(instance);
+        shouldEqualSameInstanceFewTimes(instance);
+        shouldEqualDifferentInstance(instance);
         shouldEqualObjectCifObjectBisEqualToObjectAndC(instance);
         shouldNotEqualNull(instance);
-        shouldNotEqualObjectWithDifferentType(instance);
-        classAndFieldConsumerPair.getConsumer()
-                                 .accept(instance);
+        shouldNotEqualDifferentType(instance);
+        shouldNotEqualSameInstanceWithDifferentValues(instance, classAndFieldConsumerPair.getConsumer());
 
         assertions.assertAll();
+    }
+
+    private void shouldNotEqualSameInstanceWithDifferentValues(final Object instance, final Consumer<Object> consumer) {
+        consumer.accept(instance);
     }
 
     private ClassAndFieldConsumerPair toClassWithConsumerAcceptingAllFields(final Class<?> clazz) {
@@ -72,17 +75,17 @@ public class EqualsTester {
         return object -> shouldNotEqualWithExcludedFields(object, excludedFields);
     }
 
-    private void shouldEqualSameObject(final Object object) {
+    private void shouldEqualSameInstance(final Object object) {
         assertions.assertThat(object)
                   .isReflexive();
     }
 
-    private void shouldEqualSameObjectFewTimes(final Object object) {
+    private void shouldEqualSameInstanceFewTimes(final Object object) {
         assertions.assertThat(object)
                   .isConsistent();
     }
 
-    private void shouldEqualDifferentObjectWithSameType(final Object object) {
+    private void shouldEqualDifferentInstance(final Object object) {
         final Object otherObject = objectGenerator.createSameInstance(object);
         assertions.assertThat(object)
                   .isSymmetric(otherObject);
@@ -100,7 +103,7 @@ public class EqualsTester {
                   .isNotEqualToNull();
     }
 
-    private void shouldNotEqualObjectWithDifferentType(final Object object) {
+    private void shouldNotEqualDifferentType(final Object object) {
         final Object objectToCompare = this;
         assertions.assertThat(object)
                   .isNotEqualToObjectWithDifferentType(objectToCompare);
