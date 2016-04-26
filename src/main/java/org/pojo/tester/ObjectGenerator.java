@@ -46,12 +46,11 @@ class ObjectGenerator {
             final List<Field> allFields = FieldUtils.getAllFields(object.getClass());
             for (final Field field : allFields) {
                 currentFieldName = field.getName();
-                FieldUtils.makeModifiable(field);
-                final Object value = field.get(object);
-                field.set(newInstance, value);
+                final Object value = FieldUtils.getValue(object, field);
+                FieldUtils.setValue(newInstance, field, value);
             }
             return newInstance;
-        } catch (final Exception e) {
+        } catch (final IllegalAccessException e) {
             throw new GetOrSetValueException(currentFieldName, object.getClass(), e);
         }
     }
