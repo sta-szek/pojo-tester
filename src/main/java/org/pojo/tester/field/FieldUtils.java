@@ -3,13 +3,17 @@ package org.pojo.tester.field;
 import org.paukov.combinatorics.Factory;
 import org.paukov.combinatorics.Generator;
 import org.paukov.combinatorics.ICombinatoricsVector;
+import org.pojo.tester.GetOrSetValueException;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public final class FieldUtils {
+
+    public static final String FIELD_CLASS_MODIFIER_FIELD_NAME = "modifiers";
 
     private FieldUtils() {}
 
@@ -21,13 +25,13 @@ public final class FieldUtils {
 
     public static List<Field> getAllFieldsExcluding(final Class<?> clazz, final List<String> excludedFields) {
         return getAllFields(clazz).stream()
-                                  .filter(field -> FieldUtils.doesNotContain(field, excludedFields))
+                                  .filter(field -> doesNotContain(field, excludedFields))
                                   .collect(Collectors.toList());
     }
 
     public static List<Field> getSpecifiedFields(final Class<?> clazz, final List<String> names) {
         return names.stream()
-                    .map(name -> FieldUtils.getField(clazz, name))
+                    .map(name -> getField(clazz, name))
                     .collect(Collectors.toList());
     }
 
@@ -47,6 +51,30 @@ public final class FieldUtils {
                                   .collect(Collectors.toList());
     }
 
+    public static void makeModifiable(final Field field) {
+        final Class<? extends Field> clazz = field.getClass();
+        try {
+            field.setAccessible(true);
+            int modifiers = field.getModifiers();
+            final Field modifierField = clazz.getDeclaredField(FIELD_CLASS_MODIFIER_FIELD_NAME);
+            modifiers = modifiers & ~Modifier.FINAL;
+            modifierField.setAccessible(true);
+            modifierField.setInt(field, modifiers);
+        } catch (IllegalAccessException | NoSuchFieldException e) {
+            throw new GetOrSetValueException(FIELD_CLASS_MODIFIER_FIELD_NAME, clazz, e);
+        }
+    }
+
+    public static Object getValue(final Object targetObject, final Field field) throws IllegalAccessException {
+        makeModifiable(field);
+        return field.get(targetObject);
+    }
+
+    public static void setValue(final Object targetObject, final Field field, final Object value) throws IllegalAccessException {
+        makeModifiable(field);
+        field.set(targetObject, value);
+    }
+
     private static boolean excludeEmptySet(final List<Field> fields) {
         return !fields.isEmpty();
     }
@@ -63,7 +91,7 @@ public final class FieldUtils {
         try {
             return clazz.getDeclaredField(name);
         } catch (final java.lang.NoSuchFieldException e) {
-            throw new NoSuchFieldException("Could not get field " + name + " from class " + clazz.getSimpleName(), e);
+            throw new GetValueException(name, clazz, e);
         }
     }
 }

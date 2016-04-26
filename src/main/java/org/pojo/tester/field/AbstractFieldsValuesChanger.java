@@ -1,9 +1,9 @@
 package org.pojo.tester.field;
 
 import lombok.extern.slf4j.Slf4j;
+import org.pojo.tester.GetOrSetValueException;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.util.List;
 
 @Slf4j
@@ -27,15 +27,13 @@ public abstract class AbstractFieldsValuesChanger<T> {
 
     public abstract boolean areDifferentValues(T sourceValue, T targetValue);
 
-    protected boolean canChange(final Field field) {
-        return !Modifier.isFinal(field.getModifiers());
-    }
+    protected abstract boolean canChange(final Field field);
 
     protected abstract T increaseValue(T value);
 
     private void checkAndChange(final Object sourceObject, final Object targetObject, final Field field) {
         if (canChange(field)) {
-            changeField(sourceObject, targetObject, field);
+            changeFieldValue(sourceObject, targetObject, field);
         }
     }
 
@@ -45,28 +43,16 @@ public abstract class AbstractFieldsValuesChanger<T> {
         }
     }
 
-    private void changeField(final Object sourceObject, final Object targetObject, final Field field) {
-        T sourceFieldValue = null;
-        T targetFieldValue = null;
-
+    private void changeFieldValue(final Object sourceObject, final Object targetObject, final Field field) {
         try {
-            field.setAccessible(true);
-            sourceFieldValue = (T) field.get(sourceObject);
-            targetFieldValue = (T) field.get(sourceObject);
+            final T sourceFieldValue = (T) FieldUtils.getValue(sourceObject, field);
+            final T targetFieldValue = (T) FieldUtils.getValue(targetObject, field);
+            if (!areDifferentValues(sourceFieldValue, targetFieldValue)) {
+                final T increasedValue = increaseValue(targetFieldValue);
+                FieldUtils.setValue(targetObject, field, increasedValue);
+            }
         } catch (final IllegalAccessException e) {
-            log.error("Cannot access field " + field.getName() + " in object " + sourceObject + " of type " + sourceObject.getClass());
-            //TODO ustaw pole na podstawie currentTimeMilis
-        }
-
-
-        if (areDifferentValues(sourceFieldValue, targetFieldValue)) {
-            return;
-        }
-        final T increasedValue = increaseValue(targetFieldValue);
-        try {
-            field.set(targetObject, increasedValue);
-        } catch (final IllegalAccessException e) {
-            log.error("Cannot write field " + field.getName() + " in object " + sourceObject + " of type " + sourceObject.getClass());
+            throw new GetOrSetValueException(field.getName(), sourceObject.getClass(), e);
         }
 
     }

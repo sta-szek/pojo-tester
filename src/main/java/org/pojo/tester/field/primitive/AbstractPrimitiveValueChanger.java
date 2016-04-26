@@ -5,7 +5,6 @@ import org.pojo.tester.field.AbstractFieldsValuesChanger;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 
-
 public abstract class AbstractPrimitiveValueChanger<T> extends AbstractFieldsValuesChanger<T> {
 
     private static final AbstractFieldsValuesChanger INSTANCE = new BooleanValueChanger().register(new BooleanValueChanger())
@@ -24,10 +23,15 @@ public abstract class AbstractPrimitiveValueChanger<T> extends AbstractFieldsVal
 
     @Override
     protected boolean canChange(final Field field) {
-        return super.canChange(field) && isCompatibleType(field);
+        return isPrimitive(field) && isCompatibleType(field);
     }
 
-    Class getGenericTypeClass() {
+    private boolean isPrimitive(final Field field) {
+        return field.getType()
+                    .isPrimitive();
+    }
+
+    private Class getGenericTypeClass() {
         return (Class) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
