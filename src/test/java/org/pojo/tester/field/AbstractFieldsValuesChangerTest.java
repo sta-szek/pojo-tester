@@ -5,8 +5,6 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import test.fields.AllFiledTypes;
 
-import java.lang.NoSuchFieldException;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -45,17 +43,6 @@ public class AbstractFieldsValuesChangerTest {
 
         // then
         verify(first).register(second);
-    }
-
-    @Test
-    public void shouldReturnTrueIfCanChange() throws java.lang.NoSuchFieldException {
-        // given
-
-        // when
-        final boolean result = abstractFieldsValuesChanger.canChange(AllFiledTypes.class.getDeclaredField("intType"));
-
-        // then
-        assertThat(result).isTrue();
     }
 
     @Test

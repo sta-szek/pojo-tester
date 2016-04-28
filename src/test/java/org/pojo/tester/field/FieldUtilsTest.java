@@ -4,12 +4,12 @@ import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import test.TestHelper;
 import test.fields.ClassWithAllAvailableFieldModifiers;
 import test.fields.Permutation1;
 import test.fields.Permutation2;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,7 +22,7 @@ public class FieldUtilsTest {
     @Test
     public void shouldReturnAllFields() {
         // given
-        final List<Field> expectedFields = getAllFieldsExceptDummyJacocoField(ClassWithAllAvailableFieldModifiers.class);
+        final List<Field> expectedFields = TestHelper.getAllFieldsExceptDummyJacocoField(ClassWithAllAvailableFieldModifiers.class);
 
         // when
         final List<Field> result = FieldUtils.getAllFields(ClassWithAllAvailableFieldModifiers.class);
@@ -61,9 +61,10 @@ public class FieldUtilsTest {
     @Test
     public void shouldReturnAllFieldsNames() {
         // given
-        final List<String> expectedFields = getAllFieldsExceptDummyJacocoField(ClassWithAllAvailableFieldModifiers.class).stream()
-                                                                                                                         .map(Field::getName)
-                                                                                                                         .collect(Collectors.toList());
+        final List<String> expectedFields = TestHelper.getAllFieldsExceptDummyJacocoField(ClassWithAllAvailableFieldModifiers.class)
+                                                      .stream()
+                                                      .map(Field::getName)
+                                                      .collect(Collectors.toList());
 
         // when
         final List<String> result = FieldUtils.getAllFieldNames(ClassWithAllAvailableFieldModifiers.class);
@@ -77,7 +78,7 @@ public class FieldUtilsTest {
     @Parameters(method = "permutationFields")
     public void shouldReturnAllPermutations(final Class<?> clazz, final List<List<Field>> expectedPermutations) {
         // given
-        final List<Field> fields = getAllFieldsExceptDummyJacocoField(clazz);
+        final List<Field> fields = TestHelper.getAllFieldsExceptDummyJacocoField(clazz);
 
         // when
         final List<List<Field>> permutations = FieldUtils.permutations(fields);
@@ -111,13 +112,6 @@ public class FieldUtilsTest {
 
     private Field fieldFromPermutation2Class(final String name) throws java.lang.NoSuchFieldException {
         return Permutation2.class.getDeclaredField(name);
-    }
-
-    private List<Field> getAllFieldsExceptDummyJacocoField(final Class<?> clazz) {
-        return Arrays.stream(clazz.getDeclaredFields())
-                     .filter(field -> !field.getName()
-                                            .equals("$jacocoData"))
-                     .collect(Collectors.toList());
     }
 
 }

@@ -11,11 +11,8 @@ public class Assertions {
 
     public void assertAll() {
         final Result result = resultBuilder.build();
-        final String message = result.getMessage();
         if (result.failed()) {
-            throw new AssertionError(message);
-        } else {
-            System.out.println(message);
+            throw new AssertionError(result.getMessage());
         }
     }
 }
