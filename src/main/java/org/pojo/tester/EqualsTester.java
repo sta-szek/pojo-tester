@@ -1,7 +1,5 @@
 package org.pojo.tester;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import org.pojo.tester.assertion.Assertions;
 import org.pojo.tester.field.AbstractFieldsValuesChanger;
 import org.pojo.tester.field.FieldUtils;
@@ -76,36 +74,36 @@ public class EqualsTester {
     }
 
     private void shouldEqualSameInstance(final Object object) {
-        assertions.assertThat(object)
+        assertions.assertThatEquals(object)
                   .isReflexive();
     }
 
     private void shouldEqualSameInstanceFewTimes(final Object object) {
-        assertions.assertThat(object)
+        assertions.assertThatEquals(object)
                   .isConsistent();
     }
 
     private void shouldEqualDifferentInstance(final Object object) {
         final Object otherObject = objectGenerator.createSameInstance(object);
-        assertions.assertThat(object)
+        assertions.assertThatEquals(object)
                   .isSymmetric(otherObject);
     }
 
     private void shouldEqualObjectCifObjectBisEqualToObjectAndC(final Object object) {
         final Object b = objectGenerator.createSameInstance(object);
         final Object c = objectGenerator.createSameInstance(object);
-        assertions.assertThat(object)
+        assertions.assertThatEquals(object)
                   .isTransitive(b, c);
     }
 
     private void shouldNotEqualNull(final Object object) {
-        assertions.assertThat(object)
+        assertions.assertThatEquals(object)
                   .isNotEqualToNull();
     }
 
     private void shouldNotEqualDifferentType(final Object object) {
         final Object objectToCompare = this;
-        assertions.assertThat(object)
+        assertions.assertThatEquals(object)
                   .isNotEqualToObjectWithDifferentType(objectToCompare);
     }
 
@@ -127,18 +125,8 @@ public class EqualsTester {
     }
 
     private Consumer<Object> assertIsNotEqualTo(final Object object) {
-        return eachDifferentObject -> assertions.assertThat(object)
+        return eachDifferentObject -> assertions.assertThatEquals(object)
                                                 .isNotEqualTo(eachDifferentObject);
-    }
-
-
-    @Getter
-    @AllArgsConstructor
-    private static class ClassAndFieldConsumerPair {
-
-        private final Class<?> testedClass;
-        private final Consumer<Object> consumer;
-
     }
 
 }
