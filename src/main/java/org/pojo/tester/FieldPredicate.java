@@ -6,7 +6,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class FieldPredicate {
+public abstract class FieldPredicate {
+
+    private FieldPredicate() {
+    }
 
     public static Predicate<String> acceptAllFields(final Class<?> testedClass) {
         final List<String> allFieldNames = FieldUtils.getAllFieldNames(testedClass);
@@ -41,9 +44,13 @@ public class FieldPredicate {
         return exclude(Arrays.asList(excludedFields));
     }
 
-    private static Predicate<String> getAlwaysFalsePredicate() {return fieldName -> false;}
+    private static Predicate<String> getAlwaysFalsePredicate() {
+        return fieldName -> false;
+    }
 
-    private static Predicate<String> getAlwaysTruePredicate() {return fieldName -> true;}
+    private static Predicate<String> getAlwaysTruePredicate() {
+        return fieldName -> true;
+    }
 
     private static Predicate<String> getNonEqualPredicate(final String filedName) {
         return getEqualPredicate(filedName).negate();

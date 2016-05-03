@@ -16,7 +16,8 @@ public final class FieldUtils {
 
     public static final String FIELD_CLASS_MODIFIER_FIELD_NAME = "modifiers";
 
-    private FieldUtils() {}
+    private FieldUtils() {
+    }
 
     public static List<Field> getAllFields(final Class<?> clazz) {
         return Arrays.stream(clazz.getDeclaredFields())
