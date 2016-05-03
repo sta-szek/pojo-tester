@@ -5,11 +5,11 @@ public class Assertions {
 
     private final ResultBuilder resultBuilder = new ResultBuilder();
 
-    public EqualAssertions assertThatEquals(final Object objectUnderAssert) {
+    public EqualAssertions assertThatEqualsMethod(final Object objectUnderAssert) {
         return new EqualAssertions(resultBuilder, objectUnderAssert);
     }
 
-    public HashCodeAssertions assertThatHashCode(final Object objectUnderAssert) {
+    public HashCodeAssertions assertThatHashCodeMethod(final Object objectUnderAssert) {
         return new HashCodeAssertions(resultBuilder, objectUnderAssert);
     }
 

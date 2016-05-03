@@ -6,11 +6,13 @@ import test.hashcode.BadPojoHashCode;
 import test.hashcode.BadPojoHashCodeDifferentObjectSameType;
 import test.hashcode.BadPojoHashCodeItself;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.util.Lists.newArrayList;
+import static org.pojo.tester.FieldPredicate.exclude;
+import static org.pojo.tester.FieldPredicate.include;
 
 
 public class HashCodeTesterTest {
@@ -22,7 +24,7 @@ public class HashCodeTesterTest {
         final HashCodeTester hashCodeTester = new HashCodeTester();
 
         // when
-        final Throwable result = catchThrowable(() -> hashCodeTester.testHashCodeIncludingAllFields(classesToTest));
+        final Throwable result = catchThrowable(() -> hashCodeTester.testHashCodeMethod(classesToTest));
 
         // then
         assertThat(result).isNull();
@@ -33,10 +35,10 @@ public class HashCodeTesterTest {
         // given
         final HashCodeTester hashCodeTester = new HashCodeTester();
         final Class<?> clazz = BadPojoHashCode.class;
-        final ArrayList<String> excludedFields = newArrayList("increment3", "increment4");
+        final List<String> excludedFields = newArrayList("increment3", "increment4");
 
         // when
-        final Throwable result = catchThrowable(() -> hashCodeTester.testHashCodeExcludingFields(clazz, excludedFields));
+        final Throwable result = catchThrowable(() -> hashCodeTester.testHashCodeMethod(clazz, exclude(excludedFields)));
 
         // then
         assertThat(result).isNull();
@@ -47,10 +49,10 @@ public class HashCodeTesterTest {
         // given
         final HashCodeTester hashCodeTester = new HashCodeTester();
         final Class<?> clazz = BadPojoHashCode.class;
-        final ArrayList<String> includedFields = newArrayList("increment1", "increment2");
+        final List<String> includedFields = newArrayList("increment1", "increment2");
 
         // when
-        final Throwable result = catchThrowable(() -> hashCodeTester.testHashCodeIncludingFields(clazz, includedFields));
+        final Throwable result = catchThrowable(() -> hashCodeTester.testHashCodeMethod(clazz, include(includedFields)));
 
         // then
         assertThat(result).isNull();
@@ -63,7 +65,7 @@ public class HashCodeTesterTest {
         final HashCodeTester hashCodeTester = new HashCodeTester();
 
         // when
-        final Throwable result = catchThrowable(() -> hashCodeTester.testHashCodeIncludingAllFields(classesToTest));
+        final Throwable result = catchThrowable(() -> hashCodeTester.testHashCodeMethod(classesToTest));
 
         // then
         assertThat(result).isInstanceOf(AssertionError.class);
@@ -78,7 +80,7 @@ public class HashCodeTesterTest {
         final HashCodeTester hashCodeTester = new HashCodeTester();
 
         // when
-        final Throwable result = catchThrowable(() -> hashCodeTester.testHashCodeIncludingAllFields(classesToTest));
+        final Throwable result = catchThrowable(() -> hashCodeTester.testHashCodeMethod(classesToTest));
 
         // then
         assertThat(result).isInstanceOf(AssertionError.class);
@@ -91,7 +93,7 @@ public class HashCodeTesterTest {
         final HashCodeTester hashCodeTester = new HashCodeTester();
 
         // when
-        final Throwable result = catchThrowable(() -> hashCodeTester.testHashCodeIncludingAllFields(classesToTest));
+        final Throwable result = catchThrowable(() -> hashCodeTester.testHashCodeMethod(classesToTest));
 
         // then
         assertThat(result).isInstanceOf(AssertionError.class);

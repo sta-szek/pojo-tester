@@ -55,7 +55,7 @@ public class HashCodeAssertions {
         appendResult(result, "isConsistent", message);
     }
 
-    public void isTheSame(final Object otherObject) {
+    public void returnsSameValueFor(final Object otherObject) {
         final int result1 = objectUnderAssert.hashCode();
         final int result2 = otherObject.hashCode();
         final boolean result = result1 == result2;
@@ -68,7 +68,7 @@ public class HashCodeAssertions {
         appendResult(result, "sameHashCode", message);
     }
 
-    public void isDifferentForm(final Object otherObject) {
+    public void returnsDifferentValueFor(final Object otherObject) {
         final int result1 = objectUnderAssert.hashCode();
         final int result2 = otherObject.hashCode();
         final boolean result = result1 == result2;

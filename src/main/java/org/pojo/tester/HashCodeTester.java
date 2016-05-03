@@ -10,6 +10,7 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public class HashCodeTester {
 
@@ -24,85 +25,51 @@ public class HashCodeTester {
         objectGenerator = new ObjectGenerator(abstractFieldsValuesChanger);
     }
 
-    public void testHashCodeIncludingFields(final Class<?> clazz, final List<String> includedFields) {
-        testHashCode(clazz, includingFields(includedFields));
+    public void testHashCodeMethod(final Class<?> clazz, final Predicate<String> fieldPredicate) {
+        final ClassAndFieldPredicatePair classAndFieldPredicatePair = new ClassAndFieldPredicatePair(clazz, fieldPredicate);
+        testHashCodeMethod(classAndFieldPredicatePair);
     }
 
-    public void testHashCodeExcludingFields(final Class<?> clazz, final List<String> excludedFields) {
-        testHashCode(clazz, excludingFields(excludedFields));
-    }
-
-    public void testHashCodeIncludingAllFields(final Class... classes) {
+    public void testHashCodeMethod(final Class... classes) {
         Arrays.stream(classes)
-              .map(this::toClassWithConsumerAcceptingAllFields)
-              .forEach(this::testHashCode);
+              .map(ClassAndFieldPredicatePair::new)
+              .forEach(this::testHashCodeMethod);
     }
 
-    private void testHashCode(final Class<?> clazz, final Consumer<Object> consumer) {
-        final ClassAndFieldConsumerPair classAndFieldConsumerPair = new ClassAndFieldConsumerPair(clazz, consumer);
-        testHashCode(classAndFieldConsumerPair);
-    }
-
-    private void testHashCode(final ClassAndFieldConsumerPair classAndFieldConsumerPair) {
-        final Object instance = objectGenerator.createNewInstance(classAndFieldConsumerPair.getTestedClass());
+    private void testHashCodeMethod(final ClassAndFieldPredicatePair classAndFieldPredicatePair) {
+        final Class<?> testedClass = classAndFieldPredicatePair.getTestedClass();
+        final Object instance = objectGenerator.createNewInstance(testedClass);
+        final List<Field> allFields = FieldUtils.getFields(testedClass, classAndFieldPredicatePair.getPredicate());
 
         shouldHaveSameHashCodes(instance);
         shouldHaveSameHashCodesWithDifferentInstance(instance);
-        shouldHaveDifferentHashCodes(instance, classAndFieldConsumerPair.getConsumer());
+        shouldHaveDifferentHashCodes(instance, allFields);
 
         assertions.assertAll();
     }
 
-    private void shouldHaveDifferentHashCodes(final Object instance, final Consumer<Object> consumer) {
-        consumer.accept(instance);
-    }
-
-    private ClassAndFieldConsumerPair toClassWithConsumerAcceptingAllFields(final Class<?> clazz) {
-        final List<String> allFields = FieldUtils.getAllFieldNames(clazz);
-        return new ClassAndFieldConsumerPair(clazz, includingFields(allFields));
-    }
-
-    private Consumer<Object> includingFields(final List<String> includedFields) {
-        return object -> shouldReturnDifferentHashCodeWithIncludedFields(object, includedFields);
-    }
-
-    private Consumer<Object> excludingFields(final List<String> excludedFields) {
-        return object -> shouldReturnDifferentHashCodeWithExcludedFields(object, excludedFields);
-    }
-
     private void shouldHaveSameHashCodes(final Object object) {
-        assertions.assertThatHashCode(object)
+        assertions.assertThatHashCodeMethod(object)
                   .isConsistent();
     }
 
-
     private void shouldHaveSameHashCodesWithDifferentInstance(final Object object) {
         final Object otherObject = objectGenerator.createSameInstance(object);
-        assertions.assertThatHashCode(object)
-                  .isTheSame(otherObject);
+        assertions.assertThatHashCodeMethod(object)
+                  .returnsSameValueFor(otherObject);
     }
 
 
-    private void shouldReturnDifferentHashCodeWithExcludedFields(final Object baseObject, final List<String> excludedFields) {
-        final List<Field> allFields = FieldUtils.getAllFieldsExcluding(baseObject.getClass(), excludedFields);
-        shouldReturnDifferentHashCodeWithGivenFields(baseObject, allFields);
-    }
-
-    private void shouldReturnDifferentHashCodeWithIncludedFields(final Object baseObject, final List<String> includedFields) {
-        final List<Field> allFields = FieldUtils.getSpecifiedFields(baseObject.getClass(), includedFields);
-        shouldReturnDifferentHashCodeWithGivenFields(baseObject, allFields);
-    }
-
-    private void shouldReturnDifferentHashCodeWithGivenFields(final Object baseObject, final List<Field> specifiedFields) {
-        final List<List<Field>> permutationFields = FieldUtils.permutations(specifiedFields);
+    private void shouldHaveDifferentHashCodes(final Object instance, final List<Field> fields) {
+        final List<List<Field>> permutationFields = FieldUtils.permutations(fields);
         permutationFields.stream()
-                         .map(fields -> objectGenerator.createInstanceWithDifferentFieldValues(baseObject.getClass(), fields))
-                         .forEach(assertHaveDifferentHashCodes(baseObject));
+                         .map(testedFields -> objectGenerator.createInstanceWithDifferentFieldValues(instance.getClass(), testedFields))
+                         .forEach(assertHaveDifferentHashCodes(instance));
     }
 
     private Consumer<Object> assertHaveDifferentHashCodes(final Object object) {
-        return eachDifferentObject -> assertions.assertThatHashCode(object)
-                                                .isDifferentForm(eachDifferentObject);
+        return eachDifferentObject -> assertions.assertThatHashCodeMethod(object)
+                                                .returnsDifferentValueFor(eachDifferentObject);
     }
 
 
