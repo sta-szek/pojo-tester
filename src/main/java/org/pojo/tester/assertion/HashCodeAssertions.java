@@ -72,7 +72,7 @@ public class HashCodeAssertions {
         final int result1 = objectUnderAssert.hashCode();
         final int result2 = otherObject.hashCode();
         final boolean result = result1 == result2;
-        final String message = formatMessage(CONSTRAINT_EQUAL,
+        final String message = formatMessage(CONSTRAINT_NOT_EQUAL,
                                              classUnderTest.getCanonicalName(),
                                              objectUnderAssert,
                                              otherObject,
