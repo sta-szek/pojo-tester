@@ -1,6 +1,7 @@
 package org.pojo.tester.assertion;
 
 import org.junit.Test;
+import test.GoodPojo_Equals_HashCode_ToString;
 import test.equals.*;
 
 import static org.mockito.Matchers.anyString;
@@ -40,9 +41,23 @@ public class EqualAssertionsTest {
     }
 
     @Test
-    public void shouldFail_WhenEqualsMethodIsNotTransitive() {
+    public void shouldFail_WhenEqualsMethodIsNotConsistent() {
         // given
-        final BadPojoEquals_NotSymmetric objectUnderAssert = new BadPojoEquals_NotSymmetric();
+        final BadPojoEquals_NotConsistent objectUnderAssert = new BadPojoEquals_NotConsistent();
+        final ResultBuilder resultBuilder = spy(ResultBuilder.class);
+        final EqualAssertions equalAssertions = new EqualAssertions(resultBuilder, objectUnderAssert);
+
+        // when
+        equalAssertions.isConsistent();
+
+        // then
+        verify(resultBuilder).fail(eq(BadPojoEquals_NotConsistent.class), anyString(), anyString());
+    }
+
+    @Test
+    public void shouldFail_WhenEqualsMethodIsNotTransitive_BetweenAAndB() {
+        // given
+        final BadPojoEquals_NotTransitive_A_B objectUnderAssert = new BadPojoEquals_NotTransitive_A_B();
         final ResultBuilder resultBuilder = spy(ResultBuilder.class);
         final EqualAssertions equalAssertions = new EqualAssertions(resultBuilder, objectUnderAssert);
 
@@ -50,7 +65,21 @@ public class EqualAssertionsTest {
         equalAssertions.isTransitive(objectUnderAssert, objectUnderAssert);
 
         // then
-        verify(resultBuilder).fail(eq(BadPojoEquals_NotSymmetric.class), anyString(), anyString());
+        verify(resultBuilder).fail(eq(BadPojoEquals_NotTransitive_A_B.class), anyString(), anyString());
+    }
+
+    @Test
+    public void shouldFail_WhenEqualsMethodIsNotTransitive_BetweenBAndC() {
+        // given
+        final BadPojoEquals_NotTransitive_B_C objectUnderAssert = new BadPojoEquals_NotTransitive_B_C();
+        final ResultBuilder resultBuilder = spy(ResultBuilder.class);
+        final EqualAssertions equalAssertions = new EqualAssertions(resultBuilder, objectUnderAssert);
+
+        // when
+        equalAssertions.isTransitive(objectUnderAssert, objectUnderAssert);
+
+        // then
+        verify(resultBuilder).fail(eq(BadPojoEquals_NotTransitive_B_C.class), anyString(), anyString());
     }
 
     @Test
@@ -120,6 +149,20 @@ public class EqualAssertionsTest {
 
         // when
         equalAssertions.isSymmetric(objectUnderAssert);
+
+        // then
+        verify(resultBuilder).pass(eq(GoodPojo_Equals_HashCode_ToString.class), anyString());
+    }
+
+    @Test
+    public void shouldPass_WhenEqualsMethodIsConsistent() {
+        // given
+        final GoodPojo_Equals_HashCode_ToString objectUnderAssert = new GoodPojo_Equals_HashCode_ToString();
+        final ResultBuilder resultBuilder = spy(ResultBuilder.class);
+        final EqualAssertions equalAssertions = new EqualAssertions(resultBuilder, objectUnderAssert);
+
+        // when
+        equalAssertions.isConsistent();
 
         // then
         verify(resultBuilder).pass(eq(GoodPojo_Equals_HashCode_ToString.class), anyString());

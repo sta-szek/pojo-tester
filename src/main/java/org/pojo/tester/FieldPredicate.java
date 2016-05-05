@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 
-public abstract class FieldPredicate {
+public final class FieldPredicate {
 
     private FieldPredicate() {
     }

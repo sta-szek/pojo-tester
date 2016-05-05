@@ -3,8 +3,8 @@ package org.pojo.tester;
 import org.junit.Test;
 import org.pojo.tester.field.AbstractFieldsValuesChanger;
 import org.pojo.tester.field.primitive.AbstractPrimitiveValueChanger;
+import test.GoodPojo_Equals_HashCode_ToString;
 import test.TestHelper;
-import test.equals.GoodPojo_Equals_HashCode_ToString;
 
 import java.lang.reflect.Field;
 import java.util.List;

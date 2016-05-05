@@ -1,7 +1,7 @@
 package org.pojo.tester;
 
 import org.junit.Test;
-import test.equals.GoodPojo_Equals_HashCode_ToString;
+import test.GoodPojo_Equals_HashCode_ToString;
 import test.hashcode.BadPojoHashCode;
 import test.hashcode.BadPojoHashCodeDifferentObjectSameType;
 import test.hashcode.BadPojoHashCodeItself;

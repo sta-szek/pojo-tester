@@ -1,7 +1,11 @@
 package org.pojo.tester;
 
 import org.junit.Test;
-import test.equals.*;
+import test.GoodPojo_Equals_HashCode_ToString;
+import test.equals.BadPojoEqualsDifferentObjectSameType;
+import test.equals.BadPojoEqualsDifferentType;
+import test.equals.BadPojoEqualsItself;
+import test.equals.BadPojoEqualsNull;
 
 import java.util.ArrayList;
 

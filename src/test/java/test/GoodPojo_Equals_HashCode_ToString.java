@@ -1,4 +1,4 @@
-package test.equals;
+package test;
 
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
