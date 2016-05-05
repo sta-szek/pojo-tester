@@ -23,7 +23,6 @@ class ObjectGenerator {
         return newInstance;
     }
 
-    //TODO powinno przyjmowac obiekt, zamiast klasy
     <T> T createInstanceWithDifferentFieldValues(final Class<T> clazz, final List<Field> fieldsToChange) {
         final Object object = createNewInstance(clazz);
         final Object otherObject = createNewInstance(clazz);
