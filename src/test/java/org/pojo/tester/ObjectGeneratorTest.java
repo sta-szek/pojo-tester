@@ -61,21 +61,5 @@ public class ObjectGeneratorTest {
         assertThat(result).isInstanceOf(ObjectInstantiationException.class);
     }
 
-//    @Test
-//    public void shouldThrowExceptionWhenCannotGetOrSetValue() throws IllegalAccessException {
-//        //given
-//        final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldsValuesChanger);
-//        PowerMockito.mockStatic(FieldUtils.class);
-//
-//        PowerMockito.doThrow(new IllegalAccessException("test"))
-//                    .when(FieldUtils.class);
-////        PowerMockito.when(FieldUtils.getValue(anyObject(),anyObject())).thenThrow(IllegalAccessException.class);
-//        // when
-//        final Throwable result = catchThrowable(() -> objectGenerator.createSameInstance(new Object()));
-//
-//        // then
-//        assertThat(result).isInstanceOf(GetOrSetValueException.class);
-//    }
-
 
 }
