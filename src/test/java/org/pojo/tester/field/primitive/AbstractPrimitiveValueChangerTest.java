@@ -32,13 +32,28 @@ public class AbstractPrimitiveValueChangerTest {
 
 
     @Test
-    public void fdsfsd() throws Exception {
+    public void shouldReturnFalseWhenGenericTypeIsNotPrimitive() throws Exception {
         // given
         final Field field = AllFiledTypes.class.getDeclaredField("intType");
 
         final AbstractPrimitiveValueChanger<Object> changerMock = mock(AbstractPrimitiveValueChanger.class, CALLS_REAL_METHODS);
         doReturn(Object.class).when(changerMock, "getGenericTypeClass");
         doReturn(true).when(changerMock, "isPrimitive", field);
+
+        // when
+        final boolean result = changerMock.canChange(field);
+
+        // then
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    public void shouldReturnFalseWhenFieldIsNotPrimitive() throws Exception {
+        // given
+        final Field field = Thread.class.getDeclaredField("threadQ");
+
+        final AbstractPrimitiveValueChanger<Object> changerMock = mock(AbstractPrimitiveValueChanger.class, CALLS_REAL_METHODS);
+        doReturn(Integer.class).when(changerMock, "getGenericTypeClass");
 
         // when
         final boolean result = changerMock.canChange(field);

@@ -1,8 +1,12 @@
 package org.pojo.tester;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.pojo.tester.field.AbstractFieldsValuesChanger;
+import org.pojo.tester.field.FieldUtils;
 import org.pojo.tester.field.primitive.AbstractPrimitiveValueChanger;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 import test.GoodPojo_Equals_HashCode_ToString;
 import test.TestHelper;
 
@@ -10,8 +14,10 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
-
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({FieldUtils.class, ObjectGenerator.class})
 public class ObjectGeneratorTest {
 
     private final AbstractFieldsValuesChanger abstractFieldsValuesChanger = AbstractPrimitiveValueChanger.getInstance();
@@ -42,5 +48,34 @@ public class ObjectGeneratorTest {
         // then
         assertThat(result).isNotEqualTo(goodPojo);
     }
+
+    @Test
+    public void shouldThrowExceptionWhenCannotCreateInstance() {
+        //given
+        final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldsValuesChanger);
+
+        // when
+        final Throwable result = catchThrowable(() -> objectGenerator.createNewInstance(List.class));
+
+        // then
+        assertThat(result).isInstanceOf(ObjectInstantiationException.class);
+    }
+
+//    @Test
+//    public void shouldThrowExceptionWhenCannotGetOrSetValue() throws IllegalAccessException {
+//        //given
+//        final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldsValuesChanger);
+//        PowerMockito.mockStatic(FieldUtils.class);
+//
+//        PowerMockito.doThrow(new IllegalAccessException("test"))
+//                    .when(FieldUtils.class);
+////        PowerMockito.when(FieldUtils.getValue(anyObject(),anyObject())).thenThrow(IllegalAccessException.class);
+//        // when
+//        final Throwable result = catchThrowable(() -> objectGenerator.createSameInstance(new Object()));
+//
+//        // then
+//        assertThat(result).isInstanceOf(GetOrSetValueException.class);
+//    }
+
 
 }
