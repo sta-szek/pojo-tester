@@ -63,7 +63,7 @@ public class HashCodeTester {
     private void shouldHaveDifferentHashCodes(final Object instance, final List<Field> fields) {
         final List<List<Field>> permutationFields = FieldUtils.permutations(fields);
         permutationFields.stream()
-                         .map(testedFields -> objectGenerator.createInstanceWithDifferentFieldValues(instance.getClass(), testedFields))
+                         .map(testedFields -> objectGenerator.createInstanceWithDifferentFieldValues(instance, testedFields))
                          .forEach(assertHaveDifferentHashCodes(instance));
     }
 

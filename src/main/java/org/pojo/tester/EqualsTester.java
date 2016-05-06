@@ -90,7 +90,7 @@ public class EqualsTester {
     private void shouldNotEqualWithGivenFields(final Object baseObject, final List<Field> specifiedFields) {
         final List<List<Field>> permutationFields = FieldUtils.permutations(specifiedFields);
         permutationFields.stream()
-                         .map(fields -> objectGenerator.createInstanceWithDifferentFieldValues(baseObject.getClass(), fields))
+                         .map(fields -> objectGenerator.createInstanceWithDifferentFieldValues(baseObject, fields))
                          .forEach(assertIsNotEqualTo(baseObject));
     }
 
