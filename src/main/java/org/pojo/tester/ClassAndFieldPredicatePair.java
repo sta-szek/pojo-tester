@@ -13,6 +13,6 @@ class ClassAndFieldPredicatePair {
     private final Predicate<String> predicate;
 
     ClassAndFieldPredicatePair(final Class testedClass) {
-        this(testedClass, FieldPredicate.acceptAllFields(testedClass));
+        this(testedClass, FieldPredicate.includeAllFields(testedClass));
     }
 }

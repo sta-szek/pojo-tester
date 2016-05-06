@@ -17,7 +17,7 @@ public class FieldTestPredicateTest {
         // given
 
         // when
-        final Predicate<String> predicate = FieldPredicate.acceptAllFields(TestPredicate.class);
+        final Predicate<String> predicate = FieldPredicate.includeAllFields(TestPredicate.class);
         final boolean result1 = predicate.test("a");
         final boolean result2 = predicate.test("b");
         final boolean result3 = predicate.test("c");

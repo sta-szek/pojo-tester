@@ -11,7 +11,7 @@ public final class FieldPredicate {
     private FieldPredicate() {
     }
 
-    public static Predicate<String> acceptAllFields(final Class<?> testedClass) {
+    public static Predicate<String> includeAllFields(final Class<?> testedClass) {
         final List<String> allFieldNames = FieldUtils.getAllFieldNames(testedClass);
         Predicate<String> predicate = getAlwaysFalsePredicate();
         for (final String filedName : allFieldNames) {
