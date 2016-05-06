@@ -1,13 +1,19 @@
 package org.pojo.tester;
 
 import org.junit.Test;
-import test.equals.*;
+import test.GoodPojo_Equals_HashCode_ToString;
+import test.equals.BadPojoEqualsDifferentObjectSameType;
+import test.equals.BadPojoEqualsDifferentType;
+import test.equals.BadPojoEqualsItself;
+import test.equals.BadPojoEqualsNull;
 
 import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.util.Lists.newArrayList;
+import static org.pojo.tester.FieldPredicate.exclude;
+import static org.pojo.tester.FieldPredicate.include;
 
 public class EqualsTesterTest {
 
@@ -18,7 +24,7 @@ public class EqualsTesterTest {
         final EqualsTester equalsTester = new EqualsTester();
 
         // when
-        final Throwable result = catchThrowable(() -> equalsTester.testEqualsIncludingAllFields(classesToTest));
+        final Throwable result = catchThrowable(() -> equalsTester.testEqualsMethod(classesToTest));
 
         // then
         assertThat(result).isNull();
@@ -32,7 +38,7 @@ public class EqualsTesterTest {
         final ArrayList<String> excludedFields = newArrayList("notIncludedToEqual_byteField", "notIncludedToEqual_shortType");
 
         // when
-        final Throwable result = catchThrowable(() -> equalsTester.testEqualsExcludingFields(clazz, excludedFields));
+        final Throwable result = catchThrowable(() -> equalsTester.testEqualsMethod(clazz, exclude(excludedFields)));
 
         // then
         assertThat(result).isNull();
@@ -46,7 +52,7 @@ public class EqualsTesterTest {
         final ArrayList<String> includedFields = newArrayList("byteField", "shortType");
 
         // when
-        final Throwable result = catchThrowable(() -> equalsTester.testEqualsIncludingFields(clazz, includedFields));
+        final Throwable result = catchThrowable(() -> equalsTester.testEqualsMethod(clazz, include(includedFields)));
 
         // then
         assertThat(result).isNull();
@@ -60,7 +66,7 @@ public class EqualsTesterTest {
         final EqualsTester equalsTester = new EqualsTester();
 
         // when
-        final Throwable result = catchThrowable(() -> equalsTester.testEqualsIncludingAllFields(classesToTest));
+        final Throwable result = catchThrowable(() -> equalsTester.testEqualsMethod(classesToTest));
 
         // then
         assertThat(result).isInstanceOf(AssertionError.class);
@@ -73,7 +79,7 @@ public class EqualsTesterTest {
         final EqualsTester equalsTester = new EqualsTester();
 
         // when
-        final Throwable result = catchThrowable(() -> equalsTester.testEqualsIncludingAllFields(classesToTest));
+        final Throwable result = catchThrowable(() -> equalsTester.testEqualsMethod(classesToTest));
 
         // then
         assertThat(result).isInstanceOf(AssertionError.class);
@@ -86,7 +92,7 @@ public class EqualsTesterTest {
         final EqualsTester equalsTester = new EqualsTester();
 
         // when
-        final Throwable result = catchThrowable(() -> equalsTester.testEqualsIncludingAllFields(classesToTest));
+        final Throwable result = catchThrowable(() -> equalsTester.testEqualsMethod(classesToTest));
 
         // then
         assertThat(result).isInstanceOf(AssertionError.class);
@@ -99,7 +105,7 @@ public class EqualsTesterTest {
         final EqualsTester equalsTester = new EqualsTester();
 
         // when
-        final Throwable result = catchThrowable(() -> equalsTester.testEqualsIncludingAllFields(classesToTest));
+        final Throwable result = catchThrowable(() -> equalsTester.testEqualsMethod(classesToTest));
 
         // then
         assertThat(result).isInstanceOf(AssertionError.class);
@@ -112,7 +118,7 @@ public class EqualsTesterTest {
         final EqualsTester equalsTester = new EqualsTester();
 
         // when
-        final Throwable result = catchThrowable(() -> equalsTester.testEqualsIncludingAllFields(classesToTest));
+        final Throwable result = catchThrowable(() -> equalsTester.testEqualsMethod(classesToTest));
 
         // then
         assertThat(result).isInstanceOf(AssertionError.class);

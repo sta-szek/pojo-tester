@@ -1,7 +1,5 @@
 package org.pojo.tester;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import org.pojo.tester.assertion.Assertions;
 import org.pojo.tester.field.AbstractFieldsValuesChanger;
 import org.pojo.tester.field.FieldUtils;
@@ -11,6 +9,7 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public class EqualsTester {
 
@@ -25,27 +24,22 @@ public class EqualsTester {
         objectGenerator = new ObjectGenerator(abstractFieldsValuesChanger);
     }
 
-    public void testEqualsIncludingFields(final Class<?> clazz, final List<String> includedFields) {
-        testEquals(clazz, includingFields(includedFields));
+    public void testEqualsMethod(final Class<?> clazz, final Predicate<String> fieldPredicate) {
+        final ClassAndFieldPredicatePair classAndFieldPredicatePair = new ClassAndFieldPredicatePair(clazz, fieldPredicate);
+        testEqualsMethod(classAndFieldPredicatePair);
     }
 
-    public void testEqualsExcludingFields(final Class<?> clazz, final List<String> excludedFields) {
-        testEquals(clazz, excludingFields(excludedFields));
-    }
-
-    public void testEqualsIncludingAllFields(final Class... classes) {
+    public void testEqualsMethod(final Class... classes) {
         Arrays.stream(classes)
-              .map(this::toClassWithConsumerAcceptingAllFields)
-              .forEach(this::testEquals);
+              .map(ClassAndFieldPredicatePair::new)
+              .forEach(this::testEqualsMethod);
     }
 
-    private void testEquals(final Class<?> clazz, final Consumer<Object> consumer) {
-        final ClassAndFieldConsumerPair classAndFieldConsumerPair = new ClassAndFieldConsumerPair(clazz, consumer);
-        testEquals(classAndFieldConsumerPair);
-    }
 
-    private void testEquals(final ClassAndFieldConsumerPair classAndFieldConsumerPair) {
-        final Object instance = objectGenerator.createNewInstance(classAndFieldConsumerPair.getTestedClass());
+    private void testEqualsMethod(final ClassAndFieldPredicatePair classAndFieldPredicatePair) {
+        final Class<?> testedClass = classAndFieldPredicatePair.getTestedClass();
+        final Object instance = objectGenerator.createNewInstance(testedClass);
+        final List<Field> allFields = FieldUtils.getFields(testedClass, classAndFieldPredicatePair.getPredicate());
 
         shouldEqualSameInstance(instance);
         shouldEqualSameInstanceFewTimes(instance);
@@ -53,70 +47,44 @@ public class EqualsTester {
         shouldEqualObjectCifObjectBisEqualToObjectAndC(instance);
         shouldNotEqualNull(instance);
         shouldNotEqualDifferentType(instance);
-        shouldNotEqualSameInstanceWithDifferentValues(instance, classAndFieldConsumerPair.getConsumer());
+        shouldNotEqualWithGivenFields(instance, allFields);
 
         assertions.assertAll();
     }
 
-    private void shouldNotEqualSameInstanceWithDifferentValues(final Object instance, final Consumer<Object> consumer) {
-        consumer.accept(instance);
-    }
-
-    private ClassAndFieldConsumerPair toClassWithConsumerAcceptingAllFields(final Class<?> clazz) {
-        final List<String> allFields = FieldUtils.getAllFieldNames(clazz);
-        return new ClassAndFieldConsumerPair(clazz, includingFields(allFields));
-    }
-
-    private Consumer<Object> includingFields(final List<String> includedFields) {
-        return object -> shouldNotEqualWithIncludedFields(object, includedFields);
-    }
-
-    private Consumer<Object> excludingFields(final List<String> excludedFields) {
-        return object -> shouldNotEqualWithExcludedFields(object, excludedFields);
-    }
 
     private void shouldEqualSameInstance(final Object object) {
-        assertions.assertThat(object)
+        assertions.assertThatEqualsMethod(object)
                   .isReflexive();
     }
 
     private void shouldEqualSameInstanceFewTimes(final Object object) {
-        assertions.assertThat(object)
+        assertions.assertThatEqualsMethod(object)
                   .isConsistent();
     }
 
     private void shouldEqualDifferentInstance(final Object object) {
         final Object otherObject = objectGenerator.createSameInstance(object);
-        assertions.assertThat(object)
+        assertions.assertThatEqualsMethod(object)
                   .isSymmetric(otherObject);
     }
 
     private void shouldEqualObjectCifObjectBisEqualToObjectAndC(final Object object) {
         final Object b = objectGenerator.createSameInstance(object);
         final Object c = objectGenerator.createSameInstance(object);
-        assertions.assertThat(object)
+        assertions.assertThatEqualsMethod(object)
                   .isTransitive(b, c);
     }
 
     private void shouldNotEqualNull(final Object object) {
-        assertions.assertThat(object)
+        assertions.assertThatEqualsMethod(object)
                   .isNotEqualToNull();
     }
 
     private void shouldNotEqualDifferentType(final Object object) {
         final Object objectToCompare = this;
-        assertions.assertThat(object)
+        assertions.assertThatEqualsMethod(object)
                   .isNotEqualToObjectWithDifferentType(objectToCompare);
-    }
-
-    private void shouldNotEqualWithExcludedFields(final Object baseObject, final List<String> excludedFields) {
-        final List<Field> allFields = FieldUtils.getAllFieldsExcluding(baseObject.getClass(), excludedFields);
-        shouldNotEqualWithGivenFields(baseObject, allFields);
-    }
-
-    private void shouldNotEqualWithIncludedFields(final Object baseObject, final List<String> includedFields) {
-        final List<Field> allFields = FieldUtils.getSpecifiedFields(baseObject.getClass(), includedFields);
-        shouldNotEqualWithGivenFields(baseObject, allFields);
     }
 
     private void shouldNotEqualWithGivenFields(final Object baseObject, final List<Field> specifiedFields) {
@@ -127,18 +95,8 @@ public class EqualsTester {
     }
 
     private Consumer<Object> assertIsNotEqualTo(final Object object) {
-        return eachDifferentObject -> assertions.assertThat(object)
+        return eachDifferentObject -> assertions.assertThatEqualsMethod(object)
                                                 .isNotEqualTo(eachDifferentObject);
-    }
-
-
-    @Getter
-    @AllArgsConstructor
-    private static class ClassAndFieldConsumerPair {
-
-        private final Class<?> testedClass;
-        private final Consumer<Object> consumer;
-
     }
 
 }

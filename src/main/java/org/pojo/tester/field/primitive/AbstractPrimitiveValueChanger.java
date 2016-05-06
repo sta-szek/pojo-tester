@@ -31,10 +31,6 @@ public abstract class AbstractPrimitiveValueChanger<T> extends AbstractFieldsVal
                     .isPrimitive();
     }
 
-    private Class getGenericTypeClass() {
-        return (Class) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-    }
-
     private boolean isCompatibleType(final Field field) {
         try {
             return getGenericTypeClass().getField("TYPE")
@@ -43,5 +39,9 @@ public abstract class AbstractPrimitiveValueChanger<T> extends AbstractFieldsVal
         } catch (IllegalAccessException | NoSuchFieldException e) {
             return false;
         }
+    }
+
+    private Class<T> getGenericTypeClass() {
+        return (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 }

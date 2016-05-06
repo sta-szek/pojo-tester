@@ -9,13 +9,15 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public final class FieldUtils {
 
     public static final String FIELD_CLASS_MODIFIER_FIELD_NAME = "modifiers";
 
-    private FieldUtils() {}
+    private FieldUtils() {
+    }
 
     public static List<Field> getAllFields(final Class<?> clazz) {
         return Arrays.stream(clazz.getDeclaredFields())
@@ -73,6 +75,12 @@ public final class FieldUtils {
     public static void setValue(final Object targetObject, final Field field, final Object value) throws IllegalAccessException {
         makeModifiable(field);
         field.set(targetObject, value);
+    }
+
+    public static List<Field> getFields(final Class<?> testedClass, final Predicate<String> predicate) {
+        return getAllFields(testedClass).stream()
+                                        .filter(eachField -> predicate.test(eachField.getName()))
+                                        .collect(Collectors.toList());
     }
 
     private static boolean excludeEmptySet(final List<Field> fields) {

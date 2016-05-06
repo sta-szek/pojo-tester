@@ -5,8 +5,12 @@ public class Assertions {
 
     private final ResultBuilder resultBuilder = new ResultBuilder();
 
-    public EqualAssertions assertThat(final Object objectUnderAssert) {
+    public EqualAssertions assertThatEqualsMethod(final Object objectUnderAssert) {
         return new EqualAssertions(resultBuilder, objectUnderAssert);
+    }
+
+    public HashCodeAssertions assertThatHashCodeMethod(final Object objectUnderAssert) {
+        return new HashCodeAssertions(resultBuilder, objectUnderAssert);
     }
 
     public void assertAll() {
