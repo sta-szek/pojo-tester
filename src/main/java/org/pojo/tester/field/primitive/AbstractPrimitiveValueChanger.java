@@ -18,7 +18,7 @@ public abstract class AbstractPrimitiveValueChanger<T> extends AbstractFieldsVal
                                                                                          .register(new ShortValueChanger())
                                                                                          .register(new FloatValueChanger());
 
-    private final static List<Class<?>> PRIMITIVE_CLASSES = Lists.newArrayList(Float.class,
+    private static final List<Class<?>> PRIMITIVE_CLASSES = Lists.newArrayList(Float.class,
                                                                                Integer.class,
                                                                                Long.class,
                                                                                Float.class,
