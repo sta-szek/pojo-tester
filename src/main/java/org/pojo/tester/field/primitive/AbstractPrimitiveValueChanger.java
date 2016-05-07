@@ -1,9 +1,11 @@
 package org.pojo.tester.field.primitive;
 
+import com.google.common.collect.Lists;
 import org.pojo.tester.field.AbstractFieldsValuesChanger;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
+import java.util.List;
 
 public abstract class AbstractPrimitiveValueChanger<T> extends AbstractFieldsValuesChanger<T> {
 
@@ -16,6 +18,17 @@ public abstract class AbstractPrimitiveValueChanger<T> extends AbstractFieldsVal
                                                                                          .register(new ShortValueChanger())
                                                                                          .register(new FloatValueChanger());
 
+    private final static List<Class<?>> PRIMITIVE_CLASSES = Lists.newArrayList(Float.class,
+                                                                               Integer.class,
+                                                                               Long.class,
+                                                                               Float.class,
+                                                                               Double.class,
+                                                                               Byte.class,
+                                                                               Short.class,
+                                                                               Boolean.class,
+                                                                               Character.class);
+    private static final String FIELD_WITH_PRIMITIVE_CLASS_REFERENCE = "TYPE";
+
 
     public static AbstractFieldsValuesChanger getInstance() {
         return INSTANCE;
@@ -23,8 +36,8 @@ public abstract class AbstractPrimitiveValueChanger<T> extends AbstractFieldsVal
 
     @Override
     protected boolean canChange(final Field field) {
-        return (isPrimitive(field) && isCompatibleWithPrimitive(field))
-               || (isWrappedPrimitive(field) && isCompatibleWithWrappedPrimitive(field));
+        return isPrimitive(field) && isCompatibleWithPrimitive(field)
+               || isWrappedPrimitive(field) && isCompatibleWithWrappedPrimitive(field);
     }
 
     private boolean isPrimitive(final Field field) {
@@ -34,7 +47,7 @@ public abstract class AbstractPrimitiveValueChanger<T> extends AbstractFieldsVal
 
     private boolean isCompatibleWithPrimitive(final Field field) {
         try {
-            return getGenericTypeClass().getField("TYPE")
+            return getGenericTypeClass().getField(FIELD_WITH_PRIMITIVE_CLASS_REFERENCE)
                                         .get(null)
                                         .equals(field.getType());
         } catch (IllegalAccessException | NoSuchFieldException e) {
@@ -44,22 +57,15 @@ public abstract class AbstractPrimitiveValueChanger<T> extends AbstractFieldsVal
 
     private boolean isWrappedPrimitive(final Field field) {
         final Class<?> clazz = field.getType();
-        return clazz == Byte.class
-               || clazz == Short.class
-               || clazz == Integer.class
-               || clazz == Long.class
-               || clazz == Float.class
-               || clazz == Double.class
-               || clazz == Boolean.class
-               || clazz == Character.class;
+        return PRIMITIVE_CLASSES.contains(clazz);
     }
 
     private boolean isCompatibleWithWrappedPrimitive(final Field field) {
         try {
             final Object fieldPrimitiveType = field.getType()
-                                                   .getField("TYPE")
+                                                   .getField(FIELD_WITH_PRIMITIVE_CLASS_REFERENCE)
                                                    .get(null);
-            return getGenericTypeClass().getField("TYPE")
+            return getGenericTypeClass().getField(FIELD_WITH_PRIMITIVE_CLASS_REFERENCE)
                                         .get(null)
                                         .equals(fieldPrimitiveType);
         } catch (IllegalAccessException | NoSuchFieldException e) {
