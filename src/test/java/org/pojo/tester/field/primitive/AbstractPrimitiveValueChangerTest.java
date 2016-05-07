@@ -30,7 +30,6 @@ public class AbstractPrimitiveValueChangerTest {
         assertThat(abstractFieldsValuesChanger).isNotNull();
     }
 
-
     @Test
     public void shouldReturnFalseWhenGenericTypeIsNotPrimitive() throws Exception {
         // given

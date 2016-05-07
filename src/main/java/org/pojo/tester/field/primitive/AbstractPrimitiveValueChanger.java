@@ -23,7 +23,8 @@ public abstract class AbstractPrimitiveValueChanger<T> extends AbstractFieldsVal
 
     @Override
     protected boolean canChange(final Field field) {
-        return isPrimitive(field) && isCompatibleType(field);
+        return (isPrimitive(field) && isCompatibleWithPrimitive(field))
+               || (isWrappedPrimitive(field) && isCompatibleWithWrappedPrimitive(field));
     }
 
     private boolean isPrimitive(final Field field) {
@@ -31,11 +32,36 @@ public abstract class AbstractPrimitiveValueChanger<T> extends AbstractFieldsVal
                     .isPrimitive();
     }
 
-    private boolean isCompatibleType(final Field field) {
+    private boolean isCompatibleWithPrimitive(final Field field) {
         try {
             return getGenericTypeClass().getField("TYPE")
                                         .get(null)
                                         .equals(field.getType());
+        } catch (IllegalAccessException | NoSuchFieldException e) {
+            return false;
+        }
+    }
+
+    private boolean isWrappedPrimitive(final Field field) {
+        final Class<?> clazz = field.getType();
+        return clazz == Byte.class
+               || clazz == Short.class
+               || clazz == Integer.class
+               || clazz == Long.class
+               || clazz == Float.class
+               || clazz == Double.class
+               || clazz == Boolean.class
+               || clazz == Character.class;
+    }
+
+    private boolean isCompatibleWithWrappedPrimitive(final Field field) {
+        try {
+            final Object fieldPrimitiveType = field.getType()
+                                                   .getField("TYPE")
+                                                   .get(null);
+            return getGenericTypeClass().getField("TYPE")
+                                        .get(null)
+                                        .equals(fieldPrimitiveType);
         } catch (IllegalAccessException | NoSuchFieldException e) {
             return false;
         }
