@@ -23,12 +23,12 @@ class ObjectGenerator {
         return newInstance;
     }
 
-    Object createInstanceWithDifferentFieldValues(final Object instance, final List<Field> fieldsToChange) {
-        final Class<?> clazz = instance.getClass();
-        final Object otherObject = createNewInstance(clazz);
-        abstractFieldsValuesChanger.changeFieldsValues(instance, otherObject, fieldsToChange);
+    Object createInstanceWithDifferentFieldValues(final Object baseObject, final List<Field> fieldsToChange) {
+        final Class<?> clazz = baseObject.getClass();
+        final Object objectToChange = createNewInstance(clazz);
+        abstractFieldsValuesChanger.changeFieldsValues(baseObject, objectToChange, fieldsToChange);
 
-        return otherObject;
+        return objectToChange;
     }
 
     Object createNewInstance(final Class<?> clazz) {
