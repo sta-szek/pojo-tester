@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pojo.tester.field.AbstractFieldsValuesChanger;
 import test.fields.AllFiledTypes;
+import test.fields.AllFiledTypes_Wrapped;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.powermock.reflect.Whitebox.getInternalState;
@@ -19,18 +20,34 @@ public class FloatValueChangerTest {
 
     @Test
     @Parameters(method = "getValuesForTest")
-    public void shouldChangeValue(final Float value) {
+    public void shouldChangePrimitiveValue(final Float value) {
         // given
         final AllFiledTypes helpClass1 = new AllFiledTypes(value);
         final AllFiledTypes helpClass2 = new AllFiledTypes(value);
 
         // when
         floatValueChanger.changeFieldsValues(helpClass1, helpClass2, Lists.newArrayList(AllFiledTypes.class.getDeclaredFields()));
-        final Float result = getInternalState(helpClass1, "floatType");
+        final Float result1 = getInternalState(helpClass1, "floatType");
         final Float result2 = getInternalState(helpClass2, "floatType");
 
         // then
-        assertThat(result).isNotEqualTo(result2);
+        assertThat(result1).isNotEqualTo(result2);
+    }
+
+    @Test
+    @Parameters(method = "getValuesForTest")
+    public void shouldChangeWrappedValue(final Float value) {
+        // given
+        final AllFiledTypes_Wrapped helpClass1 = new AllFiledTypes_Wrapped(value);
+        final AllFiledTypes_Wrapped helpClass2 = new AllFiledTypes_Wrapped(value);
+
+        // when
+        floatValueChanger.changeFieldsValues(helpClass1, helpClass2, Lists.newArrayList(AllFiledTypes_Wrapped.class.getDeclaredFields()));
+        final Float result1 = getInternalState(helpClass1, "floatType");
+        final Float result2 = getInternalState(helpClass2, "floatType");
+
+        // then
+        assertThat(result1).isNotEqualTo(result2);
     }
 
     @Test

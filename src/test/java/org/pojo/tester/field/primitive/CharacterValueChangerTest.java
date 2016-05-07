@@ -1,5 +1,6 @@
 package org.pojo.tester.field.primitive;
 
+
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.assertj.core.util.Lists;
@@ -7,6 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pojo.tester.field.AbstractFieldsValuesChanger;
 import test.fields.AllFiledTypes;
+import test.fields.AllFiledTypes_Wrapped;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.powermock.reflect.Whitebox.getInternalState;
@@ -18,18 +20,34 @@ public class CharacterValueChangerTest {
 
     @Test
     @Parameters(method = "getValuesForTest")
-    public void shouldChangeValue(final Character value) {
+    public void shouldChangePrimitiveValue(final Character value) {
         // given
         final AllFiledTypes helpClass1 = new AllFiledTypes(value);
         final AllFiledTypes helpClass2 = new AllFiledTypes(value);
 
         // when
         charValueChanger.changeFieldsValues(helpClass1, helpClass2, Lists.newArrayList(AllFiledTypes.class.getDeclaredFields()));
-        final Character result = getInternalState(helpClass1, "characterType");
+        final Character result1 = getInternalState(helpClass1, "characterType");
         final Character result2 = getInternalState(helpClass2, "characterType");
 
         // then
-        assertThat(result).isNotEqualTo(result2);
+        assertThat(result1).isNotEqualTo(result2);
+    }
+
+    @Test
+    @Parameters(method = "getValuesForTest")
+    public void shouldChangeWrappedValue(final Character value) {
+        // given
+        final AllFiledTypes_Wrapped helpClass1 = new AllFiledTypes_Wrapped(value);
+        final AllFiledTypes_Wrapped helpClass2 = new AllFiledTypes_Wrapped(value);
+
+        // when
+        charValueChanger.changeFieldsValues(helpClass1, helpClass2, Lists.newArrayList(AllFiledTypes_Wrapped.class.getDeclaredFields()));
+        final Character result1 = getInternalState(helpClass1, "characterType");
+        final Character result2 = getInternalState(helpClass2, "characterType");
+
+        // then
+        assertThat(result1).isNotEqualTo(result2);
     }
 
     @Test

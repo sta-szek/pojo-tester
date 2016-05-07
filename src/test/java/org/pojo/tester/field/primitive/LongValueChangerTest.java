@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pojo.tester.field.AbstractFieldsValuesChanger;
 import test.fields.AllFiledTypes;
+import test.fields.AllFiledTypes_Wrapped;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.powermock.reflect.Whitebox.getInternalState;
@@ -18,18 +19,34 @@ public class LongValueChangerTest {
 
     @Test
     @Parameters(method = "getValuesForTest")
-    public void shouldChangeValue(final Long value) {
+    public void shouldChangePrimitiveValue(final Long value) {
         // given
         final AllFiledTypes helpClass1 = new AllFiledTypes(value);
         final AllFiledTypes helpClass2 = new AllFiledTypes(value);
 
         // when
         longValueChanger.changeFieldsValues(helpClass1, helpClass2, Lists.newArrayList(AllFiledTypes.class.getDeclaredFields()));
-        final Long result = getInternalState(helpClass1, "longType");
+        final Long result1 = getInternalState(helpClass1, "longType");
         final Long result2 = getInternalState(helpClass2, "longType");
 
         // then
-        assertThat(result).isNotEqualTo(result2);
+        assertThat(result1).isNotEqualTo(result2);
+    }
+
+    @Test
+    @Parameters(method = "getValuesForTest")
+    public void shouldChangeWrappedValue(final Long value) {
+        // given
+        final AllFiledTypes_Wrapped helpClass1 = new AllFiledTypes_Wrapped(value);
+        final AllFiledTypes_Wrapped helpClass2 = new AllFiledTypes_Wrapped(value);
+
+        // when
+        longValueChanger.changeFieldsValues(helpClass1, helpClass2, Lists.newArrayList(AllFiledTypes_Wrapped.class.getDeclaredFields()));
+        final Long result1 = getInternalState(helpClass1, "longType");
+        final Long result2 = getInternalState(helpClass2, "longType");
+
+        // then
+        assertThat(result1).isNotEqualTo(result2);
     }
 
     @Test
