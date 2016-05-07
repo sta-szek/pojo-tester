@@ -43,8 +43,8 @@ public class ObjectGeneratorTest {
         final List<Field> allFields = TestHelper.getAllFieldsExceptDummyJacocoField(goodPojo.getClass());
 
         // when
-        final GoodPojo_Equals_HashCode_ToString result = objectGenerator.createInstanceWithDifferentFieldValues(goodPojo.getClass(),
-                                                                                                                allFields);
+        final Object result = objectGenerator.createInstanceWithDifferentFieldValues(goodPojo, allFields);
+
         // then
         assertThat(result).isNotEqualTo(goodPojo);
     }
