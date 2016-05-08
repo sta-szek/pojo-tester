@@ -1,15 +1,15 @@
 package org.pojo.tester;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.pojo.tester.field.FieldUtils;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class FieldPredicate {
-
-    private FieldPredicate() {
-    }
 
     public static Predicate<String> includeAllFields(final Class<?> testedClass) {
         final List<String> allFieldNames = FieldUtils.getAllFieldNames(testedClass);
