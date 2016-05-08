@@ -4,6 +4,7 @@ package test;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import test.fields.TestEnum1;
 
 import java.util.Random;
 
@@ -17,6 +18,7 @@ public class GoodPojo_Equals_HashCode_ToString {
     public boolean booleanType;
     public float floatType;
     public char charType;
+    public TestEnum1 testEnum1;
 
     public GoodPojo_Equals_HashCode_ToString() {
         final Random random = new Random();
@@ -25,17 +27,17 @@ public class GoodPojo_Equals_HashCode_ToString {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
-                .append("random", random)
-                .append("byteField", byteField)
-                .append("shortType", shortType)
-                .append("intType", intType)
-                .append("longType", longType)
-                .append("doubleType", doubleType)
-                .append("booleanType", booleanType)
-                .append("floatType", floatType)
-                .append("charType", charType)
-                .toString();
+        return new ToStringBuilder(this).append("random", random)
+                                        .append("byteField", byteField)
+                                        .append("shortType", shortType)
+                                        .append("intType", intType)
+                                        .append("longType", longType)
+                                        .append("doubleType", doubleType)
+                                        .append("booleanType", booleanType)
+                                        .append("floatType", floatType)
+                                        .append("charType", charType)
+                                        .append("testEnum1", testEnum1)
+                                        .toString();
     }
 
     @Override
@@ -59,6 +61,7 @@ public class GoodPojo_Equals_HashCode_ToString {
                                   .append(booleanType, that.booleanType)
                                   .append(floatType, that.floatType)
                                   .append(charType, that.charType)
+                                  .append(testEnum1, that.testEnum1)
                                   .isEquals();
     }
 
@@ -73,6 +76,7 @@ public class GoodPojo_Equals_HashCode_ToString {
                                     .append(booleanType)
                                     .append(floatType)
                                     .append(charType)
+                                    .append(testEnum1)
                                     .toHashCode();
     }
 }

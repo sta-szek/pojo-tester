@@ -40,6 +40,13 @@ public abstract class AbstractPrimitiveValueChanger<T> extends AbstractFieldsVal
                || isWrappedPrimitive(field) && isCompatibleWithWrappedPrimitive(field);
     }
 
+    @Override
+    protected T increaseValue(final T value, final Class<?> type) {
+        return increaseValue(value);
+    }
+
+    protected abstract T increaseValue(final T value);
+
     private boolean isPrimitive(final Field field) {
         return field.getType()
                     .isPrimitive();

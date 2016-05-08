@@ -25,7 +25,7 @@ public class AbstractFieldsValuesChangerTest {
 
         // when
         abstractFieldsValuesChanger.register(abstractFieldsValuesChanger);
-        final AbstractFieldsValuesChanger result = getInternalState(abstractFieldsValuesChanger, "abstractFieldsValuesChanger");
+        final AbstractFieldsValuesChanger result = getInternalState(abstractFieldsValuesChanger, "next");
 
         // then
         assertThat(result).isNotNull();

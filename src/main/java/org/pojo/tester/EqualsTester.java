@@ -2,8 +2,8 @@ package org.pojo.tester;
 
 import org.pojo.tester.assertion.Assertions;
 import org.pojo.tester.field.AbstractFieldsValuesChanger;
+import org.pojo.tester.field.DefaultFieldsValuesChanger;
 import org.pojo.tester.field.FieldUtils;
-import org.pojo.tester.field.primitive.AbstractPrimitiveValueChanger;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -17,7 +17,7 @@ public class EqualsTester {
     private final ObjectGenerator objectGenerator;
 
     public EqualsTester() {
-        this(AbstractPrimitiveValueChanger.getInstance());
+        this(DefaultFieldsValuesChanger.INSTANCE);
     }
 
     public EqualsTester(final AbstractFieldsValuesChanger abstractFieldsValuesChanger) {

@@ -215,6 +215,7 @@ public class EqualAssertionsTest {
         // given
         final GoodPojo_Equals_HashCode_ToString objectUnderAssert = new GoodPojo_Equals_HashCode_ToString();
         final GoodPojo_Equals_HashCode_ToString otherObject = new GoodPojo_Equals_HashCode_ToString();
+        otherObject.booleanType = true;
         final ResultBuilder resultBuilder = spy(ResultBuilder.class);
         final EqualAssertions equalAssertions = new EqualAssertions(resultBuilder, objectUnderAssert);
 
