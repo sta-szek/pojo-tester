@@ -29,7 +29,7 @@ public abstract class AbstractFieldsValuesChanger<T> {
 
     protected abstract boolean canChange(final Field field);
 
-    protected abstract T increaseValue(T value);
+    protected abstract T increaseValue(T value, final Class<?> type);
 
     private void checkAndChange(final Object sourceObject, final Object targetObject, final Field field) {
         if (canChange(field)) {
@@ -48,7 +48,7 @@ public abstract class AbstractFieldsValuesChanger<T> {
             final T sourceFieldValue = (T) FieldUtils.getValue(sourceObject, field);
             final T targetFieldValue = (T) FieldUtils.getValue(targetObject, field);
             if (!areDifferentValues(sourceFieldValue, targetFieldValue)) {
-                final T increasedValue = increaseValue(targetFieldValue);
+                final T increasedValue = increaseValue(targetFieldValue, field.getType());
                 FieldUtils.setValue(targetObject, field, increasedValue);
             }
         } catch (final IllegalAccessException e) {
