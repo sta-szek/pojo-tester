@@ -57,7 +57,7 @@ public class EnumValueChangerTest {
     }
 
     @Test
-    public void should_return_null_for_single_enum_constant() {
+    public void Should_Return_Null_For_Single_Enum_Constant() {
         // given
 
         // when

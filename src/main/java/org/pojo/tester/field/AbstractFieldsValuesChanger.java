@@ -9,13 +9,13 @@ import java.util.List;
 @Slf4j
 public abstract class AbstractFieldsValuesChanger<T> {
 
-    private AbstractFieldsValuesChanger abstractFieldsValuesChanger;
+    private AbstractFieldsValuesChanger next;
 
     public AbstractFieldsValuesChanger register(final AbstractFieldsValuesChanger abstractFieldsValuesChanger) {
-        if (this.abstractFieldsValuesChanger == null) {
-            this.abstractFieldsValuesChanger = abstractFieldsValuesChanger;
+        if (this.next == null) {
+            this.next = abstractFieldsValuesChanger;
         } else {
-            this.abstractFieldsValuesChanger.register(abstractFieldsValuesChanger);
+            this.next.register(abstractFieldsValuesChanger);
         }
         return this;
     }
@@ -38,8 +38,8 @@ public abstract class AbstractFieldsValuesChanger<T> {
     }
 
     private void callNextValuesChanger(final Object sourceObject, final Object targetObject, final List<Field> fieldsToChange) {
-        if (abstractFieldsValuesChanger != null) {
-            abstractFieldsValuesChanger.changeFieldsValues(sourceObject, targetObject, fieldsToChange);
+        if (next != null) {
+            next.changeFieldsValues(sourceObject, targetObject, fieldsToChange);
         }
     }
 

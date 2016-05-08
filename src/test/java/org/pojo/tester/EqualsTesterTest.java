@@ -58,9 +58,8 @@ public class EqualsTesterTest {
         assertThat(result).isNull();
     }
 
-
     @Test
-    public void shouldNotPassNullTest() {
+    public void shouldFailNullTest() {
         // given
         final Class[] classesToTest = {BadPojoEqualsNull.class};
         final EqualsTester equalsTester = new EqualsTester();
@@ -73,7 +72,7 @@ public class EqualsTesterTest {
     }
 
     @Test
-    public void shouldNotPassItselfTest() {
+    public void shouldFailItselfTest() {
         // given
         final Class[] classesToTest = {BadPojoEqualsItself.class};
         final EqualsTester equalsTester = new EqualsTester();
@@ -86,7 +85,7 @@ public class EqualsTesterTest {
     }
 
     @Test
-    public void shouldNotPassDifferentTypeTest() {
+    public void shouldFailDifferentTypeTest() {
         // given
         final Class[] classesToTest = {BadPojoEqualsDifferentType.class};
         final EqualsTester equalsTester = new EqualsTester();

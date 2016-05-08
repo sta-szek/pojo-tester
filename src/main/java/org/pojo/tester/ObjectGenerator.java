@@ -24,8 +24,8 @@ class ObjectGenerator {
     }
 
     Object createInstanceWithDifferentFieldValues(final Object baseObject, final List<Field> fieldsToChange) {
-        final Class<?> clazz = baseObject.getClass();
-        final Object objectToChange = createNewInstance(clazz);
+        final Object objectToChange = createSameInstance(baseObject);
+        System.out.println(baseObject.equals(objectToChange));
         abstractFieldsValuesChanger.changeFieldsValues(baseObject, objectToChange, fieldsToChange);
 
         return objectToChange;
