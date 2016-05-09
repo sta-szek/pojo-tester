@@ -19,7 +19,7 @@ public class ShortValueChangerTest {
 
     @Test
     @Parameters(method = "getValuesForTest")
-    public void shouldChangePrimitiveValue(final Short value) {
+    public void Should_Change_Primitive_Value(final Short value) {
         // given
         final AllFiledTypes helpClass1 = new AllFiledTypes(value);
         final AllFiledTypes helpClass2 = new AllFiledTypes(value);

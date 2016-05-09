@@ -19,7 +19,7 @@ public class EnumValueChangerTest {
 
     @Test
     @Parameters(method = "getValuesForTest")
-    public void shouldChangeEnumValue(final TestEnum1 value) {
+    public void Should_Change_Enum_Value(final TestEnum1 value) {
         // given
         final EnumFields helpClass1 = new EnumFields(value);
         final EnumFields helpClass2 = new EnumFields(value);
@@ -35,7 +35,7 @@ public class EnumValueChangerTest {
 
     @Test
     @Parameters(method = "getValuesForCanChange")
-    public void shouldReturnTrueOrFalse_IfCanChangeOrNot(final Field field, final boolean expectedResult) {
+    public void Should_Return_True_Or_False_Whether_Can_Change_Or_Not(final Field field, final boolean expectedResult) {
         // given
 
         // when
@@ -46,7 +46,7 @@ public class EnumValueChangerTest {
     }
 
     @Test
-    public void shouldThrowException_IfEnumDoesNotHaveConstants() {
+    public void Should_Throw_Exception_When_Enum_Has_No_Constants() {
         // given
 
         // when
@@ -68,7 +68,7 @@ public class EnumValueChangerTest {
     }
 
     @Test
-    public void shouldReturnFalseForSameValues() {
+    public void Should_Return_False_If_Values_Are_Not_Different() {
         // given
         final TestEnum1 value1 = TestEnum1.ENUM1;
         final TestEnum1 value2 = TestEnum1.ENUM1;
@@ -81,7 +81,7 @@ public class EnumValueChangerTest {
     }
 
     @Test
-    public void shouldReturnTrueForDifferentValues() {
+    public void Should_Return_True_If_Values_Are_Different() {
         // given
         final TestEnum1 value1 = TestEnum1.ENUM1;
         final TestEnum1 value2 = TestEnum1.ENUM2;

@@ -11,6 +11,13 @@ public abstract class AbstractFieldsValuesChanger<T> {
 
     private AbstractFieldsValuesChanger next;
 
+    public void changeFieldsValues(final Object sourceObject, final Object targetObject, final List<Field> fieldsToChange) {
+        fieldsToChange.forEach(eachField -> checkAndChange(sourceObject, targetObject, eachField));
+        callNextValuesChanger(sourceObject, targetObject, fieldsToChange);
+    }
+
+    public abstract boolean areDifferentValues(T sourceValue, T targetValue);
+
     public AbstractFieldsValuesChanger register(final AbstractFieldsValuesChanger abstractFieldsValuesChanger) {
         if (this.next == null) {
             this.next = abstractFieldsValuesChanger;
@@ -19,13 +26,6 @@ public abstract class AbstractFieldsValuesChanger<T> {
         }
         return this;
     }
-
-    public void changeFieldsValues(final Object sourceObject, final Object targetObject, final List<Field> fieldsToChange) {
-        fieldsToChange.forEach(eachField -> checkAndChange(sourceObject, targetObject, eachField));
-        callNextValuesChanger(sourceObject, targetObject, fieldsToChange);
-    }
-
-    public abstract boolean areDifferentValues(T sourceValue, T targetValue);
 
     protected abstract boolean canChange(final Field field);
 

@@ -19,7 +19,7 @@ public class LongValueChangerTest {
 
     @Test
     @Parameters(method = "getValuesForTest")
-    public void shouldChangePrimitiveValue(final Long value) {
+    public void Should_Change_Primitive_Value(final Long value) {
         // given
         final AllFiledTypes helpClass1 = new AllFiledTypes(value);
         final AllFiledTypes helpClass2 = new AllFiledTypes(value);
@@ -35,7 +35,7 @@ public class LongValueChangerTest {
 
     @Test
     @Parameters(method = "getValuesForTest")
-    public void shouldChangeWrappedValue(final Long value) {
+    public void Should_Change_Wrapped_Value(final Long value) {
         // given
         final AllFiledTypes_Wrapped helpClass1 = new AllFiledTypes_Wrapped(value);
         final AllFiledTypes_Wrapped helpClass2 = new AllFiledTypes_Wrapped(value);
@@ -50,7 +50,7 @@ public class LongValueChangerTest {
     }
 
     @Test
-    public void shouldReturnFalseForSameValues() {
+    public void Should_Return_False_If_Values_Are_Not_Different() {
         // given
         final Long value1 = 0L;
         final Long value2 = 0L;
@@ -63,7 +63,7 @@ public class LongValueChangerTest {
     }
 
     @Test
-    public void shouldReturnTrueForDifferentValues() {
+    public void Should_Return_True_If_Values_Are_Different() {
         // given
         final Long value1 = 0L;
         final Long value2 = 1L;
