@@ -20,7 +20,7 @@ import static org.powermock.api.mockito.PowerMockito.mock;
 public class AbstractPrimitiveValueChangerTest {
 
     @Test
-    public void shouldCreateInstanceWithPrimitiveChangers() throws InstantiationException, IllegalAccessException {
+    public void Should_Create_Instance_With_Primitive_Changers() throws InstantiationException, IllegalAccessException {
         // given
 
         // when
@@ -31,13 +31,11 @@ public class AbstractPrimitiveValueChangerTest {
     }
 
     @Test
-    public void shouldReturnFalseWhenGenericTypeIsNotPrimitive() throws Exception {
+    public void Should_Return_False_When_Field_Is_Not_Primitive() throws Exception {
         // given
-        final Field field = AllFiledTypes.class.getDeclaredField("intType");
+        final Field field = Thread.class.getDeclaredField("threadQ");
 
         final AbstractPrimitiveValueChanger<Object> changerMock = mock(AbstractPrimitiveValueChanger.class, CALLS_REAL_METHODS);
-        doReturn(Object.class).when(changerMock, "getGenericTypeClass");
-        doReturn(true).when(changerMock, "isPrimitive", field);
 
         // when
         final boolean result = changerMock.canChange(field);
@@ -47,12 +45,12 @@ public class AbstractPrimitiveValueChangerTest {
     }
 
     @Test
-    public void shouldReturnFalseWhenFieldIsNotPrimitive() throws Exception {
+    public void Should_Return_False_When_Class_Is_Not_Compatible_With_Primitive() throws Exception {
         // given
-        final Field field = Thread.class.getDeclaredField("threadQ");
+        final Field field = AllFiledTypes.class.getDeclaredField("intType");
 
         final AbstractPrimitiveValueChanger<Object> changerMock = mock(AbstractPrimitiveValueChanger.class, CALLS_REAL_METHODS);
-        doReturn(Integer.class).when(changerMock, "getGenericTypeClass");
+        doReturn(Object.class).when(changerMock, "getGenericTypeClass");
 
         // when
         final boolean result = changerMock.canChange(field);

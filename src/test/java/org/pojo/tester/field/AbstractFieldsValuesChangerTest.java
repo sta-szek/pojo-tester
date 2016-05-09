@@ -1,26 +1,25 @@
 package org.pojo.tester.field;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Answers;
+import org.mockito.Mock;
 import org.mockito.Mockito;
-import test.fields.AllFiledTypes;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.powermock.reflect.internal.WhiteboxImpl.getInternalState;
 
+@RunWith(MockitoJUnitRunner.class)
 public class AbstractFieldsValuesChangerTest {
 
+    @Mock(answer = Answers.CALLS_REAL_METHODS)
     private static AbstractFieldsValuesChanger abstractFieldsValuesChanger;
 
-    @BeforeClass
-    public static void beforeClass() {
-        abstractFieldsValuesChanger = mock(AbstractFieldsValuesChanger.class, Mockito.CALLS_REAL_METHODS);
-    }
-
     @Test
-    public void shouldRegisterFirstFieldsValuesChanger() {
+    public void Should_Register_First_Value_Changer() {
         // given
 
         // when
@@ -32,7 +31,7 @@ public class AbstractFieldsValuesChangerTest {
     }
 
     @Test
-    public void shouldRegisterFieldsValuesChangerToNextFieldRegisterValuesChanger() {
+    public void Should_Register_Value_Changer_To_Already_Registered_One() {
         // given
         final AbstractFieldsValuesChanger first = mock(AbstractFieldsValuesChanger.class, Mockito.CALLS_REAL_METHODS);
         final AbstractFieldsValuesChanger second = mock(AbstractFieldsValuesChanger.class, Mockito.CALLS_REAL_METHODS);
@@ -43,17 +42,6 @@ public class AbstractFieldsValuesChangerTest {
 
         // then
         verify(first).register(second);
-    }
-
-    @Test
-    public void shouldReturnFalseIfCanNotChange() throws NoSuchFieldException {
-        // given
-
-        // when
-        final boolean result = abstractFieldsValuesChanger.canChange(AllFiledTypes.class.getDeclaredField("finalIntType"));
-
-        // then
-        assertThat(result).isFalse();
     }
 
 }

@@ -20,7 +20,7 @@ public class FloatValueChangerTest {
 
     @Test
     @Parameters(method = "getValuesForTest")
-    public void shouldChangePrimitiveValue(final Float value) {
+    public void Should_Change_Primitive_Value(final Float value) {
         // given
         final AllFiledTypes helpClass1 = new AllFiledTypes(value);
         final AllFiledTypes helpClass2 = new AllFiledTypes(value);
@@ -36,7 +36,7 @@ public class FloatValueChangerTest {
 
     @Test
     @Parameters(method = "getValuesForTest")
-    public void shouldChangeWrappedValue(final Float value) {
+    public void Should_Change_Wrapped_Value(final Float value) {
         // given
         final AllFiledTypes_Wrapped helpClass1 = new AllFiledTypes_Wrapped(value);
         final AllFiledTypes_Wrapped helpClass2 = new AllFiledTypes_Wrapped(value);
@@ -51,7 +51,7 @@ public class FloatValueChangerTest {
     }
 
     @Test
-    public void shouldReturnFalseForSameValues() {
+    public void Should_Return_False_If_Values_Are_Not_Different() {
         // given
         final Float value1 = 0f;
         final Float value2 = 0f;
@@ -64,7 +64,7 @@ public class FloatValueChangerTest {
     }
 
     @Test
-    public void shouldReturnTrueForDifferentValues() {
+    public void Should_Return_True_If_Values_Are_Different() {
         // given
         final Float value1 = 0f;
         final Float value2 = 1f;
