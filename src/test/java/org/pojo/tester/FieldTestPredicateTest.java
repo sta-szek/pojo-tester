@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class FieldTestPredicateTest {
 
     @Test
-    public void shouldReturnPredicate_ThatAcceptAllFields() {
+    public void Should_Return_Predicate_That_Accept_All_Fields() {
         // given
 
         // when
@@ -29,7 +29,7 @@ public class FieldTestPredicateTest {
     }
 
     @Test
-    public void shouldReturnPredicate_ThatAcceptListOfFields() {
+    public void Should_Return_Predicate_That_Accept_List_Of_Fields() {
         // given
         final List<String> fields = Lists.newArrayList("a", "b");
 
@@ -46,9 +46,9 @@ public class FieldTestPredicateTest {
     }
 
     @Test
-    public void shouldReturnPredicate_ThatAcceptArrayOfFields() {
+    public void Should_Return_Predicate_That_Accept_Array_Of_Fields() {
         // given
-        String[] fields = {"a", "b"};
+        final String[] fields = {"a", "b"};
 
         // when
         final Predicate<String> predicate = FieldPredicate.include(fields);
@@ -63,7 +63,7 @@ public class FieldTestPredicateTest {
     }
 
     @Test
-    public void shouldReturnPredicate_ThatRefuseListOfFields() {
+    public void Should_Return_Predicate_That_Refuse_List_Of_Fields() {
         // given
         final List<String> fields = Lists.newArrayList("a", "b");
 
@@ -80,9 +80,9 @@ public class FieldTestPredicateTest {
     }
 
     @Test
-    public void shouldReturnPredicate_ThatRefuseArrayOfFields() {
+    public void Should_Return_Predicate_That_Refuse_Array_Of_Fields() {
         // given
-        String[] fields = {"a", "b"};
+        final String[] fields = {"a", "b"};
 
         // when
         final Predicate<String> predicate = FieldPredicate.exclude(fields);

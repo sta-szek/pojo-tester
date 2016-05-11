@@ -23,7 +23,7 @@ public class ObjectGeneratorTest {
     private final AbstractFieldsValuesChanger abstractFieldsValuesChanger = AbstractPrimitiveValueChanger.getInstance();
 
     @Test
-    public void shouldCreateSameInstance() {
+    public void Should_Create_Same_Instance() {
         // given
         final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldsValuesChanger);
         final GoodPojo_Equals_HashCode_ToString goodPojo = new GoodPojo_Equals_HashCode_ToString();
@@ -36,7 +36,7 @@ public class ObjectGeneratorTest {
     }
 
     @Test
-    public void shouldCreateDifferentInstance() {
+    public void Should_Create_Different_Instance() {
         // given
         final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldsValuesChanger);
         final GoodPojo_Equals_HashCode_ToString goodPojo = new GoodPojo_Equals_HashCode_ToString();
@@ -50,7 +50,7 @@ public class ObjectGeneratorTest {
     }
 
     @Test
-    public void shouldThrowExceptionWhenCannotCreateInstance() {
+    public void Should_Throw_Exception_When_Cannot_Create_Instance() {
         //given
         final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldsValuesChanger);
 

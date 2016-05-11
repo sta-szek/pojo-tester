@@ -35,7 +35,7 @@ public class ShortValueChangerTest {
 
     @Test
     @Parameters(method = "getValuesForTest")
-    public void shouldChangeWrappedValue(final Short value) {
+    public void Should_Change_Wrapped_Value(final Short value) {
         // given
         final AllFiledTypes_Wrapped helpClass1 = new AllFiledTypes_Wrapped(value);
         final AllFiledTypes_Wrapped helpClass2 = new AllFiledTypes_Wrapped(value);
@@ -50,7 +50,7 @@ public class ShortValueChangerTest {
     }
 
     @Test
-    public void shouldReturnFalseForSameValues() {
+    public void Should_Return_False_If_Values_Are_Not_Different() {
         // given
         final Short value1 = 0;
         final Short value2 = 0;
@@ -63,7 +63,7 @@ public class ShortValueChangerTest {
     }
 
     @Test
-    public void shouldReturnTrueForDifferentValues() {
+    public void Should_Return_True_If_Values_Are_Different() {
         // given
         final Short value1 = 0;
         final Short value2 = 1;

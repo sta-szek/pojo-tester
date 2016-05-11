@@ -15,7 +15,7 @@ import static org.mockito.Mockito.verify;
 public class HashCodeAssertionsTest {
 
     @Test
-    public void shouldFail_WhenHashCodeMethodIsNotConsistent() {
+    public void Should_Fail_When_HashCode_Method_Is_Not_Consistent() {
         // given
         final BadPojoHashCode_NotConsistent objectUnderAssert = new BadPojoHashCode_NotConsistent();
         final ResultBuilder resultBuilder = spy(ResultBuilder.class);
@@ -29,7 +29,7 @@ public class HashCodeAssertionsTest {
     }
 
     @Test
-    public void shouldFail_WhenHashCodeMethodReturnsDifferentHashCodeForSameObjects() {
+    public void Should_Fail_When_HashCode_Method_Returns_Different_HashCode_For_Same_Objects() {
         // given
         final BadPojoHashCode_SameObjects objectUnderAssert = new BadPojoHashCode_SameObjects();
         final ResultBuilder resultBuilder = spy(ResultBuilder.class);
@@ -43,7 +43,7 @@ public class HashCodeAssertionsTest {
     }
 
     @Test
-    public void shouldFail_WhenHashCodeMethodReturnsSameHashCodeForDifferentObjects() {
+    public void Should_Fail_When_HashCode_Method_Returns_Same_HashCode_For_Different_Objects() {
         // given
         final BadPojoHashCode_DifferentObjects objectUnderAssert1 = new BadPojoHashCode_DifferentObjects(1);
         final BadPojoHashCode_DifferentObjects objectUnderAssert2 = new BadPojoHashCode_DifferentObjects(2);
@@ -58,7 +58,7 @@ public class HashCodeAssertionsTest {
     }
 
     @Test
-    public void shouldPass_WhenHashCodeMethodReturnsDifferentHashCodeForDifferentObjects() {
+    public void shouldPass_When_HashCode_Method_Returns_Different_HashCode_For_Different_Objects() {
         // given
         final GoodPojo_Equals_HashCode_ToString objectUnderAssert1 = new GoodPojo_Equals_HashCode_ToString();
         final GoodPojo_Equals_HashCode_ToString objectUnderAssert2 = new GoodPojo_Equals_HashCode_ToString();
@@ -74,7 +74,7 @@ public class HashCodeAssertionsTest {
     }
 
     @Test
-    public void shouldPass_WhenHashCodeMethodReturnsSameHashCodeForSameObjects() {
+    public void shouldPass_When_HashCode_Method_Returns_Same_HashCode_For_Same_Objects() {
         // given
         final GoodPojo_Equals_HashCode_ToString objectUnderAssert = new GoodPojo_Equals_HashCode_ToString();
         final ResultBuilder resultBuilder = spy(ResultBuilder.class);
@@ -88,7 +88,7 @@ public class HashCodeAssertionsTest {
     }
 
     @Test
-    public void shouldPass_WhenHashCodeMethodIsConsistent() {
+    public void shouldPass_When_HashCode_Method_Is_Consistent() {
         // given
         final GoodPojo_Equals_HashCode_ToString objectUnderAssert = new GoodPojo_Equals_HashCode_ToString();
         final ResultBuilder resultBuilder = spy(ResultBuilder.class);

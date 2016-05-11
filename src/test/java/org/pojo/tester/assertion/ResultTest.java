@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ResultTest {
 
     @Test
-    public void shouldReturnTrueIfResultIsFailed() {
+    public void Should_Return_True_If_Result_Is_Failed() {
         // given
         final HashSet<Class> testedClasses = Sets.newLinkedHashSet(Object.class);
         final List<TestPair> passedClasses = new ArrayList<>();
@@ -33,7 +33,7 @@ public class ResultTest {
     }
 
     @Test
-    public void shouldReturnFalseIfResultIsNotFailed() {
+    public void Should_Return_False_If_Result_Is_Not_Failed() {
         // given
         final HashSet<Class> testedClasses = Sets.newLinkedHashSet(Object.class);
         final List<TestPair> passedClasses = Lists.newArrayList(new TestPair("testName", Object.class));
@@ -50,7 +50,7 @@ public class ResultTest {
 
     @Test
     @Parameters(method = "objectsForMessageTest")
-    public void shouldReturnExpectedMessage(final Result result, final String expectedMessage) {
+    public void Should_Return_Expected_Message(final Result result, final String expectedMessage) {
         // given
 
         // when
