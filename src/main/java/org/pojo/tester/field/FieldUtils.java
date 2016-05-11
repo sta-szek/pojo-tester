@@ -53,20 +53,6 @@ public final class FieldUtils {
                                   .collect(Collectors.toList());
     }
 
-    public static void makeModifiable(final Field field) {
-        final Class<? extends Field> clazz = field.getClass();
-        try {
-            field.setAccessible(true);
-            final Field modifierField = clazz.getDeclaredField(FIELD_CLASS_MODIFIER_FIELD_NAME);
-            modifierField.setAccessible(true);
-
-            final int modifiers = field.getModifiers() & ~Modifier.FINAL;
-            modifierField.setInt(field, modifiers);
-        } catch (IllegalAccessException | NoSuchFieldException e) {
-            throw new GetOrSetValueException(FIELD_CLASS_MODIFIER_FIELD_NAME, clazz, e);
-        }
-    }
-
     public static Object getValue(final Object targetObject, final Field field) throws IllegalAccessException {
         makeModifiable(field);
         return field.get(targetObject);
@@ -81,6 +67,20 @@ public final class FieldUtils {
         return getAllFields(testedClass).stream()
                                         .filter(eachField -> predicate.test(eachField.getName()))
                                         .collect(Collectors.toList());
+    }
+
+    private static void makeModifiable(final Field field) {
+        final Class<? extends Field> clazz = field.getClass();
+        try {
+            field.setAccessible(true);
+            final Field modifierField = clazz.getDeclaredField(FIELD_CLASS_MODIFIER_FIELD_NAME);
+            modifierField.setAccessible(true);
+
+            final int modifiers = field.getModifiers() & ~Modifier.FINAL;
+            modifierField.setInt(field, modifiers);
+        } catch (IllegalAccessException | NoSuchFieldException e) {
+            throw new GetOrSetValueException(FIELD_CLASS_MODIFIER_FIELD_NAME, clazz, e);
+        }
     }
 
     private static boolean excludeEmptySet(final List<Field> fields) {
