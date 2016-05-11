@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ResultBuilderTest {
 
     @Test
-    public void shouldBuildEmptyResult() {
+    public void Should_Build_Empty_Result() {
         // given
         final HashSet<Class> testedClasses = new HashSet<>();
         final List<TestPair> passedClasses = new ArrayList<>();
@@ -32,7 +32,7 @@ public class ResultBuilderTest {
     }
 
     @Test
-    public void shouldBuildResultWithPassAndTestedClass() {
+    public void Should_Build_Result_With_Pass_And_Tested_Class() {
         // given
         final HashSet<Class> testedClasses = Sets.newLinkedHashSet(Object.class);
         final List<TestPair> passedClasses = Lists.newArrayList(new TestPair("testName", Object.class));
@@ -52,7 +52,7 @@ public class ResultBuilderTest {
     }
 
     @Test
-    public void shouldBuildResultWithFailAndTestedClassAndMessage() {
+    public void Should_Build_Result_With_Fail_And_Tested_Class_And_Message() {
         // given
         final HashSet<Class> testedClasses = Sets.newLinkedHashSet(Object.class);
         final List<TestPair> passedClasses = new ArrayList<>();

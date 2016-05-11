@@ -19,9 +19,9 @@ import static org.pojo.tester.PredicateAssertions.assertThat;
 public class FieldPredicateTest {
 
     @Test
-    public void shouldIncludeAllFields() {
+    public void Should_Include_All_Fields() {
         // given
-        List<String> allFieldNames = FieldUtils.getAllFieldNames(TestPredicate.class);
+        final List<String> allFieldNames = FieldUtils.getAllFieldNames(TestPredicate.class);
 
         // when
         final Predicate<String> predicate = FieldPredicate.includeAllFields(TestPredicate.class);
@@ -32,7 +32,7 @@ public class FieldPredicateTest {
 
     @Test
     @Parameters(method = "listOfIncludedFields")
-    public void shouldIncludeListOfFields(final List<String> includedFields) {
+    public void Should_Include_List_Of_Fields(final List<String> includedFields) {
         // given
 
         // when
@@ -44,7 +44,7 @@ public class FieldPredicateTest {
 
     @Test
     @Parameters(method = "arrayOfIncludedFields")
-    public void shouldIncludeArrayOfFields(final String... includedFields) {
+    public void Should_Include_Array_Of_Fields(final String... includedFields) {
         // given
 
         // when
@@ -56,7 +56,7 @@ public class FieldPredicateTest {
 
     @Test
     @Parameters(method = "listOfExcludedFields")
-    public void shouldExcludeListOfFields(final List<String> excludedFields) {
+    public void Should_Exclude_List_Of_Fields(final List<String> excludedFields) {
         // given
 
         // when
@@ -68,7 +68,7 @@ public class FieldPredicateTest {
 
     @Test
     @Parameters(method = "arrayOfExcludedFields")
-    public void shouldExcludeArrayOfFields(final String... excludedFields) {
+    public void Should_Exclude_Array_Of_Fields(final String... excludedFields) {
         // given
 
         // when

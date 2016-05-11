@@ -12,7 +12,7 @@ import static org.mockito.internal.util.reflection.Whitebox.setInternalState;
 public class AssertionsTest {
 
     @Test
-    public void shouldNotThrowException_IfAllTestPassed() {
+    public void Should_Not_Throw_Exception_If_All_Tests_Passed() {
         // given
         final Assertions assertions = new Assertions();
         final ResultBuilder resultBuilder = mock(ResultBuilder.class);
@@ -30,7 +30,7 @@ public class AssertionsTest {
     }
 
     @Test
-    public void shouldThrowException_IfAnyTestFailed() {
+    public void Should_Throw_Exception_If_Any_Test_Failed() {
         // given
         final Assertions assertions = new Assertions();
         final ResultBuilder resultBuilder = mock(ResultBuilder.class);

@@ -20,7 +20,7 @@ import static org.assertj.core.util.Lists.newArrayList;
 public class FieldUtilsTest {
 
     @Test
-    public void shouldReturnAllFields() {
+    public void Should_Return_All_Fields() {
         // given
         final List<Field> expectedFields = TestHelper.getAllFieldsExceptDummyJacocoField(ClassWithAllAvailableFieldModifiers.class);
 
@@ -33,7 +33,7 @@ public class FieldUtilsTest {
     }
 
     @Test
-    public void shouldReturnSpecifiedFields() throws java.lang.NoSuchFieldException {
+    public void Should_Return_Specified_Fields() throws java.lang.NoSuchFieldException {
         // given
         final String fieldName = "a";
         final Field expectedField = ClassWithAllAvailableFieldModifiers.class.getDeclaredField(fieldName);
@@ -47,7 +47,7 @@ public class FieldUtilsTest {
     }
 
     @Test
-    public void shouldReturnFields_ExceptFieldsWithGivenNames() {
+    public void Should_Return_Fields_Except_Fields_With_Given_Names() {
         // given
         final String fieldName = "a";
 
@@ -59,7 +59,7 @@ public class FieldUtilsTest {
     }
 
     @Test
-    public void shouldReturnAllFieldsNames() {
+    public void Should_Return_All_Fields_Names() {
         // given
         final List<String> expectedFields = TestHelper.getAllFieldsExceptDummyJacocoField(ClassWithAllAvailableFieldModifiers.class)
                                                       .stream()
@@ -76,7 +76,7 @@ public class FieldUtilsTest {
 
     @Test
     @Parameters(method = "permutationFields")
-    public void shouldReturnAllPermutations(final Class<?> clazz, final List<List<Field>> expectedPermutations) {
+    public void Should_Return_All_Permutations(final Class<?> clazz, final List<List<Field>> expectedPermutations) {
         // given
         final List<Field> fields = TestHelper.getAllFieldsExceptDummyJacocoField(clazz);
 
