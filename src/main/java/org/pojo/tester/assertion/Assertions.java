@@ -13,6 +13,10 @@ public class Assertions {
         return new HashCodeAssertions(resultBuilder, objectUnderAssert);
     }
 
+    public ToStringAssertions assertThatToStringMethod(final Object objectUnderAssert) {
+        return new ToStringAssertions(resultBuilder, objectUnderAssert);
+    }
+
     public void assertAll() {
         final Result result = resultBuilder.build();
         if (result.failed()) {

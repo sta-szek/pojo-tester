@@ -18,7 +18,7 @@ import static org.pojo.tester.FieldPredicate.include;
 public class HashCodeTesterTest {
 
     @Test
-    public void Should_Pass_All_HashCode_Tests_() {
+    public void Should_Pass_All_HashCode_Tests() {
         // given
         final Class[] classesToTest = {GoodPojo_Equals_HashCode_ToString.class};
         final HashCodeTester hashCodeTester = new HashCodeTester();

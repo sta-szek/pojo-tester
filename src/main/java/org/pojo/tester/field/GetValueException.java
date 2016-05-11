@@ -3,7 +3,7 @@ package org.pojo.tester.field;
 
 public class GetValueException extends RuntimeException {
 
-    public GetValueException(final String fieldName, final Class<?> clazz, final NoSuchFieldException cause) {
+    public GetValueException(final String fieldName, final Class<?> clazz, final Exception cause) {
         super(createMessage(fieldName, clazz), cause);
     }
 
