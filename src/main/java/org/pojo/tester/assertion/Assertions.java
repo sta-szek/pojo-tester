@@ -22,6 +22,5 @@ public class Assertions {
         if (result.failed()) {
             throw new AssertionError(result.getMessage());
         }
-        System.out.println(result.getMessage());
     }
 }
