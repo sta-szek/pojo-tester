@@ -79,19 +79,21 @@ public class ObjectGenerator_NewInstanceTest {
 
     @Test
     @Parameters(method = "getClassesWithComplexConstructor")
-    public void Should_Create_New_Instance_With_Complex_Field_As_Constructor_Parameter(final Class<?> classToInstatiate) {
+    public void Should_Create_New_Instance_With_Complex_Field_As_Constructor_Parameter(final Class<?> classToInstantiate) {
         // given
         final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldsValuesChanger);
 
         // when
-        final Object result = objectGenerator.createNewInstance(classToInstatiate);
+        final Object result = objectGenerator.createNewInstance(classToInstantiate);
 
         // then
-        assertThat(result).isInstanceOf(classToInstatiate);
+        assertThat(result).isInstanceOf(classToInstantiate);
     }
 
     private Object[] getClassesWithComplexConstructor() {
-        return new Object[]{ConstructorWithObject_Field.class, ConstructorWithObject_Stream.class, ConstructorWithObject_Thread.class};
+        return new Object[]{ConstructorWithObject_Field.class,
+                            ConstructorWithObject_Stream.class,
+                            ConstructorWithObject_Thread.class};
     }
 
 
