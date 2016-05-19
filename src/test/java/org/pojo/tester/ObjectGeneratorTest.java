@@ -34,7 +34,7 @@ public class ObjectGeneratorTest {
         // then
         assertThat(result).isEqualTo(goodPojo);
     }
-
+    
     @Test
     public void Should_Create_Different_Instance() {
         // given

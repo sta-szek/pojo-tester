@@ -1,6 +1,8 @@
 package org.pojo.tester;
 
 
+import org.objenesis.Objenesis;
+import org.objenesis.ObjenesisStd;
 import org.pojo.tester.field.AbstractFieldsValuesChanger;
 import org.pojo.tester.field.FieldUtils;
 
@@ -32,9 +34,12 @@ class ObjectGenerator {
 
     Object createNewInstance(final Class<?> clazz) {
         try {
-            return clazz.newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
-            throw new ObjectInstantiationException(clazz, e);
+            final Objenesis objenesis = new ObjenesisStd();
+            final Object newInstance = objenesis.newInstance(clazz);
+            abstractFieldsValuesChanger.changeFieldsValues(newInstance, newInstance, FieldUtils.getAllFields(clazz));
+            return newInstance;
+        } catch (final Throwable t) {
+            throw new ObjectInstantiationException(clazz, t);
         }
     }
 

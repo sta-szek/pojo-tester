@@ -3,6 +3,9 @@ package org.pojo.tester.assertion;
 
 import org.apache.commons.lang3.ObjectUtils;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 public class ToStringAssertions {
     private static final String BAD_TO_STRING = "Class %s has bad 'toString' method implementation.";
     private static final String OBJECT_AND_NEW_LINE = "%s\n";
@@ -34,7 +37,15 @@ public class ToStringAssertions {
 
     public void contains(final String fieldName, final Object value) {
         final String stringValue = fieldName + "=" + getStringOf(value);
-        final String toString = objectUnderAssert.toString();
+        String toString = "";
+        try {
+            toString = String.valueOf(getToStringMethod()
+                                              .invoke(objectUnderAssert));
+        } catch (final IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (final InvocationTargetException e) {
+            e.printStackTrace();
+        }
         final boolean result = toString.contains(stringValue);
 
         final String message = formatMessage(CONSTRAINT_CONTAINS,
@@ -55,6 +66,15 @@ public class ToStringAssertions {
                                              stringValue,
                                              toString);
         appendResult(!result, "doesNotContain", message);
+    }
+
+    private Method getToStringMethod() {
+        try {
+            return objectUnderAssert.getClass()
+                                    .getMethod("toString");
+        } catch (final NoSuchMethodException e) {
+            throw new RuntimeException();
+        }
     }
 
     private String getStringOf(final Object value) {

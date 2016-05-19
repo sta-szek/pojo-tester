@@ -3,7 +3,7 @@ package org.pojo.tester;
 
 public class ObjectInstantiationException extends RuntimeException {
 
-    public ObjectInstantiationException(final Class<?> clazz, final ReflectiveOperationException cause) {
+    public ObjectInstantiationException(final Class<?> clazz, final Throwable cause) {
         super(createMessage(clazz), cause);
     }
 
