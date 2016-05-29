@@ -18,6 +18,4 @@ public class ToStringWithoutField {
                                         .append("obj", obj)
                                         .toString();
     }
-
-
 }

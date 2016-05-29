@@ -66,7 +66,6 @@ public final class FieldUtils {
     public static List<Field> getFields(final Class<?> testedClass, final Predicate<String> predicate) {
         return getAllFields(testedClass).stream()
                                         .filter(eachField -> predicate.test(eachField.getName()))
-                                        .peek(FieldUtils::makeModifiable)
                                         .collect(Collectors.toList());
     }
 
