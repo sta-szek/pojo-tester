@@ -110,14 +110,59 @@ class ObjectGenerator {
                         constructorParameters[i] = 0;
                     }
                 } else if (parameterType.isArray()) {
-                    //TODO ja pierdole jaka lipa
-                    if (byte[].class.isAssignableFrom(parameterType)){
-                        parameter = new byte[0];
-                        constructorParameters[i] = parameter;
-                    }
-                    else{
-                    parameter = new Object[0];
-                    constructorParameters[i] = parameter;}
+                    constructorParameters[i] = Array.newInstance(parameterType.getComponentType(), 0);
+//                    if (byte[].class.isAssignableFrom(parameterType)) {
+//                        parameter = new byte[0];
+//                        constructorParameters[i] = parameter;
+//                    } else if (Byte[].class.isAssignableFrom(parameterType)) {
+//                        parameter = new Byte[0];
+//                        constructorParameters[i] = parameter;
+//                    } else if (Boolean[].class.isAssignableFrom(parameterType)) {
+//                        parameter = new Boolean[0];
+//                        constructorParameters[i] = parameter;
+//                    } else if (boolean[].class.isAssignableFrom(parameterType)) {
+//                        parameter = new boolean[0];
+//                        constructorParameters[i] = parameter;
+//                    } else if (Character[].class.isAssignableFrom(parameterType)) {
+//                        parameter = new Character[0];
+//                        constructorParameters[i] = parameter;
+//                    } else if (char[].class.isAssignableFrom(parameterType)) {
+//                        parameter = new char[0];
+//                        constructorParameters[i] = parameter;
+//                    } else if (Integer[].class.isAssignableFrom(parameterType)) {
+//                        parameter = new Integer[0];
+//                        constructorParameters[i] = parameter;
+//                    } else if (int[].class.isAssignableFrom(parameterType)) {
+//                        parameter = new int[0];
+//                        constructorParameters[i] = parameter;
+//                    } else if (Float[].class.isAssignableFrom(parameterType)) {
+//                        parameter = new Float[0];
+//                        constructorParameters[i] = parameter;
+//                    } else if (float[].class.isAssignableFrom(parameterType)) {
+//                        parameter = new float[0];
+//                        constructorParameters[i] = parameter;
+//                    } else if (Double[].class.isAssignableFrom(parameterType)) {
+//                        parameter = new Double[0];
+//                        constructorParameters[i] = parameter;
+//                    } else if (double[].class.isAssignableFrom(parameterType)) {
+//                        parameter = new double[0];
+//                        constructorParameters[i] = parameter;
+//                    } else if (Long[].class.isAssignableFrom(parameterType)) {
+//                        parameter = new Long[0];
+//                        constructorParameters[i] = parameter;
+//                    } else if (long[].class.isAssignableFrom(parameterType)) {
+//                        parameter = new long[0];
+//                        constructorParameters[i] = parameter;
+//                    } else if (Short[].class.isAssignableFrom(parameterType)) {
+//                        parameter = new Short[0];
+//                        constructorParameters[i] = parameter;
+//                    } else if (short[].class.isAssignableFrom(parameterType)) {
+//                        parameter = new short[0];
+//                        constructorParameters[i] = parameter;
+//                    } else {
+//                        parameter = new Object[0];
+//                        constructorParameters[i] = parameter;
+//                    }
                 } else if (parameterType.isInterface()
                            || Modifier.isAbstract(parameterType.getModifiers())
                            || parameterType.isAnnotation()) {
@@ -139,7 +184,7 @@ class ObjectGenerator {
 
             try {
                 final Object o = constructor.newInstance(constructorParameters);
-            return o;
+                return o;
             } catch (final InstantiationException | IllegalAccessException | InvocationTargetException e) {
                 // ignore
                 return null;

@@ -3,11 +3,11 @@ package test.generator;
 
 import java.lang.reflect.Field;
 
-public class ConstructorWithObject_Field {
+public class Constructor_Field {
 
     private final Field field;
 
-    public ConstructorWithObject_Field(final Field field) {
+    public Constructor_Field(final Field field) {
         this.field = field;
     }
 }

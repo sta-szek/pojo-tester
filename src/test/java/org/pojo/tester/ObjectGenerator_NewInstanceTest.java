@@ -53,7 +53,7 @@ public class ObjectGenerator_NewInstanceTest {
     }
 
     @Test
-    public void Should_Create_New_Instance_Without_Protected_Constructor() {
+    public void Should_Create_New_Instance_With_Protected_Constructor() {
         // given
         final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldsValuesChanger);
 
@@ -65,7 +65,7 @@ public class ObjectGenerator_NewInstanceTest {
     }
 
     @Test
-    public void Should_Create_New_Instance_Without_Private_Constructor() {
+    public void Should_Create_New_Instance_With_Private_Constructor() {
         // given
         final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldsValuesChanger);
 
@@ -79,7 +79,7 @@ public class ObjectGenerator_NewInstanceTest {
 
     @Test
     @Parameters(method = "getClassesWithComplexConstructor")
-    public void Should_Create_New_Instance_With_Complex_Field_As_Constructor_Parameter(final Class<?> classToInstantiate) {
+    public void Should_Create_New_Instance_With_Complex_Constructors(final Class<?> classToInstantiate) {
         // given
         final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldsValuesChanger);
 
@@ -91,9 +91,25 @@ public class ObjectGenerator_NewInstanceTest {
     }
 
     private Object[] getClassesWithComplexConstructor() {
-        return new Object[]{ConstructorWithObject_Field.class,
-                            ConstructorWithObject_Stream.class,
-                            ConstructorWithObject_Thread.class};
+        return new Object[]{Constructor_Field.class,
+                            Constructor_Stream.class,
+                            Constructor_Thread.class,
+                            Constructor_Array_Boolean.class,
+                            Constructor_Array_Boolean_Primitive.class,
+                            Constructor_Array_Byte.class,
+                            Constructor_Array_Byte_Primitive.class,
+                            Constructor_Array_Char.class,
+                            Constructor_Array_Char_Primitive.class,
+                            Constructor_Array_Double.class,
+                            Constructor_Array_Double_Primitive.class,
+                            Constructor_Array_Float.class,
+                            Constructor_Array_Float_Primitive.class,
+                            Constructor_Array_Int.class,
+                            Constructor_Array_Int_Primitive.class,
+                            Constructor_Array_Long.class,
+                            Constructor_Array_Long_Primitive.class,
+                            Constructor_Array_Short.class,
+                            Constructor_Array_Short_Primitive.class};
     }
 
 
