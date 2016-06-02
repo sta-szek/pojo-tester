@@ -5,6 +5,7 @@ import org.pojo.tester.assertion.Assertions;
 import org.pojo.tester.field.AbstractFieldsValuesChanger;
 import org.pojo.tester.field.DefaultFieldsValuesChanger;
 import org.pojo.tester.field.FieldUtils;
+import org.pojo.tester.instantiator.ObjectGenerator;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
