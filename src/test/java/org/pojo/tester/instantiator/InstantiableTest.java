@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import test.instantiator.Constructor_Field;
 import test.instantiator.Constructor_Stream;
 import test.instantiator.Constructor_Thread;
+import test.instantiator.EmptyEnum;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -28,6 +29,7 @@ public class InstantiableTest {
     private Object[][] classesAndInstantiators() {
         return new Object[][]{
                 {Instantiable.class, ProxyInstantiator.class},
+                {EmptyEnum.class, EnumInstantiator.class},
                 {Constructor_Field.class, BestConstructorInstantiator.class},
                 {Constructor_Stream.class, BestConstructorInstantiator.class},
                 {Constructor_Thread.class, BestConstructorInstantiator.class},

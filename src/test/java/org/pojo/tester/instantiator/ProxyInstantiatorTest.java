@@ -18,13 +18,13 @@ public class ProxyInstantiatorTest {
     @Parameters(method = "classes")
     public void Should_Instantiate_Abstract_Interface_Or_Annotation_Classes(final Class<?> classToInstantiate) {
         // given
-        final PrimitiveInstantiator instantiator = new PrimitiveInstantiator(classToInstantiate);
+        final ProxyInstantiator instantiator = new ProxyInstantiator(classToInstantiate);
 
         // when
         final Object result = instantiator.instantiate();
 
         // then
-        assertThat(result).isNotNull();
+        assertThat(result).isInstanceOf(classToInstantiate);
     }
 
     private Object[] classes() {
