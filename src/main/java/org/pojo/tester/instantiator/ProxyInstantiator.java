@@ -33,7 +33,7 @@ class ProxyInstantiator extends ObjectInstantiator {
         try {
             return proxyFactory.create(new Class[0], new Class[0], (self, thisMethod, proceed, args) -> 0);
         } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            throw new ObjectInstantiationException(clazz, "Class could not be proxied.");
+            throw new ObjectInstantiationException(clazz, e);
         }
     }
 }
