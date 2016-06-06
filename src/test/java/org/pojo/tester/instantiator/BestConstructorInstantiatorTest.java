@@ -5,6 +5,8 @@ import junitparams.Parameters;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import test.instantiator.*;
+import test.instantiator.arrays.*;
+import test.instantiator.statics.ClassContainingNestedStaticClasses;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -25,7 +27,7 @@ public class BestConstructorInstantiatorTest {
     }
 
     @Test
-    @Parameters(method = "arrayClassesToInstantiate")
+    @Parameters(method = "classesToInstantiate")
     public void Should_Create_Object_Using_Best_Constructor(final Class<?> classToInstantiate) {
         // given
         final BestConstructorInstantiator instantiator = new BestConstructorInstantiator(classToInstantiate);
@@ -37,7 +39,7 @@ public class BestConstructorInstantiatorTest {
         assertThat(result).isInstanceOf(classToInstantiate);
     }
 
-    private Object[] arrayClassesToInstantiate() {
+    private Object[] classesToInstantiate() {
         return new Object[]{Constructor_Array_Boolean.class,
                             Constructor_Array_Boolean_Primitive.class,
                             Constructor_Array_Byte.class,
@@ -59,7 +61,11 @@ public class BestConstructorInstantiatorTest {
                             NoDefaultConstructor.class,
                             PackageConstructor.class,
                             PrivateConstructor.class,
-                            ProtectedConstructor.class
-        };
+                            ProtectedConstructor.class,
+                            ClassContainingNestedStaticClasses.NestedStaticClass_PublicConstructor.class,
+                            ClassContainingNestedStaticClasses.NestedStaticClass_PackageConstructor.class,
+                            ClassContainingNestedStaticClasses.NestedStaticClass_ProtectedConstructor.class,
+                            ClassContainingNestedStaticClasses.NestedStaticClass_PrivateConstructor.class,
+                            };
     }
 }
