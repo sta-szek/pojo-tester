@@ -1,4 +1,4 @@
-package test.instantiator;
+package test.instantiator.arrays;
 
 
 public class Constructor_Array_Long_Primitive {

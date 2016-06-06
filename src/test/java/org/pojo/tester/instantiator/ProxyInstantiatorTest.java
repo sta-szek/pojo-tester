@@ -5,9 +5,9 @@ import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import test.instantiator.Abstract;
-import test.instantiator.Annotation;
-import test.instantiator.Interface;
+import test.instantiator.abstracts.Abstract;
+import test.instantiator.abstracts.Annotation;
+import test.instantiator.abstracts.Interface;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

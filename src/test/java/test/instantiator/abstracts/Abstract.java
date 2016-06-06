@@ -1,4 +1,4 @@
-package test.instantiator;
+package test.instantiator.abstracts;
 
 
 public abstract class Abstract {

@@ -2,8 +2,8 @@ package org.pojo.tester.instantiator;
 
 
 import org.junit.Test;
-import test.instantiator.DoubleEnum;
-import test.instantiator.EmptyEnum;
+import test.instantiator.enums.DoubleEnum;
+import test.instantiator.enums.EmptyEnum;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

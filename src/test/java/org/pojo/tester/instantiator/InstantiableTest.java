@@ -7,7 +7,8 @@ import org.junit.runner.RunWith;
 import test.instantiator.Constructor_Field;
 import test.instantiator.Constructor_Stream;
 import test.instantiator.Constructor_Thread;
-import test.instantiator.EmptyEnum;
+import test.instantiator.enums.EmptyEnum;
+import test.instantiator.statics.ClassContainingNestedStaticClasses;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -64,7 +65,11 @@ public class InstantiableTest {
                 {float.class, PrimitiveInstantiator.class},
                 {int.class, PrimitiveInstantiator.class},
                 {long.class, PrimitiveInstantiator.class},
-                {short.class, PrimitiveInstantiator.class}
-        };
+                {short.class, PrimitiveInstantiator.class},
+                {ClassContainingNestedStaticClasses.NestedStaticClass_PublicConstructor.class, DefaultConstructorInstantiator.class},
+                {ClassContainingNestedStaticClasses.NestedStaticClass_PackageConstructor.class, BestConstructorInstantiator.class},
+                {ClassContainingNestedStaticClasses.NestedStaticClass_ProtectedConstructor.class, BestConstructorInstantiator.class},
+                {ClassContainingNestedStaticClasses.NestedStaticClass_PrivateConstructor.class, BestConstructorInstantiator.class},
+                };
     }
 }
