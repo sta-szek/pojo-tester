@@ -1,4 +1,4 @@
-package org.pojo.tester;
+package org.pojo.tester.instantiator;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,13 +14,25 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowable;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({FieldUtils.class, ObjectGenerator.class})
 public class ObjectGeneratorTest {
 
     private final AbstractFieldsValuesChanger abstractFieldsValuesChanger = AbstractPrimitiveValueChanger.getInstance();
+
+    @Test
+    public void Should_Create_Any_Instance() {
+        // given
+        final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldsValuesChanger);
+        final Class<GoodPojo_Equals_HashCode_ToString> expectedClass = GoodPojo_Equals_HashCode_ToString.class;
+
+        // when
+        final Object result = objectGenerator.createNewInstance(expectedClass);
+
+        // then
+        assertThat(result).isInstanceOf(expectedClass);
+    }
 
     @Test
     public void Should_Create_Same_Instance() {
@@ -48,18 +60,5 @@ public class ObjectGeneratorTest {
         // then
         assertThat(result).isNotEqualTo(goodPojo);
     }
-
-    @Test
-    public void Should_Throw_Exception_When_Cannot_Create_Instance() {
-        //given
-        final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldsValuesChanger);
-
-        // when
-        final Throwable result = catchThrowable(() -> objectGenerator.createNewInstance(List.class));
-
-        // then
-        assertThat(result).isInstanceOf(ObjectInstantiationException.class);
-    }
-
 
 }

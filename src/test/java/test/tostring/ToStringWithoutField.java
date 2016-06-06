@@ -8,8 +8,8 @@ public class ToStringWithoutField {
 
     private final int a = 1;
     private final float b = 1.43F;
-    private final TestEnum1 testEnum = TestEnum1.ENUM1;
     private final Object obj = null;
+    private TestEnum1 testEnum;
 
     @Override
     public String toString() {

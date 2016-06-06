@@ -27,6 +27,8 @@ dependencies {
     compile 'com.google.collections:google-collections:1.0'
     compile 'com.googlecode.combinatoricslib:combinatoricslib:2.1'
     compile 'org.projectlombok:lombok:1.16.8'
+    compile 'org.javassist:javassist:3.20.0-GA'
+
 
     testCompile 'org.assertj:assertj-core:3.4.0'
     testCompile 'junit:junit:4.12'
