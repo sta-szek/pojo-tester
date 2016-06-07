@@ -24,6 +24,18 @@ public class ArrayInstantiatorTest {
         assertThat(result).isInstanceOf(classToInstantiate);
     }
 
+    @Test
+    public void Should_Create_Array_By_Qualified_Class_Name() {
+        // given
+        final ArrayInstantiator instantiator = new ArrayInstantiator("[B");
+
+        // when
+        final Object result = instantiator.instantiate();
+
+        // then
+        assertThat(result).isInstanceOf(byte[].class);
+    }
+
     private Object[] arrayClassesToInstantiate() {
         return new Object[]{Boolean[].class,
                             Byte[].class,

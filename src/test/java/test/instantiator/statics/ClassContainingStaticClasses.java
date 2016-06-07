@@ -1,7 +1,7 @@
 package test.instantiator.statics;
 
 
-public class ClassContainingNestedStaticClasses {
+public class ClassContainingStaticClasses {
 
     public static class NestedStaticClass_PublicConstructor {
         public NestedStaticClass_PublicConstructor() {

@@ -23,6 +23,21 @@ public class PrimitiveInstantiatorTest {
         assertThat(result).isNotNull();
     }
 
+    @Test
+    @Parameters(method = "primitivesNames")
+    public void Should_Instantiate_Primitive_By_Qualified_Class_Name(final String qualifiedClassName) {
+        // given
+        final PrimitiveInstantiator instantiator = new PrimitiveInstantiator(qualifiedClassName);
+
+        // when
+        final Object object = instantiator.instantiate();
+        final String result = object.getClass()
+                                    .getCanonicalName();
+
+        // then
+        assertThat(result).isEqualTo(qualifiedClassName);
+    }
+
     private Object[] primitives() {
         return new Object[]{Boolean.class,
                             Byte.class,
@@ -41,5 +56,17 @@ public class PrimitiveInstantiatorTest {
                             long.class,
                             short.class
         };
+    }
+
+    private Object[] primitivesNames() {
+        return new Object[]{"java.lang.Boolean",
+                            "java.lang.Byte",
+                            "java.lang.Character",
+                            "java.lang.Double",
+                            "java.lang.Float",
+                            "java.lang.Integer",
+                            "java.lang.Long",
+                            "java.lang.Short",
+                            };
     }
 }

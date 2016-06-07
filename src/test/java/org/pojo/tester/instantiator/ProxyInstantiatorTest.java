@@ -27,10 +27,30 @@ public class ProxyInstantiatorTest {
         assertThat(result).isInstanceOf(classToInstantiate);
     }
 
+    @Test
+    @Parameters(method = "classesNames")
+    public void Should_Instantiate_Abstract_Interface_Or_Annotation_Classes_By_Qualified_Class_Names(final String qualifiedClassName) {
+        // given
+        final ProxyInstantiator instantiator = new ProxyInstantiator(qualifiedClassName);
+
+        // when
+        final Object object = instantiator.instantiate();
+
+        // then
+        assertThat(object).isNotNull();
+    }
+
     private Object[] classes() {
         return new Object[]{Annotation.class,
                             Abstract.class,
                             Interface.class,
+                            };
+    }
+
+    private Object[] classesNames() {
+        return new Object[]{"test.instantiator.abstracts.Annotation",
+                            "test.instantiator.abstracts.Abstract",
+                            "test.instantiator.abstracts.Interface",
                             };
     }
 }
