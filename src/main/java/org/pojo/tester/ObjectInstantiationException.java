@@ -7,8 +7,16 @@ public class ObjectInstantiationException extends RuntimeException {
         super(createMessage(clazz), cause);
     }
 
+    public ObjectInstantiationException(final String qualifiedClassName, final Throwable cause) {
+        super(createMessage(qualifiedClassName), cause);
+    }
+
     public ObjectInstantiationException(final Class<?> clazz, final String message) {
         super(createMessage(clazz) + " " + message);
+    }
+
+    private static String createMessage(final String qualifiedClassName) {
+        return "Unable to load class: " + qualifiedClassName;
     }
 
     private static String createMessage(final Class<?> clazz) {

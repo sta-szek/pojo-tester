@@ -9,6 +9,10 @@ import java.util.Arrays;
 
 class BestConstructorInstantiator extends ObjectInstantiator {
 
+    BestConstructorInstantiator(final String qualifiedClassName) {
+        super(qualifiedClassName);
+    }
+
     BestConstructorInstantiator(final Class<?> clazz) {
         super(clazz);
     }

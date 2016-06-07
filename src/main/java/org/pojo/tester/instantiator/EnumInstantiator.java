@@ -5,6 +5,10 @@ import java.util.Random;
 
 class EnumInstantiator extends ObjectInstantiator {
 
+    EnumInstantiator(final String qualifiedClassName) {
+        super(qualifiedClassName);
+    }
+
     EnumInstantiator(final Class<?> clazz) {
         super(clazz);
     }

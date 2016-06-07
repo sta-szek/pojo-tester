@@ -11,9 +11,12 @@ class ProxyInstantiator extends ObjectInstantiator {
 
     private final ProxyFactory proxyFactory = new ProxyFactory();
 
+    ProxyInstantiator(final String qualifiedClassName) {
+        super(qualifiedClassName);
+    }
+
     ProxyInstantiator(final Class<?> clazz) {
         super(clazz);
-        proxyFactory.setSuperclass(clazz);
     }
 
     @Override
@@ -31,6 +34,7 @@ class ProxyInstantiator extends ObjectInstantiator {
 
     private Object proxyByJavassist() {
         try {
+            proxyFactory.setSuperclass(clazz);
             return proxyFactory.create(new Class[0], new Class[0], (self, thisMethod, proceed, args) -> 0);
         } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
             throw new ObjectInstantiationException(clazz, e);

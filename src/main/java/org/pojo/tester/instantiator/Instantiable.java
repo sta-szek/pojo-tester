@@ -1,11 +1,23 @@
 package org.pojo.tester.instantiator;
 
 
+import org.pojo.tester.ObjectInstantiationException;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
 
 public abstract class Instantiable {
+
+    public static ObjectInstantiator forClass(final String qualifiedClassName) {
+        final Class<?> clazz;
+        try {
+            clazz = Class.forName(qualifiedClassName);
+        } catch (final ClassNotFoundException e) {
+            throw new ObjectInstantiationException(qualifiedClassName, e);
+        }
+        return forClass(clazz);
+    }
 
     public static ObjectInstantiator forClass(final Class<?> clazz) {
         if (canBeCreatedByDefaultConstructor(clazz)) {

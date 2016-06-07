@@ -33,4 +33,17 @@ public class EnumInstantiatorTest {
         // then
         assertThat(result).isInstanceOf(doubleEnumClass);
     }
+
+    @Test
+    public void Should_Return_Any_Enum_Value_By_Qualified_Class_Name() {
+        // given
+        final Class<DoubleEnum> doubleEnumClass = DoubleEnum.class;
+        final EnumInstantiator instantiator = new EnumInstantiator("test.instantiator.enums.DoubleEnum");
+
+        // when
+        final Object result = instantiator.instantiate();
+
+        // then
+        assertThat(result).isInstanceOf(doubleEnumClass);
+    }
 }
