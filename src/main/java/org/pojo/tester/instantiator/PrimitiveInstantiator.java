@@ -41,7 +41,4 @@ class PrimitiveInstantiator extends ObjectInstantiator {
         return preparedObjects.get(canonicalName);
     }
 
-    private boolean isBoolean(final Class<?> clazz) {
-        return boolean.class.isAssignableFrom(clazz) || Boolean.class.isAssignableFrom(clazz);
-    }
 }

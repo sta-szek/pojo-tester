@@ -28,7 +28,7 @@ public class BestConstructorInstantiatorTest {
 
     @Test
     @Parameters(method = "classesToInstantiate")
-    public void Should_Create_Object_Using_Best_Constructor_By_Class(final Class<?> classToInstantiate) {
+    public void Should_Create_Object_Using_Best_Constructor(final Class<?> classToInstantiate) {
         // given
         final BestConstructorInstantiator instantiator = new BestConstructorInstantiator(classToInstantiate);
 
