@@ -19,7 +19,7 @@ import static org.pojo.tester.PredicateAssertions.assertThat;
 public class FieldPredicateTest {
 
     @Test
-    public void Should_Include_All_Fields() {
+    public void Should_Return_Predicate_That_Accept_All_Field_Names() {
         // given
         final List<String> allFieldNames = FieldUtils.getAllFieldNames(TestPredicate.class);
 
@@ -32,7 +32,7 @@ public class FieldPredicateTest {
 
     @Test
     @Parameters(method = "listOfIncludedFields")
-    public void Should_Include_List_Of_Fields(final List<String> includedFields) {
+    public void Should_Return_Predicate_That_Accept_List_Of_Field_Names(final List<String> includedFields) {
         // given
 
         // when
@@ -44,7 +44,7 @@ public class FieldPredicateTest {
 
     @Test
     @Parameters(method = "arrayOfIncludedFields")
-    public void Should_Include_Array_Of_Fields(final String... includedFields) {
+    public void Should_Return_Predicate_That_Accept_Array_Of_Field_Names(final String... includedFields) {
         // given
 
         // when
@@ -56,7 +56,7 @@ public class FieldPredicateTest {
 
     @Test
     @Parameters(method = "listOfExcludedFields")
-    public void Should_Exclude_List_Of_Fields(final List<String> excludedFields) {
+    public void Should_Return_Predicate_That_Does_Not_Accept_List_Of_Fields(final List<String> excludedFields) {
         // given
 
         // when
@@ -68,7 +68,7 @@ public class FieldPredicateTest {
 
     @Test
     @Parameters(method = "arrayOfExcludedFields")
-    public void Should_Exclude_Array_Of_Fields(final String... excludedFields) {
+    public void Should_Return_Predicate_That_Does_Not_Accept_Array_Of_Fields(final String... excludedFields) {
         // given
 
         // when

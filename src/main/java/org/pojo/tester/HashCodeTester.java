@@ -1,43 +1,25 @@
 package org.pojo.tester;
 
 
-import org.pojo.tester.assertion.Assertions;
 import org.pojo.tester.field.AbstractFieldsValuesChanger;
-import org.pojo.tester.field.DefaultFieldsValuesChanger;
 import org.pojo.tester.field.FieldUtils;
-import org.pojo.tester.instantiator.ObjectGenerator;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.function.Predicate;
 
-public class HashCodeTester {
-
-    private final Assertions assertions = new Assertions();
-    private final ObjectGenerator objectGenerator;
+public class HashCodeTester extends Testable {
 
     public HashCodeTester() {
-        this(DefaultFieldsValuesChanger.INSTANCE);
+        super();
     }
 
     public HashCodeTester(final AbstractFieldsValuesChanger abstractFieldsValuesChanger) {
-        objectGenerator = new ObjectGenerator(abstractFieldsValuesChanger);
+        super(abstractFieldsValuesChanger);
     }
 
-    public void testHashCodeMethod(final Class<?> clazz, final Predicate<String> fieldPredicate) {
-        final ClassAndFieldPredicatePair classAndFieldPredicatePair = new ClassAndFieldPredicatePair(clazz, fieldPredicate);
-        testHashCodeMethod(classAndFieldPredicatePair);
-    }
-
-    public void testHashCodeMethod(final Class... classes) {
-        Arrays.stream(classes)
-              .map(ClassAndFieldPredicatePair::new)
-              .forEach(this::testHashCodeMethod);
-    }
-
-    private void testHashCodeMethod(final ClassAndFieldPredicatePair classAndFieldPredicatePair) {
+    @Override
+    protected void test(final ClassAndFieldPredicatePair classAndFieldPredicatePair) {
         final Class<?> testedClass = classAndFieldPredicatePair.getTestedClass();
         final Object instance = objectGenerator.createNewInstance(testedClass);
         final List<Field> allFields = FieldUtils.getFields(testedClass, classAndFieldPredicatePair.getPredicate());

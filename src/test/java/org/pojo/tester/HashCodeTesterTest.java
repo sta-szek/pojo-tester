@@ -24,7 +24,7 @@ public class HashCodeTesterTest {
         final HashCodeTester hashCodeTester = new HashCodeTester();
 
         // when
-        final Throwable result = catchThrowable(() -> hashCodeTester.testHashCodeMethod(classesToTest));
+        final Throwable result = catchThrowable(() -> hashCodeTester.test(classesToTest));
 
         // then
         assertThat(result).isNull();
@@ -38,7 +38,7 @@ public class HashCodeTesterTest {
         final List<String> excludedFields = newArrayList("increment3", "increment4");
 
         // when
-        final Throwable result = catchThrowable(() -> hashCodeTester.testHashCodeMethod(clazz, exclude(excludedFields)));
+        final Throwable result = catchThrowable(() -> hashCodeTester.test(clazz, exclude(excludedFields)));
 
         // then
         assertThat(result).isNull();
@@ -52,7 +52,7 @@ public class HashCodeTesterTest {
         final List<String> includedFields = newArrayList("increment1", "increment2");
 
         // when
-        final Throwable result = catchThrowable(() -> hashCodeTester.testHashCodeMethod(clazz, include(includedFields)));
+        final Throwable result = catchThrowable(() -> hashCodeTester.test(clazz, include(includedFields)));
 
         // then
         assertThat(result).isNull();
@@ -65,7 +65,7 @@ public class HashCodeTesterTest {
         final HashCodeTester hashCodeTester = new HashCodeTester();
 
         // when
-        final Throwable result = catchThrowable(() -> hashCodeTester.testHashCodeMethod(classesToTest));
+        final Throwable result = catchThrowable(() -> hashCodeTester.test(classesToTest));
 
         // then
         assertThat(result).isInstanceOf(AssertionError.class);
@@ -80,7 +80,7 @@ public class HashCodeTesterTest {
         final HashCodeTester hashCodeTester = new HashCodeTester();
 
         // when
-        final Throwable result = catchThrowable(() -> hashCodeTester.testHashCodeMethod(classesToTest));
+        final Throwable result = catchThrowable(() -> hashCodeTester.test(classesToTest));
 
         // then
         assertThat(result).isInstanceOf(AssertionError.class);
@@ -93,7 +93,7 @@ public class HashCodeTesterTest {
         final HashCodeTester hashCodeTester = new HashCodeTester();
 
         // when
-        final Throwable result = catchThrowable(() -> hashCodeTester.testHashCodeMethod(classesToTest));
+        final Throwable result = catchThrowable(() -> hashCodeTester.test(classesToTest));
 
         // then
         assertThat(result).isInstanceOf(AssertionError.class);

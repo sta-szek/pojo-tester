@@ -1,8 +1,6 @@
 package org.pojo.tester.instantiator;
 
 
-import org.pojo.tester.ObjectInstantiationException;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;

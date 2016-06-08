@@ -2,7 +2,6 @@ package org.pojo.tester.instantiator;
 
 
 import javassist.util.proxy.ProxyFactory;
-import org.pojo.tester.ObjectInstantiationException;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Proxy;
