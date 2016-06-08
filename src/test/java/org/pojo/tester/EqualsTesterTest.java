@@ -24,7 +24,7 @@ public class EqualsTesterTest {
         final EqualsTester equalsTester = new EqualsTester();
 
         // when
-        final Throwable result = catchThrowable(() -> equalsTester.testEqualsMethod(classesToTest));
+        final Throwable result = catchThrowable(() -> equalsTester.test(classesToTest));
 
         // then
         assertThat(result).isNull();
@@ -38,7 +38,7 @@ public class EqualsTesterTest {
         final ArrayList<String> excludedFields = newArrayList("notIncludedToEqual_byteField", "notIncludedToEqual_shortType");
 
         // when
-        final Throwable result = catchThrowable(() -> equalsTester.testEqualsMethod(clazz, exclude(excludedFields)));
+        final Throwable result = catchThrowable(() -> equalsTester.test(clazz, exclude(excludedFields)));
 
         // then
         assertThat(result).isNull();
@@ -52,7 +52,7 @@ public class EqualsTesterTest {
         final ArrayList<String> includedFields = newArrayList("byteField", "shortType");
 
         // when
-        final Throwable result = catchThrowable(() -> equalsTester.testEqualsMethod(clazz, include(includedFields)));
+        final Throwable result = catchThrowable(() -> equalsTester.test(clazz, include(includedFields)));
 
         // then
         assertThat(result).isNull();
@@ -65,7 +65,7 @@ public class EqualsTesterTest {
         final EqualsTester equalsTester = new EqualsTester();
 
         // when
-        final Throwable result = catchThrowable(() -> equalsTester.testEqualsMethod(classesToTest));
+        final Throwable result = catchThrowable(() -> equalsTester.test(classesToTest));
 
         // then
         assertThat(result).isInstanceOf(AssertionError.class);
@@ -78,7 +78,7 @@ public class EqualsTesterTest {
         final EqualsTester equalsTester = new EqualsTester();
 
         // when
-        final Throwable result = catchThrowable(() -> equalsTester.testEqualsMethod(classesToTest));
+        final Throwable result = catchThrowable(() -> equalsTester.test(classesToTest));
 
         // then
         assertThat(result).isInstanceOf(AssertionError.class);
@@ -91,7 +91,7 @@ public class EqualsTesterTest {
         final EqualsTester equalsTester = new EqualsTester();
 
         // when
-        final Throwable result = catchThrowable(() -> equalsTester.testEqualsMethod(classesToTest));
+        final Throwable result = catchThrowable(() -> equalsTester.test(classesToTest));
 
         // then
         assertThat(result).isInstanceOf(AssertionError.class);
@@ -104,7 +104,7 @@ public class EqualsTesterTest {
         final EqualsTester equalsTester = new EqualsTester();
 
         // when
-        final Throwable result = catchThrowable(() -> equalsTester.testEqualsMethod(classesToTest));
+        final Throwable result = catchThrowable(() -> equalsTester.test(classesToTest));
 
         // then
         assertThat(result).isInstanceOf(AssertionError.class);
@@ -117,7 +117,7 @@ public class EqualsTesterTest {
         final EqualsTester equalsTester = new EqualsTester();
 
         // when
-        final Throwable result = catchThrowable(() -> equalsTester.testEqualsMethod(classesToTest));
+        final Throwable result = catchThrowable(() -> equalsTester.test(classesToTest));
 
         // then
         assertThat(result).isInstanceOf(AssertionError.class);

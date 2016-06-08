@@ -4,6 +4,8 @@ import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.pojo.tester.FieldPredicate;
+import org.pojo.tester.field.FieldUtils;
 import test.instantiator.*;
 import test.instantiator.arrays.*;
 import test.instantiator.statics.ClassContainingStaticClasses;
@@ -124,6 +126,8 @@ public class BestConstructorInstantiatorTest {
                             ClassContainingStaticClasses.NestedStaticClass_PackageConstructor.class,
                             ClassContainingStaticClasses.NestedStaticClass_ProtectedConstructor.class,
                             ClassContainingStaticClasses.NestedStaticClass_PrivateConstructor.class,
+                            FieldUtils.class,
+                            FieldPredicate.class,
                             };
     }
 }

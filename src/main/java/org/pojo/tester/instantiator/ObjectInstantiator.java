@@ -1,7 +1,5 @@
 package org.pojo.tester.instantiator;
 
-import org.pojo.tester.ObjectInstantiationException;
-
 abstract class ObjectInstantiator {
 
     protected Class<?> clazz;

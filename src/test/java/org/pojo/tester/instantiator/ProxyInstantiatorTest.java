@@ -6,6 +6,7 @@ import junitparams.Parameters;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import test.instantiator.abstracts.Abstract;
+import test.instantiator.abstracts.Abstract_PrivateConstructor;
 import test.instantiator.abstracts.Annotation;
 import test.instantiator.abstracts.Interface;
 
@@ -44,11 +45,13 @@ public class ProxyInstantiatorTest {
         return new Object[]{Annotation.class,
                             Abstract.class,
                             Interface.class,
+                            Abstract_PrivateConstructor.class,
                             };
     }
 
     private Object[] classesNames() {
         return new Object[]{"test.instantiator.abstracts.Annotation",
+                            "test.instantiator.abstracts.Abstract_PrivateConstructor",
                             "test.instantiator.abstracts.Abstract",
                             "test.instantiator.abstracts.Interface",
                             };

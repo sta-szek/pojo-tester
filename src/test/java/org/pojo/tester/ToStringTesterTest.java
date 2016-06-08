@@ -22,7 +22,7 @@ public class ToStringTesterTest {
         final ToStringTester hashCodeTester = new ToStringTester();
 
         // when
-        final Throwable result = catchThrowable(() -> hashCodeTester.testToStringMethod(classesToTest));
+        final Throwable result = catchThrowable(() -> hashCodeTester.test(classesToTest));
 
         // then
         assertThat(result).isNull();
@@ -36,7 +36,7 @@ public class ToStringTesterTest {
         final List<String> excludedFields = newArrayList("testEnum");
 
         // when
-        final Throwable result = catchThrowable(() -> hashCodeTester.testToStringMethod(clazz, exclude(excludedFields)));
+        final Throwable result = catchThrowable(() -> hashCodeTester.test(clazz, exclude(excludedFields)));
 
         // then
         assertThat(result).isNull();
@@ -50,7 +50,7 @@ public class ToStringTesterTest {
         final List<String> includedFields = newArrayList("a", "b", "obj");
 
         // when
-        final Throwable result = catchThrowable(() -> hashCodeTester.testToStringMethod(clazz, include(includedFields)));
+        final Throwable result = catchThrowable(() -> hashCodeTester.test(clazz, include(includedFields)));
 
         // then
         assertThat(result).isNull();
@@ -63,7 +63,7 @@ public class ToStringTesterTest {
         final ToStringTester hashCodeTester = new ToStringTester();
 
         // when
-        final Throwable result = catchThrowable(() -> hashCodeTester.testToStringMethod(classesToTest));
+        final Throwable result = catchThrowable(() -> hashCodeTester.test(classesToTest));
 
         // then
         assertThat(result).isInstanceOf(AssertionError.class);
@@ -77,7 +77,7 @@ public class ToStringTesterTest {
         final List<String> excludedFields = newArrayList("a");
 
         // when
-        final Throwable result = catchThrowable(() -> hashCodeTester.testToStringMethod(clazz, exclude(excludedFields)));
+        final Throwable result = catchThrowable(() -> hashCodeTester.test(clazz, exclude(excludedFields)));
 
         // then
         assertThat(result).isInstanceOf(AssertionError.class);
@@ -91,7 +91,7 @@ public class ToStringTesterTest {
         final List<String> includedFields = newArrayList("a", "b");
 
         // when
-        final Throwable result = catchThrowable(() -> hashCodeTester.testToStringMethod(clazz, include(includedFields)));
+        final Throwable result = catchThrowable(() -> hashCodeTester.test(clazz, include(includedFields)));
 
         // then
         assertThat(result).isInstanceOf(AssertionError.class);

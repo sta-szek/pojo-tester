@@ -1,45 +1,27 @@
 package org.pojo.tester;
 
 
-import org.pojo.tester.assertion.Assertions;
 import org.pojo.tester.field.AbstractFieldsValuesChanger;
-import org.pojo.tester.field.DefaultFieldsValuesChanger;
 import org.pojo.tester.field.FieldUtils;
 import org.pojo.tester.field.GetValueException;
-import org.pojo.tester.instantiator.ObjectGenerator;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class ToStringTester {
-
-    private final Assertions assertions = new Assertions();
-    private final ObjectGenerator objectGenerator;
+public class ToStringTester extends Testable {
 
     public ToStringTester() {
-        this(DefaultFieldsValuesChanger.INSTANCE);
+        super();
     }
 
     public ToStringTester(final AbstractFieldsValuesChanger abstractFieldsValuesChanger) {
-        objectGenerator = new ObjectGenerator(abstractFieldsValuesChanger);
+        super(abstractFieldsValuesChanger);
     }
 
-    public void testToStringMethod(final Class<?> clazz, final Predicate<String> fieldPredicate) {
-        final ClassAndFieldPredicatePair classAndFieldPredicatePair = new ClassAndFieldPredicatePair(clazz, fieldPredicate);
-        testToStringMethod(classAndFieldPredicatePair);
-    }
-
-    public void testToStringMethod(final Class... classes) {
-        Arrays.stream(classes)
-              .map(ClassAndFieldPredicatePair::new)
-              .forEach(this::testToStringMethod);
-    }
-
-    private void testToStringMethod(final ClassAndFieldPredicatePair classAndFieldPredicatePair) {
+    @Override
+    protected void test(final Testable.ClassAndFieldPredicatePair classAndFieldPredicatePair) {
         final Class<?> testedClass = classAndFieldPredicatePair.getTestedClass();
         final Object instance = objectGenerator.createNewInstance(testedClass);
 
@@ -52,12 +34,12 @@ public class ToStringTester {
         assertions.assertAll();
     }
 
-    private List<Field> getIncludedFields(final ClassAndFieldPredicatePair classAndFieldPredicatePair) {
+    private List<Field> getIncludedFields(final Testable.ClassAndFieldPredicatePair classAndFieldPredicatePair) {
         final Class<?> testedClass = classAndFieldPredicatePair.getTestedClass();
         return FieldUtils.getFields(testedClass, classAndFieldPredicatePair.getPredicate());
     }
 
-    private List<Field> getExcludedFields(final ClassAndFieldPredicatePair classAndFieldPredicatePair) {
+    private List<Field> getExcludedFields(final Testable.ClassAndFieldPredicatePair classAndFieldPredicatePair) {
         final List<Field> includedFields = getIncludedFields(classAndFieldPredicatePair);
         final List<String> included = includedFields.stream()
                                                     .map(Field::getName)
