@@ -9,14 +9,14 @@ import java.util.List;
 
 public abstract class AbstractPrimitiveValueChanger<T> extends AbstractFieldsValuesChanger<T> {
 
-    private static final AbstractFieldsValuesChanger INSTANCE = new BooleanValueChanger().register(new BooleanValueChanger())
-                                                                                         .register(new ByteValueChanger())
-                                                                                         .register(new CharacterValueChanger())
-                                                                                         .register(new DoubleValueChanger())
-                                                                                         .register(new IntegerValueChanger())
-                                                                                         .register(new LongValueChanger())
-                                                                                         .register(new ShortValueChanger())
-                                                                                         .register(new FloatValueChanger());
+    public static final AbstractFieldsValuesChanger INSTANCE = new BooleanValueChanger().register(new BooleanValueChanger())
+                                                                                        .register(new ByteValueChanger())
+                                                                                        .register(new CharacterValueChanger())
+                                                                                        .register(new DoubleValueChanger())
+                                                                                        .register(new IntegerValueChanger())
+                                                                                        .register(new LongValueChanger())
+                                                                                        .register(new ShortValueChanger())
+                                                                                        .register(new FloatValueChanger());
 
     private static final List<Class<?>> PRIMITIVE_CLASSES = Lists.newArrayList(Float.class,
                                                                                Integer.class,
@@ -28,11 +28,6 @@ public abstract class AbstractPrimitiveValueChanger<T> extends AbstractFieldsVal
                                                                                Boolean.class,
                                                                                Character.class);
     private static final String FIELD_WITH_PRIMITIVE_CLASS_REFERENCE = "TYPE";
-
-
-    public static AbstractFieldsValuesChanger getInstance() {
-        return INSTANCE;
-    }
 
     @Override
     protected boolean canChange(final Field field) {

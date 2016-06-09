@@ -68,29 +68,29 @@ public class EnumValueChangerTest {
     }
 
     @Test
-    public void Should_Return_False_If_Values_Are_Not_Different() {
+    @Parameters(method = "getValuesForAreDifferent")
+    public void Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final TestEnum1 value1,
+                                                                                final TestEnum1 value2,
+                                                                                final boolean expectedResult) {
         // given
-        final TestEnum1 value1 = TestEnum1.ENUM1;
-        final TestEnum1 value2 = TestEnum1.ENUM1;
-
         // when
         final boolean result = enumValueChanger.areDifferentValues(value1, value2);
 
         // then
-        assertThat(result).isFalse();
+        assertThat(result).isEqualTo(expectedResult);
     }
 
-    @Test
-    public void Should_Return_True_If_Values_Are_Different() {
-        // given
-        final TestEnum1 value1 = TestEnum1.ENUM1;
-        final TestEnum1 value2 = TestEnum1.ENUM2;
-
-        // when
-        final boolean result = enumValueChanger.areDifferentValues(value1, value2);
-
-        // then
-        assertThat(result).isTrue();
+    private Object[][] getValuesForAreDifferent() {
+        return new Object[][]{
+                {null, null, false},
+                {TestEnum1.ENUM1, TestEnum1.ENUM1, false},
+                {TestEnum1.ENUM2, TestEnum1.ENUM2, false},
+                {TestEnum1.ENUM2, TestEnum1.ENUM2, false},
+                {TestEnum1.ENUM2, null, true},
+                {null, TestEnum1.ENUM2, true},
+                {TestEnum1.ENUM2, null, true},
+                {TestEnum1.ENUM2, TestEnum1.ENUM1, true},
+                };
     }
 
     private Object[][] getValuesForCanChange() throws NoSuchFieldException {
