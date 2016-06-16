@@ -1,12 +1,11 @@
 package org.pojo.tester.field;
 
-import lombok.extern.slf4j.Slf4j;
 import org.pojo.tester.GetOrSetValueException;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
-@Slf4j
 public abstract class AbstractFieldValueChanger<T> {
 
     private AbstractFieldValueChanger next;
@@ -30,6 +29,10 @@ public abstract class AbstractFieldValueChanger<T> {
     protected abstract boolean canChange(final Field field);
 
     protected abstract T increaseValue(T value, final Class<?> type);
+
+    protected Class<T> getGenericTypeClass() {
+        return (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+    }
 
     private void checkAndChange(final Object sourceObject, final Object targetObject, final Field field) {
         if (canChange(field)) {

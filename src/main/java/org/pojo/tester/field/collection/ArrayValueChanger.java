@@ -1,12 +1,10 @@
 package org.pojo.tester.field.collection;
 
-import org.pojo.tester.field.AbstractFieldValueChanger;
-
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.Arrays;
 
-public class ArrayValueChanger extends AbstractFieldValueChanger<Object> {
+public class ArrayValueChanger extends CollectionFieldValueChanger<Object> {
 
     @Override
     public boolean areDifferentValues(final Object sourceValue, final Object targetValue) {
@@ -15,11 +13,6 @@ public class ArrayValueChanger extends AbstractFieldValueChanger<Object> {
 
     @Override
     protected boolean canChange(final Field field) {
-        SortedSet.class.isAssignableFrom(Set.class); // false
-        Set.class.isAssignableFrom(SortedSet.class); // true
-        ArrayList.class.isAssignableFrom(Collection.class); // false
-        Collection.class.isAssignableFrom(ArrayList.class); // true
-        final Collection<String> e = new ArrayList<>();
         return field.getType()
                     .isArray();
     }

@@ -1,12 +1,13 @@
 package org.pojo.tester.field.collection;
 
 import java.util.Arrays;
-import java.util.stream.Stream;
+import java.util.Collections;
+import java.util.Set;
 
-public class StreamValueChanger extends CollectionFieldValueChanger<Stream<?>> {
+public class SetValueChanger extends CollectionFieldValueChanger<Set<?>> {
 
     @Override
-    public boolean areDifferentValues(final Stream<?> sourceValue, final Stream<?> targetValue) {
+    public boolean areDifferentValues(final Set<?> sourceValue, final Set<?> targetValue) {
         if (sourceValue == targetValue) {
             return false;
         }
@@ -20,9 +21,9 @@ public class StreamValueChanger extends CollectionFieldValueChanger<Stream<?>> {
     }
 
     @Override
-    protected Stream<?> increaseValue(final Stream<?> value, final Class<?> type) {
+    protected Set<?> increaseValue(final Set<?> value, final Class<?> type) {
         return value != null
                ? null
-               : Stream.empty();
+               : Collections.EMPTY_SET;
     }
 }

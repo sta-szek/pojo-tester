@@ -1,12 +1,12 @@
 package org.pojo.tester.field.collection;
 
 import java.util.Arrays;
-import java.util.stream.Stream;
+import java.util.Vector;
 
-public class StreamValueChanger extends CollectionFieldValueChanger<Stream<?>> {
+public class VectorValueChanger extends CollectionFieldValueChanger<Vector<?>> {
 
     @Override
-    public boolean areDifferentValues(final Stream<?> sourceValue, final Stream<?> targetValue) {
+    public boolean areDifferentValues(final Vector<?> sourceValue, final Vector<?> targetValue) {
         if (sourceValue == targetValue) {
             return false;
         }
@@ -20,9 +20,9 @@ public class StreamValueChanger extends CollectionFieldValueChanger<Stream<?>> {
     }
 
     @Override
-    protected Stream<?> increaseValue(final Stream<?> value, final Class<?> type) {
+    protected Vector<?> increaseValue(final Vector<?> value, final Class<?> type) {
         return value != null
                ? null
-               : Stream.empty();
+               : new Vector<>();
     }
 }

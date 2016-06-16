@@ -1,12 +1,13 @@
 package org.pojo.tester.field.collection;
 
 import java.util.Arrays;
-import java.util.stream.Stream;
+import java.util.LinkedList;
+import java.util.Queue;
 
-public class StreamValueChanger extends CollectionFieldValueChanger<Stream<?>> {
+public class QueueValueChanger extends CollectionFieldValueChanger<Queue<?>> {
 
     @Override
-    public boolean areDifferentValues(final Stream<?> sourceValue, final Stream<?> targetValue) {
+    public boolean areDifferentValues(final Queue<?> sourceValue, final Queue<?> targetValue) {
         if (sourceValue == targetValue) {
             return false;
         }
@@ -20,9 +21,9 @@ public class StreamValueChanger extends CollectionFieldValueChanger<Stream<?>> {
     }
 
     @Override
-    protected Stream<?> increaseValue(final Stream<?> value, final Class<?> type) {
+    protected Queue<?> increaseValue(final Queue<?> value, final Class<?> type) {
         return value != null
                ? null
-               : Stream.empty();
+               : new LinkedList<>();
     }
 }

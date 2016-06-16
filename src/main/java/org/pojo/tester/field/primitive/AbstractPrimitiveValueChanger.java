@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import org.pojo.tester.field.AbstractFieldValueChanger;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 public abstract class AbstractPrimitiveValueChanger<T> extends AbstractFieldValueChanger<T> {
@@ -73,9 +72,5 @@ public abstract class AbstractPrimitiveValueChanger<T> extends AbstractFieldValu
         } catch (IllegalAccessException | NoSuchFieldException e) {
             return false;
         }
-    }
-
-    private Class<T> getGenericTypeClass() {
-        return (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 }
