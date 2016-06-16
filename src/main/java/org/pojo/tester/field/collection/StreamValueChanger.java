@@ -1,12 +1,12 @@
 package org.pojo.tester.field.collection;
 
-import org.pojo.tester.field.AbstractFieldsValuesChanger;
+import org.pojo.tester.field.AbstractFieldValueChanger;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-public class StreamValueChanger extends AbstractFieldsValuesChanger<Stream<?>> {
+public class StreamValueChanger extends AbstractFieldValueChanger<Stream<?>> {
 
     @Override
     public boolean areDifferentValues(final Stream<?> sourceValue, final Stream<?> targetValue) {

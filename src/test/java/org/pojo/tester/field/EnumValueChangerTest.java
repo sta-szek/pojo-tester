@@ -15,7 +15,7 @@ import static org.powermock.reflect.Whitebox.getInternalState;
 
 @RunWith(JUnitParamsRunner.class)
 public class EnumValueChangerTest {
-    private final AbstractFieldsValuesChanger<Enum> enumValueChanger = new EnumValueChanger();
+    private final AbstractFieldValueChanger<Enum> enumValueChanger = new EnumValueChanger();
 
     @Test
     @Parameters(method = "getValuesForTest")

@@ -4,8 +4,8 @@ import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pojo.tester.field.AbstractFieldsValuesChanger;
-import org.pojo.tester.field.DefaultFieldsValuesChanger;
+import org.pojo.tester.field.AbstractFieldValueChanger;
+import org.pojo.tester.field.DefaultFieldValueChanger;
 import test.GoodPojo_Equals_HashCode_ToString;
 import test.TestHelper;
 import test.instantiator.arrays.ObjectContainingArray;
@@ -21,12 +21,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(JUnitParamsRunner.class)
 public class ObjectGeneratorTest {
 
-    private final AbstractFieldsValuesChanger abstractFieldsValuesChanger = DefaultFieldsValuesChanger.INSTANCE;
+    private final AbstractFieldValueChanger abstractFieldValueChanger = DefaultFieldValueChanger.INSTANCE;
 
     @Test
     public void Should_Create_Any_Instance() {
         // given
-        final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldsValuesChanger);
+        final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger);
         final Class<GoodPojo_Equals_HashCode_ToString> expectedClass = GoodPojo_Equals_HashCode_ToString.class;
 
         // when
@@ -40,7 +40,7 @@ public class ObjectGeneratorTest {
     @Parameters(method = "objectsToCreateSameInstance")
     public void Should_Create_Same_Instance(final Object objectToCreateSameInstance) {
         // given
-        final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldsValuesChanger);
+        final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger);
 
         // when
         final Object result = objectGenerator.createSameInstance(objectToCreateSameInstance);
@@ -53,7 +53,7 @@ public class ObjectGeneratorTest {
     @Parameters(method = "objectsToCreateDifferentInstance")
     public void Should_Create_Different_Instance(final Object objectToCreateSameInstance) {
         // given
-        final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldsValuesChanger);
+        final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger);
         final List<Field> allFields = TestHelper.getAllFieldsExceptDummyJacocoField(objectToCreateSameInstance.getClass());
 
         // when

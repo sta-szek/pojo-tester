@@ -4,8 +4,8 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.pojo.tester.assertion.Assertions;
-import org.pojo.tester.field.AbstractFieldsValuesChanger;
-import org.pojo.tester.field.DefaultFieldsValuesChanger;
+import org.pojo.tester.field.AbstractFieldValueChanger;
+import org.pojo.tester.field.DefaultFieldValueChanger;
 import org.pojo.tester.instantiator.ObjectGenerator;
 
 import java.util.Arrays;
@@ -18,11 +18,11 @@ public abstract class Testable {
     protected final ObjectGenerator objectGenerator;
 
     public Testable() {
-        this(DefaultFieldsValuesChanger.INSTANCE);
+        this(DefaultFieldValueChanger.INSTANCE);
     }
 
-    public Testable(final AbstractFieldsValuesChanger abstractFieldsValuesChanger) {
-        objectGenerator = new ObjectGenerator(abstractFieldsValuesChanger);
+    public Testable(final AbstractFieldValueChanger abstractFieldValueChanger) {
+        objectGenerator = new ObjectGenerator(abstractFieldValueChanger);
     }
 
     public void test(final Class<?> clazz, final Predicate<String> fieldPredicate) {

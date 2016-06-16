@@ -1,7 +1,7 @@
 package org.pojo.tester;
 
 
-import org.pojo.tester.field.AbstractFieldsValuesChanger;
+import org.pojo.tester.field.AbstractFieldValueChanger;
 import org.pojo.tester.field.FieldUtils;
 import org.pojo.tester.field.GetValueException;
 
@@ -16,8 +16,8 @@ public class ToStringTester extends Testable {
         super();
     }
 
-    public ToStringTester(final AbstractFieldsValuesChanger abstractFieldsValuesChanger) {
-        super(abstractFieldsValuesChanger);
+    public ToStringTester(final AbstractFieldValueChanger abstractFieldValueChanger) {
+        super(abstractFieldValueChanger);
     }
 
     @Override
