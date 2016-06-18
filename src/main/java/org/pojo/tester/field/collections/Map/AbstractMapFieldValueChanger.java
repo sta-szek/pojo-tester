@@ -2,8 +2,10 @@ package org.pojo.tester.field.collections.map;
 
 
 import org.pojo.tester.field.AbstractFieldValueChanger;
+import sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
 import java.util.Map;
 
 public abstract class AbstractMapFieldValueChanger<T extends Map> extends AbstractFieldValueChanger<T> {
@@ -19,7 +21,7 @@ public abstract class AbstractMapFieldValueChanger<T extends Map> extends Abstra
         if (sourceValue == targetValue) {
             return false;
         }
-        if (sourceValue == null || targetValue == null) {
+        if (sourceValue == null || targetValue == null || haveDifferentSizes(sourceValue, targetValue)) {
             return true;
         } else {
             targetValue.forEach(sourceValue::remove);
@@ -30,6 +32,15 @@ public abstract class AbstractMapFieldValueChanger<T extends Map> extends Abstra
     @Override
     protected boolean canChange(final Field field) {
         return field.getType()
-                    .isAssignableFrom(getGenericTypeClass());
+                    .isAssignableFrom(getGenericTypeClass2());
+    }
+    
+    protected Class<T> getGenericTypeClass2() {
+        return (Class<T>) ((ParameterizedTypeImpl) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0])
+                .getRawType();
+    }
+
+    private boolean haveDifferentSizes(final T sourceValue, final T targetValue) {
+        return sourceValue.size() != targetValue.size();
     }
 }
