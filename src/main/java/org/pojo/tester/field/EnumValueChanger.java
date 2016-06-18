@@ -3,7 +3,7 @@ package org.pojo.tester.field;
 
 import java.lang.reflect.Field;
 
-public class EnumValueChanger extends AbstractFieldValueChanger<Enum> {
+class EnumValueChanger extends AbstractFieldValueChanger<Enum> {
 
 
     @Override
@@ -39,7 +39,7 @@ public class EnumValueChanger extends AbstractFieldValueChanger<Enum> {
     private Enum firstValue(final Class<?> type) {
         final Object[] enumConstants = type.getEnumConstants();
         if (enumConstants.length == 0) {
-            throw new ImpossibleEnumValueChange(type);
+            throw new ImpossibleEnumValueChangeException(type);
         }
         return (Enum) enumConstants[0];
     }

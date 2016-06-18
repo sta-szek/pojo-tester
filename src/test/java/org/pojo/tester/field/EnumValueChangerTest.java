@@ -53,7 +53,7 @@ public class EnumValueChangerTest {
         final Throwable result = catchThrowable(() -> enumValueChanger.increaseValue(null, EnumWithoutConstants.class));
 
         // then
-        assertThat(result).isInstanceOf(ImpossibleEnumValueChange.class);
+        assertThat(result).isInstanceOf(ImpossibleEnumValueChangeException.class);
     }
 
     @Test

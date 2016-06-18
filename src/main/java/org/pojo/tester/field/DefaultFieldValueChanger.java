@@ -3,7 +3,7 @@ package org.pojo.tester.field;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.pojo.tester.field.collection.CollectionFieldValueChanger;
+import org.pojo.tester.field.collections.CollectionFieldValueChanger;
 import org.pojo.tester.field.primitive.AbstractPrimitiveValueChanger;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
