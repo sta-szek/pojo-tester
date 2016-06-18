@@ -5,7 +5,7 @@ import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import test.fields.collections.collection.Collections;
+import test.fields.collections.map.Maps;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -94,12 +94,12 @@ public class AbstractMapFieldValueChangerTest {
     }
 
     private Object[][] getValuesForCanChange() throws NoSuchFieldException {
-        final Field hashtable = Collections.class.getDeclaredField("hashtable");
-        final Field linkedHashMap = Collections.class.getDeclaredField("linkedHashMap");
-        final Field map = Collections.class.getDeclaredField("map");
-        final Field sortedMap = Collections.class.getDeclaredField("sortedMap");
-        final Field treeMap = Collections.class.getDeclaredField("treeMap");
-        final Field hashMap = Collections.class.getDeclaredField("hashMap");
+        final Field hashtable = Maps.class.getDeclaredField("hashtable");
+        final Field linkedHashMap = Maps.class.getDeclaredField("linkedHashMap");
+        final Field map = Maps.class.getDeclaredField("map");
+        final Field sortedMap = Maps.class.getDeclaredField("sortedMap");
+        final Field treeMap = Maps.class.getDeclaredField("treeMap");
+        final Field hashMap = Maps.class.getDeclaredField("hashMap");
 
         return new Object[][]{
                 {new HashtableValueChanger(), hashtable, true},
