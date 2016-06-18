@@ -32,10 +32,11 @@ public abstract class AbstractMapFieldValueChanger<T extends Map> extends Abstra
     @Override
     protected boolean canChange(final Field field) {
         return field.getType()
-                    .isAssignableFrom(getGenericTypeClass2());
+                    .isAssignableFrom(getGenericTypeClass());
     }
-    
-    protected Class<T> getGenericTypeClass2() {
+
+    @Override
+    protected Class<T> getGenericTypeClass() {
         return (Class<T>) ((ParameterizedTypeImpl) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0])
                 .getRawType();
     }
