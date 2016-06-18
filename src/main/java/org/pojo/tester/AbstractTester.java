@@ -12,16 +12,16 @@ import java.util.Arrays;
 import java.util.function.Predicate;
 
 
-public abstract class Testable {
+public abstract class AbstractTester {
 
     protected final Assertions assertions = new Assertions();
     protected final ObjectGenerator objectGenerator;
 
-    public Testable() {
+    public AbstractTester() {
         this(DefaultFieldValueChanger.INSTANCE);
     }
 
-    public Testable(final AbstractFieldValueChanger abstractFieldValueChanger) {
+    public AbstractTester(final AbstractFieldValueChanger abstractFieldValueChanger) {
         objectGenerator = new ObjectGenerator(abstractFieldValueChanger);
     }
 

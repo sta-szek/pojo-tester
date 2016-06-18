@@ -8,7 +8,7 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class HashCodeTester extends Testable {
+public class HashCodeTester extends AbstractTester {
 
     public HashCodeTester() {
         super();
