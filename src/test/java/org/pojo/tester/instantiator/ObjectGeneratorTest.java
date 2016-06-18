@@ -8,6 +8,8 @@ import org.pojo.tester.field.AbstractFieldValueChanger;
 import org.pojo.tester.field.DefaultFieldValueChanger;
 import test.GoodPojo_Equals_HashCode_ToString;
 import test.TestHelper;
+import test.fields.collections.collection.Collections;
+import test.fields.collections.map.Maps;
 import test.instantiator.arrays.ObjectContainingArray;
 import test.instantiator.arrays.ObjectContainingIterable;
 import test.instantiator.arrays.ObjectContainingIterator;
@@ -67,6 +69,8 @@ public class ObjectGeneratorTest {
         return new Object[]{
                 new GoodPojo_Equals_HashCode_ToString(),
                 new ObjectContainingArray(),
+                new Collections(),
+                new Maps(),
                 };
     }
 
@@ -76,6 +80,8 @@ public class ObjectGeneratorTest {
                 new ObjectContainingIterable(),
                 new ObjectContainingIterator(),
                 new ObjectContainingStream(),
+                new Collections(),
+                new Maps(),
                 new GoodPojo_Equals_HashCode_ToString(),
                 };
     }
