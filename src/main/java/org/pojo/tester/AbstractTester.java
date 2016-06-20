@@ -4,25 +4,25 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.pojo.tester.assertion.Assertions;
-import org.pojo.tester.field.AbstractFieldsValuesChanger;
-import org.pojo.tester.field.DefaultFieldsValuesChanger;
+import org.pojo.tester.field.AbstractFieldValueChanger;
+import org.pojo.tester.field.DefaultFieldValueChanger;
 import org.pojo.tester.instantiator.ObjectGenerator;
 
 import java.util.Arrays;
 import java.util.function.Predicate;
 
 
-public abstract class Testable {
+public abstract class AbstractTester {
 
     protected final Assertions assertions = new Assertions();
     protected final ObjectGenerator objectGenerator;
 
-    public Testable() {
-        this(DefaultFieldsValuesChanger.INSTANCE);
+    public AbstractTester() {
+        this(DefaultFieldValueChanger.INSTANCE);
     }
 
-    public Testable(final AbstractFieldsValuesChanger abstractFieldsValuesChanger) {
-        objectGenerator = new ObjectGenerator(abstractFieldsValuesChanger);
+    public AbstractTester(final AbstractFieldValueChanger abstractFieldValueChanger) {
+        objectGenerator = new ObjectGenerator(abstractFieldValueChanger);
     }
 
     public void test(final Class<?> clazz, final Predicate<String> fieldPredicate) {

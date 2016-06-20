@@ -2,7 +2,7 @@ package org.pojo.tester.instantiator;
 
 
 import org.pojo.tester.GetOrSetValueException;
-import org.pojo.tester.field.AbstractFieldsValuesChanger;
+import org.pojo.tester.field.AbstractFieldValueChanger;
 import org.pojo.tester.field.FieldUtils;
 
 import java.lang.reflect.Field;
@@ -10,10 +10,10 @@ import java.util.List;
 
 public class ObjectGenerator {
 
-    private final AbstractFieldsValuesChanger abstractFieldsValuesChanger;
+    private final AbstractFieldValueChanger abstractFieldValueChanger;
 
-    public ObjectGenerator(final AbstractFieldsValuesChanger abstractFieldsValuesChanger) {
-        this.abstractFieldsValuesChanger = abstractFieldsValuesChanger;
+    public ObjectGenerator(final AbstractFieldValueChanger abstractFieldValueChanger) {
+        this.abstractFieldValueChanger = abstractFieldValueChanger;
     }
 
     public Object createNewInstance(final Class<?> clazz) {
@@ -31,7 +31,7 @@ public class ObjectGenerator {
 
     public Object createInstanceWithDifferentFieldValues(final Object baseObject, final List<Field> fieldsToChange) {
         final Object objectToChange = createSameInstance(baseObject);
-        abstractFieldsValuesChanger.changeFieldsValues(baseObject, objectToChange, fieldsToChange);
+        abstractFieldValueChanger.changeFieldsValues(baseObject, objectToChange, fieldsToChange);
 
         return objectToChange;
     }

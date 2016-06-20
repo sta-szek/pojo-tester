@@ -1,7 +1,7 @@
 package org.pojo.tester;
 
 
-import org.pojo.tester.field.AbstractFieldsValuesChanger;
+import org.pojo.tester.field.AbstractFieldValueChanger;
 import org.pojo.tester.field.FieldUtils;
 import org.pojo.tester.field.GetValueException;
 
@@ -10,18 +10,18 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-public class ToStringTester extends Testable {
+public class ToStringTester extends AbstractTester {
 
     public ToStringTester() {
         super();
     }
 
-    public ToStringTester(final AbstractFieldsValuesChanger abstractFieldsValuesChanger) {
-        super(abstractFieldsValuesChanger);
+    public ToStringTester(final AbstractFieldValueChanger abstractFieldValueChanger) {
+        super(abstractFieldValueChanger);
     }
 
     @Override
-    protected void test(final Testable.ClassAndFieldPredicatePair classAndFieldPredicatePair) {
+    protected void test(final AbstractTester.ClassAndFieldPredicatePair classAndFieldPredicatePair) {
         final Class<?> testedClass = classAndFieldPredicatePair.getTestedClass();
         final Object instance = objectGenerator.createNewInstance(testedClass);
 
@@ -34,12 +34,12 @@ public class ToStringTester extends Testable {
         assertions.assertAll();
     }
 
-    private List<Field> getIncludedFields(final Testable.ClassAndFieldPredicatePair classAndFieldPredicatePair) {
+    private List<Field> getIncludedFields(final AbstractTester.ClassAndFieldPredicatePair classAndFieldPredicatePair) {
         final Class<?> testedClass = classAndFieldPredicatePair.getTestedClass();
         return FieldUtils.getFields(testedClass, classAndFieldPredicatePair.getPredicate());
     }
 
-    private List<Field> getExcludedFields(final Testable.ClassAndFieldPredicatePair classAndFieldPredicatePair) {
+    private List<Field> getExcludedFields(final AbstractTester.ClassAndFieldPredicatePair classAndFieldPredicatePair) {
         final List<Field> includedFields = getIncludedFields(classAndFieldPredicatePair);
         final List<String> included = includedFields.stream()
                                                     .map(Field::getName)

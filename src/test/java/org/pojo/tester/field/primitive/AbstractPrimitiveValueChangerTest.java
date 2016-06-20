@@ -3,7 +3,6 @@ package org.pojo.tester.field.primitive;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pojo.tester.field.AbstractFieldsValuesChanger;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import test.fields.AllFiledTypes;
@@ -18,17 +17,6 @@ import static org.powermock.api.mockito.PowerMockito.mock;
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(AbstractPrimitiveValueChanger.class)
 public class AbstractPrimitiveValueChangerTest {
-
-    @Test
-    public void Should_Create_Instance_With_Primitive_Changers() throws InstantiationException, IllegalAccessException {
-        // given
-
-        // when
-        final AbstractFieldsValuesChanger abstractFieldsValuesChanger = AbstractPrimitiveValueChanger.getInstance();
-
-        // then
-        assertThat(abstractFieldsValuesChanger).isNotNull();
-    }
 
     @Test
     public void Should_Return_False_When_Field_Is_Not_Primitive() throws Exception {

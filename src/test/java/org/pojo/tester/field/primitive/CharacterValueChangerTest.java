@@ -6,7 +6,7 @@ import junitparams.Parameters;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pojo.tester.field.AbstractFieldsValuesChanger;
+import org.pojo.tester.field.AbstractFieldValueChanger;
 import test.fields.AllFiledTypes;
 import test.fields.AllFiledTypes_Wrapped;
 
@@ -16,7 +16,7 @@ import static org.powermock.reflect.Whitebox.getInternalState;
 @RunWith(JUnitParamsRunner.class)
 public class CharacterValueChangerTest {
 
-    private final AbstractFieldsValuesChanger<Character> charValueChanger = new CharacterValueChanger();
+    private final AbstractFieldValueChanger<Character> charValueChanger = new CharacterValueChanger();
 
     @Test
     @Parameters(method = "getValuesForTest")

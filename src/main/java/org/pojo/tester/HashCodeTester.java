@@ -1,21 +1,21 @@
 package org.pojo.tester;
 
 
-import org.pojo.tester.field.AbstractFieldsValuesChanger;
+import org.pojo.tester.field.AbstractFieldValueChanger;
 import org.pojo.tester.field.FieldUtils;
 
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class HashCodeTester extends Testable {
+public class HashCodeTester extends AbstractTester {
 
     public HashCodeTester() {
         super();
     }
 
-    public HashCodeTester(final AbstractFieldsValuesChanger abstractFieldsValuesChanger) {
-        super(abstractFieldsValuesChanger);
+    public HashCodeTester(final AbstractFieldValueChanger abstractFieldValueChanger) {
+        super(abstractFieldValueChanger);
     }
 
     @Override

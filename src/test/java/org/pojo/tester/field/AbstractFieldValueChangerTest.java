@@ -13,18 +13,18 @@ import static org.mockito.Mockito.verify;
 import static org.powermock.reflect.internal.WhiteboxImpl.getInternalState;
 
 @RunWith(MockitoJUnitRunner.class)
-public class AbstractFieldsValuesChangerTest {
+public class AbstractFieldValueChangerTest {
 
     @Mock(answer = Answers.CALLS_REAL_METHODS)
-    private static AbstractFieldsValuesChanger abstractFieldsValuesChanger;
+    private static AbstractFieldValueChanger abstractFieldValueChanger;
 
     @Test
     public void Should_Register_First_Value_Changer() {
         // given
 
         // when
-        abstractFieldsValuesChanger.register(abstractFieldsValuesChanger);
-        final AbstractFieldsValuesChanger result = getInternalState(abstractFieldsValuesChanger, "next");
+        abstractFieldValueChanger.attachNext(abstractFieldValueChanger);
+        final AbstractFieldValueChanger result = getInternalState(abstractFieldValueChanger, "next");
 
         // then
         assertThat(result).isNotNull();
@@ -33,15 +33,15 @@ public class AbstractFieldsValuesChangerTest {
     @Test
     public void Should_Register_Value_Changer_To_Already_Registered_One() {
         // given
-        final AbstractFieldsValuesChanger first = mock(AbstractFieldsValuesChanger.class, Mockito.CALLS_REAL_METHODS);
-        final AbstractFieldsValuesChanger second = mock(AbstractFieldsValuesChanger.class, Mockito.CALLS_REAL_METHODS);
+        final AbstractFieldValueChanger first = mock(AbstractFieldValueChanger.class, Mockito.CALLS_REAL_METHODS);
+        final AbstractFieldValueChanger second = mock(AbstractFieldValueChanger.class, Mockito.CALLS_REAL_METHODS);
 
         // when
-        abstractFieldsValuesChanger.register(first)
-                                   .register(second);
+        abstractFieldValueChanger.attachNext(first)
+                                 .attachNext(second);
 
         // then
-        verify(first).register(second);
+        verify(first).attachNext(second);
     }
 
 }

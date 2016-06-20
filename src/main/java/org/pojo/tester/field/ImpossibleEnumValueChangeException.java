@@ -1,8 +1,8 @@
 package org.pojo.tester.field;
 
-public class ImpossibleEnumValueChange extends RuntimeException {
+class ImpossibleEnumValueChangeException extends RuntimeException {
 
-    public ImpossibleEnumValueChange(final Class<?> type) {
+    public ImpossibleEnumValueChangeException(final Class<?> type) {
         super("Enum with type '" + type.getName() + "' has no enum constants. The only value of field with this type is null.");
     }
 }

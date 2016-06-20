@@ -1,22 +1,21 @@
 package org.pojo.tester.field.primitive;
 
 import com.google.common.collect.Lists;
-import org.pojo.tester.field.AbstractFieldsValuesChanger;
+import org.pojo.tester.field.AbstractFieldValueChanger;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
-public abstract class AbstractPrimitiveValueChanger<T> extends AbstractFieldsValuesChanger<T> {
+public abstract class AbstractPrimitiveValueChanger<T> extends AbstractFieldValueChanger<T> {
 
-    private static final AbstractFieldsValuesChanger INSTANCE = new BooleanValueChanger().register(new BooleanValueChanger())
-                                                                                         .register(new ByteValueChanger())
-                                                                                         .register(new CharacterValueChanger())
-                                                                                         .register(new DoubleValueChanger())
-                                                                                         .register(new IntegerValueChanger())
-                                                                                         .register(new LongValueChanger())
-                                                                                         .register(new ShortValueChanger())
-                                                                                         .register(new FloatValueChanger());
+    public static final AbstractFieldValueChanger INSTANCE = new BooleanValueChanger().attachNext(new BooleanValueChanger())
+                                                                                      .attachNext(new ByteValueChanger())
+                                                                                      .attachNext(new CharacterValueChanger())
+                                                                                      .attachNext(new DoubleValueChanger())
+                                                                                      .attachNext(new IntegerValueChanger())
+                                                                                      .attachNext(new LongValueChanger())
+                                                                                      .attachNext(new ShortValueChanger())
+                                                                                      .attachNext(new FloatValueChanger());
 
     private static final List<Class<?>> PRIMITIVE_CLASSES = Lists.newArrayList(Float.class,
                                                                                Integer.class,
@@ -28,11 +27,6 @@ public abstract class AbstractPrimitiveValueChanger<T> extends AbstractFieldsVal
                                                                                Boolean.class,
                                                                                Character.class);
     private static final String FIELD_WITH_PRIMITIVE_CLASS_REFERENCE = "TYPE";
-
-
-    public static AbstractFieldsValuesChanger getInstance() {
-        return INSTANCE;
-    }
 
     @Override
     protected boolean canChange(final Field field) {
@@ -78,9 +72,5 @@ public abstract class AbstractPrimitiveValueChanger<T> extends AbstractFieldsVal
         } catch (IllegalAccessException | NoSuchFieldException e) {
             return false;
         }
-    }
-
-    private Class<T> getGenericTypeClass() {
-        return (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 }

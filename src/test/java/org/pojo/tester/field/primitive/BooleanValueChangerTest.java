@@ -4,7 +4,7 @@ import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pojo.tester.field.AbstractFieldsValuesChanger;
+import org.pojo.tester.field.AbstractFieldValueChanger;
 import test.fields.AllFiledTypes;
 import test.fields.AllFiledTypes_Wrapped;
 
@@ -15,7 +15,7 @@ import static org.powermock.reflect.Whitebox.getInternalState;
 @RunWith(JUnitParamsRunner.class)
 public class BooleanValueChangerTest {
 
-    private final AbstractFieldsValuesChanger<Boolean> booleanValueChanger = new BooleanValueChanger();
+    private final AbstractFieldValueChanger<Boolean> booleanValueChanger = new BooleanValueChanger();
 
     @Test
     @Parameters(method = "getValuesForTest")

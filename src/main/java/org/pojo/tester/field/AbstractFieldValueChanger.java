@@ -1,15 +1,14 @@
 package org.pojo.tester.field;
 
-import lombok.extern.slf4j.Slf4j;
 import org.pojo.tester.GetOrSetValueException;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
-@Slf4j
-public abstract class AbstractFieldsValuesChanger<T> {
+public abstract class AbstractFieldValueChanger<T> {
 
-    private AbstractFieldsValuesChanger next;
+    private AbstractFieldValueChanger next;
 
     public void changeFieldsValues(final Object sourceObject, final Object targetObject, final List<Field> fieldsToChange) {
         fieldsToChange.forEach(eachField -> checkAndChange(sourceObject, targetObject, eachField));
@@ -18,11 +17,11 @@ public abstract class AbstractFieldsValuesChanger<T> {
 
     public abstract boolean areDifferentValues(T sourceValue, T targetValue);
 
-    public AbstractFieldsValuesChanger register(final AbstractFieldsValuesChanger abstractFieldsValuesChanger) {
+    public AbstractFieldValueChanger attachNext(final AbstractFieldValueChanger abstractFieldValueChanger) {
         if (this.next == null) {
-            this.next = abstractFieldsValuesChanger;
+            this.next = abstractFieldValueChanger;
         } else {
-            this.next.register(abstractFieldsValuesChanger);
+            this.next.attachNext(abstractFieldValueChanger);
         }
         return this;
     }
@@ -30,6 +29,10 @@ public abstract class AbstractFieldsValuesChanger<T> {
     protected abstract boolean canChange(final Field field);
 
     protected abstract T increaseValue(T value, final Class<?> type);
+
+    protected Class<T> getGenericTypeClass() {
+        return (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+    }
 
     private void checkAndChange(final Object sourceObject, final Object targetObject, final Field field) {
         if (canChange(field)) {

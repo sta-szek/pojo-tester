@@ -1,30 +1,34 @@
 package org.pojo.tester.instantiator;
 
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pojo.tester.field.AbstractFieldsValuesChanger;
-import org.pojo.tester.field.FieldUtils;
-import org.pojo.tester.field.primitive.AbstractPrimitiveValueChanger;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.pojo.tester.field.AbstractFieldValueChanger;
+import org.pojo.tester.field.DefaultFieldValueChanger;
 import test.GoodPojo_Equals_HashCode_ToString;
 import test.TestHelper;
+import test.fields.collections.collection.Collections;
+import test.fields.collections.map.Maps;
+import test.instantiator.arrays.ObjectContainingArray;
+import test.instantiator.arrays.ObjectContainingIterable;
+import test.instantiator.arrays.ObjectContainingIterator;
+import test.instantiator.arrays.ObjectContainingStream;
 
 import java.lang.reflect.Field;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({FieldUtils.class, ObjectGenerator.class})
+@RunWith(JUnitParamsRunner.class)
 public class ObjectGeneratorTest {
 
-    private final AbstractFieldsValuesChanger abstractFieldsValuesChanger = AbstractPrimitiveValueChanger.getInstance();
+    private final AbstractFieldValueChanger abstractFieldValueChanger = DefaultFieldValueChanger.INSTANCE;
 
     @Test
     public void Should_Create_Any_Instance() {
         // given
-        final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldsValuesChanger);
+        final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger);
         final Class<GoodPojo_Equals_HashCode_ToString> expectedClass = GoodPojo_Equals_HashCode_ToString.class;
 
         // when
@@ -35,30 +39,51 @@ public class ObjectGeneratorTest {
     }
 
     @Test
-    public void Should_Create_Same_Instance() {
+    @Parameters(method = "objectsToCreateSameInstance")
+    public void Should_Create_Same_Instance(final Object objectToCreateSameInstance) {
         // given
-        final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldsValuesChanger);
-        final GoodPojo_Equals_HashCode_ToString goodPojo = new GoodPojo_Equals_HashCode_ToString();
+        final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger);
 
         // when
-        final Object result = objectGenerator.createSameInstance(goodPojo);
+        final Object result = objectGenerator.createSameInstance(objectToCreateSameInstance);
 
         // then
-        assertThat(result).isEqualTo(goodPojo);
+        assertThat(result).isEqualToComparingFieldByField(objectToCreateSameInstance);
     }
 
     @Test
-    public void Should_Create_Different_Instance() {
+    @Parameters(method = "objectsToCreateDifferentInstance")
+    public void Should_Create_Different_Instance(final Object objectToCreateSameInstance) {
         // given
-        final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldsValuesChanger);
-        final GoodPojo_Equals_HashCode_ToString goodPojo = new GoodPojo_Equals_HashCode_ToString();
-        final List<Field> allFields = TestHelper.getAllFieldsExceptDummyJacocoField(goodPojo.getClass());
+        final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger);
+        final List<Field> allFields = TestHelper.getAllFieldsExceptDummyJacocoField(objectToCreateSameInstance.getClass());
 
         // when
-        final Object result = objectGenerator.createInstanceWithDifferentFieldValues(goodPojo, allFields);
+        final Object result = objectGenerator.createInstanceWithDifferentFieldValues(objectToCreateSameInstance, allFields);
 
         // then
-        assertThat(result).isNotEqualTo(goodPojo);
+        assertThat(result).isNotEqualTo(objectToCreateSameInstance);
+    }
+
+    private Object[] objectsToCreateSameInstance() {
+        return new Object[]{
+                new GoodPojo_Equals_HashCode_ToString(),
+                new ObjectContainingArray(),
+                new Collections(),
+                new Maps(),
+                };
+    }
+
+    private Object[] objectsToCreateDifferentInstance() {
+        return new Object[]{
+                new ObjectContainingArray(),
+                new ObjectContainingIterable(),
+                new ObjectContainingIterator(),
+                new ObjectContainingStream(),
+                new Collections(),
+                new Maps(),
+                new GoodPojo_Equals_HashCode_ToString(),
+                };
     }
 
 }
