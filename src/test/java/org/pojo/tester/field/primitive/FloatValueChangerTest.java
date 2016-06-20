@@ -19,7 +19,7 @@ public class FloatValueChangerTest {
     private final AbstractFieldValueChanger<Float> floatValueChanger = new FloatValueChanger();
 
     @Test
-    @Parameters(method = "getValuesForTest")
+    @Parameters(method = "getValuesForChangeValue")
     public void Should_Change_Primitive_Value(final Float value) {
         // given
         final AllFiledTypes helpClass1 = new AllFiledTypes(value);
@@ -35,7 +35,7 @@ public class FloatValueChangerTest {
     }
 
     @Test
-    @Parameters(method = "getValuesForTest")
+    @Parameters(method = "getValuesForChangeValue")
     public void Should_Change_Wrapped_Value(final Float value) {
         // given
         final AllFiledTypes_Wrapped helpClass1 = new AllFiledTypes_Wrapped(value);
@@ -51,32 +51,36 @@ public class FloatValueChangerTest {
     }
 
     @Test
-    public void Should_Return_False_If_Values_Are_Not_Different() {
+    @Parameters(method = "getValuesForAreDifferent")
+    public void Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final Float value1,
+                                                                                final Float value2,
+                                                                                final boolean expectedResult) {
         // given
-        final Float value1 = 0f;
-        final Float value2 = 0f;
 
         // when
         final boolean result = floatValueChanger.areDifferentValues(value1, value2);
 
         // then
-        assertThat(result).isFalse();
+        assertThat(result).isEqualTo(expectedResult);
     }
 
-    @Test
-    public void Should_Return_True_If_Values_Are_Different() {
-        // given
-        final Float value1 = 0f;
-        final Float value2 = 1f;
+    private Object[][] getValuesForAreDifferent() {
+        return new Object[][]{
+                {null, null, false},
+                {(float) 0, (float) 0, false},
+                {Float.MIN_VALUE, Float.MIN_VALUE, false},
+                {Float.MAX_VALUE, Float.MAX_VALUE, false},
 
-        // when
-        final boolean result = floatValueChanger.areDifferentValues(value1, value2);
+                {(float) 0, (float) 1, true},
+                {(float) 0, null, true},
+                {null, Float.MIN_VALUE, true},
+                {Float.MIN_VALUE, Float.MAX_VALUE, true},
+                {Float.MAX_VALUE, Float.MIN_VALUE, true},
 
-        // then
-        assertThat(result).isTrue();
+                };
     }
 
-    private Object[] getValuesForTest() {
+    private Object[] getValuesForChangeValue() {
         return new Object[]{Float.MAX_VALUE,
                             Float.MIN_VALUE,
                             Float.MIN_NORMAL,

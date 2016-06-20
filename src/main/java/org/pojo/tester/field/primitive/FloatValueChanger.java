@@ -4,7 +4,7 @@ package org.pojo.tester.field.primitive;
 class FloatValueChanger extends AbstractPrimitiveValueChanger<Float> {
 
     @Override
-    public boolean areDifferentValues(final Float sourceValue, final Float targetValue) {
+    public boolean areDifferent(final Float sourceValue, final Float targetValue) {
         return sourceValue.doubleValue() != targetValue.doubleValue();
     }
 
