@@ -4,7 +4,7 @@ package org.pojo.tester.field.primitive;
 class ShortValueChanger extends AbstractPrimitiveValueChanger<Short> {
 
     @Override
-    public boolean areDifferentValues(final Short sourceValue, final Short targetValue) {
+    public boolean areDifferent(final Short sourceValue, final Short targetValue) {
         return sourceValue.shortValue() != targetValue.shortValue();
     }
 

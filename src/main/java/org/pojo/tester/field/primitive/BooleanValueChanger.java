@@ -3,7 +3,7 @@ package org.pojo.tester.field.primitive;
 class BooleanValueChanger extends AbstractPrimitiveValueChanger<Boolean> {
 
     @Override
-    public boolean areDifferentValues(final Boolean sourceValue, final Boolean targetValue) {
+    public boolean areDifferent(final Boolean sourceValue, final Boolean targetValue) {
         return sourceValue.booleanValue() != targetValue.booleanValue();
     }
 
