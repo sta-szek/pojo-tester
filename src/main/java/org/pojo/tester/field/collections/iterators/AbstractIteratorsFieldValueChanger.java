@@ -9,7 +9,7 @@ import java.lang.reflect.ParameterizedType;
 
 public abstract class AbstractIteratorsFieldValueChanger<T> extends AbstractFieldValueChanger<T> {
 
-    public static final AbstractFieldValueChanger INSTANCE = new IteratorValueChanger().register(new IterableValueChanger());
+    public static final AbstractFieldValueChanger INSTANCE = new IteratorValueChanger().attachNext(new IterableValueChanger());
 
 
     @Override

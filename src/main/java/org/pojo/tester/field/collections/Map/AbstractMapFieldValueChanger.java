@@ -10,11 +10,11 @@ import java.util.Map;
 
 public abstract class AbstractMapFieldValueChanger<T extends Map> extends AbstractFieldValueChanger<T> {
 
-    public static final AbstractFieldValueChanger INSTANCE = new HashMapValueChanger().register(new HashtableValueChanger())
-                                                                                      .register(new LinkedHashMapValueChanger())
-                                                                                      .register(new MapValueChanger())
-                                                                                      .register(new SortedMapValueChanger())
-                                                                                      .register(new TreeMapValueChanger());
+    public static final AbstractFieldValueChanger INSTANCE = new HashMapValueChanger().attachNext(new HashtableValueChanger())
+                                                                                      .attachNext(new LinkedHashMapValueChanger())
+                                                                                      .attachNext(new MapValueChanger())
+                                                                                      .attachNext(new SortedMapValueChanger())
+                                                                                      .attachNext(new TreeMapValueChanger());
 
     @Override
     public boolean areDifferentValues(final T sourceValue, final T targetValue) {

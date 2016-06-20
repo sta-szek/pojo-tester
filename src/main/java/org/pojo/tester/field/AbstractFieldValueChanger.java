@@ -17,11 +17,11 @@ public abstract class AbstractFieldValueChanger<T> {
 
     public abstract boolean areDifferentValues(T sourceValue, T targetValue);
 
-    public AbstractFieldValueChanger register(final AbstractFieldValueChanger abstractFieldValueChanger) {
+    public AbstractFieldValueChanger attachNext(final AbstractFieldValueChanger abstractFieldValueChanger) {
         if (this.next == null) {
             this.next = abstractFieldValueChanger;
         } else {
-            this.next.register(abstractFieldValueChanger);
+            this.next.attachNext(abstractFieldValueChanger);
         }
         return this;
     }

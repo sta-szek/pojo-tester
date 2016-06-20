@@ -8,14 +8,14 @@ import java.util.List;
 
 public abstract class AbstractPrimitiveValueChanger<T> extends AbstractFieldValueChanger<T> {
 
-    public static final AbstractFieldValueChanger INSTANCE = new BooleanValueChanger().register(new BooleanValueChanger())
-                                                                                      .register(new ByteValueChanger())
-                                                                                      .register(new CharacterValueChanger())
-                                                                                      .register(new DoubleValueChanger())
-                                                                                      .register(new IntegerValueChanger())
-                                                                                      .register(new LongValueChanger())
-                                                                                      .register(new ShortValueChanger())
-                                                                                      .register(new FloatValueChanger());
+    public static final AbstractFieldValueChanger INSTANCE = new BooleanValueChanger().attachNext(new BooleanValueChanger())
+                                                                                      .attachNext(new ByteValueChanger())
+                                                                                      .attachNext(new CharacterValueChanger())
+                                                                                      .attachNext(new DoubleValueChanger())
+                                                                                      .attachNext(new IntegerValueChanger())
+                                                                                      .attachNext(new LongValueChanger())
+                                                                                      .attachNext(new ShortValueChanger())
+                                                                                      .attachNext(new FloatValueChanger());
 
     private static final List<Class<?>> PRIMITIVE_CLASSES = Lists.newArrayList(Float.class,
                                                                                Integer.class,

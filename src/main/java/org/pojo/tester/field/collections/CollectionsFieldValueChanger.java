@@ -7,8 +7,10 @@ import org.pojo.tester.field.collections.iterators.AbstractIteratorsFieldValueCh
 import org.pojo.tester.field.collections.map.AbstractMapFieldValueChanger;
 
 public class CollectionsFieldValueChanger {
-    public static final AbstractFieldValueChanger INSTANCE = new ArrayValueChanger().register(new StreamValueChanger())
-                                                                                    .register(AbstractCollectionFieldValueChanger.INSTANCE)
-                                                                                    .register(AbstractMapFieldValueChanger.INSTANCE)
-                                                                                    .register(AbstractIteratorsFieldValueChanger.INSTANCE);
+    public static final AbstractFieldValueChanger INSTANCE = new ArrayValueChanger().attachNext(new StreamValueChanger())
+                                                                                    .attachNext(AbstractCollectionFieldValueChanger
+                                                                                                        .INSTANCE)
+                                                                                    .attachNext(AbstractMapFieldValueChanger.INSTANCE)
+                                                                                    .attachNext(AbstractIteratorsFieldValueChanger
+                                                                                                        .INSTANCE);
 }

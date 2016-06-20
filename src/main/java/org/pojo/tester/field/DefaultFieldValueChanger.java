@@ -9,6 +9,6 @@ import org.pojo.tester.field.primitive.AbstractPrimitiveValueChanger;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class DefaultFieldValueChanger {
 
-    public static final AbstractFieldValueChanger INSTANCE = new EnumValueChanger().register(AbstractPrimitiveValueChanger.INSTANCE)
-                                                                                   .register(CollectionsFieldValueChanger.INSTANCE);
+    public static final AbstractFieldValueChanger INSTANCE = new EnumValueChanger().attachNext(AbstractPrimitiveValueChanger.INSTANCE)
+                                                                                   .attachNext(CollectionsFieldValueChanger.INSTANCE);
 }

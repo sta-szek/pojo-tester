@@ -23,7 +23,7 @@ public class AbstractFieldValueChangerTest {
         // given
 
         // when
-        abstractFieldValueChanger.register(abstractFieldValueChanger);
+        abstractFieldValueChanger.attachNext(abstractFieldValueChanger);
         final AbstractFieldValueChanger result = getInternalState(abstractFieldValueChanger, "next");
 
         // then
@@ -37,11 +37,11 @@ public class AbstractFieldValueChangerTest {
         final AbstractFieldValueChanger second = mock(AbstractFieldValueChanger.class, Mockito.CALLS_REAL_METHODS);
 
         // when
-        abstractFieldValueChanger.register(first)
-                                 .register(second);
+        abstractFieldValueChanger.attachNext(first)
+                                 .attachNext(second);
 
         // then
-        verify(first).register(second);
+        verify(first).attachNext(second);
     }
 
 }
