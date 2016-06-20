@@ -19,7 +19,7 @@ public class ByteValueChangerTest {
     private final AbstractFieldValueChanger<Byte> byteValueChanger = new ByteValueChanger();
 
     @Test
-    @Parameters(method = "getValuesForTest")
+    @Parameters(method = "getValuesForChangeValue")
     public void Should_Change_Primitive_Value(final Byte value) {
         // given
         final AllFiledTypes helpClass1 = new AllFiledTypes(value);
@@ -35,7 +35,7 @@ public class ByteValueChangerTest {
     }
 
     @Test
-    @Parameters(method = "getValuesForTest")
+    @Parameters(method = "getValuesForChangeValue")
     public void Should_Change_Wrapped_Value(final Byte value) {
         // given
         final AllFiledTypes_Wrapped helpClass1 = new AllFiledTypes_Wrapped(value);
@@ -51,32 +51,36 @@ public class ByteValueChangerTest {
     }
 
     @Test
-    public void Should_Return_False_If_Values_Are_Not_Different() {
+    @Parameters(method = "getValuesForAreDifferent")
+    public void Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final Byte value1,
+                                                                                final Byte value2,
+                                                                                final boolean expectedResult) {
         // given
-        final Byte value1 = 0;
-        final Byte value2 = 0;
 
         // when
         final boolean result = byteValueChanger.areDifferentValues(value1, value2);
 
         // then
-        assertThat(result).isFalse();
+        assertThat(result).isEqualTo(expectedResult);
     }
 
-    @Test
-    public void Should_Return_True_If_Values_Are_Different() {
-        // given
-        final Byte value1 = 0;
-        final Byte value2 = 1;
+    private Object[][] getValuesForAreDifferent() {
+        return new Object[][]{
+                {null, null, false},
+                {(byte) 0, (byte) 0, false},
+                {Byte.MIN_VALUE, Byte.MIN_VALUE, false},
+                {Byte.MAX_VALUE, Byte.MAX_VALUE, false},
 
-        // when
-        final boolean result = byteValueChanger.areDifferentValues(value1, value2);
+                {(byte) 0, (byte) 1, true},
+                {(byte) 0, null, true},
+                {null, Byte.MIN_VALUE, true},
+                {Byte.MIN_VALUE, Byte.MAX_VALUE, true},
+                {Byte.MAX_VALUE, Byte.MIN_VALUE, true},
 
-        // then
-        assertThat(result).isTrue();
+                };
     }
 
-    private Object[] getValuesForTest() {
+    private Object[] getValuesForChangeValue() {
         return new Object[]{Byte.MAX_VALUE,
                             Byte.MIN_VALUE,
                             new Byte((byte) 0),

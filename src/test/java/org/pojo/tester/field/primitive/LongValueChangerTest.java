@@ -18,7 +18,7 @@ public class LongValueChangerTest {
     private final AbstractFieldValueChanger<Long> longValueChanger = new LongValueChanger();
 
     @Test
-    @Parameters(method = "getValuesForTest")
+    @Parameters(method = "getValuesForChangeValue")
     public void Should_Change_Primitive_Value(final Long value) {
         // given
         final AllFiledTypes helpClass1 = new AllFiledTypes(value);
@@ -34,7 +34,7 @@ public class LongValueChangerTest {
     }
 
     @Test
-    @Parameters(method = "getValuesForTest")
+    @Parameters(method = "getValuesForChangeValue")
     public void Should_Change_Wrapped_Value(final Long value) {
         // given
         final AllFiledTypes_Wrapped helpClass1 = new AllFiledTypes_Wrapped(value);
@@ -50,32 +50,36 @@ public class LongValueChangerTest {
     }
 
     @Test
-    public void Should_Return_False_If_Values_Are_Not_Different() {
+    @Parameters(method = "getValuesForAreDifferent")
+    public void Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final Long value1,
+                                                                                final Long value2,
+                                                                                final boolean expectedResult) {
         // given
-        final Long value1 = 0L;
-        final Long value2 = 0L;
 
         // when
         final boolean result = longValueChanger.areDifferentValues(value1, value2);
 
         // then
-        assertThat(result).isFalse();
+        assertThat(result).isEqualTo(expectedResult);
     }
 
-    @Test
-    public void Should_Return_True_If_Values_Are_Different() {
-        // given
-        final Long value1 = 0L;
-        final Long value2 = 1L;
+    private Object[][] getValuesForAreDifferent() {
+        return new Object[][]{
+                {null, null, false},
+                {(long) 0, (long) 0, false},
+                {Long.MIN_VALUE, Long.MIN_VALUE, false},
+                {Long.MAX_VALUE, Long.MAX_VALUE, false},
 
-        // when
-        final boolean result = longValueChanger.areDifferentValues(value1, value2);
+                {(long) 0, (long) 1, true},
+                {(long) 0, null, true},
+                {null, Long.MIN_VALUE, true},
+                {Long.MIN_VALUE, Long.MAX_VALUE, true},
+                {Long.MAX_VALUE, Long.MIN_VALUE, true},
 
-        // then
-        assertThat(result).isTrue();
+                };
     }
 
-    private Object[] getValuesForTest() {
+    private Object[] getValuesForChangeValue() {
         return new Object[]{Long.MAX_VALUE,
                             Long.MIN_VALUE,
                             0L,

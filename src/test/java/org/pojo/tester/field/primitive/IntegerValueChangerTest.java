@@ -19,7 +19,7 @@ public class IntegerValueChangerTest {
     private final AbstractFieldValueChanger<Integer> integerValueChanger = new IntegerValueChanger();
 
     @Test
-    @Parameters(method = "getValuesForTest")
+    @Parameters(method = "getValuesForChangeValue")
     public void Should_Change_Primitive_Value(final Integer value) {
         // given
         final AllFiledTypes helpClass1 = new AllFiledTypes(value);
@@ -35,7 +35,7 @@ public class IntegerValueChangerTest {
     }
 
     @Test
-    @Parameters(method = "getValuesForTest")
+    @Parameters(method = "getValuesForChangeValue")
     public void Should_Change_Wrapped_Value(final Integer value) {
         // given
         final AllFiledTypes_Wrapped helpClass1 = new AllFiledTypes_Wrapped(value);
@@ -51,32 +51,36 @@ public class IntegerValueChangerTest {
     }
 
     @Test
-    public void Should_Return_False_If_Values_Are_Not_Different() {
+    @Parameters(method = "getValuesForAreDifferent")
+    public void Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final Integer value1,
+                                                                                final Integer value2,
+                                                                                final boolean expectedResult) {
         // given
-        final Integer value1 = 0;
-        final Integer value2 = 0;
 
         // when
         final boolean result = integerValueChanger.areDifferentValues(value1, value2);
 
         // then
-        assertThat(result).isFalse();
+        assertThat(result).isEqualTo(expectedResult);
     }
 
-    @Test
-    public void Should_Return_True_If_Values_Are_Different() {
-        // given
-        final Integer value1 = 0;
-        final Integer value2 = 1;
+    private Object[][] getValuesForAreDifferent() {
+        return new Object[][]{
+                {null, null, false},
+                {0, 0, false},
+                {Integer.MIN_VALUE, Integer.MIN_VALUE, false},
+                {Integer.MAX_VALUE, Integer.MAX_VALUE, false},
 
-        // when
-        final boolean result = integerValueChanger.areDifferentValues(value1, value2);
+                {0, 1, true},
+                {0, null, true},
+                {null, Integer.MIN_VALUE, true},
+                {Integer.MIN_VALUE, Integer.MAX_VALUE, true},
+                {Integer.MAX_VALUE, Integer.MIN_VALUE, true},
 
-        // then
-        assertThat(result).isTrue();
+                };
     }
 
-    private Object[] getValuesForTest() {
+    private Object[] getValuesForChangeValue() {
         return new Object[]{Integer.MAX_VALUE,
                             Integer.MIN_VALUE,
                             0,

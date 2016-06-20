@@ -19,7 +19,7 @@ public class CharacterValueChangerTest {
     private final AbstractFieldValueChanger<Character> charValueChanger = new CharacterValueChanger();
 
     @Test
-    @Parameters(method = "getValuesForTest")
+    @Parameters(method = "getValuesForChangeValue")
     public void Should_Change_Primitive_Value(final Character value) {
         // given
         final AllFiledTypes helpClass1 = new AllFiledTypes(value);
@@ -35,7 +35,7 @@ public class CharacterValueChangerTest {
     }
 
     @Test
-    @Parameters(method = "getValuesForTest")
+    @Parameters(method = "getValuesForChangeValue")
     public void Should_Change_Wrapped_Value(final Character value) {
         // given
         final AllFiledTypes_Wrapped helpClass1 = new AllFiledTypes_Wrapped(value);
@@ -51,32 +51,36 @@ public class CharacterValueChangerTest {
     }
 
     @Test
-    public void Should_Return_False_If_Values_Are_Not_Different() {
+    @Parameters(method = "getValuesForAreDifferent")
+    public void Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final Character value1,
+                                                                                final Character value2,
+                                                                                final boolean expectedResult) {
         // given
-        final Character value1 = 0;
-        final Character value2 = 0;
 
         // when
         final boolean result = charValueChanger.areDifferentValues(value1, value2);
 
         // then
-        assertThat(result).isFalse();
+        assertThat(result).isEqualTo(expectedResult);
     }
 
-    @Test
-    public void Should_Return_True_If_Values_Are_Different() {
-        // given
-        final Character value1 = 0;
-        final Character value2 = 1;
+    private Object[][] getValuesForAreDifferent() {
+        return new Object[][]{
+                {null, null, false},
+                {(char) 0, (char) 0, false},
+                {Character.MIN_VALUE, Character.MIN_VALUE, false},
+                {Character.MAX_VALUE, Character.MAX_VALUE, false},
 
-        // when
-        final boolean result = charValueChanger.areDifferentValues(value1, value2);
+                {(char) 0, (char) 1, true},
+                {(char) 0, null, true},
+                {null, Character.MIN_VALUE, true},
+                {Character.MIN_VALUE, Character.MAX_VALUE, true},
+                {Character.MAX_VALUE, Character.MIN_VALUE, true},
 
-        // then
-        assertThat(result).isTrue();
+                };
     }
 
-    private Object[] getValuesForTest() {
+    private Object[] getValuesForChangeValue() {
         return new Object[]{Character.MAX_CODE_POINT,
                             Character.MAX_HIGH_SURROGATE,
                             Character.MAX_LOW_SURROGATE,

@@ -21,7 +21,7 @@ public class StreamValueChangerTest {
     private final StreamValueChanger streamValueChanger = new StreamValueChanger();
 
     @Test
-    @Parameters(method = "getValuesForTest")
+    @Parameters(method = "getValuesForChangeValue")
     public void Should_Change_Stream_Value(final String fieldName) throws NoSuchFieldException {
         // given
         final ClassContainingStream helpClass1 = new ClassContainingStream();
@@ -64,6 +64,20 @@ public class StreamValueChangerTest {
         assertThat(result).isEqualTo(expectedResult);
     }
 
+    private Object[][] getValuesForAreDifferent() {
+        return new Object[][]{
+                {null, null, false},
+                {Stream.of(1), Stream.of(1), false},
+                {Stream.of(new A()), Stream.of(new A()), false},
+                {Stream.empty(), Stream.empty(), false},
+                {Stream.empty(), null, true},
+                {null, Stream.empty(), true},
+                {Stream.of(new A()), null, true},
+                {Stream.of(new A()), Stream.of(1), true},
+                {Stream.of(new A()), Stream.empty(), true},
+                };
+    }
+
     private Object[][] getValuesForCanChange() throws NoSuchFieldException {
         final Field field1 = ClassContainingStream.class.getDeclaredField("stream_String");
         final Field field2 = ClassContainingStream.class.getDeclaredField("stream_Object");
@@ -82,27 +96,13 @@ public class StreamValueChangerTest {
                 };
     }
 
-    private Object[] getValuesForTest() {
+    private Object[] getValuesForChangeValue() {
         return new Object[]{
                 "stream_String",
                 "stream_Object",
                 "stream_Integer",
                 "stream_A",
                 "stream",
-                };
-    }
-
-    private Object[][] getValuesForAreDifferent() {
-        return new Object[][]{
-                {null, null, false},
-                {Stream.of(1), Stream.of(1), false},
-                {Stream.of(new A()), Stream.of(new A()), false},
-                {Stream.empty(), Stream.empty(), false},
-                {Stream.empty(), null, true},
-                {null, Stream.empty(), true},
-                {Stream.of(new A()), null, true},
-                {Stream.of(new A()), Stream.of(1), true},
-                {Stream.of(new A()), Stream.empty(), true},
                 };
     }
 }

@@ -18,7 +18,7 @@ public class ArrayValueChangerTest {
     private final ArrayValueChanger arrayValueChanger = new ArrayValueChanger();
 
     @Test
-    @Parameters(method = "getValuesForTest")
+    @Parameters(method = "getValuesForChangeValue")
     public void Should_Change_Array_Value(final String fieldName) throws NoSuchFieldException {
         // given
         final ClassContainingArrays helpClass1 = new ClassContainingArrays();
@@ -115,7 +115,7 @@ public class ArrayValueChangerTest {
                 };
     }
 
-    private Object[] getValuesForTest() {
+    private Object[] getValuesForChangeValue() {
         return new Object[]{
                 "a_int",
                 "a_char",

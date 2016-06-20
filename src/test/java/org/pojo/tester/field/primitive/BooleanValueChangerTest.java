@@ -18,7 +18,7 @@ public class BooleanValueChangerTest {
     private final AbstractFieldValueChanger<Boolean> booleanValueChanger = new BooleanValueChanger();
 
     @Test
-    @Parameters(method = "getValuesForTest")
+    @Parameters(method = "getValuesForChangeValue")
     public void Should_Change_Primitive_Value(final Boolean value) {
         // given
         final AllFiledTypes helpClass1 = new AllFiledTypes(value);
@@ -34,7 +34,7 @@ public class BooleanValueChangerTest {
     }
 
     @Test
-    @Parameters(method = "getValuesForTest")
+    @Parameters(method = "getValuesForChangeValue")
     public void Should_Change_Wrapped_Value(final Boolean value) {
         // given
         final AllFiledTypes_Wrapped helpClass1 = new AllFiledTypes_Wrapped(value);
@@ -50,28 +50,36 @@ public class BooleanValueChangerTest {
     }
 
     @Test
-    public void Should_Return_False_If_Values_Are_Not_Different() {
+    @Parameters(method = "getValuesForAreDifferent")
+    public void Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final Boolean value1,
+                                                                                final Boolean value2,
+                                                                                final boolean expectedResult) {
         // given
 
         // when
-        final boolean result = booleanValueChanger.areDifferentValues(false, false);
+        final boolean result = booleanValueChanger.areDifferentValues(value1, value2);
 
         // then
-        assertThat(result).isFalse();
+        assertThat(result).isEqualTo(expectedResult);
     }
 
-    @Test
-    public void Should_Return_True_If_Values_Are_Different() {
-        // given
+    private Object[][] getValuesForAreDifferent() {
+        return new Object[][]{
+                {null, null, false},
+                {false, false, false},
+                {Boolean.FALSE, Boolean.FALSE, false},
+                {Boolean.TRUE, Boolean.TRUE, false},
 
-        // when
-        final boolean result = booleanValueChanger.areDifferentValues(false, true);
+                {false, true, true},
+                {false, null, true},
+                {null, Boolean.FALSE, true},
+                {Boolean.FALSE, Boolean.TRUE, true},
+                {Boolean.TRUE, Boolean.FALSE, true},
 
-        // then
-        assertThat(result).isTrue();
+                };
     }
 
-    private Object[] getValuesForTest() {
+    private Object[] getValuesForChangeValue() {
         return new Object[]{Boolean.FALSE,
                             Boolean.TRUE};
     }

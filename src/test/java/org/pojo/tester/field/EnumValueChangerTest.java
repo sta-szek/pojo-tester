@@ -18,7 +18,7 @@ public class EnumValueChangerTest {
     private final AbstractFieldValueChanger<Enum> enumValueChanger = new EnumValueChanger();
 
     @Test
-    @Parameters(method = "getValuesForTest")
+    @Parameters(method = "getValuesForChangeValue")
     public void Should_Change_Enum_Value(final TestEnum1 value) {
         // given
         final EnumFields helpClass1 = new EnumFields(value);
@@ -109,7 +109,7 @@ public class EnumValueChangerTest {
                               {object, false}};
     }
 
-    private Object[] getValuesForTest() {
+    private Object[] getValuesForChangeValue() {
         return new Object[]{TestEnum1.ENUM1, TestEnum1.ENUM2};
     }
 }

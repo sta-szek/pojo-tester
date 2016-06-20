@@ -18,7 +18,7 @@ public class ShortValueChangerTest {
     private final AbstractFieldValueChanger<Short> shortValueChanger = new ShortValueChanger();
 
     @Test
-    @Parameters(method = "getValuesForTest")
+    @Parameters(method = "getValuesForChangeValue")
     public void Should_Change_Primitive_Value(final Short value) {
         // given
         final AllFiledTypes helpClass1 = new AllFiledTypes(value);
@@ -34,7 +34,7 @@ public class ShortValueChangerTest {
     }
 
     @Test
-    @Parameters(method = "getValuesForTest")
+    @Parameters(method = "getValuesForChangeValue")
     public void Should_Change_Wrapped_Value(final Short value) {
         // given
         final AllFiledTypes_Wrapped helpClass1 = new AllFiledTypes_Wrapped(value);
@@ -50,32 +50,36 @@ public class ShortValueChangerTest {
     }
 
     @Test
-    public void Should_Return_False_If_Values_Are_Not_Different() {
+    @Parameters(method = "getValuesForAreDifferent")
+    public void Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final Short value1,
+                                                                                final Short value2,
+                                                                                final boolean expectedResult) {
         // given
-        final Short value1 = 0;
-        final Short value2 = 0;
 
         // when
         final boolean result = shortValueChanger.areDifferentValues(value1, value2);
 
         // then
-        assertThat(result).isFalse();
+        assertThat(result).isEqualTo(expectedResult);
     }
 
-    @Test
-    public void Should_Return_True_If_Values_Are_Different() {
-        // given
-        final Short value1 = 0;
-        final Short value2 = 1;
+    private Object[][] getValuesForAreDifferent() {
+        return new Object[][]{
+                {null, null, false},
+                {(short) 0, (short) 0, false},
+                {Short.MIN_VALUE, Short.MIN_VALUE, false},
+                {Short.MAX_VALUE, Short.MAX_VALUE, false},
 
-        // when
-        final boolean result = shortValueChanger.areDifferentValues(value1, value2);
+                {(short) 0, (short) 1, true},
+                {(short) 0, null, true},
+                {null, Short.MIN_VALUE, true},
+                {Short.MIN_VALUE, Short.MAX_VALUE, true},
+                {Short.MAX_VALUE, Short.MIN_VALUE, true},
 
-        // then
-        assertThat(result).isTrue();
+                };
     }
 
-    private Object[] getValuesForTest() {
+    private Object[] getValuesForChangeValue() {
         return new Object[]{Short.MAX_VALUE,
                             Short.MIN_VALUE,
                             new Short((short) 0),

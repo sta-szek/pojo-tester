@@ -19,7 +19,7 @@ public class DoubleValueChangerTest {
     private final AbstractFieldValueChanger<Double> doubleValueChanger = new DoubleValueChanger();
 
     @Test
-    @Parameters(method = "getValuesForTest")
+    @Parameters(method = "getValuesForChangeValue")
     public void Should_Change_Primitive_Value(final Double value) {
         // given
         final AllFiledTypes helpClass1 = new AllFiledTypes(value);
@@ -35,7 +35,7 @@ public class DoubleValueChangerTest {
     }
 
     @Test
-    @Parameters(method = "getValuesForTest")
+    @Parameters(method = "getValuesForChangeValue")
     public void Should_Change_Wrapped_Value(final Double value) {
         // given
         final AllFiledTypes_Wrapped helpClass1 = new AllFiledTypes_Wrapped(value);
@@ -51,32 +51,36 @@ public class DoubleValueChangerTest {
     }
 
     @Test
-    public void Should_Return_False_If_Values_Are_Not_Different() {
+    @Parameters(method = "getValuesForAreDifferent")
+    public void Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final Double value1,
+                                                                                final Double value2,
+                                                                                final boolean expectedResult) {
         // given
-        final Double value1 = 0d;
-        final Double value2 = 0d;
 
         // when
         final boolean result = doubleValueChanger.areDifferentValues(value1, value2);
 
         // then
-        assertThat(result).isFalse();
+        assertThat(result).isEqualTo(expectedResult);
     }
 
-    @Test
-    public void Should_Return_True_If_Values_Are_Different() {
-        // given
-        final Double value1 = 0d;
-        final Double value2 = 1d;
+    private Object[][] getValuesForAreDifferent() {
+        return new Object[][]{
+                {null, null, false},
+                {(double) 0, (double) 0, false},
+                {Double.MIN_VALUE, Double.MIN_VALUE, false},
+                {Double.MAX_VALUE, Double.MAX_VALUE, false},
 
-        // when
-        final boolean result = doubleValueChanger.areDifferentValues(value1, value2);
+                {(double) 0, (double) 1, true},
+                {(double) 0, null, true},
+                {null, Double.MIN_VALUE, true},
+                {Double.MIN_VALUE, Double.MAX_VALUE, true},
+                {Double.MAX_VALUE, Double.MIN_VALUE, true},
 
-        // then
-        assertThat(result).isTrue();
+                };
     }
 
-    private Object[] getValuesForTest() {
+    private Object[] getValuesForChangeValue() {
         return new Object[]{Double.MAX_VALUE,
                             Double.MIN_VALUE,
                             Double.MIN_NORMAL,
