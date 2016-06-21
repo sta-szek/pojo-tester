@@ -1,6 +1,6 @@
 package org.pojo.tester.assertion;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import test.tostring.ToStringWithoutField;
 
 import static org.mockito.Matchers.anyString;

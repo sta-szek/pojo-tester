@@ -2,11 +2,16 @@ package org.pojo.tester.instantiator;
 
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.pojo.tester.FieldPredicate;
 import org.pojo.tester.field.FieldUtils;
-import test.instantiator.*;
+import test.instantiator.Constructor_Stream;
+import test.instantiator.Constructor_Thread;
+import test.instantiator.NoDefaultConstructor;
+import test.instantiator.PackageConstructor;
+import test.instantiator.PrivateConstructor;
+import test.instantiator.ProtectedConstructor;
 import test.instantiator.arrays.*;
 import test.instantiator.statics.ClassContainingStaticClasses;
 

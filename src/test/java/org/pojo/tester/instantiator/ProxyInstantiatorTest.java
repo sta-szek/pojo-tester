@@ -3,7 +3,7 @@ package org.pojo.tester.instantiator;
 
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import test.instantiator.abstracts.Abstract;
 import test.instantiator.abstracts.Abstract_PrivateConstructor;

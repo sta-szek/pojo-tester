@@ -1,8 +1,14 @@
 package org.pojo.tester.assertion;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import test.GoodPojo_Equals_HashCode_ToString;
-import test.equals.*;
+import test.equals.BadPojoEqualsDifferentType;
+import test.equals.BadPojoEqualsNull;
+import test.equals.BadPojoEqualsWithEqualObject;
+import test.equals.BadPojoEquals_NotConsistent;
+import test.equals.BadPojoEquals_NotSymmetric;
+import test.equals.BadPojoEquals_NotTransitive_A_B;
+import test.equals.BadPojoEquals_NotTransitive_B_C;
 
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;

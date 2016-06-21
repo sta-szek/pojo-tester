@@ -1,14 +1,18 @@
 package org.pojo.tester.field.collections.collection;
 
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.TreeSet;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import test.fields.collections.collection.Collections;
-
-import java.lang.reflect.Field;
-import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

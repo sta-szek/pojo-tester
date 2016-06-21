@@ -1,7 +1,7 @@
 package org.pojo.tester.instantiator;
 
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import test.instantiator.enums.DoubleEnum;
 import test.instantiator.enums.EmptyEnum;
 

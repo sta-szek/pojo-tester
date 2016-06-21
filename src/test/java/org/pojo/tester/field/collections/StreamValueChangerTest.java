@@ -1,15 +1,14 @@
 package org.pojo.tester.field.collections;
 
 
+import java.lang.reflect.Field;
+import java.util.stream.Stream;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import test.A;
 import test.fields.ClassContainingStream;
-
-import java.lang.reflect.Field;
-import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.util.Lists.newArrayList;

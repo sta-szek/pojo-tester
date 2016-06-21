@@ -1,13 +1,12 @@
 package org.pojo.tester.field.primitive;
 
 
-import org.junit.Test;
+import java.lang.reflect.Field;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import test.fields.AllFiledTypes;
-
-import java.lang.reflect.Field;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.CALLS_REAL_METHODS;

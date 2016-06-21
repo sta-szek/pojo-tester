@@ -1,12 +1,16 @@
 package org.pojo.tester.field;
 
+import java.lang.reflect.Field;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import test.fields.*;
-
-import java.lang.reflect.Field;
+import test.fields.AllFiledTypes;
+import test.fields.AllFiledTypes_Wrapped;
+import test.fields.EnumFields;
+import test.fields.EnumWithoutConstants;
+import test.fields.SingleEnum;
+import test.fields.TestEnum1;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;

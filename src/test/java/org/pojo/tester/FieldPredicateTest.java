@@ -1,15 +1,14 @@
 package org.pojo.tester;
 
-import junitparams.JUnitParamsRunner;
-import junitparams.Parameters;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.pojo.tester.field.FieldUtils;
-import test.predicate.TestPredicate;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.pojo.tester.field.FieldUtils;
+import test.predicate.TestPredicate;
 
 import static org.assertj.core.util.Lists.newArrayList;
 import static org.pojo.tester.PredicateAssertions.assertThat;

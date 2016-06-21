@@ -1,12 +1,11 @@
 package org.pojo.tester;
 
-import org.junit.Test;
+import java.util.List;
+import org.junit.jupiter.api.Test;
 import test.GoodPojo_Equals_HashCode_ToString;
 import test.hashcode.BadPojoHashCode;
 import test.hashcode.BadPojoHashCodeDifferentObjectSameType;
 import test.hashcode.BadPojoHashCodeItself;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;

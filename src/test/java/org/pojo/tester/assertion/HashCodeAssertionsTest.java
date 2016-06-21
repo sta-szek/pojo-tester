@@ -1,6 +1,6 @@
 package org.pojo.tester.assertion;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import test.GoodPojo_Equals_HashCode_ToString;
 import test.hashcode.BadPojoHashCode_DifferentObjects;
 import test.hashcode.BadPojoHashCode_NotConsistent;

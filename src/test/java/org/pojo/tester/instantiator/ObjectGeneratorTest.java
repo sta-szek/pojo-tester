@@ -1,8 +1,10 @@
 package org.pojo.tester.instantiator;
 
+import java.lang.reflect.Field;
+import java.util.List;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.pojo.tester.field.AbstractFieldValueChanger;
 import org.pojo.tester.field.DefaultFieldValueChanger;
@@ -14,9 +16,6 @@ import test.instantiator.arrays.ObjectContainingArray;
 import test.instantiator.arrays.ObjectContainingIterable;
 import test.instantiator.arrays.ObjectContainingIterator;
 import test.instantiator.arrays.ObjectContainingStream;
-
-import java.lang.reflect.Field;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

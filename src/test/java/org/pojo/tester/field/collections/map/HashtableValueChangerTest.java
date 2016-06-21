@@ -1,8 +1,7 @@
 package org.pojo.tester.field.collections.map;
 
-import org.junit.Test;
-
 import java.util.Hashtable;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

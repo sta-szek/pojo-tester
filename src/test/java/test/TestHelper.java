@@ -14,4 +14,8 @@ public class TestHelper {
                                             .equals("$jacocoData"))
                      .collect(Collectors.toList());
     }
+
+    public static String getDefaultDisplayName(final Object values) {
+        return "Value: " + String.valueOf(values);
+    }
 }

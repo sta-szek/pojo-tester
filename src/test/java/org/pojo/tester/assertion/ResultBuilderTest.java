@@ -1,12 +1,11 @@
 package org.pojo.tester.assertion;
 
-import org.assertj.core.util.Lists;
-import org.assertj.core.util.Sets;
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import org.assertj.core.util.Lists;
+import org.assertj.core.util.Sets;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

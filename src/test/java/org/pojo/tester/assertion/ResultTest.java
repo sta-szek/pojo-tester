@@ -1,15 +1,14 @@
 package org.pojo.tester.assertion;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.assertj.core.util.Lists;
 import org.assertj.core.util.Sets;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

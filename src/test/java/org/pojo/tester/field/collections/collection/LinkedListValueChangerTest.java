@@ -1,9 +1,8 @@
 package org.pojo.tester.field.collections.collection;
 
 
-import org.junit.Test;
-
 import java.util.LinkedList;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

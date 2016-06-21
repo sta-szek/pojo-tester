@@ -1,17 +1,16 @@
 package org.pojo.tester.field;
 
+import java.lang.reflect.Field;
+import java.util.List;
+import java.util.stream.Collectors;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import test.TestHelper;
 import test.fields.ClassWithAllAvailableFieldModifiers;
 import test.fields.Permutation1;
 import test.fields.Permutation2;
-
-import java.lang.reflect.Field;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.util.Lists.newArrayList;

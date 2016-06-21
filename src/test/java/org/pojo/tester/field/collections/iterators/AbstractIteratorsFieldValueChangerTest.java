@@ -1,13 +1,12 @@
 package org.pojo.tester.field.collections.iterators;
 
 
+import java.lang.reflect.Field;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import test.fields.collections.iterators.Iterators;
-
-import java.lang.reflect.Field;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -1,14 +1,17 @@
 package org.pojo.tester.field.collections.map;
 
 
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.TreeMap;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import test.fields.collections.map.Maps;
-
-import java.lang.reflect.Field;
-import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

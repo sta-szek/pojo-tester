@@ -1,25 +1,46 @@
 buildscript {
     repositories {
         mavenCentral()
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
     }
     dependencies {
         classpath 'info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.1.9'
+        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.0-SNAPSHOT'
     }
 }
 
+ext.junit4Version = '4.12'
+ext.junitVintageVersion = '4.12.0-SNAPSHOT'
+ext.junitPlatformVersion = '1.0.0-SNAPSHOT'
+ext.junitJupiterVersion = '5.0.0-SNAPSHOT'
+ext.log4JVersion = '2.5'
 
 group 'pojo-tester'
-version '0.0.1'
+version '0.1.0'
 
 apply plugin: 'java'
+apply plugin: 'idea'
 apply plugin: 'jacoco'
 apply plugin: 'info.solidsoft.pitest'
+apply plugin: 'org.junit.platform.gradle.plugin'
 
 sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
 }
+
+junitPlatform {
+    enableStandardTestTask true
+    engines {
+        include 'junit-jupiter'
+        // exclude 'junit-vintage'
+    }
+
+    includeClassNamePattern '.*Test'
+}
+
 dependencies {
     compile 'org.slf4j:slf4j-simple:1.7.20'
     compile 'org.apache.commons:commons-lang3:3.4'
@@ -30,8 +51,10 @@ dependencies {
     compile 'org.javassist:javassist:3.20.0-GA'
 
 
+    testCompile("org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}")
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}")
+    testCompile("org.junit.platform:junit-platform-runner:${junitPlatformVersion}")
     testCompile 'org.assertj:assertj-core:3.4.1'
-    testCompile 'junit:junit:4.12'
     testCompile 'pl.pragmatists:JUnitParams:1.0.4'
     testCompile 'org.powermock:powermock-api-mockito:1.6.5'
     testCompile 'org.powermock:powermock-module-junit4:1.6.5'
