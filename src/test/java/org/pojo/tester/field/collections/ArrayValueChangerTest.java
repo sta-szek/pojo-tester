@@ -1,140 +1,135 @@
 package org.pojo.tester.field.collections;
 
 import java.lang.reflect.Field;
-import junitparams.JUnitParamsRunner;
-import junitparams.Parameters;
-import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+import java.util.stream.Stream;
+import lombok.AllArgsConstructor;
+import org.junit.jupiter.api.DynamicTest;
+import org.junit.jupiter.api.Executable;
+import org.junit.jupiter.api.TestFactory;
 import test.fields.ClassContainingArrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.util.Lists.newArrayList;
+import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 import static org.powermock.reflect.Whitebox.getInternalState;
+import static test.TestHelper.getDefaultDisplayName;
 
-@RunWith(JUnitParamsRunner.class)
 public class ArrayValueChangerTest {
 
-    private final ArrayValueChanger arrayValueChanger = new ArrayValueChanger();
+    private final ArrayValueChanger valueChanger = new ArrayValueChanger();
 
-    @Test
-    @Parameters(method = "getValuesForChangeValue")
-    public void Should_Change_Array_Value(final String fieldName) throws NoSuchFieldException {
-        // given
-        final ClassContainingArrays helpClass1 = new ClassContainingArrays();
-        final ClassContainingArrays helpClass2 = new ClassContainingArrays();
-
-        // when
-        arrayValueChanger.changeFieldsValues(helpClass1, helpClass2, newArrayList(ClassContainingArrays.class.getDeclaredField(fieldName)));
-        final Object result1 = getInternalState(helpClass1, fieldName);
-        final Object result2 = getInternalState(helpClass2, fieldName);
-
-        // then
-        assertThat(result1).isNotEqualTo(result2);
+    @TestFactory
+    public Stream<DynamicTest> Should_Change_Array_Value() {
+        return Stream.of("a_int",
+                         "a_char",
+                         "a_float",
+                         "a_double",
+                         "a_boolean",
+                         "a_byte",
+                         "a_short",
+                         "a_long",
+                         "a_Int",
+                         "a_Char",
+                         "a_Float",
+                         "a_Double",
+                         "a_Boolean",
+                         "a_Byte",
+                         "a_Short",
+                         "a_Long",
+                         "a_object_null",
+                         "a_object",
+                         "a_a")
+                     .map(fieldName -> dynamicTest(getDefaultDisplayName(fieldName), Should_Change_Array_Value(fieldName)));
     }
 
-    @Test
-    @Parameters(method = "getValuesForCanChange")
-    public void Should_Return_True_Or_False_Whether_Can_Change_Or_Not(final Field field, final boolean expectedResult) {
-        // given
-
-        // when
-        final boolean result = arrayValueChanger.canChange(field);
-
-        // then
-        assertThat(result).isEqualTo(expectedResult);
+    @TestFactory
+    public Stream<DynamicTest> Should_Return_True_Or_False_Whether_Can_Change_Or_Not() throws NoSuchFieldException {
+        return Stream.of(new CanChangeCase(ClassContainingArrays.class.getDeclaredField("a_int"), true),
+                         new CanChangeCase(ClassContainingArrays.class.getDeclaredField("a_char"), true),
+                         new CanChangeCase(ClassContainingArrays.class.getDeclaredField("a_float"), true),
+                         new CanChangeCase(ClassContainingArrays.class.getDeclaredField("a_double"), true),
+                         new CanChangeCase(ClassContainingArrays.class.getDeclaredField("a_boolean"), true),
+                         new CanChangeCase(ClassContainingArrays.class.getDeclaredField("a_byte"), true),
+                         new CanChangeCase(ClassContainingArrays.class.getDeclaredField("a_short"), true),
+                         new CanChangeCase(ClassContainingArrays.class.getDeclaredField("a_long"), true),
+                         new CanChangeCase(ClassContainingArrays.class.getDeclaredField("a_Int"), true),
+                         new CanChangeCase(ClassContainingArrays.class.getDeclaredField("a_Char"), true),
+                         new CanChangeCase(ClassContainingArrays.class.getDeclaredField("a_Float"), true),
+                         new CanChangeCase(ClassContainingArrays.class.getDeclaredField("a_Double"), true),
+                         new CanChangeCase(ClassContainingArrays.class.getDeclaredField("a_Boolean"), true),
+                         new CanChangeCase(ClassContainingArrays.class.getDeclaredField("a_Byte"), true),
+                         new CanChangeCase(ClassContainingArrays.class.getDeclaredField("a_object_null"), true),
+                         new CanChangeCase(ClassContainingArrays.class.getDeclaredField("a_object"), true),
+                         new CanChangeCase(ClassContainingArrays.class.getDeclaredField("a_a"), true),
+                         new CanChangeCase(ClassContainingArrays.class.getDeclaredField("a"), false))
+                     .map(value -> dynamicTest(getDefaultDisplayName(value.field.getName()),
+                                               Should_Return_True_Or_False_Whether_Can_Change_Or_Not(value)));
     }
 
-    @Test
-    @Parameters(method = "getValuesForAreDifferent")
-    public void Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final Object value1,
-                                                                                final Object value2,
-                                                                                final boolean expectedResult) {
-        // given
-
-        // when
-        final boolean result = arrayValueChanger.areDifferentValues(value1, value2);
-
-        // then
-        assertThat(result).isEqualTo(expectedResult);
+    @TestFactory
+    public Stream<DynamicTest> Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not() {
+        return Stream.of(new AreDifferentCase(null, null, false),
+                         new AreDifferentCase(new int[0], new int[0], false),
+                         new AreDifferentCase(new Object[1], new Object[1], false),
+                         new AreDifferentCase(new Object[0], new Object[0], false),
+                         new AreDifferentCase(new Object[0], null, true),
+                         new AreDifferentCase(null, new Object[0], true),
+                         new AreDifferentCase(new Object[1], null, true),
+                         new AreDifferentCase(new Object[1], new int[0], true),
+                         new AreDifferentCase(new Object[1], new Object[0], true))
+                     .map(value -> dynamicTest(getDefaultDisplayName(value.value1 + " " + value.value2),
+                                               Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(value)));
     }
 
-    private Object[][] getValuesForAreDifferent() {
-        return new Object[][]{
-                {null, null, false},
-                {new int[0], new int[0], false},
-                {new Object[1], new Object[1], false},
-                {new Object[0], new Object[0], false},
-                {new Object[0], null, true},
-                {null, new Object[0], true},
-                {new Object[1], null, true},
-                {new Object[1], new int[0], true},
-                {new Object[1], new Object[0], true},
-                };
+    private Executable Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final AreDifferentCase testCase) {
+        return () -> {
+            // when
+            final boolean result = valueChanger.areDifferentValues(testCase.value1, testCase.value2);
+
+            // then
+            assertThat(result).isEqualTo(testCase.result);
+        };
     }
 
-    private Object[][] getValuesForCanChange() throws NoSuchFieldException {
-        final Field field1 = ClassContainingArrays.class.getDeclaredField("a_int");
-        final Field field2 = ClassContainingArrays.class.getDeclaredField("a_char");
-        final Field field3 = ClassContainingArrays.class.getDeclaredField("a_float");
-        final Field field4 = ClassContainingArrays.class.getDeclaredField("a_double");
-        final Field field5 = ClassContainingArrays.class.getDeclaredField("a_boolean");
-        final Field field6 = ClassContainingArrays.class.getDeclaredField("a_byte");
-        final Field field7 = ClassContainingArrays.class.getDeclaredField("a_short");
-        final Field field8 = ClassContainingArrays.class.getDeclaredField("a_long");
-        final Field field9 = ClassContainingArrays.class.getDeclaredField("a_Int");
-        final Field field10 = ClassContainingArrays.class.getDeclaredField("a_Char");
-        final Field field11 = ClassContainingArrays.class.getDeclaredField("a_Float");
-        final Field field12 = ClassContainingArrays.class.getDeclaredField("a_Double");
-        final Field field13 = ClassContainingArrays.class.getDeclaredField("a_Boolean");
-        final Field field14 = ClassContainingArrays.class.getDeclaredField("a_Byte");
-        final Field field15 = ClassContainingArrays.class.getDeclaredField("a_object_null");
-        final Field field16 = ClassContainingArrays.class.getDeclaredField("a_object");
-        final Field field17 = ClassContainingArrays.class.getDeclaredField("a_a");
-        final Field field18 = ClassContainingArrays.class.getDeclaredField("a");
+    private Executable Should_Return_True_Or_False_Whether_Can_Change_Or_Not(final CanChangeCase testCase) {
+        return () -> {
+            // when
+            final boolean result = valueChanger.canChange(testCase.field);
 
-        return new Object[][]{
-                {field1, true},
-                {field2, true},
-                {field3, true},
-                {field4, true},
-                {field5, true},
-                {field6, true},
-                {field7, true},
-                {field8, true},
-                {field9, true},
-                {field10, true},
-                {field11, true},
-                {field12, true},
-                {field13, true},
-                {field14, true},
-                {field15, true},
-                {field16, true},
-                {field17, true},
-                {field18, false},
-                };
+            // then
+            assertThat(result).isEqualTo(testCase.result);
+        };
     }
 
-    private Object[] getValuesForChangeValue() {
-        return new Object[]{
-                "a_int",
-                "a_char",
-                "a_float",
-                "a_double",
-                "a_boolean",
-                "a_byte",
-                "a_short",
-                "a_long",
-                "a_Int",
-                "a_Char",
-                "a_Float",
-                "a_Double",
-                "a_Boolean",
-                "a_Byte",
-                "a_Short",
-                "a_Long",
-                "a_object_null",
-                "a_object",
-                "a_a",
-                };
+    private Executable Should_Change_Array_Value(final String fieldName) {
+        return () -> {
+            // given
+            final ClassContainingArrays helpClass1 = new ClassContainingArrays();
+            final ClassContainingArrays helpClass2 = new ClassContainingArrays();
+
+            // when
+            valueChanger.changeFieldsValues(helpClass1, helpClass2, newArrayList(ClassContainingArrays.class.getDeclaredField(fieldName)));
+            final Object result1 = getInternalState(helpClass1, fieldName);
+            final Object result2 = getInternalState(helpClass2, fieldName);
+
+            // then
+            assertThat(result1).isNotEqualTo(result2);
+        };
     }
+
+
+    @AllArgsConstructor
+    private class CanChangeCase {
+        private Field field;
+        private boolean result;
+    }
+
+    @AllArgsConstructor
+    private class AreDifferentCase {
+
+        private Object value1;
+        private Object value2;
+        private boolean result;
+    }
+
 }

@@ -1,10 +1,12 @@
 package org.pojo.tester.field;
 
 import java.lang.reflect.Field;
-import junitparams.JUnitParamsRunner;
-import junitparams.Parameters;
+import java.util.stream.Stream;
+import lombok.AllArgsConstructor;
+import org.junit.jupiter.api.DynamicTest;
+import org.junit.jupiter.api.Executable;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.TestFactory;
 import test.fields.AllFiledTypes;
 import test.fields.AllFiledTypes_Wrapped;
 import test.fields.EnumFields;
@@ -15,38 +17,44 @@ import test.fields.TestEnum1;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.util.Lists.newArrayList;
+import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 import static org.powermock.reflect.Whitebox.getInternalState;
+import static test.TestHelper.getDefaultDisplayName;
 
-@RunWith(JUnitParamsRunner.class)
 public class EnumValueChangerTest {
-    private final AbstractFieldValueChanger<Enum> enumValueChanger = new EnumValueChanger();
 
-    @Test
-    @Parameters(method = "getValuesForChangeValue")
-    public void Should_Change_Enum_Value(final TestEnum1 value) {
-        // given
-        final EnumFields helpClass1 = new EnumFields(value);
-        final EnumFields helpClass2 = new EnumFields(value);
+    private final AbstractFieldValueChanger<Enum> valueChanger = new EnumValueChanger();
 
-        // when
-        enumValueChanger.changeFieldsValues(helpClass1, helpClass2, newArrayList(EnumFields.class.getDeclaredFields()));
-        final TestEnum1 result1 = getInternalState(helpClass1, "testEnum1");
-        final TestEnum1 result2 = getInternalState(helpClass2, "testEnum1");
-
-        // then
-        assertThat(result1).isNotEqualTo(result2);
+    @TestFactory
+    public Stream<DynamicTest> Should_Change_Enum_Value() {
+        return Stream.of(TestEnum1.ENUM1, TestEnum1.ENUM2)
+                     .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Change_Enum_Value(value)));
     }
 
-    @Test
-    @Parameters(method = "getValuesForCanChange")
-    public void Should_Return_True_Or_False_Whether_Can_Change_Or_Not(final Field field, final boolean expectedResult) {
-        // given
+    @TestFactory
+    public Stream<DynamicTest> Should_Return_True_Or_False_Whether_Can_Change_Or_Not() throws NoSuchFieldException {
+        return Stream.of(new CanChangeCase(EnumFields.class.getDeclaredField("nullEnum"), true),
+                         new CanChangeCase(EnumFields.class.getDeclaredField("testEnum1"), true),
+                         new CanChangeCase(EnumFields.class.getDeclaredField("singleEnum1"), true),
+                         new CanChangeCase(AllFiledTypes.class.getDeclaredField("intType"), false),
+                         new CanChangeCase(AllFiledTypes_Wrapped.class.getDeclaredField("intType"), false),
+                         new CanChangeCase(EnumFields.class.getDeclaredField("object"), false))
+                     .map(value -> dynamicTest(getDefaultDisplayName(value.field.getName()),
+                                               Should_Return_True_Or_False_Whether_Can_Change_Or_Not(value)));
+    }
 
-        // when
-        final boolean result = enumValueChanger.canChange(field);
-
-        // then
-        assertThat(result).isEqualTo(expectedResult);
+    @TestFactory
+    public Stream<DynamicTest> Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not() {
+        return Stream.of(new AreDifferentCase(null, null, false),
+                         new AreDifferentCase(TestEnum1.ENUM1, TestEnum1.ENUM1, false),
+                         new AreDifferentCase(TestEnum1.ENUM2, TestEnum1.ENUM2, false),
+                         new AreDifferentCase(TestEnum1.ENUM2, TestEnum1.ENUM2, false),
+                         new AreDifferentCase(TestEnum1.ENUM2, null, true),
+                         new AreDifferentCase(null, TestEnum1.ENUM2, true),
+                         new AreDifferentCase(TestEnum1.ENUM2, null, true),
+                         new AreDifferentCase(TestEnum1.ENUM2, TestEnum1.ENUM1, true))
+                     .map(value -> dynamicTest(getDefaultDisplayName(value.value1 + " " + value.value2),
+                                               Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(value)));
     }
 
     @Test
@@ -54,7 +62,7 @@ public class EnumValueChangerTest {
         // given
 
         // when
-        final Throwable result = catchThrowable(() -> enumValueChanger.increaseValue(null, EnumWithoutConstants.class));
+        final Throwable result = catchThrowable(() -> valueChanger.increaseValue(null, EnumWithoutConstants.class));
 
         // then
         assertThat(result).isInstanceOf(ImpossibleEnumValueChangeException.class);
@@ -65,55 +73,60 @@ public class EnumValueChangerTest {
         // given
 
         // when
-        final Enum result = enumValueChanger.increaseValue(SingleEnum.ENUM1, SingleEnum.class);
+        final Enum result = valueChanger.increaseValue(SingleEnum.ENUM1, SingleEnum.class);
 
         // then
         assertThat(result).isNull();
     }
 
-    @Test
-    @Parameters(method = "getValuesForAreDifferent")
-    public void Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final TestEnum1 value1,
-                                                                                final TestEnum1 value2,
-                                                                                final boolean expectedResult) {
-        // given
-        // when
-        final boolean result = enumValueChanger.areDifferentValues(value1, value2);
+    private Executable Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final AreDifferentCase testCase) {
+        return () -> {
+            // when
+            final boolean result = valueChanger.areDifferentValues(testCase.value1, testCase.value2);
 
-        // then
-        assertThat(result).isEqualTo(expectedResult);
+            // then
+            assertThat(result).isEqualTo(testCase.result);
+        };
     }
 
-    private Object[][] getValuesForAreDifferent() {
-        return new Object[][]{
-                {null, null, false},
-                {TestEnum1.ENUM1, TestEnum1.ENUM1, false},
-                {TestEnum1.ENUM2, TestEnum1.ENUM2, false},
-                {TestEnum1.ENUM2, TestEnum1.ENUM2, false},
-                {TestEnum1.ENUM2, null, true},
-                {null, TestEnum1.ENUM2, true},
-                {TestEnum1.ENUM2, null, true},
-                {TestEnum1.ENUM2, TestEnum1.ENUM1, true},
-                };
+    private Executable Should_Return_True_Or_False_Whether_Can_Change_Or_Not(final CanChangeCase testCase) {
+        return () -> {
+            // when
+            final boolean result = valueChanger.canChange(testCase.field);
+
+            // then
+            assertThat(result).isEqualTo(testCase.result);
+        };
     }
 
-    private Object[][] getValuesForCanChange() throws NoSuchFieldException {
-        final Field nullEnum = EnumFields.class.getDeclaredField("nullEnum");
-        final Field testEnum = EnumFields.class.getDeclaredField("testEnum1");
-        final Field singleEnum1 = EnumFields.class.getDeclaredField("singleEnum1");
-        final Field object = EnumFields.class.getDeclaredField("object");
-        final Field intType = AllFiledTypes.class.getDeclaredField("intType");
-        final Field intWrappedType = AllFiledTypes_Wrapped.class.getDeclaredField("intType");
+    private Executable Should_Change_Enum_Value(final TestEnum1 value) {
+        return () -> {
+            // given
+            final EnumFields helpClass1 = new EnumFields(value);
+            final EnumFields helpClass2 = new EnumFields(value);
 
-        return new Object[][]{{nullEnum, true},
-                              {testEnum, true},
-                              {singleEnum1, true},
-                              {intType, false},
-                              {intWrappedType, false},
-                              {object, false}};
+            // when
+            valueChanger.changeFieldsValues(helpClass1, helpClass2, newArrayList(EnumFields.class.getDeclaredFields()));
+            final TestEnum1 result1 = getInternalState(helpClass1, "testEnum1");
+            final TestEnum1 result2 = getInternalState(helpClass2, "testEnum1");
+
+            // then
+            assertThat(result1).isNotEqualTo(result2);
+        };
     }
 
-    private Object[] getValuesForChangeValue() {
-        return new Object[]{TestEnum1.ENUM1, TestEnum1.ENUM2};
+    @AllArgsConstructor
+    private class CanChangeCase {
+
+        private Field field;
+        private boolean result;
+    }
+
+    @AllArgsConstructor
+    private class AreDifferentCase {
+
+        private TestEnum1 value1;
+        private TestEnum1 value2;
+        private boolean result;
     }
 }
