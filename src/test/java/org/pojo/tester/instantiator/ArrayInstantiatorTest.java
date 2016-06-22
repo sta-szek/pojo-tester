@@ -1,27 +1,37 @@
 package org.pojo.tester.instantiator;
 
 
-import junitparams.JUnitParamsRunner;
-import junitparams.Parameters;
+import java.util.stream.Stream;
+import org.junit.jupiter.api.DynamicTest;
+import org.junit.jupiter.api.Executable;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.TestFactory;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.DynamicTest.dynamicTest;
+import static test.TestHelper.getDefaultDisplayName;
 
-@RunWith(JUnitParamsRunner.class)
 public class ArrayInstantiatorTest {
 
-    @Test
-    @Parameters(method = "arrayClassesToInstantiate")
-    public void Should_Create_Array(final Class<?> classToInstantiate) {
-        // given
-        final ArrayInstantiator instantiator = new ArrayInstantiator(classToInstantiate);
-
-        // when
-        final Object result = instantiator.instantiate();
-
-        // then
-        assertThat(result).isInstanceOf(classToInstantiate);
+    @TestFactory
+    public Stream<DynamicTest> Should_Create_Array() {
+        return Stream.of(Integer[].class,
+                         Byte[].class,
+                         Character[].class,
+                         Double[].class,
+                         Float[].class,
+                         Integer[].class,
+                         Long[].class,
+                         Short[].class,
+                         boolean[].class,
+                         byte[].class,
+                         char[].class,
+                         double[].class,
+                         float[].class,
+                         int[].class,
+                         long[].class,
+                         short[].class)
+                     .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Create_Array(value)));
     }
 
     @Test
@@ -36,23 +46,17 @@ public class ArrayInstantiatorTest {
         assertThat(result).isInstanceOf(byte[].class);
     }
 
-    private Object[] arrayClassesToInstantiate() {
-        return new Object[]{Boolean[].class,
-                            Byte[].class,
-                            Character[].class,
-                            Double[].class,
-                            Float[].class,
-                            Integer[].class,
-                            Long[].class,
-                            Short[].class,
-                            boolean[].class,
-                            byte[].class,
-                            char[].class,
-                            double[].class,
-                            float[].class,
-                            int[].class,
-                            long[].class,
-                            short[].class
+    private Executable Should_Create_Array(final Class<?> classToInstantiate) {
+        return () -> {
+            // given
+            final ArrayInstantiator instantiator = new ArrayInstantiator(classToInstantiate);
+
+            // when
+            final Object result = instantiator.instantiate();
+
+            // then
+            assertThat(result).isInstanceOf(classToInstantiate);
         };
     }
+
 }
