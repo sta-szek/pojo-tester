@@ -16,6 +16,6 @@ public class TestHelper {
     }
 
     public static String getDefaultDisplayName(final Object values) {
-        return "Value: " + String.valueOf(values);
+        return "------> " + String.valueOf(values) + " <------";
     }
 }

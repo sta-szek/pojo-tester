@@ -1,22 +1,17 @@
 package org.pojo.tester.field;
 
+import java.lang.reflect.Field;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Answers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.powermock.reflect.internal.WhiteboxImpl.getInternalState;
 
-@RunWith(MockitoJUnitRunner.class)
 public class AbstractFieldValueChangerTest {
 
-    @Mock(answer = Answers.CALLS_REAL_METHODS)
-    private static AbstractFieldValueChanger abstractFieldValueChanger;
+    private final AbstractFieldValueChanger abstractFieldValueChanger = new ImplementationForTest();
 
     @Test
     public void Should_Register_First_Value_Changer() {
@@ -44,4 +39,20 @@ public class AbstractFieldValueChangerTest {
         verify(first).attachNext(second);
     }
 
+    private class ImplementationForTest extends AbstractFieldValueChanger<Object> {
+        @Override
+        public boolean areDifferentValues(final Object sourceValue, final Object targetValue) {
+            return false;
+        }
+
+        @Override
+        protected boolean canChange(final Field field) {
+            return false;
+        }
+
+        @Override
+        protected Object increaseValue(final Object value, final Class<?> type) {
+            return null;
+        }
+    }
 }

@@ -81,8 +81,8 @@ public class StreamValueChangerTest {
 
             // when
             valueChanger.changeFieldsValues(helpClass1, helpClass2, newArrayList(ClassContainingStream.class.getDeclaredField(fieldName)));
-            final Stream result1 = getInternalState(helpClass1, fieldName);
-            final Stream result2 = getInternalState(helpClass2, fieldName);
+            final Stream result1 = getInternalState(helpClass2, fieldName);
+            final Stream result2 = getInternalState(helpClass1, fieldName);
 
             // then
             assertThat(result1).isNotEqualTo(result2);

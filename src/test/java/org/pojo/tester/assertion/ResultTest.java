@@ -3,16 +3,19 @@ package org.pojo.tester.assertion;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import junitparams.JUnitParamsRunner;
-import junitparams.Parameters;
-import org.assertj.core.util.Lists;
+import java.util.stream.Stream;
+import lombok.AllArgsConstructor;
 import org.assertj.core.util.Sets;
+import org.junit.jupiter.api.DynamicTest;
+import org.junit.jupiter.api.Executable;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.TestFactory;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.util.Lists.newArrayList;
+import static org.junit.jupiter.api.DynamicTest.dynamicTest;
+import static test.TestHelper.getDefaultDisplayName;
 
-@RunWith(JUnitParamsRunner.class)
 public class ResultTest {
 
     @Test
@@ -20,7 +23,7 @@ public class ResultTest {
         // given
         final HashSet<Class> testedClasses = Sets.newLinkedHashSet(Object.class);
         final List<TestPair> passedClasses = new ArrayList<>();
-        final List<TestPair> failedClasses = Lists.newArrayList(new TestPair("testName", Object.class));
+        final List<TestPair> failedClasses = newArrayList(new TestPair("testName", Object.class));
         final String message = "";
         final Result result = new Result(testedClasses, passedClasses, failedClasses, message);
 
@@ -35,7 +38,7 @@ public class ResultTest {
     public void Should_Return_False_If_Result_Is_Not_Failed() {
         // given
         final HashSet<Class> testedClasses = Sets.newLinkedHashSet(Object.class);
-        final List<TestPair> passedClasses = Lists.newArrayList(new TestPair("testName", Object.class));
+        final List<TestPair> passedClasses = newArrayList(new TestPair("testName", Object.class));
         final List<TestPair> failedClasses = new ArrayList<>();
         final String message = "";
         final Result result = new Result(testedClasses, passedClasses, failedClasses, message);
@@ -47,23 +50,27 @@ public class ResultTest {
         assertThat(failed).isFalse();
     }
 
-    @Test
-    @Parameters(method = "objectsForMessageTest")
-    public void Should_Return_Expected_Message(final Result result, final String expectedMessage) {
-        // given
-
-        // when
-        final String resultMessage = result.getMessage();
-
-        // then
-        assertThat(resultMessage).isEqualTo(expectedMessage);
+    @TestFactory
+    public Stream<DynamicTest> Should_Return_Expected_Message() throws NoSuchFieldException {
+        return objectsForMessageTest().stream()
+                                      .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Return_Expected_Message(value)));
     }
 
-    private Object objectsForMessageTest() {
+    private Executable Should_Return_Expected_Message(final TestCase testCase) {
+        return () -> {
+            // when
+            final String resultMessage = testCase.result.getMessage();
+
+            // then
+            assertThat(resultMessage).isEqualTo(testCase.expectedResult);
+        };
+    }
+
+    private List<TestCase> objectsForMessageTest() {
         final HashSet<Class> testedClasses = Sets.newLinkedHashSet(Object.class);
-        final List<TestPair> passedClasses = Lists.newArrayList(new TestPair("testName", Object.class));
-        final List<TestPair> failedClasses = Lists.newArrayList(new TestPair("testName", Object.class));
-        final List<TestPair> emptyList = Lists.newArrayList();
+        final List<TestPair> passedClasses = newArrayList(new TestPair("testName", Object.class));
+        final List<TestPair> failedClasses = newArrayList(new TestPair("testName", Object.class));
+        final List<TestPair> emptyList = newArrayList();
 
         final Result result1 = new Result(testedClasses, passedClasses, emptyList, "");
         final String message1 = "Classes that were tested:\n" +
@@ -101,9 +108,15 @@ public class ResultTest {
                                 "\n" +
                                 "What went wrong:\n" +
                                 "message";
-        return new Object[][]{{result1, message1},
-                              {result2, message2},
-                              {result3, message3},
-                              {result4, message4}};
+        return newArrayList(new TestCase(result1, message1),
+                            new TestCase(result2, message2),
+                            new TestCase(result3, message3),
+                            new TestCase(result4, message4));
+    }
+
+    @AllArgsConstructor
+    private class TestCase {
+        private Result result;
+        private String expectedResult;
     }
 }

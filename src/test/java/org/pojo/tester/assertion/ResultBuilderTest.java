@@ -47,7 +47,7 @@ public class ResultBuilderTest {
         final Result result = resultBuilder.build();
 
         // then
-        assertThat(result).isEqualToComparingFieldByFieldRecursively(expectedResult);
+        assertThat(result.getMessage()).isEqualTo(expectedResult.getMessage());
     }
 
     @Test
@@ -67,6 +67,6 @@ public class ResultBuilderTest {
         final Result result = resultBuilder.build();
 
         // then
-        assertThat(result).isEqualToComparingFieldByFieldRecursively(expectedResult);
+        assertThat(result.getMessage()).isEqualTo(expectedResult.getMessage());
     }
 }
