@@ -5,19 +5,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.stream.Stream;
-import junitparams.JUnitParamsRunner;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Executable;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
-import org.junit.runner.RunWith;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 import static test.TestHelper.getDefaultDisplayName;
 
-@RunWith(JUnitParamsRunner.class)
 public class IteratorValueChangerTest {
 
     @TestFactory
