@@ -2,7 +2,7 @@ language: java
 sudo: required
 jdk:
   - oraclejdk8
-before_script:
+before_install:
   # Download desired version of Gradle
   - wget http://services.gradle.org/distributions/gradle-2.14-bin.zip
   - unzip -qq gradle-2.14-bin.zip
