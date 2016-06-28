@@ -67,7 +67,6 @@ jacocoTestReport {
     }
 }
 
-
 pitest {
     pitestVersion = '1.1.9'
     exportLineCoverage = true
@@ -79,3 +78,7 @@ pitest {
 
 jacocoTestReport.mustRunAfter(test)
 check.dependsOn jacocoTestReport
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.14'
+}
