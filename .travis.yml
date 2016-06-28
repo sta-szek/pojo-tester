@@ -6,6 +6,10 @@ before_script:
   - sudo add-apt-repository -y ppa:cwchien/gradle
   - sudo apt-get -y update
   - sudo apt-get -y install gradle-ppa
+  - echo '----------------------------------------------------------'
+  - gradle -v
+  - echo $GRADLE_HOME
+  - echo '----------------------------------------------------------'
 after_success:
   - sudo curl http://www.jpm4j.org/install/script > jpmInstall.sh
   - sudo sh jpmInstall.sh
