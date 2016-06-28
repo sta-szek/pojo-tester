@@ -3,7 +3,7 @@ sudo: required
 jdk:
   - oraclejdk8
 before_install:
-  - sudo add-apt-repository ppa:cwchien/gradle
+  - sudo add-apt-repository ppa:cwchien/gradle -y
   - sudo apt-get update
   - sudo apt-get install gradle
 #  # Download desired version of Gradle
