@@ -1,6 +1,8 @@
 package org.pojo.tester.assertion;
 
 import org.junit.jupiter.api.Test;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.runner.RunWith;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -9,6 +11,7 @@ import static org.mockito.Mockito.when;
 import static org.mockito.internal.util.reflection.Whitebox.setInternalState;
 
 
+@RunWith(JUnitPlatform.class)
 public class AssertionsTest {
 
     @Test

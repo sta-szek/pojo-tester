@@ -1,6 +1,8 @@
 package org.pojo.tester.assertion;
 
 import org.junit.jupiter.api.Test;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.runner.RunWith;
 import test.tostring.ToStringWithoutField;
 
 import static org.mockito.Matchers.anyString;
@@ -8,7 +10,7 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
-
+@RunWith(JUnitPlatform.class)
 public class ToStringAssertionsTest {
 
     @Test

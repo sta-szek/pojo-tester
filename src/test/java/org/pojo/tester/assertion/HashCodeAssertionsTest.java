@@ -1,6 +1,8 @@
 package org.pojo.tester.assertion;
 
 import org.junit.jupiter.api.Test;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.runner.RunWith;
 import test.GoodPojo_Equals_HashCode_ToString;
 import test.hashcode.BadPojoHashCode_DifferentObjects;
 import test.hashcode.BadPojoHashCode_NotConsistent;
@@ -11,7 +13,7 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
-
+@RunWith(JUnitPlatform.class)
 public class HashCodeAssertionsTest {
 
     @Test

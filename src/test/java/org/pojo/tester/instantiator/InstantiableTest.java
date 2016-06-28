@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Executable;
 import org.junit.jupiter.api.TestFactory;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.runner.RunWith;
 import test.instantiator.Constructor_Field;
 import test.instantiator.Constructor_Stream;
 import test.instantiator.Constructor_Thread;
@@ -15,6 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 import static test.TestHelper.getDefaultDisplayName;
 
+@RunWith(JUnitPlatform.class)
 public class InstantiableTest {
 
     @TestFactory

@@ -2,11 +2,14 @@ package org.pojo.tester.instantiator;
 
 
 import org.junit.jupiter.api.Test;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.runner.RunWith;
 import test.instantiator.enums.DoubleEnum;
 import test.instantiator.enums.EmptyEnum;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@RunWith(JUnitPlatform.class)
 public class EnumInstantiatorTest {
 
     @Test

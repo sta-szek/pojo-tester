@@ -8,6 +8,8 @@ import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Executable;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.runner.RunWith;
 import org.pojo.tester.field.FieldUtils;
 import test.predicate.TestPredicate;
 
@@ -16,7 +18,7 @@ import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 import static org.pojo.tester.PredicateAssertions.assertThat;
 import static test.TestHelper.getDefaultDisplayName;
 
-
+@RunWith(JUnitPlatform.class)
 public class FieldPredicateTest {
 
     @Test

@@ -9,6 +9,8 @@ import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Executable;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.runner.RunWith;
 import test.TestHelper;
 import test.fields.ClassWithAllAvailableFieldModifiers;
 import test.fields.Permutation1;
@@ -19,6 +21,7 @@ import static org.assertj.core.util.Lists.newArrayList;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 import static test.TestHelper.getDefaultDisplayName;
 
+@RunWith(JUnitPlatform.class)
 public class FieldUtilsTest {
 
     @Test
