@@ -9,12 +9,6 @@ buildscript {
     }
 }
 
-ext.junit4Version = '4.12'
-ext.junitVintageVersion = '4.12.0-SNAPSHOT'
-ext.junitPlatformVersion = '1.0.0-SNAPSHOT'
-ext.junitJupiterVersion = '5.0.0-SNAPSHOT'
-ext.log4JVersion = '2.5'
-
 group 'pojo-tester'
 version '0.1.0'
 
@@ -51,8 +45,8 @@ dependencies {
     compile 'org.javassist:javassist:3.20.0-GA'
 
 
-    testCompile("org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}")
-    testRuntime("org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}")
+    testCompile("org.junit.jupiter:junit-jupiter-api:5.0.0-SNAPSHOT")
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:5.0.0-SNAPSHOT")
     testCompile 'org.assertj:assertj-core:3.4.1'
     testCompile 'org.powermock:powermock-api-mockito:1.6.5'
     testCompile 'org.powermock:powermock-module-junit4:1.6.5'
