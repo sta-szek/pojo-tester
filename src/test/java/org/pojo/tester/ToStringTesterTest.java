@@ -1,10 +1,11 @@
 package org.pojo.tester;
 
-import org.junit.Test;
+import java.util.List;
+import org.junit.jupiter.api.Test;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.runner.RunWith;
 import test.GoodPojo_Equals_HashCode_ToString;
 import test.tostring.ToStringWithoutField;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -12,7 +13,7 @@ import static org.assertj.core.util.Lists.newArrayList;
 import static org.pojo.tester.FieldPredicate.exclude;
 import static org.pojo.tester.FieldPredicate.include;
 
-
+@RunWith(JUnitPlatform.class)
 public class ToStringTesterTest {
 
     @Test

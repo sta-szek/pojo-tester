@@ -1,13 +1,15 @@
 package org.pojo.tester.field.collections.collection;
 
 
-import org.junit.Test;
-
 import java.util.Collections;
 import java.util.Set;
+import org.junit.jupiter.api.Test;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.runner.RunWith;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@RunWith(JUnitPlatform.class)
 public class SetChangerTest {
 
     @Test

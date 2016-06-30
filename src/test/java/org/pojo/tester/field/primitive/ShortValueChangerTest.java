@@ -1,89 +1,100 @@
 package org.pojo.tester.field.primitive;
 
-import junitparams.JUnitParamsRunner;
-import junitparams.Parameters;
+import java.util.stream.Stream;
+import lombok.AllArgsConstructor;
 import org.assertj.core.util.Lists;
-import org.junit.Test;
+import org.junit.jupiter.api.DynamicTest;
+import org.junit.jupiter.api.Executable;
+import org.junit.jupiter.api.TestFactory;
+import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 import org.pojo.tester.field.AbstractFieldValueChanger;
 import test.fields.AllFiledTypes;
 import test.fields.AllFiledTypes_Wrapped;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 import static org.powermock.reflect.Whitebox.getInternalState;
+import static test.TestHelper.getDefaultDisplayName;
 
-@RunWith(JUnitParamsRunner.class)
+@RunWith(JUnitPlatform.class)
 public class ShortValueChangerTest {
 
-    private final AbstractFieldValueChanger<Short> shortValueChanger = new ShortValueChanger();
+    private final AbstractFieldValueChanger<Short> valueChanger = new ShortValueChanger();
 
-    @Test
-    @Parameters(method = "getValuesForChangeValue")
-    public void Should_Change_Primitive_Value(final Short value) {
-        // given
-        final AllFiledTypes helpClass1 = new AllFiledTypes(value);
-        final AllFiledTypes helpClass2 = new AllFiledTypes(value);
-
-        // when
-        shortValueChanger.changeFieldsValues(helpClass1, helpClass2, Lists.newArrayList(AllFiledTypes.class.getDeclaredFields()));
-        final Short result1 = getInternalState(helpClass1, "shortType");
-        final Short result2 = getInternalState(helpClass2, "shortType");
-
-        // then
-        assertThat(result1).isNotEqualTo(result2);
+    @TestFactory
+    public Stream<DynamicTest> Should_Change_Primitive_Value() {
+        return Stream.of(Short.MAX_VALUE, Short.MIN_VALUE, (short) 0, (short) -1, (short) 1)
+                     .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Change_Primitive_Value(value)));
     }
 
-    @Test
-    @Parameters(method = "getValuesForChangeValue")
-    public void Should_Change_Wrapped_Value(final Short value) {
-        // given
-        final AllFiledTypes_Wrapped helpClass1 = new AllFiledTypes_Wrapped(value);
-        final AllFiledTypes_Wrapped helpClass2 = new AllFiledTypes_Wrapped(value);
-
-        // when
-        shortValueChanger.changeFieldsValues(helpClass1, helpClass2, Lists.newArrayList(AllFiledTypes_Wrapped.class.getDeclaredFields()));
-        final Short result1 = getInternalState(helpClass1, "shortType");
-        final Short result2 = getInternalState(helpClass2, "shortType");
-
-        // then
-        assertThat(result1).isNotEqualTo(result2);
+    @TestFactory
+    public Stream<DynamicTest> Should_Change_Wrapped_Value() {
+        return Stream.of(Short.MAX_VALUE, Short.MIN_VALUE, (short) 0, (short) -1, (short) 1)
+                     .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Change_Wrapped_Value(value)));
     }
 
-    @Test
-    @Parameters(method = "getValuesForAreDifferent")
-    public void Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final Short value1,
-                                                                                final Short value2,
-                                                                                final boolean expectedResult) {
-        // given
-
-        // when
-        final boolean result = shortValueChanger.areDifferentValues(value1, value2);
-
-        // then
-        assertThat(result).isEqualTo(expectedResult);
+    @TestFactory
+    public Stream<DynamicTest> Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not() {
+        return Stream.of(new TestCase(null, null, false),
+                         new TestCase((short) 0, (short) 0, false),
+                         new TestCase(Short.MIN_VALUE, Short.MIN_VALUE, false),
+                         new TestCase(Short.MAX_VALUE, Short.MAX_VALUE, false),
+                         new TestCase((short) 0, (short) 1, true),
+                         new TestCase((short) 0, null, true),
+                         new TestCase(null, Short.MIN_VALUE, true),
+                         new TestCase(Short.MIN_VALUE, Short.MAX_VALUE, true),
+                         new TestCase(Short.MAX_VALUE, Short.MIN_VALUE, true))
+                     .map(value -> dynamicTest(getDefaultDisplayName(value.value1 + " " + value.value2),
+                                               Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(value)));
     }
 
-    private Object[][] getValuesForAreDifferent() {
-        return new Object[][]{
-                {null, null, false},
-                {(short) 0, (short) 0, false},
-                {Short.MIN_VALUE, Short.MIN_VALUE, false},
-                {Short.MAX_VALUE, Short.MAX_VALUE, false},
+    private Executable Should_Change_Primitive_Value(final Short value) {
+        return () -> {
+            // given
+            final AllFiledTypes helpClass1 = new AllFiledTypes(value);
+            final AllFiledTypes helpClass2 = new AllFiledTypes(value);
 
-                {(short) 0, (short) 1, true},
-                {(short) 0, null, true},
-                {null, Short.MIN_VALUE, true},
-                {Short.MIN_VALUE, Short.MAX_VALUE, true},
-                {Short.MAX_VALUE, Short.MIN_VALUE, true},
+            // when
+            valueChanger.changeFieldsValues(helpClass1, helpClass2, Lists.newArrayList(AllFiledTypes.class.getDeclaredFields()));
+            final Short result1 = getInternalState(helpClass1, "shortType");
+            final Short result2 = getInternalState(helpClass2, "shortType");
 
-                };
+            // then
+            assertThat(result1).isNotEqualTo(result2);
+        };
     }
 
-    private Object[] getValuesForChangeValue() {
-        return new Object[]{Short.MAX_VALUE,
-                            Short.MIN_VALUE,
-                            new Short((short) 0),
-                            new Short((short) -1),
-                            new Short((short) 1)};
+    private Executable Should_Change_Wrapped_Value(final Short value) {
+        return () -> {
+            // given
+            final AllFiledTypes_Wrapped helpClass1 = new AllFiledTypes_Wrapped(value);
+            final AllFiledTypes_Wrapped helpClass2 = new AllFiledTypes_Wrapped(value);
+
+            // when
+            valueChanger.changeFieldsValues(helpClass1, helpClass2, Lists.newArrayList(AllFiledTypes_Wrapped.class.getDeclaredFields()));
+            final Short result1 = getInternalState(helpClass1, "shortType");
+            final Short result2 = getInternalState(helpClass2, "shortType");
+
+            // then
+            assertThat(result1).isNotEqualTo(result2);
+        };
+    }
+
+    private Executable Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final TestCase value) {
+        return () -> {
+            // when
+            final boolean result = valueChanger.areDifferentValues(value.value1, value.value2);
+
+            // then
+            assertThat(result).isEqualTo(value.result);
+        };
+    }
+
+    @AllArgsConstructor
+    private class TestCase {
+        private Short value1;
+        private Short value2;
+        private boolean result;
     }
 }

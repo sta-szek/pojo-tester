@@ -1,108 +1,110 @@
 package org.pojo.tester.field.collections;
 
 
-import junitparams.JUnitParamsRunner;
-import junitparams.Parameters;
-import org.junit.Test;
+import java.lang.reflect.Field;
+import java.util.stream.Stream;
+import lombok.AllArgsConstructor;
+import org.junit.jupiter.api.DynamicTest;
+import org.junit.jupiter.api.Executable;
+import org.junit.jupiter.api.TestFactory;
+import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 import test.A;
 import test.fields.ClassContainingStream;
 
-import java.lang.reflect.Field;
-import java.util.stream.Stream;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.util.Lists.newArrayList;
+import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 import static org.powermock.reflect.Whitebox.getInternalState;
+import static test.TestHelper.getDefaultDisplayName;
 
-@RunWith(JUnitParamsRunner.class)
+@RunWith(JUnitPlatform.class)
 public class StreamValueChangerTest {
 
-    private final StreamValueChanger streamValueChanger = new StreamValueChanger();
+    private final StreamValueChanger valueChanger = new StreamValueChanger();
 
-    @Test
-    @Parameters(method = "getValuesForChangeValue")
-    public void Should_Change_Stream_Value(final String fieldName) throws NoSuchFieldException {
-        // given
-        final ClassContainingStream helpClass1 = new ClassContainingStream();
-        final ClassContainingStream helpClass2 = new ClassContainingStream();
-
-        // when
-        streamValueChanger.changeFieldsValues(helpClass1,
-                                              helpClass2,
-                                              newArrayList(ClassContainingStream.class.getDeclaredField(fieldName)));
-        final Stream result1 = getInternalState(helpClass1, fieldName);
-        final Stream result2 = getInternalState(helpClass2, fieldName);
-
-        // then
-        assertThat(result2).isNotEqualTo(result1);
+    @TestFactory
+    public Stream<DynamicTest> Should_Change_Stream_Value() {
+        return Stream.of("stream_String", "stream_Object", "stream_Integer", "stream_A", "stream")
+                     .map(fieldName -> dynamicTest(getDefaultDisplayName(fieldName), Should_Change_Stream_Value(fieldName)));
     }
 
-    @Test
-    @Parameters(method = "getValuesForCanChange")
-    public void Should_Return_True_Or_False_Whether_Can_Change_Or_Not(final Field field, final boolean expectedResult) {
-        // given
-
-        // when
-        final boolean result = streamValueChanger.canChange(field);
-
-        // then
-        assertThat(result).isEqualTo(expectedResult);
+    @TestFactory
+    public Stream<DynamicTest> Should_Return_True_Or_False_Whether_Can_Change_Or_Not() throws NoSuchFieldException {
+        return Stream.of(new CanChangeCase(ClassContainingStream.class.getDeclaredField("stream_String"), true),
+                         new CanChangeCase(ClassContainingStream.class.getDeclaredField("stream_Object"), true),
+                         new CanChangeCase(ClassContainingStream.class.getDeclaredField("stream_Integer"), true),
+                         new CanChangeCase(ClassContainingStream.class.getDeclaredField("stream_A"), true),
+                         new CanChangeCase(ClassContainingStream.class.getDeclaredField("stream"), true),
+                         new CanChangeCase(ClassContainingStream.class.getDeclaredField("a"), false))
+                     .map(value -> dynamicTest(getDefaultDisplayName(value.field.getName()),
+                                               Should_Return_True_Or_False_Whether_Can_Change_Or_Not(value)));
     }
 
-    @Test
-    @Parameters(method = "getValuesForAreDifferent")
-    public void Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final Stream<?> value1,
-                                                                                final Stream<?> value2,
-                                                                                final boolean expectedResult) {
-        // given
-
-        // when
-        final boolean result = streamValueChanger.areDifferentValues(value1, value2);
-
-        // then
-        assertThat(result).isEqualTo(expectedResult);
+    @TestFactory
+    public Stream<DynamicTest> Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not() {
+        return Stream.of(new AreDifferentCase(null, null, false),
+                         new AreDifferentCase(Stream.of(1), Stream.of(1), false),
+                         new AreDifferentCase(Stream.of(new A()), Stream.of(new A()), false),
+                         new AreDifferentCase(Stream.empty(), Stream.empty(), false),
+                         new AreDifferentCase(Stream.empty(), null, true),
+                         new AreDifferentCase(null, Stream.empty(), true),
+                         new AreDifferentCase(Stream.of(new A()), null, true),
+                         new AreDifferentCase(Stream.of(new A()), Stream.of(1), true),
+                         new AreDifferentCase(Stream.of(new A()), Stream.empty(), true))
+                     .map(value -> dynamicTest(getDefaultDisplayName(value.value1 + " " + value.value2),
+                                               Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(value)));
     }
 
-    private Object[][] getValuesForAreDifferent() {
-        return new Object[][]{
-                {null, null, false},
-                {Stream.of(1), Stream.of(1), false},
-                {Stream.of(new A()), Stream.of(new A()), false},
-                {Stream.empty(), Stream.empty(), false},
-                {Stream.empty(), null, true},
-                {null, Stream.empty(), true},
-                {Stream.of(new A()), null, true},
-                {Stream.of(new A()), Stream.of(1), true},
-                {Stream.of(new A()), Stream.empty(), true},
-                };
+    private Executable Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final AreDifferentCase testCase) {
+        return () -> {
+            // when
+            final boolean result = valueChanger.areDifferentValues(testCase.value1, testCase.value2);
+
+            // then
+            assertThat(result).isEqualTo(testCase.result);
+        };
     }
 
-    private Object[][] getValuesForCanChange() throws NoSuchFieldException {
-        final Field field1 = ClassContainingStream.class.getDeclaredField("stream_String");
-        final Field field2 = ClassContainingStream.class.getDeclaredField("stream_Object");
-        final Field field3 = ClassContainingStream.class.getDeclaredField("stream_Integer");
-        final Field field4 = ClassContainingStream.class.getDeclaredField("stream_A");
-        final Field field5 = ClassContainingStream.class.getDeclaredField("stream");
-        final Field field6 = ClassContainingStream.class.getDeclaredField("a");
+    private Executable Should_Return_True_Or_False_Whether_Can_Change_Or_Not(final CanChangeCase testCase) {
+        return () -> {
+            // when
+            final boolean result = valueChanger.canChange(testCase.field);
 
-        return new Object[][]{
-                {field1, true},
-                {field2, true},
-                {field3, true},
-                {field4, true},
-                {field5, true},
-                {field6, false},
-                };
+            // then
+            assertThat(result).isEqualTo(testCase.result);
+        };
     }
 
-    private Object[] getValuesForChangeValue() {
-        return new Object[]{
-                "stream_String",
-                "stream_Object",
-                "stream_Integer",
-                "stream_A",
-                "stream",
-                };
+    private Executable Should_Change_Stream_Value(final String fieldName) {
+        return () -> {
+            // given
+            final ClassContainingStream helpClass1 = new ClassContainingStream();
+            final ClassContainingStream helpClass2 = new ClassContainingStream();
+
+            // when
+            valueChanger.changeFieldsValues(helpClass1, helpClass2, newArrayList(ClassContainingStream.class.getDeclaredField(fieldName)));
+            final Stream result1 = getInternalState(helpClass2, fieldName);
+            final Stream result2 = getInternalState(helpClass1, fieldName);
+
+            // then
+            assertThat(result1).isNotEqualTo(result2);
+        };
     }
+
+
+    @AllArgsConstructor
+    private class CanChangeCase {
+        private Field field;
+        private boolean result;
+    }
+
+    @AllArgsConstructor
+    private class AreDifferentCase {
+
+        private Stream<?> value1;
+        private Stream<?> value2;
+        private boolean result;
+    }
+
 }

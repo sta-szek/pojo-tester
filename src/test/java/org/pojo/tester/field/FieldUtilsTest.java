@@ -1,22 +1,27 @@
 package org.pojo.tester.field;
 
-import junitparams.JUnitParamsRunner;
-import junitparams.Parameters;
-import org.junit.Test;
+import java.lang.reflect.Field;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import lombok.AllArgsConstructor;
+import org.junit.jupiter.api.DynamicTest;
+import org.junit.jupiter.api.Executable;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestFactory;
+import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 import test.TestHelper;
 import test.fields.ClassWithAllAvailableFieldModifiers;
 import test.fields.Permutation1;
 import test.fields.Permutation2;
 
-import java.lang.reflect.Field;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.util.Lists.newArrayList;
+import static org.junit.jupiter.api.DynamicTest.dynamicTest;
+import static test.TestHelper.getDefaultDisplayName;
 
-@RunWith(JUnitParamsRunner.class)
+@RunWith(JUnitPlatform.class)
 public class FieldUtilsTest {
 
     @Test
@@ -74,35 +79,38 @@ public class FieldUtilsTest {
                           .containsExactlyElementsOf(expectedFields);
     }
 
-    @Test
-    @Parameters(method = "permutationFields")
-    public void Should_Return_All_Permutations(final Class<?> clazz, final List<List<Field>> expectedPermutations) {
-        // given
-        final List<Field> fields = TestHelper.getAllFieldsExceptDummyJacocoField(clazz);
-
-        // when
-        final List<List<Field>> permutations = FieldUtils.permutations(fields);
-
-        // then
-        assertThat(permutations).hasSameSizeAs(expectedPermutations)
-                                .containsAll(expectedPermutations);
-    }
-
-    private Object[][] permutationFields() throws java.lang.NoSuchFieldException {
+    @TestFactory
+    public Stream<DynamicTest> Should_Return_All_Permutations() throws NoSuchFieldException {
         final Field perm1A = fieldFromPermutation1Class("a");
         final Field perm1B = fieldFromPermutation1Class("b");
         final Field perm2A = fieldFromPermutation2Class("a");
         final Field perm2B = fieldFromPermutation2Class("b");
         final Field perm2C = fieldFromPermutation2Class("c");
-        return new Object[][]{
-                {Permutation1.class, newArrayList(newArrayList(perm1A), newArrayList(perm1B), newArrayList(perm1A, perm1B))},
-                {Permutation2.class, newArrayList(newArrayList(perm2A),
-                                                  newArrayList(perm2B),
-                                                  newArrayList(perm2C),
-                                                  newArrayList(perm2A, perm2B),
-                                                  newArrayList(perm2A, perm2C),
-                                                  newArrayList(perm2B, perm2C),
-                                                  newArrayList(perm2A, perm2B, perm2C))}
+
+        final TestCase testCase1 = new TestCase(Permutation1.class,
+                                                newArrayList(newArrayList(perm1A), newArrayList(perm1B), newArrayList(perm1A, perm1B)));
+        final TestCase testCase2 = new TestCase(Permutation2.class, newArrayList(newArrayList(perm2A),
+                                                                                 newArrayList(perm2B),
+                                                                                 newArrayList(perm2C),
+                                                                                 newArrayList(perm2A, perm2B),
+                                                                                 newArrayList(perm2A, perm2C),
+                                                                                 newArrayList(perm2B, perm2C),
+                                                                                 newArrayList(perm2A, perm2B, perm2C)));
+        return Stream.of(testCase1, testCase2)
+                     .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Return_All_Permutations(value)));
+    }
+
+    private Executable Should_Return_All_Permutations(final TestCase testCase) {
+        return () -> {
+            // given
+            final List<Field> fields = TestHelper.getAllFieldsExceptDummyJacocoField(testCase.clazz);
+
+            // when
+            final List<List<Field>> permutations = FieldUtils.permutations(fields);
+
+            // then
+            assertThat(permutations).hasSameSizeAs(testCase.fields)
+                                    .containsAll(testCase.fields);
         };
     }
 
@@ -114,4 +122,9 @@ public class FieldUtilsTest {
         return Permutation2.class.getDeclaredField(name);
     }
 
+    @AllArgsConstructor
+    private class TestCase {
+        private Class<?> clazz;
+        private List<List<Field>> fields;
+    }
 }

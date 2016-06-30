@@ -1,33 +1,43 @@
 package org.pojo.tester.field.collections.iterators;
 
 
-import junitparams.JUnitParamsRunner;
-import junitparams.Parameters;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.stream.Stream;
+import lombok.AllArgsConstructor;
+import org.junit.jupiter.api.DynamicTest;
+import org.junit.jupiter.api.Executable;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestFactory;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.runner.RunWith;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.DynamicTest.dynamicTest;
+import static test.TestHelper.getDefaultDisplayName;
 
-@RunWith(JUnitParamsRunner.class)
+@RunWith(JUnitPlatform.class)
 public class IteratorValueChangerTest {
 
-    @Test
-    @Parameters(method = "getValuesForAreDifferent")
-    public void Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final Iterator<?> value1,
-                                                                                final Iterator<?> value2,
-                                                                                final boolean expectedResult) {
-        // given
-        final IteratorValueChanger changer = new IteratorValueChanger();
+    @TestFactory
+    public Stream<DynamicTest> Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not() {
+        final Collection collectionABC = new ArrayList<>();
+        collectionABC.add("A");
+        collectionABC.add("B");
+        collectionABC.add("C");
+        final Collection collectionAB = new ArrayList<>();
+        collectionAB.add("A");
+        collectionAB.add("B");
+        final ArrayList<Object> emptyArrayList = new ArrayList<>();
 
-        // when
-        final boolean result = changer.areDifferentValues(value1, value2);
-
-        // then
-        assertThat(result).isEqualTo(expectedResult);
+        return Stream.of(new AreDifferentCase(null, null, false),
+                         new AreDifferentCase(emptyArrayList.iterator(), emptyArrayList.iterator(), false),
+                         new AreDifferentCase(collectionABC.iterator(), collectionABC.iterator(), false),
+                         new AreDifferentCase(null, emptyArrayList.iterator(), true),
+                         new AreDifferentCase(collectionAB.iterator(), collectionABC.iterator(), true))
+                     .map(value -> dynamicTest(getDefaultDisplayName(value.value1 + " " + value.value2),
+                                               Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(value)));
     }
 
     @Test
@@ -59,25 +69,24 @@ public class IteratorValueChangerTest {
         assertThat(result).isInstanceOf(type);
     }
 
-    private Object[][] getValuesForAreDifferent() {
-        final Collection collectionABC = new ArrayList<>();
-        collectionABC.add("A");
-        collectionABC.add("B");
-        collectionABC.add("C");
+    private Executable Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final AreDifferentCase testCase) {
+        return () -> {
+            // given
+            final IteratorValueChanger valueChanger = new IteratorValueChanger();
 
-        final Collection collectionAB = new ArrayList<>();
-        collectionAB.add("A");
-        collectionAB.add("B");
+            // when
+            final boolean result = valueChanger.areDifferentValues(testCase.value1, testCase.value2);
 
-        final ArrayList<Object> emptyArrayList = new ArrayList<>();
+            // then
+            assertThat(result).isEqualTo(testCase.result);
+        };
+    }
 
-        return new Object[][]{
-                {null, null, false},
-                {emptyArrayList.iterator(), emptyArrayList.iterator(), false},
-                {collectionABC.iterator(), collectionABC.iterator(), false},
-                {null, emptyArrayList.iterator(), true},
-                {collectionAB.iterator(), collectionABC.iterator(), true},
-                };
+    @AllArgsConstructor
+    private class AreDifferentCase {
+        private Iterator value1;
+        private Iterator value2;
+        private boolean result;
     }
 
 }

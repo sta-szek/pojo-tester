@@ -1,9 +1,8 @@
 package test.fields;
 
 
-import test.A;
-
 import java.util.stream.Stream;
+import test.A;
 
 public class ClassContainingStream {
 

@@ -1,50 +1,49 @@
 package org.pojo.tester.field.collections.collection;
 
 
-import junitparams.JUnitParamsRunner;
-import junitparams.Parameters;
-import org.junit.Test;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.TreeSet;
+import java.util.stream.Stream;
+import lombok.AllArgsConstructor;
+import org.junit.jupiter.api.DynamicTest;
+import org.junit.jupiter.api.Executable;
+import org.junit.jupiter.api.TestFactory;
+import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 import test.fields.collections.collection.Collections;
 
-import java.lang.reflect.Field;
-import java.util.*;
-
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.DynamicTest.dynamicTest;
+import static test.TestHelper.getDefaultDisplayName;
 
-@RunWith(JUnitParamsRunner.class)
+@RunWith(JUnitPlatform.class)
 public class AbstractCollectionFieldValueChangerTest {
 
-    @Test
-    @Parameters(method = "getValuesForCanChange")
-    public void Should_Return_True_Or_False_Whether_Can_Change_Or_Not(final AbstractCollectionFieldValueChanger changer,
-                                                                      final Field field,
-                                                                      final boolean expectedResult) {
-        // given
-
-        // when
-        final boolean result = changer.canChange(field);
-
-        // then
-        assertThat(result).isEqualTo(expectedResult);
+    @TestFactory
+    public Stream<DynamicTest> Should_Return_True_Or_False_Whether_Can_Change_Or_Not() throws NoSuchFieldException {
+        return Stream.of(new CanChangeCase(new ArrayListValueChanger(), Collections.class.getDeclaredField("arrayList"), true),
+                         new CanChangeCase(new DequeValueChanger(), Collections.class.getDeclaredField("deque"), true),
+                         new CanChangeCase(new HashSetValueChanger(), Collections.class.getDeclaredField("hashSet"), true),
+                         new CanChangeCase(new LinkedHashSetValueChanger(), Collections.class.getDeclaredField("linkedHashSet"), true),
+                         new CanChangeCase(new LinkedListValueChanger(), Collections.class.getDeclaredField("linkedList"), true),
+                         new CanChangeCase(new ListValueChanger(), Collections.class.getDeclaredField("list"), true),
+                         new CanChangeCase(new QueueValueChanger(), Collections.class.getDeclaredField("queue"), true),
+                         new CanChangeCase(new SetValueChanger(), Collections.class.getDeclaredField("set"), true),
+                         new CanChangeCase(new SortedSetValueChanger(), Collections.class.getDeclaredField("sortedSet"), true),
+                         new CanChangeCase(new StackValueChanger(), Collections.class.getDeclaredField("stack"), true),
+                         new CanChangeCase(new TreeSetValueChanger(), Collections.class.getDeclaredField("treeSet"), true),
+                         new CanChangeCase(new VectorValueChanger(), Collections.class.getDeclaredField("vector"), true))
+                     .map(value -> dynamicTest(getDefaultDisplayName(value.field.getName()),
+                                               Should_Return_True_Or_False_Whether_Can_Change_Or_Not(value)));
     }
 
-    @Test
-    @Parameters(method = "getValuesForAreDifferent")
-    public void Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final AbstractCollectionFieldValueChanger changer,
-                                                                                final Collection value1,
-                                                                                final Collection value2,
-                                                                                final boolean expectedResult) {
-        // given
-
-        // when
-        final boolean result = changer.areDifferentValues(value1, value2);
-
-        // then
-        assertThat(result).isEqualTo(expectedResult);
-    }
-
-    private Object[][] getValuesForAreDifferent() {
+    @TestFactory
+    public Stream<DynamicTest> Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not() {
         final Collection collectionABC = new ArrayList<>();
         collectionABC.add("A");
         collectionABC.add("B");
@@ -54,90 +53,92 @@ public class AbstractCollectionFieldValueChangerTest {
         collectionAB.add("A");
         collectionAB.add("B");
 
-        return new Object[][]{
-                {new ArrayListValueChanger(), null, null, false},
-                {new ArrayListValueChanger(), new ArrayList<>(), new ArrayList<>(), false},
-                {new ArrayListValueChanger(), new ArrayList<>(collectionABC), new ArrayList<>(collectionABC), false},
-                {new ArrayListValueChanger(), null, new ArrayList<>(), true},
-                {new ArrayListValueChanger(), new ArrayList<>(collectionAB), new ArrayList<>(collectionABC), true},
-
-                {new DequeValueChanger(), null, null, false},
-                {new DequeValueChanger(), new LinkedList<>(), new LinkedList<>(), false},
-                {new DequeValueChanger(), new LinkedList<>(collectionABC), new LinkedList<>(collectionABC), false},
-                {new DequeValueChanger(), null, new LinkedList<>(), true},
-                {new DequeValueChanger(), new LinkedList<>(collectionAB), new LinkedList<>(collectionABC), true},
-
-                {new HashSetValueChanger(), null, null, false},
-                {new HashSetValueChanger(), new HashSet<>(), new HashSet<>(), false},
-                {new HashSetValueChanger(), new HashSet<>(collectionABC), new HashSet<>(collectionABC), false},
-                {new HashSetValueChanger(), null, new HashSet<>(), true},
-                {new HashSetValueChanger(), new HashSet<>(collectionAB), new HashSet<>(collectionABC), true},
-
-                {new LinkedHashSetValueChanger(), null, null, false},
-                {new LinkedHashSetValueChanger(), new LinkedHashSet<>(), new LinkedHashSet<>(), false},
-                {new LinkedHashSetValueChanger(), new LinkedHashSet<>(collectionABC), new LinkedHashSet<>(collectionABC), false},
-                {new LinkedHashSetValueChanger(), null, new LinkedHashSet<>(), true},
-                {new LinkedHashSetValueChanger(), new LinkedHashSet<>(collectionAB), new LinkedHashSet<>(collectionABC), true},
-
-                {new LinkedListValueChanger(), null, null, false},
-                {new LinkedListValueChanger(), new LinkedList<>(), new LinkedList<>(), false},
-                {new LinkedListValueChanger(), new LinkedList<>(collectionABC), new LinkedList<>(collectionABC), false},
-                {new LinkedListValueChanger(), null, new LinkedList<>(), true},
-                {new LinkedListValueChanger(), new LinkedList<>(collectionAB), new LinkedList<>(collectionABC), true},
-
-                {new ListValueChanger(), null, null, false},
-                {new ListValueChanger(), new ArrayList<>(), new ArrayList<>(), false},
-                {new ListValueChanger(), new ArrayList<>(collectionABC), new ArrayList<>(collectionABC), false},
-                {new ListValueChanger(), null, new ArrayList<>(), true},
-                {new ListValueChanger(), new ArrayList<>(collectionAB), new ArrayList<>(collectionABC), true},
-
-                {new QueueValueChanger(), null, null, false},
-                {new QueueValueChanger(), new LinkedList<>(), new LinkedList<>(), false},
-                {new QueueValueChanger(), new LinkedList<>(collectionABC), new LinkedList<>(collectionABC), false},
-                {new QueueValueChanger(), null, new LinkedList<>(), true},
-                {new QueueValueChanger(), new LinkedList<>(collectionAB), new LinkedList<>(collectionABC), true},
-
-                {new SetValueChanger(), null, null, false},
-                {new SetValueChanger(), new HashSet<>(), new HashSet<>(), false},
-                {new SetValueChanger(), new HashSet<>(collectionABC), new HashSet<>(collectionABC), false},
-                {new SetValueChanger(), null, new HashSet<>(), true},
-                {new SetValueChanger(), new HashSet<>(collectionAB), new HashSet<>(collectionABC), true},
-
-                {new SortedSetValueChanger(), null, null, false},
-                {new SortedSetValueChanger(), new TreeSet<>(), new TreeSet<>(), false},
-                {new SortedSetValueChanger(), new TreeSet<>(collectionABC), new TreeSet<>(collectionABC), false},
-                {new SortedSetValueChanger(), null, new TreeSet<>(), true},
-                {new SortedSetValueChanger(), new TreeSet<>(collectionAB), new TreeSet<>(collectionABC), true},
-                };
+        final ArrayList arrayListABC = new ArrayList<>(collectionABC);
+        final LinkedList linkedListABC = new LinkedList<>(collectionABC);
+        final LinkedHashSet linkedHashSetABC = new LinkedHashSet<>(collectionABC);
+        final TreeSet treeSetABC = new TreeSet<>(collectionABC);
+        return Stream.of(new AreDifferentCase(new ArrayListValueChanger(), null, null, false),
+                         new AreDifferentCase(new ArrayListValueChanger(), new ArrayList<>(), new ArrayList<>(), false),
+                         new AreDifferentCase(new ArrayListValueChanger(), arrayListABC, arrayListABC, false),
+                         new AreDifferentCase(new ArrayListValueChanger(), null, new ArrayList<>(), true),
+                         new AreDifferentCase(new ArrayListValueChanger(), new ArrayList<>(collectionAB), arrayListABC, true),
+                         new AreDifferentCase(new DequeValueChanger(), null, null, false),
+                         new AreDifferentCase(new DequeValueChanger(), new LinkedList<>(), new LinkedList<>(), false),
+                         new AreDifferentCase(new DequeValueChanger(), linkedListABC, linkedListABC, false),
+                         new AreDifferentCase(new DequeValueChanger(), null, new LinkedList<>(), true),
+                         new AreDifferentCase(new DequeValueChanger(), new LinkedList<>(collectionAB), linkedListABC, true),
+                         new AreDifferentCase(new HashSetValueChanger(), null, null, false),
+                         new AreDifferentCase(new HashSetValueChanger(), new HashSet<>(), new HashSet<>(), false),
+                         new AreDifferentCase(new HashSetValueChanger(), new HashSet<>(collectionABC), new HashSet<>(collectionABC), false),
+                         new AreDifferentCase(new HashSetValueChanger(), null, new HashSet<>(), true),
+                         new AreDifferentCase(new HashSetValueChanger(), new HashSet<>(collectionAB), new HashSet<>(collectionABC), true),
+                         new AreDifferentCase(new LinkedHashSetValueChanger(), null, null, false),
+                         new AreDifferentCase(new LinkedHashSetValueChanger(), new LinkedHashSet<>(), new LinkedHashSet<>(), false),
+                         new AreDifferentCase(new LinkedHashSetValueChanger(), linkedHashSetABC, linkedHashSetABC, false),
+                         new AreDifferentCase(new LinkedHashSetValueChanger(), null, new LinkedHashSet<>(), true),
+                         new AreDifferentCase(new LinkedHashSetValueChanger(), new LinkedHashSet<>(collectionAB), linkedHashSetABC, true),
+                         new AreDifferentCase(new LinkedListValueChanger(), null, null, false),
+                         new AreDifferentCase(new LinkedListValueChanger(), new LinkedList<>(), new LinkedList<>(), false),
+                         new AreDifferentCase(new LinkedListValueChanger(), linkedListABC, linkedListABC, false),
+                         new AreDifferentCase(new LinkedListValueChanger(), null, new LinkedList<>(), true),
+                         new AreDifferentCase(new LinkedListValueChanger(), new LinkedList<>(collectionAB), linkedListABC, true),
+                         new AreDifferentCase(new ListValueChanger(), null, null, false),
+                         new AreDifferentCase(new ListValueChanger(), new ArrayList<>(), new ArrayList<>(), false),
+                         new AreDifferentCase(new ListValueChanger(), arrayListABC, arrayListABC, false),
+                         new AreDifferentCase(new ListValueChanger(), null, new ArrayList<>(), true),
+                         new AreDifferentCase(new ListValueChanger(), new ArrayList<>(collectionAB), arrayListABC, true),
+                         new AreDifferentCase(new QueueValueChanger(), null, null, false),
+                         new AreDifferentCase(new QueueValueChanger(), new LinkedList<>(), new LinkedList<>(), false),
+                         new AreDifferentCase(new QueueValueChanger(), linkedListABC, linkedListABC, false),
+                         new AreDifferentCase(new QueueValueChanger(), null, new LinkedList<>(), true),
+                         new AreDifferentCase(new QueueValueChanger(), new LinkedList<>(collectionAB), linkedListABC, true),
+                         new AreDifferentCase(new SetValueChanger(), null, null, false),
+                         new AreDifferentCase(new SetValueChanger(), new HashSet<>(), new HashSet<>(), false),
+                         new AreDifferentCase(new SetValueChanger(), new HashSet<>(collectionABC), new HashSet<>(collectionABC), false),
+                         new AreDifferentCase(new SetValueChanger(), null, new HashSet<>(), true),
+                         new AreDifferentCase(new SetValueChanger(), new HashSet<>(collectionAB), new HashSet<>(collectionABC), true),
+                         new AreDifferentCase(new SortedSetValueChanger(), null, null, false),
+                         new AreDifferentCase(new SortedSetValueChanger(), new TreeSet<>(), new TreeSet<>(), false),
+                         new AreDifferentCase(new SortedSetValueChanger(), treeSetABC, treeSetABC, false),
+                         new AreDifferentCase(new SortedSetValueChanger(), null, new TreeSet<>(), true),
+                         new AreDifferentCase(new SortedSetValueChanger(), new TreeSet<>(collectionAB), treeSetABC, true))
+                     .map(value -> dynamicTest(getDefaultDisplayName(value.value1 + " " + value.value2),
+                                               Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(value)));
     }
 
-    private Object[][] getValuesForCanChange() throws NoSuchFieldException {
-        final Field arrayList = Collections.class.getDeclaredField("arrayList");
-        final Field deque = Collections.class.getDeclaredField("deque");
-        final Field hashSet = Collections.class.getDeclaredField("hashSet");
-        final Field linkedHashSet = Collections.class.getDeclaredField("linkedHashSet");
-        final Field linkedList = Collections.class.getDeclaredField("linkedList");
-        final Field list = Collections.class.getDeclaredField("list");
-        final Field queue = Collections.class.getDeclaredField("queue");
-        final Field set = Collections.class.getDeclaredField("set");
-        final Field sortedSet = Collections.class.getDeclaredField("sortedSet");
-        final Field stack = Collections.class.getDeclaredField("stack");
-        final Field treeSet = Collections.class.getDeclaredField("treeSet");
-        final Field vector = Collections.class.getDeclaredField("vector");
+    private Executable Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final AreDifferentCase testCase) {
+        return () -> {
+            // when
+            final boolean result = testCase.valueChanger.areDifferentValues(testCase.value1, testCase.value2);
 
-        return new Object[][]{
-                {new ArrayListValueChanger(), arrayList, true},
-                {new DequeValueChanger(), deque, true},
-                {new HashSetValueChanger(), hashSet, true},
-                {new LinkedHashSetValueChanger(), linkedHashSet, true},
-                {new LinkedListValueChanger(), linkedList, true},
-                {new ListValueChanger(), list, true},
-                {new QueueValueChanger(), queue, true},
-                {new SetValueChanger(), set, true},
-                {new SortedSetValueChanger(), sortedSet, true},
-                {new StackValueChanger(), stack, true},
-                {new TreeSetValueChanger(), treeSet, true},
-                {new VectorValueChanger(), vector, true},
-                };
+            // then
+            assertThat(result).isEqualTo(testCase.result);
+        };
     }
+
+    private Executable Should_Return_True_Or_False_Whether_Can_Change_Or_Not(final CanChangeCase testCase) {
+        return () -> {
+            // when
+            final boolean result = testCase.valueChanger.canChange(testCase.field);
+
+            // then
+            assertThat(result).isEqualTo(testCase.result);
+        };
+    }
+
+    @AllArgsConstructor
+    private class CanChangeCase {
+        private AbstractCollectionFieldValueChanger valueChanger;
+        private Field field;
+        private boolean result;
+    }
+
+    @AllArgsConstructor
+    private class AreDifferentCase {
+        private AbstractCollectionFieldValueChanger valueChanger;
+        private Collection value1;
+        private Collection value2;
+        private boolean result;
+    }
+
 }

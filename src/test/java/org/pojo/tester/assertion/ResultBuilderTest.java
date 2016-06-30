@@ -1,16 +1,17 @@
 package org.pojo.tester.assertion;
 
-import org.assertj.core.util.Lists;
-import org.assertj.core.util.Sets;
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import org.assertj.core.util.Lists;
+import org.assertj.core.util.Sets;
+import org.junit.jupiter.api.Test;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.runner.RunWith;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
+@RunWith(JUnitPlatform.class)
 public class ResultBuilderTest {
 
     @Test
@@ -48,7 +49,7 @@ public class ResultBuilderTest {
         final Result result = resultBuilder.build();
 
         // then
-        assertThat(result).isEqualToComparingFieldByFieldRecursively(expectedResult);
+        assertThat(result.getMessage()).isEqualTo(expectedResult.getMessage());
     }
 
     @Test
@@ -68,6 +69,6 @@ public class ResultBuilderTest {
         final Result result = resultBuilder.build();
 
         // then
-        assertThat(result).isEqualToComparingFieldByFieldRecursively(expectedResult);
+        assertThat(result.getMessage()).isEqualTo(expectedResult.getMessage());
     }
 }

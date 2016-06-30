@@ -1,32 +1,44 @@
 package org.pojo.tester.field.collections.iterators;
 
 
-import junitparams.JUnitParamsRunner;
-import junitparams.Parameters;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.stream.Stream;
+import lombok.AllArgsConstructor;
+import org.junit.jupiter.api.DynamicTest;
+import org.junit.jupiter.api.Executable;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestFactory;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.runner.RunWith;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.DynamicTest.dynamicTest;
+import static test.TestHelper.getDefaultDisplayName;
 
-@RunWith(JUnitParamsRunner.class)
+@RunWith(JUnitPlatform.class)
 public class IterableValueChangerTest {
 
-    @Test
-    @Parameters(method = "getValuesForAreDifferent")
-    public void Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final Iterable<?> value1,
-                                                                                final Iterable<?> value2,
-                                                                                final boolean expectedResult) {
-        // given
-        final IterableValueChanger changer = new IterableValueChanger();
+    @TestFactory
+    public Stream<DynamicTest> Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not() {
+        final Collection collectionABC = new ArrayList<>();
+        collectionABC.add("A");
+        collectionABC.add("B");
+        collectionABC.add("C");
 
-        // when
-        final boolean result = changer.areDifferentValues(value1, value2);
+        final Collection collectionAB = new ArrayList<>();
+        collectionAB.add("A");
+        collectionAB.add("B");
 
-        // then
-        assertThat(result).isEqualTo(expectedResult);
+        final ArrayList<Object> emptyArrayList = new ArrayList<>();
+
+        return Stream.of(new AreDifferentCase(null, null, false),
+                         new AreDifferentCase(emptyArrayList, emptyArrayList, false),
+                         new AreDifferentCase(collectionABC, collectionABC, false),
+                         new AreDifferentCase(null, emptyArrayList, true),
+                         new AreDifferentCase(collectionAB, collectionABC, true))
+                     .map(value -> dynamicTest(getDefaultDisplayName(value.value1 + " " + value.value2),
+                                               Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(value)));
     }
 
     @Test
@@ -58,25 +70,24 @@ public class IterableValueChangerTest {
         assertThat(result).isInstanceOf(type);
     }
 
-    private Object[][] getValuesForAreDifferent() {
-        final Collection collectionABC = new ArrayList<>();
-        collectionABC.add("A");
-        collectionABC.add("B");
-        collectionABC.add("C");
+    private Executable Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final AreDifferentCase testCase) {
+        return () -> {
+            // given
+            final IterableValueChanger valueChanger = new IterableValueChanger();
 
-        final Collection collectionAB = new ArrayList<>();
-        collectionAB.add("A");
-        collectionAB.add("B");
+            // when
+            final boolean result = valueChanger.areDifferentValues(testCase.value1, testCase.value2);
 
-        final ArrayList<Object> emptyArrayList = new ArrayList<>();
+            // then
+            assertThat(result).isEqualTo(testCase.result);
+        };
+    }
 
-        return new Object[][]{
-                {null, null, false},
-                {emptyArrayList, emptyArrayList, false},
-                {collectionABC, collectionABC, false},
-                {null, emptyArrayList, true},
-                {collectionAB, collectionABC, true},
-                };
+    @AllArgsConstructor
+    private class AreDifferentCase {
+        private Collection value1;
+        private Collection value2;
+        private boolean result;
     }
 
 }

@@ -1,13 +1,15 @@
 package org.pojo.tester.field.collections.collection;
 
 
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.jupiter.api.Test;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.runner.RunWith;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@RunWith(JUnitPlatform.class)
 public class ListValueChangerTest {
 
     @Test
