@@ -5,69 +5,63 @@ import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 import test.tostring.ToStringWithoutField;
 
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 @RunWith(JUnitPlatform.class)
 public class ToStringAssertionsTest {
 
     @Test
-    public void Should_Fail_When_ToString_Method_Does_Not_Contain_Value() {
+    public void Should_Throw_Exception_When_ToString_Method_Does_Not_Contain_Value() {
         // given
         final ToStringWithoutField objectUnderAssert = new ToStringWithoutField();
-        final ResultBuilder resultBuilder = spy(ResultBuilder.class);
-        final ToStringAssertions toStringAssertions = new ToStringAssertions(resultBuilder, objectUnderAssert);
+        final ToStringAssertions toStringAssertions = new ToStringAssertions(objectUnderAssert);
 
         // when
-        toStringAssertions.contains("unexpectedField", "unexpectedValue");
+        final Throwable result = catchThrowable(() -> toStringAssertions.contains("unexpectedField", "unexpectedValue"));
 
         // then
-        verify(resultBuilder).fail(eq(ToStringWithoutField.class), anyString(), anyString());
+        assertThat(result).isInstanceOf(AssertionException.class);
     }
 
     @Test
-    public void Should_Fail_When_ToString_Method_Contains_Value() {
+    public void Should_Throw_Exception_When_ToString_Method_Contains_Value() {
         // given
         final ToStringWithoutField objectUnderAssert = new ToStringWithoutField();
-        final ResultBuilder resultBuilder = spy(ResultBuilder.class);
-        final ToStringAssertions toStringAssertions = new ToStringAssertions(resultBuilder, objectUnderAssert);
+        final ToStringAssertions toStringAssertions = new ToStringAssertions(objectUnderAssert);
 
         // when
-        toStringAssertions.doestNotContain("b", "1.43");
+        final Throwable result = catchThrowable(() -> toStringAssertions.doestNotContain("b", "1.43"));
 
         // then
-        verify(resultBuilder).fail(eq(ToStringWithoutField.class), anyString(), anyString());
+        assertThat(result).isInstanceOf(AssertionException.class);
     }
 
 
     @Test
-    public void Should_Pass_When_ToString_Method_Contains_Value() {
+    public void Should_Not_Throw_Exception_When_ToString_Method_Contains_Value() {
         // given
         final ToStringWithoutField objectUnderAssert = new ToStringWithoutField();
-        final ResultBuilder resultBuilder = spy(ResultBuilder.class);
-        final ToStringAssertions toStringAssertions = new ToStringAssertions(resultBuilder, objectUnderAssert);
+        final ToStringAssertions toStringAssertions = new ToStringAssertions(objectUnderAssert);
 
         // when
-        toStringAssertions.contains("a", "1");
+        final Throwable result = catchThrowable(() -> toStringAssertions.contains("a", "1"));
 
         // then
-        verify(resultBuilder).pass(eq(ToStringWithoutField.class), anyString());
+        assertThat(result).isNull();
     }
 
     @Test
-    public void Should_Pass_When_ToString_Method_Does_Not_Contain_Value() {
+    public void Should_Not_Throw_Exception_When_ToString_Method_Does_Not_Contain_Value() {
         // given
         final ToStringWithoutField objectUnderAssert = new ToStringWithoutField();
-        final ResultBuilder resultBuilder = spy(ResultBuilder.class);
-        final ToStringAssertions toStringAssertions = new ToStringAssertions(resultBuilder, objectUnderAssert);
+        final ToStringAssertions toStringAssertions = new ToStringAssertions(objectUnderAssert);
 
         // when
-        toStringAssertions.doestNotContain("testEnum", "ENUM1");
+        final Throwable result = catchThrowable(() -> toStringAssertions.doestNotContain("testEnum", "ENUM1"));
 
         // then
-        verify(resultBuilder).pass(eq(ToStringWithoutField.class), anyString());
+        assertThat(result).isNull();
     }
 
 

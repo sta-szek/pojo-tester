@@ -33,12 +33,10 @@ public class HashCodeAssertions {
                                                        + "have same hash codes:"
                                                        + TWO_HASH_CODES_AND_NEW_LINE;
 
-    private final ResultBuilder resultBuilder;
     private final Object objectUnderAssert;
     private final Class<?> classUnderTest;
 
-    HashCodeAssertions(final ResultBuilder resultBuilder, final Object objectUnderAssert) {
-        this.resultBuilder = resultBuilder;
+    HashCodeAssertions(final Object objectUnderAssert) {
         this.objectUnderAssert = objectUnderAssert;
         this.classUnderTest = objectUnderAssert.getClass();
     }
@@ -52,7 +50,7 @@ public class HashCodeAssertions {
                                              objectUnderAssert,
                                              result1,
                                              result2);
-        appendResult(result, "isConsistent", message);
+        checkResult(result, message);
     }
 
     public void returnsSameValueFor(final Object otherObject) {
@@ -65,7 +63,7 @@ public class HashCodeAssertions {
                                              otherObject,
                                              result1,
                                              result2);
-        appendResult(result, "sameHashCode", message);
+        checkResult(result, message);
     }
 
     public void returnsDifferentValueFor(final Object otherObject) {
@@ -78,26 +76,17 @@ public class HashCodeAssertions {
                                              otherObject,
                                              result1,
                                              result2);
-        appendResult(!result, "differentHashCode", message);
+        checkResult(!result, message);
     }
 
     private String formatMessage(final String message, final Object... objects) {
         return String.format(message, objects);
     }
 
-    private void appendResult(final boolean pass, final String testName, final String errorMessage) {
-        if (pass) {
-            appendPass(classUnderTest, testName);
-        } else {
-            appendFail(classUnderTest, testName, errorMessage);
+    private void checkResult(final boolean pass, final String errorMessage) {
+        if (!pass) {
+            throw new AssertionException(errorMessage);
         }
     }
 
-    private void appendFail(final Class<?> testedClass, final String testName, final String errorMessage) {
-        resultBuilder.fail(testedClass, testName, errorMessage);
-    }
-
-    private void appendPass(final Class<?> testedClass, final String testName) {
-        resultBuilder.pass(testedClass, testName);
-    }
 }

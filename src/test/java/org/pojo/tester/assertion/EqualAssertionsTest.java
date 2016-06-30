@@ -12,225 +12,208 @@ import test.equals.BadPojoEquals_NotSymmetric;
 import test.equals.BadPojoEquals_NotTransitive_A_B;
 import test.equals.BadPojoEquals_NotTransitive_B_C;
 
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 @RunWith(JUnitPlatform.class)
 public class EqualAssertionsTest {
 
     @Test
-    public void Should_Fail_When_Equals_Method_Is_Not_Reflexive() {
+    public void Should_Throw_Exception_When_Equals_Method_Is_Not_Reflexive() {
         // given
         final BadPojoEqualsNull objectUnderAssert = new BadPojoEqualsNull();
-        final ResultBuilder resultBuilder = spy(ResultBuilder.class);
-        final EqualAssertions equalAssertions = new EqualAssertions(resultBuilder, objectUnderAssert);
+        final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
 
         // when
-        equalAssertions.isReflexive();
+        final Throwable result = catchThrowable(() -> equalAssertions.isReflexive());
 
         // then
-        verify(resultBuilder).fail(eq(BadPojoEqualsNull.class), anyString(), anyString());
+        assertThat(result).isInstanceOf(AssertionException.class);
     }
 
     @Test
-    public void Should_Fail_When_Equals_Method_Is_Not_Symmetric() {
+    public void Should_Throw_Exception_When_Equals_Method_Is_Not_Symmetric() {
         // given
         final BadPojoEquals_NotSymmetric objectUnderAssert = new BadPojoEquals_NotSymmetric();
-        final ResultBuilder resultBuilder = spy(ResultBuilder.class);
-        final EqualAssertions equalAssertions = new EqualAssertions(resultBuilder, objectUnderAssert);
+        final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
 
         // when
-        equalAssertions.isSymmetric(objectUnderAssert);
+        final Throwable result = catchThrowable(() -> equalAssertions.isSymmetric(objectUnderAssert));
 
         // then
-        verify(resultBuilder).fail(eq(BadPojoEquals_NotSymmetric.class), anyString(), anyString());
+        assertThat(result).isInstanceOf(AssertionException.class);
     }
 
     @Test
-    public void Should_Fail_When_Equals_Method_Is_Not_Consistent() {
+    public void Should_Throw_Exception_When_Equals_Method_Is_Not_Consistent() {
         // given
         final BadPojoEquals_NotConsistent objectUnderAssert = new BadPojoEquals_NotConsistent();
-        final ResultBuilder resultBuilder = spy(ResultBuilder.class);
-        final EqualAssertions equalAssertions = new EqualAssertions(resultBuilder, objectUnderAssert);
+        final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
 
         // when
-        equalAssertions.isConsistent();
+        final Throwable result = catchThrowable(() -> equalAssertions.isConsistent());
 
         // then
-        verify(resultBuilder).fail(eq(BadPojoEquals_NotConsistent.class), anyString(), anyString());
+        assertThat(result).isInstanceOf(AssertionException.class);
     }
 
     @Test
-    public void Should_Fail_When_Equals_Method_Is_Not_Transitive_Between_A_And_B() {
+    public void Should_Throw_Exception_When_Equals_Method_Is_Not_Transitive_Between_A_And_B() {
         // given
         final BadPojoEquals_NotTransitive_A_B objectUnderAssert = new BadPojoEquals_NotTransitive_A_B();
-        final ResultBuilder resultBuilder = spy(ResultBuilder.class);
-        final EqualAssertions equalAssertions = new EqualAssertions(resultBuilder, objectUnderAssert);
+        final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
 
         // when
-        equalAssertions.isTransitive(objectUnderAssert, objectUnderAssert);
+        final Throwable result = catchThrowable(() -> equalAssertions.isTransitive(objectUnderAssert, objectUnderAssert));
 
         // then
-        verify(resultBuilder).fail(eq(BadPojoEquals_NotTransitive_A_B.class), anyString(), anyString());
+        assertThat(result).isInstanceOf(AssertionException.class);
     }
 
     @Test
-    public void Should_Fail_When_Equals_Method_Is_Not_Transitive_Between_B_And_C() {
+    public void Should_Throw_Exception_When_Equals_Method_Is_Not_Transitive_Between_B_And_C() {
         // given
         final BadPojoEquals_NotTransitive_B_C objectUnderAssert = new BadPojoEquals_NotTransitive_B_C();
-        final ResultBuilder resultBuilder = spy(ResultBuilder.class);
-        final EqualAssertions equalAssertions = new EqualAssertions(resultBuilder, objectUnderAssert);
+        final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
 
         // when
-        equalAssertions.isTransitive(objectUnderAssert, objectUnderAssert);
+        final Throwable result = catchThrowable(() -> equalAssertions.isTransitive(objectUnderAssert, objectUnderAssert));
 
         // then
-        verify(resultBuilder).fail(eq(BadPojoEquals_NotTransitive_B_C.class), anyString(), anyString());
+        assertThat(result).isInstanceOf(AssertionException.class);
     }
 
     @Test
-    public void Should_Fail_When_Equals_Method_Return_True_Compared_To_Null() {
+    public void Should_Throw_Exception_When_Equals_Method_Return_True_Compared_To_Null() {
         // given
         final BadPojoEqualsNull objectUnderAssert = new BadPojoEqualsNull();
-        final ResultBuilder resultBuilder = spy(ResultBuilder.class);
-        final EqualAssertions equalAssertions = new EqualAssertions(resultBuilder, objectUnderAssert);
+        final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
 
         // when
-        equalAssertions.isNotEqualToNull();
+        final Throwable result = catchThrowable(() -> equalAssertions.isNotEqualToNull());
 
         // then
-        verify(resultBuilder).fail(eq(BadPojoEqualsNull.class), anyString(), anyString());
+        assertThat(result).isInstanceOf(AssertionException.class);
     }
 
     @Test
-    public void Should_Fail_When_Equals_Method_Return_True_Compared_To_Different_Type() {
+    public void Should_Throw_Exception_When_Equals_Method_Return_True_Compared_To_Different_Type() {
         // given
         final BadPojoEqualsDifferentType objectUnderAssert = new BadPojoEqualsDifferentType();
-        final ResultBuilder resultBuilder = spy(ResultBuilder.class);
-        final EqualAssertions equalAssertions = new EqualAssertions(resultBuilder, objectUnderAssert);
+        final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
 
         // when
-        equalAssertions.isNotEqualToObjectWithDifferentType(this);
+        final Throwable result = catchThrowable(() -> equalAssertions.isNotEqualToObjectWithDifferentType(this));
 
         // then
-        verify(resultBuilder).fail(eq(BadPojoEqualsDifferentType.class), anyString(), anyString());
+        assertThat(result).isInstanceOf(AssertionException.class);
     }
 
     @Test
-    public void Should_Fail_When_Equals_Method_Return_True_Compared_To_Not_Equal_Object() {
+    public void Should_Throw_Exception_When_Equals_Method_Return_True_Compared_To_Not_Equal_Object() {
         // given
         final BadPojoEqualsWithEqualObject objectUnderAssert = new BadPojoEqualsWithEqualObject();
         final BadPojoEqualsWithEqualObject otherObject = new BadPojoEqualsWithEqualObject();
         objectUnderAssert.intType = 1;
-        final ResultBuilder resultBuilder = spy(ResultBuilder.class);
-        final EqualAssertions equalAssertions = new EqualAssertions(resultBuilder, objectUnderAssert);
+        final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
 
         // when
-        equalAssertions.isNotEqualTo(otherObject);
+        final Throwable result = catchThrowable(() -> equalAssertions.isNotEqualTo(otherObject));
 
         // then
-        verify(resultBuilder).fail(eq(BadPojoEqualsWithEqualObject.class), anyString(), anyString());
+        assertThat(result).isInstanceOf(AssertionException.class);
     }
 
     @Test
-    public void Should_Pass_When_Equals_Method_Is_Reflexive() {
+    public void Should_Not_Throw_Exception_When_Equals_Method_Is_Reflexive() {
         // given
         final GoodPojo_Equals_HashCode_ToString objectUnderAssert = new GoodPojo_Equals_HashCode_ToString();
-        final ResultBuilder resultBuilder = spy(ResultBuilder.class);
-        final EqualAssertions equalAssertions = new EqualAssertions(resultBuilder, objectUnderAssert);
+        final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
 
         // when
-        equalAssertions.isReflexive();
+        final Throwable result = catchThrowable(() -> equalAssertions.isReflexive());
 
         // then
-        verify(resultBuilder).pass(eq(GoodPojo_Equals_HashCode_ToString.class), anyString());
+        assertThat(result).isNull();
     }
 
     @Test
-    public void Should_Pass_When_Equals_Method_Is_Symmetric() {
+    public void Should_Not_Throw_Exception_When_Equals_Method_Is_Symmetric() {
         // given
         final GoodPojo_Equals_HashCode_ToString objectUnderAssert = new GoodPojo_Equals_HashCode_ToString();
-        final ResultBuilder resultBuilder = spy(ResultBuilder.class);
-        final EqualAssertions equalAssertions = new EqualAssertions(resultBuilder, objectUnderAssert);
+        final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
 
         // when
-        equalAssertions.isSymmetric(objectUnderAssert);
+        final Throwable result = catchThrowable(() -> equalAssertions.isSymmetric(objectUnderAssert));
 
         // then
-        verify(resultBuilder).pass(eq(GoodPojo_Equals_HashCode_ToString.class), anyString());
+        assertThat(result).isNull();
     }
 
     @Test
-    public void Should_Pass_When_Equals_Method_Is_Consistent() {
+    public void Should_Not_Throw_Exception_When_Equals_Method_Is_Consistent() {
         // given
         final GoodPojo_Equals_HashCode_ToString objectUnderAssert = new GoodPojo_Equals_HashCode_ToString();
-        final ResultBuilder resultBuilder = spy(ResultBuilder.class);
-        final EqualAssertions equalAssertions = new EqualAssertions(resultBuilder, objectUnderAssert);
+        final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
 
         // when
-        equalAssertions.isConsistent();
+        final Throwable result = catchThrowable(() -> equalAssertions.isConsistent());
 
         // then
-        verify(resultBuilder).pass(eq(GoodPojo_Equals_HashCode_ToString.class), anyString());
+        assertThat(result).isNull();
     }
 
     @Test
-    public void Should_Pass_When_Equals_Method_Is_Transitive() {
+    public void Should_Not_Throw_Exception_When_Equals_Method_Is_Transitive() {
         // given
         final GoodPojo_Equals_HashCode_ToString objectUnderAssert = new GoodPojo_Equals_HashCode_ToString();
-        final ResultBuilder resultBuilder = spy(ResultBuilder.class);
-        final EqualAssertions equalAssertions = new EqualAssertions(resultBuilder, objectUnderAssert);
+        final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
 
         // when
-        equalAssertions.isTransitive(objectUnderAssert, objectUnderAssert);
+        final Throwable result = catchThrowable(() -> equalAssertions.isTransitive(objectUnderAssert, objectUnderAssert));
 
         // then
-        verify(resultBuilder).pass(eq(GoodPojo_Equals_HashCode_ToString.class), anyString());
+        assertThat(result).isNull();
     }
 
     @Test
-    public void Should_Pass_When_Equals_Method_Return_False_Compared_To_Null() {
+    public void Should_Not_Throw_Exception_When_Equals_Method_Return_False_Compared_To_Null() {
         // given
         final GoodPojo_Equals_HashCode_ToString objectUnderAssert = new GoodPojo_Equals_HashCode_ToString();
-        final ResultBuilder resultBuilder = spy(ResultBuilder.class);
-        final EqualAssertions equalAssertions = new EqualAssertions(resultBuilder, objectUnderAssert);
+        final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
 
         // when
-        equalAssertions.isNotEqualToNull();
+        final Throwable result = catchThrowable(() -> equalAssertions.isNotEqualToNull());
 
         // then
-        verify(resultBuilder).pass(eq(GoodPojo_Equals_HashCode_ToString.class), anyString());
+        assertThat(result).isNull();
     }
 
     @Test
-    public void Should_Pass_When_Equals_Method_Return_False_Compared_To_Different_Type() {
+    public void Should_Not_Throw_Exception_When_Equals_Method_Return_False_Compared_To_Different_Type() {
         // given
         final GoodPojo_Equals_HashCode_ToString objectUnderAssert = new GoodPojo_Equals_HashCode_ToString();
-        final ResultBuilder resultBuilder = spy(ResultBuilder.class);
-        final EqualAssertions equalAssertions = new EqualAssertions(resultBuilder, objectUnderAssert);
+        final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
 
         // when
-        equalAssertions.isNotEqualToObjectWithDifferentType(this);
+        final Throwable result = catchThrowable(() -> equalAssertions.isNotEqualToObjectWithDifferentType(this));
 
         // then
-        verify(resultBuilder).pass(eq(GoodPojo_Equals_HashCode_ToString.class), anyString());
+        assertThat(result).isNull();
     }
 
     @Test
-    public void Should_Fail_When_Equals_Method_Return_False_Compared_To_Not_Equal_Object() {
+    public void Should_Not_Throw_Exception_When_Equals_Method_Return_False_Compared_To_Not_Equal_Object() {
         // given
         final GoodPojo_Equals_HashCode_ToString objectUnderAssert = new GoodPojo_Equals_HashCode_ToString();
         final GoodPojo_Equals_HashCode_ToString otherObject = new GoodPojo_Equals_HashCode_ToString();
         otherObject.booleanType = true;
-        final ResultBuilder resultBuilder = spy(ResultBuilder.class);
-        final EqualAssertions equalAssertions = new EqualAssertions(resultBuilder, objectUnderAssert);
+        final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
 
         // when
-        equalAssertions.isNotEqualTo(otherObject);
+        final Throwable result = catchThrowable(() -> equalAssertions.isNotEqualTo(otherObject));
 
         // then
-        verify(resultBuilder).pass(eq(GoodPojo_Equals_HashCode_ToString.class), anyString());
+        assertThat(result).isNull();
     }
 }

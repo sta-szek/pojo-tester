@@ -60,12 +60,10 @@ public class EqualAssertions {
                                                        + "should not be equal to:\n"
                                                        + OBJECT_AND_NEW_LINE;
 
-    private final ResultBuilder resultBuilder;
     private final Object objectUnderAssert;
     private final Class<?> classUnderTest;
 
-    EqualAssertions(final ResultBuilder resultBuilder, final Object objectUnderAssert) {
-        this.resultBuilder = resultBuilder;
+    EqualAssertions(final Object objectUnderAssert) {
         this.objectUnderAssert = objectUnderAssert;
         this.classUnderTest = objectUnderAssert.getClass();
     }
@@ -73,19 +71,19 @@ public class EqualAssertions {
     public void isReflexive() {
         final boolean result = objectUnderAssert.equals(objectUnderAssert);
         final String message = formatMessage(CONSTRAINT_REFLEXIVE, classUnderTest.getCanonicalName(), objectUnderAssert, objectUnderAssert);
-        appendResult(result, "isReflexive", message);
+        checkResult(result, message);
     }
 
     public void isConsistent() {
         final boolean result1 = objectUnderAssert.equals(objectUnderAssert);
         final boolean result2 = objectUnderAssert.equals(objectUnderAssert);
-        final boolean result = result1 == result2;
+        final boolean result = result1 && result2;
         final String message = formatMessage(CONSTRAINT_CONSISTENT,
                                              classUnderTest.getCanonicalName(),
                                              objectUnderAssert,
                                              result1,
                                              result2);
-        appendResult(result, "isConsistent", message);
+        checkResult(result, message);
     }
 
     public void isSymmetric(final Object otherObject) {
@@ -98,7 +96,7 @@ public class EqualAssertions {
                                              result2,
                                              objectUnderAssert,
                                              otherObject);
-        appendResult(result, "isSymmetric", message);
+        checkResult(result, message);
     }
 
     public void isTransitive(final Object b, final Object c) {
@@ -116,44 +114,35 @@ public class EqualAssertions {
                                              objectUnderAssert,
                                              b,
                                              c);
-        appendResult(result, "isTransitive", message);
+        checkResult(result, message);
     }
 
     public void isNotEqualToNull() {
         final boolean result = !objectUnderAssert.equals(null);
         final String message = formatMessage(CONSTRAINT_NULL, classUnderTest);
-        appendResult(result, "isNotEqualToNull", message);
+        checkResult(result, message);
     }
 
     public void isNotEqualToObjectWithDifferentType(final Object otherObject) {
         final boolean result = !objectUnderAssert.equals(otherObject);
         final String message = formatMessage(CONSTRAINT_OTHER_TYPE, classUnderTest, objectUnderAssert, otherObject);
-        appendResult(result, "isNotEqualToObjectWithDifferentType", message);
+        checkResult(result, message);
     }
 
     public void isNotEqualTo(final Object objectToCompare) {
         final boolean result = !objectUnderAssert.equals(objectToCompare);
         final String message = formatMessage(CONSTRAINT_NOT_EQUAL, classUnderTest, objectUnderAssert, objectToCompare);
-        appendResult(result, "isNotEqualTo", message);
+        checkResult(result, message);
     }
 
     private String formatMessage(final String message, final Object... objects) {
         return String.format(message, objects);
     }
 
-    private void appendResult(final boolean pass, final String testName, final String errorMessage) {
-        if (pass) {
-            appendPass(classUnderTest, testName);
-        } else {
-            appendFail(classUnderTest, testName, errorMessage);
+    private void checkResult(final boolean pass, final String errorMessage) {
+        if (!pass) {
+            throw new AssertionException(errorMessage);
         }
     }
 
-    private void appendFail(final Class<?> testedClass, final String testName, final String errorMessage) {
-        resultBuilder.fail(testedClass, testName, errorMessage);
-    }
-
-    private void appendPass(final Class<?> testedClass, final String testName) {
-        resultBuilder.pass(testedClass, testName);
-    }
 }

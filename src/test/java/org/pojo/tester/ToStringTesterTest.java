@@ -4,6 +4,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
+import org.pojo.tester.assertion.AssertionException;
 import test.GoodPojo_Equals_HashCode_ToString;
 import test.tostring.ToStringWithoutField;
 
@@ -67,7 +68,7 @@ public class ToStringTesterTest {
         final Throwable result = catchThrowable(() -> hashCodeTester.test(classesToTest));
 
         // then
-        assertThat(result).isInstanceOf(AssertionError.class);
+        assertThat(result).isInstanceOf(AssertionException.class);
     }
 
     @Test
@@ -81,7 +82,7 @@ public class ToStringTesterTest {
         final Throwable result = catchThrowable(() -> hashCodeTester.test(clazz, exclude(excludedFields)));
 
         // then
-        assertThat(result).isInstanceOf(AssertionError.class);
+        assertThat(result).isInstanceOf(AssertionException.class);
     }
 
     @Test
@@ -95,7 +96,7 @@ public class ToStringTesterTest {
         final Throwable result = catchThrowable(() -> hashCodeTester.test(clazz, include(includedFields)));
 
         // then
-        assertThat(result).isInstanceOf(AssertionError.class);
+        assertThat(result).isInstanceOf(AssertionException.class);
     }
 
 

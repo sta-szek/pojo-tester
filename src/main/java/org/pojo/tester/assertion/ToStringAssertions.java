@@ -21,12 +21,10 @@ public class ToStringAssertions {
                                                          + "Result of toString:"
                                                          + OBJECT_AND_NEW_LINE;
 
-    private final ResultBuilder resultBuilder;
     private final Object objectUnderAssert;
     private final Class<?> classUnderTest;
 
-    ToStringAssertions(final ResultBuilder resultBuilder, final Object objectUnderAssert) {
-        this.resultBuilder = resultBuilder;
+    ToStringAssertions(final Object objectUnderAssert) {
         this.objectUnderAssert = objectUnderAssert;
         this.classUnderTest = objectUnderAssert.getClass();
     }
@@ -41,7 +39,7 @@ public class ToStringAssertions {
                                              classUnderTest.getCanonicalName(),
                                              stringValue,
                                              toString);
-        appendResult(result, "contains", message);
+        checkResult(result, message);
 
     }
 
@@ -54,7 +52,7 @@ public class ToStringAssertions {
                                              classUnderTest.getCanonicalName(),
                                              stringValue,
                                              toString);
-        appendResult(!result, "doesNotContain", message);
+        checkResult(!result, message);
     }
 
     private String getStringOf(final Object value) {
@@ -66,19 +64,9 @@ public class ToStringAssertions {
         return String.format(message, objects);
     }
 
-    private void appendResult(final boolean pass, final String testName, final String errorMessage) {
-        if (pass) {
-            appendPass(classUnderTest, testName);
-        } else {
-            appendFail(classUnderTest, testName, errorMessage);
+    private void checkResult(final boolean pass, final String errorMessage) {
+        if (!pass) {
+            throw new AssertionException(errorMessage);
         }
-    }
-
-    private void appendFail(final Class<?> testedClass, final String testName, final String errorMessage) {
-        resultBuilder.fail(testedClass, testName, errorMessage);
-    }
-
-    private void appendPass(final Class<?> testedClass, final String testName) {
-        resultBuilder.pass(testedClass, testName);
     }
 }
