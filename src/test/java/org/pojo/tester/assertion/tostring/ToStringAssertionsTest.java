@@ -1,9 +1,8 @@
-package org.pojo.tester.assertion;
+package org.pojo.tester.assertion.tostring;
 
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
-import org.pojo.tester.assertion.tostring.ToStringAssertions;
 import test.tostring.ToStringWithoutField;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -22,7 +21,7 @@ public class ToStringAssertionsTest {
         final Throwable result = catchThrowable(() -> toStringAssertions.contains("unexpectedField", "unexpectedValue"));
 
         // then
-        assertThat(result).isInstanceOf(AssertionError.class);
+        assertThat(result).isInstanceOf(ContainsToStringAssertionError.class);
     }
 
     @Test
@@ -35,7 +34,7 @@ public class ToStringAssertionsTest {
         final Throwable result = catchThrowable(() -> toStringAssertions.doestNotContain("b", "1.43"));
 
         // then
-        assertThat(result).isInstanceOf(AssertionError.class);
+        assertThat(result).isInstanceOf(NotContainToStringAssertionError.class);
     }
 
 

@@ -1,9 +1,8 @@
-package org.pojo.tester.assertion;
+package org.pojo.tester.assertion.equals;
 
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
-import org.pojo.tester.assertion.equals.EqualAssertions;
 import test.GoodPojo_Equals_HashCode_ToString;
 import test.equals.BadPojoEqualsDifferentType;
 import test.equals.BadPojoEqualsNull;
@@ -29,7 +28,7 @@ public class EqualAssertionsTest {
         final Throwable result = catchThrowable(() -> equalAssertions.isReflexive());
 
         // then
-        assertThat(result).isInstanceOf(AssertionError.class);
+        assertThat(result).isInstanceOf(ReflexiveEqualsAssertionError.class);
     }
 
     @Test
@@ -42,7 +41,7 @@ public class EqualAssertionsTest {
         final Throwable result = catchThrowable(() -> equalAssertions.isSymmetric(objectUnderAssert));
 
         // then
-        assertThat(result).isInstanceOf(AssertionError.class);
+        assertThat(result).isInstanceOf(SymmetricEqualsAssertionError.class);
     }
 
     @Test
@@ -55,7 +54,7 @@ public class EqualAssertionsTest {
         final Throwable result = catchThrowable(() -> equalAssertions.isConsistent());
 
         // then
-        assertThat(result).isInstanceOf(AssertionError.class);
+        assertThat(result).isInstanceOf(ConsistentEqualsAssertionError.class);
     }
 
     @Test
@@ -68,7 +67,7 @@ public class EqualAssertionsTest {
         final Throwable result = catchThrowable(() -> equalAssertions.isTransitive(objectUnderAssert, objectUnderAssert));
 
         // then
-        assertThat(result).isInstanceOf(AssertionError.class);
+        assertThat(result).isInstanceOf(TransitiveEqualsAssertionError.class);
     }
 
     @Test
@@ -81,7 +80,7 @@ public class EqualAssertionsTest {
         final Throwable result = catchThrowable(() -> equalAssertions.isTransitive(objectUnderAssert, objectUnderAssert));
 
         // then
-        assertThat(result).isInstanceOf(AssertionError.class);
+        assertThat(result).isInstanceOf(TransitiveEqualsAssertionError.class);
     }
 
     @Test
@@ -94,7 +93,7 @@ public class EqualAssertionsTest {
         final Throwable result = catchThrowable(() -> equalAssertions.isNotEqualToNull());
 
         // then
-        assertThat(result).isInstanceOf(AssertionError.class);
+        assertThat(result).isInstanceOf(NullEqualsAssertionError.class);
     }
 
     @Test
@@ -107,7 +106,7 @@ public class EqualAssertionsTest {
         final Throwable result = catchThrowable(() -> equalAssertions.isNotEqualToObjectWithDifferentType(this));
 
         // then
-        assertThat(result).isInstanceOf(AssertionError.class);
+        assertThat(result).isInstanceOf(OtherTypeEqualsAssertionError.class);
     }
 
     @Test
@@ -122,7 +121,7 @@ public class EqualAssertionsTest {
         final Throwable result = catchThrowable(() -> equalAssertions.isNotEqualTo(otherObject));
 
         // then
-        assertThat(result).isInstanceOf(AssertionError.class);
+        assertThat(result).isInstanceOf(NotEqualEqualsAssertionError.class);
     }
 
     @Test
