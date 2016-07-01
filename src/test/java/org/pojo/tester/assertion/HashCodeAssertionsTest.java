@@ -3,6 +3,7 @@ package org.pojo.tester.assertion;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
+import org.pojo.tester.assertion.hashcode.HashCodeAssertions;
 import test.GoodPojo_Equals_HashCode_ToString;
 import test.hashcode.BadPojoHashCode_DifferentObjects;
 import test.hashcode.BadPojoHashCode_NotConsistent;
@@ -24,7 +25,7 @@ public class HashCodeAssertionsTest {
         final Throwable result = catchThrowable(() -> hashCodeAssertions.isConsistent());
 
         // then
-        assertThat(result).isInstanceOf(AssertionException.class);
+        assertThat(result).isInstanceOf(AssertionError.class);
     }
 
     @Test
@@ -37,7 +38,7 @@ public class HashCodeAssertionsTest {
         final Throwable result = catchThrowable(() -> hashCodeAssertions.returnsSameValueFor(objectUnderAssert));
 
         // then
-        assertThat(result).isInstanceOf(AssertionException.class);
+        assertThat(result).isInstanceOf(AssertionError.class);
     }
 
     @Test
@@ -51,7 +52,7 @@ public class HashCodeAssertionsTest {
         final Throwable result = catchThrowable(() -> hashCodeAssertions.returnsDifferentValueFor(objectUnderAssert2));
 
         // then
-        assertThat(result).isInstanceOf(AssertionException.class);
+        assertThat(result).isInstanceOf(AssertionError.class);
     }
 
     @Test

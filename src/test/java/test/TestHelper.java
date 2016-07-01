@@ -15,7 +15,7 @@ public class TestHelper {
                      .collect(Collectors.toList());
     }
 
-    public static String getDefaultDisplayName(final Object values) {
-        return "------> " + String.valueOf(values) + " <------";
+    public static String getDefaultDisplayName(final Object value) {
+        return "------> " + String.valueOf(value) + " <------";
     }
 }
