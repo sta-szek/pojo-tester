@@ -24,27 +24,17 @@ public class CharacterValueChangerTest {
 
     @TestFactory
     public Stream<DynamicTest> Should_Change_Primitive_Value() {
-        return Stream.of(Character.MAX_HIGH_SURROGATE,
-                         Character.MAX_LOW_SURROGATE,
-                         Character.MAX_SURROGATE,
-                         Character.MAX_VALUE,
-                         Character.MIN_HIGH_SURROGATE,
-                         Character.MIN_LOW_SURROGATE,
-                         Character.MIN_SURROGATE,
-                         Character.MIN_VALUE)
+        return Stream.of(Character.MAX_VALUE,
+                         Character.MIN_VALUE,
+                         " ".toCharArray()[0])
                      .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Change_Primitive_Value(value)));
     }
 
     @TestFactory
     public Stream<DynamicTest> Should_Change_Wrapped_Value() {
-        return Stream.of(Character.MAX_HIGH_SURROGATE,
-                         Character.MAX_LOW_SURROGATE,
-                         Character.MAX_SURROGATE,
-                         Character.MAX_VALUE,
-                         Character.MIN_HIGH_SURROGATE,
-                         Character.MIN_LOW_SURROGATE,
-                         Character.MIN_SURROGATE,
-                         Character.MIN_VALUE)
+        return Stream.of(Character.MAX_VALUE,
+                         Character.MIN_VALUE,
+                         " ".toCharArray()[0])
                      .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Change_Wrapped_Value(value)));
     }
 
