@@ -4,6 +4,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
+import org.pojo.tester.assertion.AssertionError;
 import test.GoodPojo_Equals_HashCode_ToString;
 import test.tostring.ToStringWithoutField;
 

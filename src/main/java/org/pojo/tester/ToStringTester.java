@@ -1,14 +1,13 @@
 package org.pojo.tester;
 
 
-import org.pojo.tester.field.AbstractFieldValueChanger;
-import org.pojo.tester.field.FieldUtils;
-import org.pojo.tester.field.GetValueException;
-
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
+import org.pojo.tester.field.AbstractFieldValueChanger;
+import org.pojo.tester.field.FieldUtils;
+import org.pojo.tester.field.GetValueException;
 
 public class ToStringTester extends AbstractTester {
 
@@ -30,8 +29,6 @@ public class ToStringTester extends AbstractTester {
 
         final List<Field> excludedFields = getExcludedFields(classAndFieldPredicatePair);
         shouldNotContainValues(instance, excludedFields);
-
-        assertions.assertAll();
     }
 
     private List<Field> getIncludedFields(final AbstractTester.ClassAndFieldPredicatePair classAndFieldPredicatePair) {

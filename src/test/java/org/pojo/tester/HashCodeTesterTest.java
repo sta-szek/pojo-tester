@@ -4,6 +4,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
+import org.pojo.tester.assertion.hashcode.HashCodeAssertionError;
 import test.GoodPojo_Equals_HashCode_ToString;
 import test.hashcode.BadPojoHashCode;
 import test.hashcode.BadPojoHashCodeDifferentObjectSameType;
@@ -69,7 +70,7 @@ public class HashCodeTesterTest {
         final Throwable result = catchThrowable(() -> hashCodeTester.test(classesToTest));
 
         // then
-        assertThat(result).isInstanceOf(AssertionError.class);
+        assertThat(result).isInstanceOf(HashCodeAssertionError.class);
     }
 
     @Test
@@ -84,7 +85,7 @@ public class HashCodeTesterTest {
         final Throwable result = catchThrowable(() -> hashCodeTester.test(classesToTest));
 
         // then
-        assertThat(result).isInstanceOf(AssertionError.class);
+        assertThat(result).isInstanceOf(HashCodeAssertionError.class);
     }
 
     @Test
@@ -97,7 +98,7 @@ public class HashCodeTesterTest {
         final Throwable result = catchThrowable(() -> hashCodeTester.test(classesToTest));
 
         // then
-        assertThat(result).isInstanceOf(AssertionError.class);
+        assertThat(result).isInstanceOf(HashCodeAssertionError.class);
     }
 
 }

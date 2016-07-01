@@ -1,12 +1,11 @@
 package org.pojo.tester;
 
 
-import org.pojo.tester.field.AbstractFieldValueChanger;
-import org.pojo.tester.field.FieldUtils;
-
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.function.Consumer;
+import org.pojo.tester.field.AbstractFieldValueChanger;
+import org.pojo.tester.field.FieldUtils;
 
 public class HashCodeTester extends AbstractTester {
 
@@ -27,8 +26,6 @@ public class HashCodeTester extends AbstractTester {
         shouldHaveSameHashCodes(instance);
         shouldHaveSameHashCodesWithDifferentInstance(instance);
         shouldHaveDifferentHashCodes(instance, allFields);
-
-        assertions.assertAll();
     }
 
     private void shouldHaveSameHashCodes(final Object object) {

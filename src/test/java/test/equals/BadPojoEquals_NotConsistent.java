@@ -10,6 +10,6 @@ public class BadPojoEquals_NotConsistent {
         if (this == obj) {
             BadPojoEquals_NotConsistent.counter++;
         }
-        return BadPojoEquals_NotConsistent.counter == 0;
+        return BadPojoEquals_NotConsistent.counter % 2 == 0;
     }
 }
