@@ -20,6 +20,6 @@ public class NotEqualEqualsAssertionError extends EqualsAssertionError {
 
     @Override
     protected String getDetailedMessage() {
-        return String.format(CONSTRAINT_NOT_EQUAL, testedCass, otherObject);
+        return String.format(CONSTRAINT_NOT_EQUAL, testedObject, otherObject);
     }
 }

@@ -33,36 +33,36 @@ public class EqualsTester extends AbstractTester {
     }
 
     private void shouldEqualSameInstance(final Object object) {
-        assertions.assertThatEqualsMethod(object)
+        assertions.assertThatEqualsMethodFor(object)
                   .isReflexive();
     }
 
     private void shouldEqualSameInstanceFewTimes(final Object object) {
-        assertions.assertThatEqualsMethod(object)
+        assertions.assertThatEqualsMethodFor(object)
                   .isConsistent();
     }
 
     private void shouldEqualDifferentInstance(final Object object) {
         final Object otherObject = objectGenerator.createSameInstance(object);
-        assertions.assertThatEqualsMethod(object)
+        assertions.assertThatEqualsMethodFor(object)
                   .isSymmetric(otherObject);
     }
 
     private void shouldEqualObjectCifObjectBisEqualToObjectAndC(final Object object) {
         final Object b = objectGenerator.createSameInstance(object);
         final Object c = objectGenerator.createSameInstance(object);
-        assertions.assertThatEqualsMethod(object)
+        assertions.assertThatEqualsMethodFor(object)
                   .isTransitive(b, c);
     }
 
     private void shouldNotEqualNull(final Object object) {
-        assertions.assertThatEqualsMethod(object)
+        assertions.assertThatEqualsMethodFor(object)
                   .isNotEqualToNull();
     }
 
     private void shouldNotEqualDifferentType(final Object object) {
         final Object objectToCompare = this;
-        assertions.assertThatEqualsMethod(object)
+        assertions.assertThatEqualsMethodFor(object)
                   .isNotEqualToObjectWithDifferentType(objectToCompare);
     }
 
@@ -74,7 +74,7 @@ public class EqualsTester extends AbstractTester {
     }
 
     private Consumer<Object> assertIsNotEqualTo(final Object object) {
-        return eachDifferentObject -> assertions.assertThatEqualsMethod(object)
+        return eachDifferentObject -> assertions.assertThatEqualsMethodFor(object)
                                                 .isNotEqualTo(eachDifferentObject);
     }
 

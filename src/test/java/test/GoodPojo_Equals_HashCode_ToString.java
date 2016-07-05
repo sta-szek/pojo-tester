@@ -1,13 +1,16 @@
 package test;
 
 
+import java.util.Random;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import test.fields.TestEnum1;
 
-import java.util.Random;
-
+@Getter
+@Setter
 public class GoodPojo_Equals_HashCode_ToString {
     public final long random;
     public byte byteField;

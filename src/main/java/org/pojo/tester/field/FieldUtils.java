@@ -1,16 +1,19 @@
 package org.pojo.tester.field;
 
-import org.paukov.combinatorics.Factory;
-import org.paukov.combinatorics.Generator;
-import org.paukov.combinatorics.ICombinatoricsVector;
-import org.pojo.tester.GetOrSetValueException;
-
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import org.paukov.combinatorics.Factory;
+import org.paukov.combinatorics.Generator;
+import org.paukov.combinatorics.ICombinatoricsVector;
+import org.pojo.tester.GetOrSetValueException;
+import org.pojo.tester.GetterNotFoundException;
+import org.pojo.tester.SetterNotFoundException;
 
 public final class FieldUtils {
 
@@ -69,6 +72,53 @@ public final class FieldUtils {
                                         .collect(Collectors.toList());
     }
 
+    public static Method findSetterFor(final Class<?> clazz, final Field field) {
+        final Method[] methods = clazz.getMethods();
+        final String fieldName = upperCaseFirstLetter(field.getName());
+        return Stream.of(methods)
+                     .filter(method -> method.getParameterCount() == 1)
+                     .filter(method -> method.getParameterTypes()[0] == field.getType())
+                     .filter(method -> method.getReturnType() == void.class)
+                     .map(Method::getName)
+                     .filter(methodName -> methodName.endsWith(fieldName))
+                     .filter(methodName -> methodName.startsWith("set"))
+                     .filter(methodName -> methodName.length() == fieldName.length() + 3)
+                     .map(methodName -> getSetterByNameAndParametersForField(clazz, methodName, field))
+                     .findAny()
+                     .orElseThrow(() -> new SetterNotFoundException(clazz, field));
+    }
+
+    public static Method findGetterFor(final Class<?> clazz, final Field field) {
+        final Method[] methods = clazz.getMethods();
+        final String fieldName = upperCaseFirstLetter(field.getName());
+        return Stream.of(methods)
+                     .filter(method -> prefixMatchesGettersPrefixAndHasExpectedLength(method, fieldName))
+                     .filter(method -> method.getParameterCount() == 0)
+                     .filter(method -> method.getReturnType() == field.getType())
+                     .map(Method::getName)
+                     .filter(methodName -> methodName.endsWith(fieldName))
+                     .map(methodName -> getGetterByNameForField(clazz, methodName, field))
+                     .findAny()
+                     .orElseThrow(() -> new GetterNotFoundException(clazz, field));
+    }
+
+
+    private static Method getGetterByNameForField(final Class<?> clazz, final String methodName, final Field field) {
+        try {
+            return clazz.getMethod(methodName);
+        } catch (final NoSuchMethodException e) {
+            throw new GetterNotFoundException(clazz, field);
+        }
+    }
+
+    private static Method getSetterByNameAndParametersForField(final Class<?> clazz, final String methodName, final Field field) {
+        try {
+            return clazz.getMethod(methodName, field.getType());
+        } catch (final NoSuchMethodException e) {
+            throw new SetterNotFoundException(clazz, field);
+        }
+    }
+
     private static void makeModifiable(final Field field) {
         final Class<? extends Field> clazz = field.getClass();
         try {
@@ -101,5 +151,25 @@ public final class FieldUtils {
         } catch (final java.lang.NoSuchFieldException e) {
             throw new GetValueException(name, clazz, e);
         }
+    }
+
+    private static boolean prefixMatchesGettersPrefixAndHasExpectedLength(final Method method, final String fieldName) {
+        final Class<?> returnType = method.getReturnType();
+        final String methodName = method.getName();
+        final int fieldNameLength = fieldName.length();
+        if (returnType.equals(boolean.class) || returnType.equals(Boolean.class)) {
+            return (methodName.startsWith("is") && methodName.length() == fieldNameLength + 2)
+                   || (methodName.startsWith("has") && methodName.length() == fieldNameLength + 3)
+                   || (methodName.startsWith("have") && methodName.length() == fieldNameLength + 4)
+                   || (methodName.startsWith("contains") && methodName.length() == fieldNameLength + 8);
+        } else {
+            return methodName.startsWith("get");
+        }
+    }
+
+    private static String upperCaseFirstLetter(final String string) {
+        final String firstLetter = string.substring(0, 1)
+                                         .toUpperCase();
+        return firstLetter + string.substring(1, string.length());
     }
 }
