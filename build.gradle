@@ -27,12 +27,6 @@ repositories {
 
 junitPlatform {
     enableStandardTestTask true
-    engines {
-        include 'junit-jupiter'
-        // exclude 'junit-vintage'
-    }
-
-    includeClassNamePattern '.*Test'
 }
 
 dependencies {

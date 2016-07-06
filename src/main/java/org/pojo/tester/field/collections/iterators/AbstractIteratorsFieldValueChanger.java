@@ -1,11 +1,8 @@
 package org.pojo.tester.field.collections.iterators;
 
 
-import org.pojo.tester.field.AbstractFieldValueChanger;
-import sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl;
-
 import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
+import org.pojo.tester.field.AbstractFieldValueChanger;
 
 public abstract class AbstractIteratorsFieldValueChanger<T> extends AbstractFieldValueChanger<T> {
 
@@ -18,9 +15,4 @@ public abstract class AbstractIteratorsFieldValueChanger<T> extends AbstractFiel
                     .isAssignableFrom(getGenericTypeClass());
     }
 
-    @Override
-    protected Class<T> getGenericTypeClass() {
-        return (Class<T>) ((ParameterizedTypeImpl) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0])
-                .getRawType();
-    }
 }

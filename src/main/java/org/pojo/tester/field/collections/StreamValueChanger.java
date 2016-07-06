@@ -1,11 +1,9 @@
 package org.pojo.tester.field.collections;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
 import java.util.Arrays;
 import java.util.stream.Stream;
 import org.pojo.tester.field.AbstractFieldValueChanger;
-import sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl;
 
 class StreamValueChanger extends AbstractFieldValueChanger<Stream<?>> {
 
@@ -36,10 +34,4 @@ class StreamValueChanger extends AbstractFieldValueChanger<Stream<?>> {
                : Stream.empty();
     }
 
-    @Override
-    protected Class<Stream<?>> getGenericTypeClass() {
-        return (Class<Stream<?>>) ((ParameterizedTypeImpl) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments
-                ()[0])
-                .getRawType();
-    }
 }
