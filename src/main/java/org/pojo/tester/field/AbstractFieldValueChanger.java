@@ -1,10 +1,10 @@
 package org.pojo.tester.field;
 
-import org.pojo.tester.GetOrSetValueException;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.List;
+import org.pojo.tester.GetOrSetValueException;
 
 public abstract class AbstractFieldValueChanger<T> {
 
@@ -31,7 +31,10 @@ public abstract class AbstractFieldValueChanger<T> {
     protected abstract T increaseValue(T value, final Class<?> type);
 
     protected Class<T> getGenericTypeClass() {
-        return (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+        final Type type = ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+        return type instanceof ParameterizedType
+               ? (Class<T>) ((ParameterizedType) type).getRawType()
+               : (Class<T>) type;
     }
 
     private void checkAndChange(final Object sourceObject, final Object targetObject, final Field field) {

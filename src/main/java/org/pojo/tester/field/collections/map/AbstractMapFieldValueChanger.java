@@ -1,12 +1,9 @@
 package org.pojo.tester.field.collections.map;
 
 
-import org.pojo.tester.field.AbstractFieldValueChanger;
-import sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl;
-
 import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
 import java.util.Map;
+import org.pojo.tester.field.AbstractFieldValueChanger;
 
 public abstract class AbstractMapFieldValueChanger<T extends Map> extends AbstractFieldValueChanger<T> {
 
@@ -33,12 +30,6 @@ public abstract class AbstractMapFieldValueChanger<T extends Map> extends Abstra
     protected boolean canChange(final Field field) {
         return field.getType()
                     .isAssignableFrom(getGenericTypeClass());
-    }
-
-    @Override
-    protected Class<T> getGenericTypeClass() {
-        return (Class<T>) ((ParameterizedTypeImpl) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0])
-                .getRawType();
     }
 
     private boolean haveDifferentSizes(final T sourceValue, final T targetValue) {
