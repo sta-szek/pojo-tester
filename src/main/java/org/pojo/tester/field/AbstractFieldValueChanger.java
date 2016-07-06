@@ -32,10 +32,9 @@ public abstract class AbstractFieldValueChanger<T> {
 
     protected Class<T> getGenericTypeClass() {
         final Type type = ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-        if (type instanceof ParameterizedType) {
-            return (Class<T>) ((ParameterizedType) type).getRawType();
-        }
-        return (Class<T>) type;
+        return type instanceof ParameterizedType
+               ? (Class<T>) ((ParameterizedType) type).getRawType()
+               : (Class<T>) type;
     }
 
     private void checkAndChange(final Object sourceObject, final Object targetObject, final Field field) {
