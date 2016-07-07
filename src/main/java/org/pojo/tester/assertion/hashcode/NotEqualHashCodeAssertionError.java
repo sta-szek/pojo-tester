@@ -9,8 +9,10 @@ public class NotEqualHashCodeAssertionError extends HashCodeAssertionError {
                                                        + "%s\n"
                                                        + "and\n"
                                                        + "%s\n"
-                                                       + "have same hash codes:"
-                                                       + "%s\n and\n %s\n";
+                                                       + "have should have different hash codes:\n"
+                                                       + "%s\n"
+                                                       + "and\n"
+                                                       + "%s";
     private final Object testedObject;
     private final Object secondObject;
     private final int firstHashCode;

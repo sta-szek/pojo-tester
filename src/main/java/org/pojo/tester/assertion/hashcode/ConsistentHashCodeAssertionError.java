@@ -1,14 +1,16 @@
 package org.pojo.tester.assertion.hashcode;
 
 
-public class ConsistentHashCodeAssertionError extends HashCodeAssertionError {
+class ConsistentHashCodeAssertionError extends HashCodeAssertionError {
 
-    private static final String CONSTRAINT_CONSISTENT = "The hashCode method should return same hash code for same object."
+    private static final String CONSTRAINT_CONSISTENT = "The hashCode method should return same hash code for same object.\n"
                                                         + "Current implementation returns different values.\n"
                                                         + "Object:\n"
                                                         + "%s\n"
-                                                        + "has two different hash codes:"
-                                                        + "%s\n and\n %s\n";
+                                                        + "has two different hash codes:\n"
+                                                        + "%s\n"
+                                                        + "and"
+                                                        + "\n%s";
     private final Object testedObject;
     private final int firstHashCode;
     private final int secondHashCode;
