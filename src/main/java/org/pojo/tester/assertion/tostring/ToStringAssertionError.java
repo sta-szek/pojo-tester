@@ -3,8 +3,7 @@ package org.pojo.tester.assertion.tostring;
 
 import org.pojo.tester.assertion.AssertionError;
 
-public abstract class ToStringAssertionError extends AssertionError {
-
+abstract class ToStringAssertionError extends AssertionError {
 
     ToStringAssertionError(final Class<?> testedCass) {
         super(testedCass);
