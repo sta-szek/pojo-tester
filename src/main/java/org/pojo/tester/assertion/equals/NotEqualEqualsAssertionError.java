@@ -1,14 +1,14 @@
 package org.pojo.tester.assertion.equals;
 
 
-public class NotEqualEqualsAssertionError extends EqualsAssertionError {
+class NotEqualEqualsAssertionError extends EqualsAssertionError {
 
     private static final String CONSTRAINT_NOT_EQUAL = "The equals method should return false if objects should not be equal.\n"
                                                        + "Current implementation returns true.\n"
                                                        + "Object:\n"
                                                        + "%s\n"
                                                        + "should not be equal to:\n"
-                                                       + "%s\n";
+                                                       + "%s";
     private final Object testedObject;
     private final Object otherObject;
 

@@ -1,14 +1,14 @@
 package org.pojo.tester.assertion.equals;
 
 
-public class ConsistentEqualsAssertionError extends EqualsAssertionError {
+class ConsistentEqualsAssertionError extends EqualsAssertionError {
 
     private static final String CONSTRAINT_CONSISTENT = "The equals method should be consistent when comparing same objects multiple "
                                                         + "times.\n"
                                                         + "Current implementation returns different results.\n"
                                                         + "When comparing object:\n"
                                                         + "%s\n"
-                                                        + "First result was '%s' and second time was '%s'\n.\n";
+                                                        + "to itself, first result was '%s' and second time was '%s'.";
     private final Object testedObject;
     private final boolean firstResult;
     private final boolean secondResult;

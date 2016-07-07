@@ -32,19 +32,6 @@ public class EqualAssertionsTest {
     }
 
     @Test
-    public void Should_Throw_Exception_When_Equals_Method_Is_Not_Symmetric() {
-        // given
-        final BadPojoEquals_NotSymmetric objectUnderAssert = new BadPojoEquals_NotSymmetric();
-        final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
-
-        // when
-        final Throwable result = catchThrowable(() -> equalAssertions.isSymmetric(objectUnderAssert));
-
-        // then
-        assertThat(result).isInstanceOf(SymmetricEqualsAssertionError.class);
-    }
-
-    @Test
     public void Should_Throw_Exception_When_Equals_Method_Is_Not_Consistent() {
         // given
         final BadPojoEquals_NotConsistent objectUnderAssert = new BadPojoEquals_NotConsistent();
@@ -55,6 +42,19 @@ public class EqualAssertionsTest {
 
         // then
         assertThat(result).isInstanceOf(ConsistentEqualsAssertionError.class);
+    }
+
+    @Test
+    public void Should_Throw_Exception_When_Equals_Method_Is_Not_Symmetric() {
+        // given
+        final BadPojoEquals_NotSymmetric objectUnderAssert = new BadPojoEquals_NotSymmetric();
+        final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
+
+        // when
+        final Throwable result = catchThrowable(() -> equalAssertions.isSymmetric(objectUnderAssert));
+
+        // then
+        assertThat(result).isInstanceOf(SymmetricEqualsAssertionError.class);
     }
 
     @Test
@@ -138,19 +138,6 @@ public class EqualAssertionsTest {
     }
 
     @Test
-    public void Should_Not_Throw_Exception_When_Equals_Method_Is_Symmetric() {
-        // given
-        final GoodPojo_Equals_HashCode_ToString objectUnderAssert = new GoodPojo_Equals_HashCode_ToString();
-        final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
-
-        // when
-        final Throwable result = catchThrowable(() -> equalAssertions.isSymmetric(objectUnderAssert));
-
-        // then
-        assertThat(result).isNull();
-    }
-
-    @Test
     public void Should_Not_Throw_Exception_When_Equals_Method_Is_Consistent() {
         // given
         final GoodPojo_Equals_HashCode_ToString objectUnderAssert = new GoodPojo_Equals_HashCode_ToString();
@@ -158,6 +145,19 @@ public class EqualAssertionsTest {
 
         // when
         final Throwable result = catchThrowable(() -> equalAssertions.isConsistent());
+
+        // then
+        assertThat(result).isNull();
+    }
+
+    @Test
+    public void Should_Not_Throw_Exception_When_Equals_Method_Is_Symmetric() {
+        // given
+        final GoodPojo_Equals_HashCode_ToString objectUnderAssert = new GoodPojo_Equals_HashCode_ToString();
+        final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
+
+        // when
+        final Throwable result = catchThrowable(() -> equalAssertions.isSymmetric(objectUnderAssert));
 
         // then
         assertThat(result).isNull();
