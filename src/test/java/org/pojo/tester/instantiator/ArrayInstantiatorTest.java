@@ -4,7 +4,6 @@ package org.pojo.tester.instantiator;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Executable;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
@@ -71,7 +70,6 @@ public class ArrayInstantiatorTest {
                      .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Create_Array_By_Qualified_Class_Name(value)));
     }
 
-    @Test
     public Executable Should_Create_Array_By_Qualified_Class_Name(final String classToInstantiate) {
         return () -> {
             // given
