@@ -4,14 +4,14 @@ package org.pojo.tester.assertion.setter;
 import java.lang.reflect.Field;
 import org.pojo.tester.assertion.AssertionError;
 
-public class SetterAssertionError extends AssertionError {
+class SetterAssertionError extends AssertionError {
 
-    private static final String CONSTRAINT_SETTER = "The setter method for field %s should set field value.\n"
+    private static final String CONSTRAINT_SETTER = "The setter method for field '%s' should set field value.\n"
                                                     + "Current implementation does not set the value.\n"
                                                     + "Expected value:\n"
                                                     + "%s\n"
                                                     + "but was:\n"
-                                                    + "%s\n";
+                                                    + "%s";
 
     private final Field field;
     private final Object expectedValue;
