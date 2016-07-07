@@ -3,14 +3,14 @@ package org.pojo.tester.assertion.getter;
 import java.lang.reflect.Field;
 import org.pojo.tester.assertion.AssertionError;
 
-public class GetterAssertionError extends AssertionError {
+class GetterAssertionError extends AssertionError {
 
-    private static final String CONSTRAINT_GETTER = "The getter method for field %s should return field value.\n"
+    private static final String CONSTRAINT_GETTER = "The getter method for field '%s' should return field value.\n"
                                                     + "Current implementation returns different value.\n"
                                                     + "Expected value:\n"
                                                     + "%s\n"
                                                     + "but was:\n"
-                                                    + "%s\n";
+                                                    + "%s";
 
     private final Field field;
     private final Object expectedValue;
