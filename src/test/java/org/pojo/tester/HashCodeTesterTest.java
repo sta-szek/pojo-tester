@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 import org.pojo.tester.assertion.hashcode.HashCodeAssertionError;
+import org.pojo.tester.field.DefaultFieldValueChanger;
 import test.GoodPojo_Equals_HashCode_ToString;
 import test.hashcode.BadPojoHashCode;
 import test.hashcode.BadPojoHashCodeDifferentObjectSameType;
@@ -23,7 +24,7 @@ public class HashCodeTesterTest {
     public void Should_Pass_All_HashCode_Tests() {
         // given
         final Class[] classesToTest = {GoodPojo_Equals_HashCode_ToString.class};
-        final HashCodeTester hashCodeTester = new HashCodeTester();
+        final HashCodeTester hashCodeTester = new HashCodeTester(DefaultFieldValueChanger.INSTANCE);
 
         // when
         final Throwable result = catchThrowable(() -> hashCodeTester.test(classesToTest));

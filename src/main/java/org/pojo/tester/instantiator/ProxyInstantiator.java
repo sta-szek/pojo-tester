@@ -1,18 +1,13 @@
 package org.pojo.tester.instantiator;
 
 
-import javassist.util.proxy.ProxyFactory;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Proxy;
+import javassist.util.proxy.ProxyFactory;
 
 class ProxyInstantiator extends ObjectInstantiator {
 
     private final ProxyFactory proxyFactory = new ProxyFactory();
-
-    ProxyInstantiator(final String qualifiedClassName) {
-        super(qualifiedClassName);
-    }
 
     ProxyInstantiator(final Class<?> clazz) {
         super(clazz);

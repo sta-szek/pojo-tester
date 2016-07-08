@@ -35,6 +35,16 @@ public class AbstractMapFieldValueChangerTest {
                                                Should_Return_True_Or_False_Whether_Can_Change_Or_Not(value)));
     }
 
+    public Executable Should_Return_True_Or_False_Whether_Can_Change_Or_Not(final CanChangeCase testCase) {
+        return () -> {
+            // when
+            final boolean result = testCase.valueChanger.canChange(testCase.field);
+
+            // then
+            assertThat(result).isEqualTo(testCase.result);
+        };
+    }
+
     @TestFactory
     public Stream<DynamicTest> Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not() {
         final Map mapABC = new HashMap<>();
@@ -46,13 +56,18 @@ public class AbstractMapFieldValueChangerTest {
         mapAB.put("A", "A");
         mapAB.put("B", "B");
 
+        final Map mapAC = new HashMap<>();
+        mapAC.put("A", "A");
+        mapAC.put("C", "C");
+
         final LinkedHashMap linkedHashMap = new LinkedHashMap<>(mapABC);
 
         return Stream.of(new AreDifferentCase(new HashtableValueChanger(), null, null, false),
                          new AreDifferentCase(new HashtableValueChanger(), new Hashtable<>(), new Hashtable<>(), false),
                          new AreDifferentCase(new HashtableValueChanger(), new Hashtable<>(mapABC), new Hashtable<>(mapABC), false),
-                         new AreDifferentCase(new HashtableValueChanger(), null, new Hashtable<>(), true),
+                         new AreDifferentCase(new HashtableValueChanger(), new Hashtable<>(), null, true),
                          new AreDifferentCase(new HashtableValueChanger(), new Hashtable<>(mapAB), new Hashtable<>(mapABC), true),
+                         new AreDifferentCase(new HashtableValueChanger(), new Hashtable<>(mapAB), new Hashtable<>(mapAC), true),
                          new AreDifferentCase(new LinkedHashMapValueChanger(), null, null, false),
                          new AreDifferentCase(new LinkedHashMapValueChanger(), new LinkedHashMap<>(), new LinkedHashMap<>(), false),
                          new AreDifferentCase(new LinkedHashMapValueChanger(), linkedHashMap, linkedHashMap, false),
@@ -82,20 +97,10 @@ public class AbstractMapFieldValueChangerTest {
                                                Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(value)));
     }
 
-    private Executable Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final AreDifferentCase testCase) {
+    public Executable Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final AreDifferentCase testCase) {
         return () -> {
             // when
             final boolean result = testCase.valueChanger.areDifferentValues(testCase.value1, testCase.value2);
-
-            // then
-            assertThat(result).isEqualTo(testCase.result);
-        };
-    }
-
-    private Executable Should_Return_True_Or_False_Whether_Can_Change_Or_Not(final CanChangeCase testCase) {
-        return () -> {
-            // when
-            final boolean result = testCase.valueChanger.canChange(testCase.field);
 
             // then
             assertThat(result).isEqualTo(testCase.result);

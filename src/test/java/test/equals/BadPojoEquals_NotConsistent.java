@@ -3,13 +3,17 @@ package test.equals;
 
 public class BadPojoEquals_NotConsistent {
 
-    private static int counter = -1;
+    private final boolean[] equalReturnValues = new boolean[2];
+    private int counter = -1;
+
+    public BadPojoEquals_NotConsistent(final boolean firstReturn, final boolean secondReturn) {
+        this.equalReturnValues[0] = firstReturn;
+        this.equalReturnValues[1] = secondReturn;
+    }
 
     @Override
     public boolean equals(final Object obj) {
-        if (this == obj) {
-            BadPojoEquals_NotConsistent.counter++;
-        }
-        return BadPojoEquals_NotConsistent.counter % 2 == 0;
+        counter++;
+        return equalReturnValues[counter];
     }
 }

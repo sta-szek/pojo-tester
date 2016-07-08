@@ -8,14 +8,6 @@ abstract class ObjectInstantiator {
         this.clazz = clazz;
     }
 
-    ObjectInstantiator(final String qualifiedClassName) {
-        try {
-            clazz = Class.forName(qualifiedClassName);
-        } catch (final ClassNotFoundException e) {
-            throw new ObjectInstantiationException(qualifiedClassName, e);
-        }
-    }
-
     public abstract Object instantiate();
 
 

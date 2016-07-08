@@ -35,36 +35,7 @@ public class PrimitiveInstantiatorTest {
                      .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Instantiate_Primitive(value)));
     }
 
-    @TestFactory
-    public Stream<DynamicTest> Should_Instantiate_Primitive_By_Qualified_Class_Name() {
-        return Stream.of("java.lang.Boolean",
-                         "java.lang.Byte",
-                         "java.lang.Character",
-                         "java.lang.Double",
-                         "java.lang.Float",
-                         "java.lang.Integer",
-                         "java.lang.Long",
-                         "java.lang.Short")
-                     .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Instantiate_Primitive_By_Qualified_Class_Name(value)));
-    }
-
-    private Executable Should_Instantiate_Primitive_By_Qualified_Class_Name(final String qualifiedClassName) {
-        return () -> {
-
-            // given
-            final PrimitiveInstantiator instantiator = new PrimitiveInstantiator(qualifiedClassName);
-
-            // when
-            final Object object = instantiator.instantiate();
-            final String result = object.getClass()
-                                        .getCanonicalName();
-
-            // then
-            assertThat(result).isEqualTo(qualifiedClassName);
-        };
-    }
-
-    private Executable Should_Instantiate_Primitive(final Class<?> classToInstantiate) {
+    public Executable Should_Instantiate_Primitive(final Class<?> classToInstantiate) {
         return () -> {
             // given
             final PrimitiveInstantiator instantiator = new PrimitiveInstantiator(classToInstantiate);

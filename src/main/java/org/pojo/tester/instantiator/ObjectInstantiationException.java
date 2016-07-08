@@ -4,7 +4,7 @@ package org.pojo.tester.instantiator;
 class ObjectInstantiationException extends RuntimeException {
 
     ObjectInstantiationException(final Class<?> clazz, final Throwable cause) {
-        super(createMessage(clazz), cause);
+        this(clazz.getName(), cause);
     }
 
     ObjectInstantiationException(final String qualifiedClassName, final Throwable cause) {

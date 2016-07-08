@@ -1,11 +1,10 @@
 package org.pojo.tester.field.collections.iterators;
 
 
-import org.apache.commons.collections4.IteratorUtils;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
+import org.apache.commons.collections4.IteratorUtils;
 
 class IteratorValueChanger extends AbstractIteratorsFieldValueChanger<Iterator<?>> {
 

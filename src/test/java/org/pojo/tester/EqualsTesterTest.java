@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 import org.pojo.tester.assertion.AssertionError;
+import org.pojo.tester.field.DefaultFieldValueChanger;
 import test.GoodPojo_Equals_HashCode_ToString;
 import test.equals.BadPojoEqualsDifferentObjectSameType;
 import test.equals.BadPojoEqualsDifferentType;
@@ -24,7 +25,7 @@ public class EqualsTesterTest {
     public void Should_Pass_All_Equals_Tests() {
         // given
         final Class[] classesToTest = {GoodPojo_Equals_HashCode_ToString.class};
-        final EqualsTester equalsTester = new EqualsTester();
+        final EqualsTester equalsTester = new EqualsTester(DefaultFieldValueChanger.INSTANCE);
 
         // when
         final Throwable result = catchThrowable(() -> equalsTester.test(classesToTest));

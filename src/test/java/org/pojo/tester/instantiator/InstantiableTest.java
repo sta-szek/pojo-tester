@@ -1,9 +1,11 @@
 package org.pojo.tester.instantiator;
 
+import java.io.Serializable;
 import java.util.stream.Stream;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Executable;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
@@ -14,6 +16,7 @@ import test.instantiator.enums.EmptyEnum;
 import test.instantiator.statics.ClassContainingStaticClasses;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 import static test.TestHelper.getDefaultDisplayName;
 
@@ -22,7 +25,10 @@ public class InstantiableTest {
 
     @TestFactory
     public Stream<DynamicTest> Should_Return_Expected_Instantiator_For_Class() throws NoSuchFieldException {
-        return Stream.of(new ClassInstantiator(Instantiable.class, ProxyInstantiator.class),
+        return Stream.of(new ClassInstantiator(Serializable.class, ProxyInstantiator.class),
+                         new ClassInstantiator(Override.class, ProxyInstantiator.class),
+                         new ClassInstantiator(Instantiable.class, ProxyInstantiator.class),
+                         new ClassInstantiator(Runnable.class, ProxyInstantiator.class),
                          new ClassInstantiator(EmptyEnum.class, EnumInstantiator.class),
                          new ClassInstantiator(Constructor_Field.class, BestConstructorInstantiator.class),
                          new ClassInstantiator(Constructor_Stream.class, BestConstructorInstantiator.class),
@@ -69,6 +75,16 @@ public class InstantiableTest {
                                                BestConstructorInstantiator.class))
                      .map(value -> dynamicTest(getDefaultDisplayName(value.clazz.getName()),
                                                Should_Return_Expected_Instantiator_For_Class(value)));
+    }
+
+    public Executable Should_Return_Expected_Instantiator_For_Class(final ClassInstantiator testCase) {
+        return () -> {
+            // when
+            final Object result = Instantiable.forClass(testCase.clazz);
+
+            // then
+            assertThat(result).isInstanceOf(testCase.instantiator);
+        };
     }
 
     @TestFactory
@@ -128,7 +144,7 @@ public class InstantiableTest {
                                                Should_Return_Expected_Instantiator_For_Class_By_Qualified_Class_Name(value)));
     }
 
-    private Executable Should_Return_Expected_Instantiator_For_Class_By_Qualified_Class_Name(final ClassNameInstantiator testCase) {
+    public Executable Should_Return_Expected_Instantiator_For_Class_By_Qualified_Class_Name(final ClassNameInstantiator testCase) {
         return () -> {
             // when
             final Object result = Instantiable.forClass(testCase.className);
@@ -138,14 +154,15 @@ public class InstantiableTest {
         };
     }
 
-    private Executable Should_Return_Expected_Instantiator_For_Class(final ClassInstantiator testCase) {
-        return () -> {
-            // when
-            final Object result = Instantiable.forClass(testCase.clazz);
+    @Test
+    public void Should_Throw_Exception_If_Class_Does_Not_Exist() {
+        // given
 
-            // then
-            assertThat(result).isInstanceOf(testCase.instantiator);
-        };
+        // when
+        final Throwable result = catchThrowable(() -> Instantiable.forClass("lopopopo.ale.tlucze"));
+
+        // then
+        assertThat(result).isInstanceOf(ObjectInstantiationException.class);
     }
 
     @AllArgsConstructor
