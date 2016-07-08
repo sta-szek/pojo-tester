@@ -22,13 +22,15 @@ public class IteratorValueChangerTest {
 
     @TestFactory
     public Stream<DynamicTest> Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not() {
-        final Collection collectionABC = new ArrayList<>();
+        final Collection<String> collectionABC = new ArrayList<>();
         collectionABC.add("A");
         collectionABC.add("B");
         collectionABC.add("C");
-        final Collection collectionAB = new ArrayList<>();
+
+        final Collection<String> collectionAB = new ArrayList<>();
         collectionAB.add("A");
         collectionAB.add("B");
+
         final ArrayList<Object> emptyArrayList = new ArrayList<>();
 
         return Stream.of(new AreDifferentCase(null, null, false),

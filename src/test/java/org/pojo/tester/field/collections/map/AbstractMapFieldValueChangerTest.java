@@ -47,16 +47,16 @@ public class AbstractMapFieldValueChangerTest {
 
     @TestFactory
     public Stream<DynamicTest> Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not() {
-        final Map mapABC = new HashMap<>();
+        final Map<String, String> mapABC = new HashMap<>();
         mapABC.put("A", "A");
         mapABC.put("B", "B");
         mapABC.put("C", "C");
 
-        final Map mapAB = new HashMap<>();
+        final Map<String, String> mapAB = new HashMap<>();
         mapAB.put("A", "A");
         mapAB.put("B", "B");
 
-        final Map mapAC = new HashMap<>();
+        final Map<String, String> mapAC = new HashMap<>();
         mapAC.put("A", "A");
         mapAC.put("C", "C");
 

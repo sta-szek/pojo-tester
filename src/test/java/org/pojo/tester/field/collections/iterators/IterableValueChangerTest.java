@@ -21,16 +21,16 @@ public class IterableValueChangerTest {
 
     @TestFactory
     public Stream<DynamicTest> Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not() {
-        final Collection collectionABC = new ArrayList<>();
+        final Collection<String> collectionABC = new ArrayList<>();
         collectionABC.add("A");
         collectionABC.add("B");
         collectionABC.add("C");
 
-        final Collection collectionAB_1 = new ArrayList<>();
+        final Collection<String> collectionAB_1 = new ArrayList<>();
         collectionAB_1.add("A");
         collectionAB_1.add("B");
 
-        final Collection collectionAB_2 = new ArrayList<>();
+        final Collection<String> collectionAB_2 = new ArrayList<>();
         collectionAB_2.add("A");
         collectionAB_2.add("B");
 
