@@ -5,7 +5,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Objects;
-import org.pojo.tester.field.FieldUtils;
+import org.pojo.tester.utils.FieldUtils;
 
 public class GetterAssertions {
 

@@ -1,12 +1,11 @@
 package org.pojo.tester.instantiator;
 
 
-import org.pojo.tester.GetOrSetValueException;
-import org.pojo.tester.field.AbstractFieldValueChanger;
-import org.pojo.tester.field.FieldUtils;
-
 import java.lang.reflect.Field;
 import java.util.List;
+import org.pojo.tester.GetOrSetValueException;
+import org.pojo.tester.field.AbstractFieldValueChanger;
+import org.pojo.tester.utils.FieldUtils;
 
 public class ObjectGenerator {
 

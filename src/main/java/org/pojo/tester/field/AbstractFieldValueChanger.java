@@ -5,6 +5,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 import org.pojo.tester.GetOrSetValueException;
+import org.pojo.tester.utils.FieldUtils;
 
 public abstract class AbstractFieldValueChanger<T> {
 

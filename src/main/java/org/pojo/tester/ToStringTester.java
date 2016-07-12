@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import org.pojo.tester.field.AbstractFieldValueChanger;
-import org.pojo.tester.field.FieldUtils;
 import org.pojo.tester.field.GetValueException;
+import org.pojo.tester.utils.FieldUtils;
 
 public class ToStringTester extends AbstractTester {
 

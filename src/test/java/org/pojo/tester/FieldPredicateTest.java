@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
-import org.pojo.tester.field.FieldUtils;
+import org.pojo.tester.utils.FieldUtils;
 import test.predicate.TestPredicate;
 
 import static org.assertj.core.util.Lists.newArrayList;

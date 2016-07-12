@@ -9,7 +9,8 @@ import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.pojo.tester.field.AbstractFieldValueChanger;
-import org.pojo.tester.field.FieldUtils;
+import org.pojo.tester.utils.FieldUtils;
+import org.pojo.tester.utils.MethodUtils;
 
 public class SetterGetterTester extends AbstractTester {
 
@@ -55,8 +56,8 @@ public class SetterGetterTester extends AbstractTester {
     }
 
     private SetterGetterPair findSetterAndGetterPairForField(final Class<?> testedClass, final Field field) {
-        final Method setter = FieldUtils.findSetterFor(testedClass, field);
-        final Method getter = FieldUtils.findGetterFor(testedClass, field);
+        final Method setter = MethodUtils.findSetterFor(testedClass, field);
+        final Method getter = MethodUtils.findGetterFor(testedClass, field);
         return new SetterGetterPair(setter, getter, field);
     }
 
