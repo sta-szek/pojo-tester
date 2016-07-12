@@ -2,6 +2,7 @@ package org.pojo.tester.utils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 import org.apache.commons.lang3.reflect.TypeUtils;
 import org.pojo.tester.GetterNotFoundException;
@@ -13,15 +14,11 @@ public class MethodUtils {
         final Method[] methods = clazz.getMethods();
         final String fieldName = upperCaseFirstLetter(field.getName());
         return Stream.of(methods)
-                     .filter(method -> method.getParameterCount() == 1)
-                     .filter(method -> TypeUtils.isAssignable(method.getParameterTypes()[0], field.getType()))
+                     .filter(method -> prefixMatchesSettersPrefixAndHasExpectedLength(method, fieldName))
+                     .filter(methodNameEndsWithFieldName(fieldName))
+                     .filter(hasOnlyOneParameter())
+                     .filter(areParameterAndFieldTypeAssignable(field))
                      .filter(method -> method.getReturnType() == void.class)
-                     .filter(method -> method.getName()
-                                             .endsWith(fieldName))
-                     .filter(method -> method.getName()
-                                             .startsWith("set"))
-                     .filter(method -> method.getName()
-                                             .length() == fieldName.length() + 3)
                      .findAny()
                      .orElseThrow(() -> new SetterNotFoundException(clazz, field));
     }
@@ -31,12 +28,32 @@ public class MethodUtils {
         final String fieldName = upperCaseFirstLetter(field.getName());
         return Stream.of(methods)
                      .filter(method -> prefixMatchesGettersPrefixAndHasExpectedLength(method, fieldName))
-                     .filter(method -> method.getParameterCount() == 0)
-                     .filter(method -> TypeUtils.isAssignable(method.getReturnType(), field.getType()))
-                     .filter(method -> method.getName()
-                                             .endsWith(fieldName))
+                     .filter(methodNameEndsWithFieldName(fieldName))
+                     .filter(hasZeroParameters())
+                     .filter(areReturnAndFieldTypeAssignable(field))
                      .findAny()
                      .orElseThrow(() -> new GetterNotFoundException(clazz, field));
+    }
+
+    private static Predicate<Method> areParameterAndFieldTypeAssignable(final Field field) {
+        return method -> TypeUtils.isAssignable(method.getParameterTypes()[0], field.getType());
+    }
+
+    private static Predicate<Method> hasOnlyOneParameter() {
+        return method -> method.getParameterCount() == 1;
+    }
+
+    private static Predicate<Method> areReturnAndFieldTypeAssignable(final Field field) {
+        return method -> TypeUtils.isAssignable(method.getReturnType(), field.getType());
+    }
+
+    private static Predicate<Method> hasZeroParameters() {
+        return method -> method.getParameterCount() == 0;
+    }
+
+    private static Predicate<Method> methodNameEndsWithFieldName(final String fieldName) {
+        return method -> method.getName()
+                               .endsWith(fieldName);
     }
 
     private static boolean prefixMatchesGettersPrefixAndHasExpectedLength(final Method method, final String fieldName) {
@@ -52,6 +69,12 @@ public class MethodUtils {
         } else {
             return methodName.startsWith("get");
         }
+    }
+
+    private static boolean prefixMatchesSettersPrefixAndHasExpectedLength(final Method method, final String fieldName) {
+        final String methodName = method.getName();
+        final int fieldNameLength = fieldName.length();
+        return methodName.startsWith("set") && methodName.length() == fieldNameLength + 3;
     }
 
     private static String upperCaseFirstLetter(final String string) {
