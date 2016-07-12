@@ -2,12 +2,14 @@ package org.pojo.tester.instantiator;
 
 
 import org.junit.jupiter.api.Test;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.runner.RunWith;
 import test.instantiator.No_Args_Constructor_Throws_IllegalAccessException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
-
+@RunWith(JUnitPlatform.class)
 public class DefaultConstructorInstantiatorTest {
 
     @Test

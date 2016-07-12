@@ -2,6 +2,8 @@ package org.pojo.tester;
 
 import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.runner.RunWith;
 import org.pojo.tester.assertion.AssertionError;
 import org.pojo.tester.field.DefaultFieldValueChanger;
 import test.GoodPojo_Equals_HashCode_ToString;
@@ -16,7 +18,7 @@ import static org.assertj.core.util.Lists.newArrayList;
 import static org.pojo.tester.FieldPredicate.exclude;
 import static org.pojo.tester.FieldPredicate.include;
 
-
+@RunWith(JUnitPlatform.class)
 public class EqualsTesterTest {
 
     @Test

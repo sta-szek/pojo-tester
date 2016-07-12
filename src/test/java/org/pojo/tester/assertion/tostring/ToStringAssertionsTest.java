@@ -1,12 +1,14 @@
 package org.pojo.tester.assertion.tostring;
 
 import org.junit.jupiter.api.Test;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.runner.RunWith;
 import test.tostring.ToStringWithoutField;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
-
+@RunWith(JUnitPlatform.class)
 public class ToStringAssertionsTest {
 
     @Test

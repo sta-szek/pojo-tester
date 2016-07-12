@@ -5,6 +5,8 @@ import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Executable;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.runner.RunWith;
 import org.pojo.tester.FieldPredicate;
 import org.pojo.tester.field.FieldUtils;
 import test.instantiator.Constructor_Stream;
@@ -23,7 +25,7 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 import static test.TestHelper.getDefaultDisplayName;
 
-
+@RunWith(JUnitPlatform.class)
 public class BestConstructorInstantiatorTest {
 
     @TestFactory

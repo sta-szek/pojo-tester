@@ -2,10 +2,12 @@ package org.pojo.tester.field.collections.map;
 
 import java.util.LinkedHashMap;
 import org.junit.jupiter.api.Test;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.runner.RunWith;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
+@RunWith(JUnitPlatform.class)
 public class LinkedHashMapValueChangerTest {
 
     @Test

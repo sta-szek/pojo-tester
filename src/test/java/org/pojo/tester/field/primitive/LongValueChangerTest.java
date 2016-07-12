@@ -6,6 +6,8 @@ import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Executable;
 import org.junit.jupiter.api.TestFactory;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.runner.RunWith;
 import org.pojo.tester.field.AbstractFieldValueChanger;
 import test.fields.AllFiledTypes;
 import test.fields.AllFiledTypes_Wrapped;
@@ -15,7 +17,7 @@ import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 import static org.powermock.reflect.Whitebox.getInternalState;
 import static test.TestHelper.getDefaultDisplayName;
 
-
+@RunWith(JUnitPlatform.class)
 public class LongValueChangerTest {
 
     private final AbstractFieldValueChanger<Long> valueChanger = new LongValueChanger();
