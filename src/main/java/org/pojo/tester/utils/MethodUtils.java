@@ -19,9 +19,9 @@ public final class MethodUtils {
         return Stream.of(methods)
                      .filter(method -> prefixMatchesSettersPrefixAndHasExpectedLength(method, fieldName))
                      .filter(methodNameEndsWithFieldName(fieldName))
-                     .filter(hasOnlyOneParameter())
+                     .filter(methodHasOnlyOneParameter())
                      .filter(areParameterAndFieldTypeAssignable(field))
-                     .filter(method -> method.getReturnType() == void.class)
+                     .filter(returnTypeIsVoid())
                      .findAny()
                      .orElseThrow(() -> new SetterNotFoundException(clazz, field));
     }
@@ -38,11 +38,15 @@ public final class MethodUtils {
                      .orElseThrow(() -> new GetterNotFoundException(clazz, field));
     }
 
+    private static Predicate<Method> returnTypeIsVoid() {
+        return method -> method.getReturnType() == void.class;
+    }
+
     private static Predicate<Method> areParameterAndFieldTypeAssignable(final Field field) {
         return method -> TypeUtils.isAssignable(method.getParameterTypes()[0], field.getType());
     }
 
-    private static Predicate<Method> hasOnlyOneParameter() {
+    private static Predicate<Method> methodHasOnlyOneParameter() {
         return method -> method.getParameterCount() == 1;
     }
 
