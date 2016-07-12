@@ -8,7 +8,7 @@ import org.junit.jupiter.api.TestFactory;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 import org.pojo.tester.FieldPredicate;
-import org.pojo.tester.field.FieldUtils;
+import org.pojo.tester.utils.FieldUtils;
 import test.instantiator.Constructor_Stream;
 import test.instantiator.Constructor_Thread;
 import test.instantiator.NoDefaultConstructor;

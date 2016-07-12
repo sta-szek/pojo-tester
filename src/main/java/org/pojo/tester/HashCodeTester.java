@@ -5,7 +5,7 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.function.Consumer;
 import org.pojo.tester.field.AbstractFieldValueChanger;
-import org.pojo.tester.field.FieldUtils;
+import org.pojo.tester.utils.FieldUtils;
 
 public class HashCodeTester extends AbstractTester {
 

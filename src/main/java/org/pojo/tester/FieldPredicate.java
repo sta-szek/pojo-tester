@@ -1,12 +1,11 @@
 package org.pojo.tester;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-import org.pojo.tester.field.FieldUtils;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+import org.pojo.tester.utils.FieldUtils;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class FieldPredicate {
