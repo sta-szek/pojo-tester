@@ -1,12 +1,10 @@
 package org.pojo.tester.assertion;
 
 import org.junit.jupiter.api.Test;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(JUnitPlatform.class)
+
 public class AssertionErrorTest {
 
     @Test

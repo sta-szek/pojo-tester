@@ -2,12 +2,10 @@ package org.pojo.tester.assertion.setter;
 
 import java.lang.reflect.Field;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(JUnitPlatform.class)
+
 public class SetterAssertionErrorTest {
 
     @Test

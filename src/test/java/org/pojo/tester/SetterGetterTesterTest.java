@@ -2,8 +2,6 @@ package org.pojo.tester;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 import org.pojo.tester.field.DefaultFieldValueChanger;
 import test.fields.Getters;
 import test.fields.Setters;
@@ -16,7 +14,7 @@ import static org.assertj.core.util.Lists.newArrayList;
 import static org.pojo.tester.FieldPredicate.exclude;
 import static org.pojo.tester.FieldPredicate.include;
 
-@RunWith(JUnitPlatform.class)
+
 public class SetterGetterTesterTest {
 
     @Test

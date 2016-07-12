@@ -1,8 +1,6 @@
 package org.pojo.tester.assertion.equals;
 
 import org.junit.jupiter.api.Test;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 import test.GoodPojo_Equals_HashCode_ToString;
 import test.equals.BadPojoEqualsDifferentType;
 import test.equals.BadPojoEqualsNull;
@@ -15,7 +13,7 @@ import test.equals.BadPojoEquals_NotTransitive_B_C;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
-@RunWith(JUnitPlatform.class)
+
 public class EqualAssertionsTest {
 
     @Test

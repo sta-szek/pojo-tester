@@ -7,8 +7,6 @@ import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Executable;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 import test.fields.AllFiledTypes;
 import test.fields.AllFiledTypes_Wrapped;
 import test.fields.EnumFields;
@@ -23,7 +21,7 @@ import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 import static org.powermock.reflect.Whitebox.getInternalState;
 import static test.TestHelper.getDefaultDisplayName;
 
-@RunWith(JUnitPlatform.class)
+
 public class EnumValueChangerTest {
 
     private final AbstractFieldValueChanger<Enum> valueChanger = new EnumValueChanger();

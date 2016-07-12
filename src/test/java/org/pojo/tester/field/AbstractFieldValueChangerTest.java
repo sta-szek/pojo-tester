@@ -2,8 +2,6 @@ package org.pojo.tester.field;
 
 import java.lang.reflect.Field;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -11,7 +9,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.powermock.reflect.internal.WhiteboxImpl.getInternalState;
 
-@RunWith(JUnitPlatform.class)
+
 public class AbstractFieldValueChangerTest {
 
     private final AbstractFieldValueChanger abstractFieldValueChanger = new ImplementationForTest();
