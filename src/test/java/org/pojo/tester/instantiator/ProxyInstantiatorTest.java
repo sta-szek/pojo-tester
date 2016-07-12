@@ -26,31 +26,7 @@ public class ProxyInstantiatorTest {
                                                Should_Instantiate_Abstract_Interface_Or_Annotation_Classes(value)));
     }
 
-    @TestFactory
-    public Stream<DynamicTest> Should_Instantiate_Abstract_Interface_Or_Annotation_Classes_By_Qualified_Class_Names() {
-        return Stream.of("test.instantiator.abstracts.Annotation",
-                         "test.instantiator.abstracts.Abstract_PrivateConstructor",
-                         "test.instantiator.abstracts.Abstract",
-                         "test.instantiator.abstracts.Interface")
-                     .map(value -> dynamicTest(getDefaultDisplayName(value),
-                                               Should_Instantiate_Abstract_Interface_Or_Annotation_Classes_By_Qualified_Class_Names
-                                                       (value)));
-    }
-
-    private Executable Should_Instantiate_Abstract_Interface_Or_Annotation_Classes_By_Qualified_Class_Names(final String qualifiedName) {
-        return () -> {
-            // given
-            final ProxyInstantiator instantiator = new ProxyInstantiator(qualifiedName);
-
-            // when
-            final Object object = instantiator.instantiate();
-
-            // then
-            assertThat(object).isNotNull();
-        };
-    }
-
-    private Executable Should_Instantiate_Abstract_Interface_Or_Annotation_Classes(final Class<?> classToInstantiate) {
+    public Executable Should_Instantiate_Abstract_Interface_Or_Annotation_Classes(final Class<?> classToInstantiate) {
         return () -> {
             // given
             final ProxyInstantiator instantiator = new ProxyInstantiator(classToInstantiate);

@@ -1,7 +1,7 @@
 package org.pojo.tester.field.collections.collection;
 
 
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
@@ -15,7 +15,7 @@ public class SetChangerTest {
     @Test
     public void Should_Return_Null_When_Value_Is_Not_Null() {
         // given
-        final Set<String> value = Collections.EMPTY_SET;
+        final Set<String> value = new HashSet<>();
         final Class<? extends Set> type = value.getClass();
 
         final SetValueChanger valueChanger = new SetValueChanger();

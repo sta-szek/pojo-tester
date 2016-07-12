@@ -128,13 +128,15 @@ public class FieldUtilsTest {
         final Field fieldD = fieldFromSettersClass("d");
         final Field fieldE = fieldFromSettersClass("e");
         final Field fieldF = fieldFromSettersClass("f");
+        final Field fieldG = fieldFromSettersClass("g");
 
         return Stream.of(fieldA,
                          fieldB,
                          fieldC,
                          fieldD,
                          fieldE,
-                         fieldF)
+                         fieldF,
+                         fieldG)
                      .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Throw_Exception_When_Setter_Was_Not_Found(value)));
     }
 

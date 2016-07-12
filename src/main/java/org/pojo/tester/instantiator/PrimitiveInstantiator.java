@@ -27,10 +27,6 @@ class PrimitiveInstantiator extends ObjectInstantiator {
         preparedObjects.put("short", Short.MAX_VALUE);
     }
 
-    PrimitiveInstantiator(final String qualifiedClassName) {
-        super(qualifiedClassName);
-    }
-
     PrimitiveInstantiator(final Class<?> clazz) {
         super(clazz);
     }

@@ -4,6 +4,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
+import org.pojo.tester.field.DefaultFieldValueChanger;
 import test.fields.Getters;
 import test.fields.Setters;
 import test.settergetter.BadPojoSetterGetter;
@@ -22,7 +23,7 @@ public class SetterGetterTesterTest {
     public void Should_Pass_All_Setter_Getter_Tests() {
         // given
         final Class[] classesToTest = {GoodPojoSetterGetter.class};
-        final SetterGetterTester hashCodeTester = new SetterGetterTester();
+        final SetterGetterTester hashCodeTester = new SetterGetterTester(DefaultFieldValueChanger.INSTANCE);
 
         // when
         final Throwable result = catchThrowable(() -> hashCodeTester.test(classesToTest));

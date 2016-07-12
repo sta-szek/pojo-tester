@@ -16,7 +16,7 @@ public class GetterAssertionsTest {
 
 
     @Test
-    public void Should_Not_Throw_Exception_When_Getter_Gets_Value()
+    public void Should_Not_Throw_Exception_When_Getter_Returns_Expected_Value()
             throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException {
         // given
         final GoodPojo_Equals_HashCode_ToString pojo = new GoodPojo_Equals_HashCode_ToString();
@@ -32,7 +32,7 @@ public class GetterAssertionsTest {
     }
 
     @Test
-    public void Should_Throw_Exception_When_Getter_Does_Not_Get_Value()
+    public void Should_Throw_Exception_When_Getter_Does_Not_Return_Expected_Value()
             throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException {
         // given
         final BadPojoSetterGetter pojo = new BadPojoSetterGetter();

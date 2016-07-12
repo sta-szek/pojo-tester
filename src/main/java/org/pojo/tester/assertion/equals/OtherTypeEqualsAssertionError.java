@@ -1,7 +1,7 @@
 package org.pojo.tester.assertion.equals;
 
 
-public class OtherTypeEqualsAssertionError extends EqualsAssertionError {
+class OtherTypeEqualsAssertionError extends EqualsAssertionError {
 
     private static final String CONSTRAINT_OTHER_TYPE = "The equals method should return false if object is comparing to object with "
                                                         + "different type.\n"
@@ -9,7 +9,7 @@ public class OtherTypeEqualsAssertionError extends EqualsAssertionError {
                                                         + "Object:\n"
                                                         + "%s\n"
                                                         + "should not be equal to:\n"
-                                                        + "%s\n";
+                                                        + "%s";
     private final Object testedObject;
     private final Object otherObject;
 
@@ -21,6 +21,6 @@ public class OtherTypeEqualsAssertionError extends EqualsAssertionError {
 
     @Override
     protected String getDetailedMessage() {
-        return String.format(CONSTRAINT_OTHER_TYPE, testedCass, otherObject);
+        return String.format(CONSTRAINT_OTHER_TYPE, testedObject, otherObject);
     }
 }

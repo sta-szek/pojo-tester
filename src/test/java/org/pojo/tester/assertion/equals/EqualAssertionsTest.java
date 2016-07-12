@@ -25,10 +25,36 @@ public class EqualAssertionsTest {
         final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
 
         // when
-        final Throwable result = catchThrowable(() -> equalAssertions.isReflexive());
+        final Throwable result = catchThrowable(equalAssertions::isReflexive);
 
         // then
         assertThat(result).isInstanceOf(ReflexiveEqualsAssertionError.class);
+    }
+
+    @Test
+    public void Should_Throw_Exception_When_Equals_Method_Is_Not_Consistent_1() {
+        // given
+        final BadPojoEquals_NotConsistent objectUnderAssert = new BadPojoEquals_NotConsistent(true, false);
+        final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
+
+        // when
+        final Throwable result = catchThrowable(equalAssertions::isConsistent);
+
+        // then
+        assertThat(result).isInstanceOf(ConsistentEqualsAssertionError.class);
+    }
+
+    @Test
+    public void Should_Throw_Exception_When_Equals_Method_Is_Not_Consistent_2() {
+        // given
+        final BadPojoEquals_NotConsistent objectUnderAssert = new BadPojoEquals_NotConsistent(false, true);
+        final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
+
+        // when
+        final Throwable result = catchThrowable(equalAssertions::isConsistent);
+
+        // then
+        assertThat(result).isInstanceOf(ConsistentEqualsAssertionError.class);
     }
 
     @Test
@@ -42,19 +68,6 @@ public class EqualAssertionsTest {
 
         // then
         assertThat(result).isInstanceOf(SymmetricEqualsAssertionError.class);
-    }
-
-    @Test
-    public void Should_Throw_Exception_When_Equals_Method_Is_Not_Consistent() {
-        // given
-        final BadPojoEquals_NotConsistent objectUnderAssert = new BadPojoEquals_NotConsistent();
-        final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
-
-        // when
-        final Throwable result = catchThrowable(() -> equalAssertions.isConsistent());
-
-        // then
-        assertThat(result).isInstanceOf(ConsistentEqualsAssertionError.class);
     }
 
     @Test
@@ -90,7 +103,7 @@ public class EqualAssertionsTest {
         final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
 
         // when
-        final Throwable result = catchThrowable(() -> equalAssertions.isNotEqualToNull());
+        final Throwable result = catchThrowable(equalAssertions::isNotEqualToNull);
 
         // then
         assertThat(result).isInstanceOf(NullEqualsAssertionError.class);
@@ -131,7 +144,20 @@ public class EqualAssertionsTest {
         final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
 
         // when
-        final Throwable result = catchThrowable(() -> equalAssertions.isReflexive());
+        final Throwable result = catchThrowable(equalAssertions::isReflexive);
+
+        // then
+        assertThat(result).isNull();
+    }
+
+    @Test
+    public void Should_Not_Throw_Exception_When_Equals_Method_Is_Consistent() {
+        // given
+        final GoodPojo_Equals_HashCode_ToString objectUnderAssert = new GoodPojo_Equals_HashCode_ToString();
+        final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
+
+        // when
+        final Throwable result = catchThrowable(equalAssertions::isConsistent);
 
         // then
         assertThat(result).isNull();
@@ -145,19 +171,6 @@ public class EqualAssertionsTest {
 
         // when
         final Throwable result = catchThrowable(() -> equalAssertions.isSymmetric(objectUnderAssert));
-
-        // then
-        assertThat(result).isNull();
-    }
-
-    @Test
-    public void Should_Not_Throw_Exception_When_Equals_Method_Is_Consistent() {
-        // given
-        final GoodPojo_Equals_HashCode_ToString objectUnderAssert = new GoodPojo_Equals_HashCode_ToString();
-        final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
-
-        // when
-        final Throwable result = catchThrowable(() -> equalAssertions.isConsistent());
 
         // then
         assertThat(result).isNull();
@@ -183,7 +196,7 @@ public class EqualAssertionsTest {
         final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
 
         // when
-        final Throwable result = catchThrowable(() -> equalAssertions.isNotEqualToNull());
+        final Throwable result = catchThrowable(equalAssertions::isNotEqualToNull);
 
         // then
         assertThat(result).isNull();

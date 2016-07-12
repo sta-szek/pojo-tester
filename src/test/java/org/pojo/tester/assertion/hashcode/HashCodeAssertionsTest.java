@@ -21,7 +21,7 @@ public class HashCodeAssertionsTest {
         final HashCodeAssertions hashCodeAssertions = new HashCodeAssertions(objectUnderAssert);
 
         // when
-        final Throwable result = catchThrowable(() -> hashCodeAssertions.isConsistent());
+        final Throwable result = catchThrowable(hashCodeAssertions::isConsistent);
 
         // then
         assertThat(result).isInstanceOf(ConsistentHashCodeAssertionError.class);
@@ -89,7 +89,7 @@ public class HashCodeAssertionsTest {
         final HashCodeAssertions hashCodeAssertions = new HashCodeAssertions(objectUnderAssert);
 
         // when
-        final Throwable result = catchThrowable(() -> hashCodeAssertions.isConsistent());
+        final Throwable result = catchThrowable(hashCodeAssertions::isConsistent);
 
         // then
         assertThat(result).isNull();

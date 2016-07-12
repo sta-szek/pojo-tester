@@ -1,16 +1,16 @@
 package org.pojo.tester.assertion.equals;
 
 
-public class SymmetricEqualsAssertionError extends EqualsAssertionError {
+class SymmetricEqualsAssertionError extends EqualsAssertionError {
 
     private static final String CONSTRAINT_SYMMETRIC = "The equals method should return true for both a.equals(b) and b.equals(a).\n"
                                                        + "Current implementation returns:\n"
                                                        + "%s for a.equals(b),\n"
                                                        + "%s for b.equals(a),\n"
-                                                       + "where a is:\n"
+                                                       + "where 'a' is:\n"
                                                        + "%s\n"
-                                                       + "b is:\n"
-                                                       + "%s\n";
+                                                       + "and 'b' is:\n"
+                                                       + "%s";
     private final Object testedObject;
     private final Object otherObject;
     private final boolean firstResult;

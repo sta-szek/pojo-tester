@@ -7,10 +7,6 @@ import java.util.Arrays;
 
 class BestConstructorInstantiator extends ObjectInstantiator {
 
-    BestConstructorInstantiator(final String qualifiedClassName) {
-        super(qualifiedClassName);
-    }
-
     BestConstructorInstantiator(final Class<?> clazz) {
         super(clazz);
     }
@@ -45,7 +41,8 @@ class BestConstructorInstantiator extends ObjectInstantiator {
                     | InvocationTargetException
                     | SecurityException
                     | IllegalArgumentException e) {
-                // ignore
+                // ignore, we want to try all constructors
+                // if all constructors fail, it will be handled by caller
                 return null;
             }
         }
@@ -60,7 +57,8 @@ class BestConstructorInstantiator extends ObjectInstantiator {
         try {
             return constructor.newInstance();
         } catch (final InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            // ignore
+            // ignore, we want to try all constructors
+            // if all constructors fail, it will be handled by caller
             return null;
         }
     }

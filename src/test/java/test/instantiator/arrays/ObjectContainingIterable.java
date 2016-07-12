@@ -7,7 +7,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 @ToString
 public class ObjectContainingIterable {
 
-    private Iterable<Integer> interable;
+    private Iterable<Integer> iterable;
 
     @Override
     public boolean equals(final Object o) {
@@ -21,13 +21,13 @@ public class ObjectContainingIterable {
 
         final ObjectContainingIterable that = (ObjectContainingIterable) o;
 
-        return new EqualsBuilder().append(interable, that.interable)
+        return new EqualsBuilder().append(iterable, that.iterable)
                                   .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(interable)
+        return new HashCodeBuilder().append(iterable)
                                     .toHashCode();
     }
 }

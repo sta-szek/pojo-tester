@@ -17,7 +17,7 @@ import org.pojo.tester.SetterNotFoundException;
 
 public final class FieldUtils {
 
-    public static final String FIELD_CLASS_MODIFIER_FIELD_NAME = "modifiers";
+    public static final String MODIFIERS_FIELD_NAME_IN_FIELD_CLASS = "modifiers";
 
     private FieldUtils() {
     }
@@ -123,13 +123,13 @@ public final class FieldUtils {
         final Class<? extends Field> clazz = field.getClass();
         try {
             field.setAccessible(true);
-            final Field modifierField = clazz.getDeclaredField(FIELD_CLASS_MODIFIER_FIELD_NAME);
+            final Field modifierField = clazz.getDeclaredField(MODIFIERS_FIELD_NAME_IN_FIELD_CLASS);
             modifierField.setAccessible(true);
 
             final int modifiers = field.getModifiers() & ~Modifier.FINAL;
             modifierField.setInt(field, modifiers);
         } catch (IllegalAccessException | NoSuchFieldException e) {
-            throw new GetOrSetValueException(FIELD_CLASS_MODIFIER_FIELD_NAME, clazz, e);
+            throw new GetOrSetValueException(MODIFIERS_FIELD_NAME_IN_FIELD_CLASS, clazz, e);
         }
     }
 

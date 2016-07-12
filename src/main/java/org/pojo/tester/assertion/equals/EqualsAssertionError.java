@@ -3,7 +3,7 @@ package org.pojo.tester.assertion.equals;
 
 import org.pojo.tester.assertion.AssertionError;
 
-public abstract class EqualsAssertionError extends AssertionError {
+abstract class EqualsAssertionError extends AssertionError {
 
 
     EqualsAssertionError(final Class<?> testedCass) {

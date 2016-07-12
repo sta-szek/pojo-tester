@@ -21,14 +21,18 @@ public class IterableValueChangerTest {
 
     @TestFactory
     public Stream<DynamicTest> Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not() {
-        final Collection collectionABC = new ArrayList<>();
+        final Collection<String> collectionABC = new ArrayList<>();
         collectionABC.add("A");
         collectionABC.add("B");
         collectionABC.add("C");
 
-        final Collection collectionAB = new ArrayList<>();
-        collectionAB.add("A");
-        collectionAB.add("B");
+        final Collection<String> collectionAB_1 = new ArrayList<>();
+        collectionAB_1.add("A");
+        collectionAB_1.add("B");
+
+        final Collection<String> collectionAB_2 = new ArrayList<>();
+        collectionAB_2.add("A");
+        collectionAB_2.add("B");
 
         final ArrayList<Object> emptyArrayList = new ArrayList<>();
 
@@ -36,9 +40,24 @@ public class IterableValueChangerTest {
                          new AreDifferentCase(emptyArrayList, emptyArrayList, false),
                          new AreDifferentCase(collectionABC, collectionABC, false),
                          new AreDifferentCase(null, emptyArrayList, true),
-                         new AreDifferentCase(collectionAB, collectionABC, true))
+                         new AreDifferentCase(emptyArrayList, null, true),
+                         new AreDifferentCase(collectionAB_1, collectionABC, true),
+                         new AreDifferentCase(collectionAB_1, collectionAB_2, false))
                      .map(value -> dynamicTest(getDefaultDisplayName(value.value1 + " " + value.value2),
                                                Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(value)));
+    }
+
+    public Executable Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final AreDifferentCase testCase) {
+        return () -> {
+            // given
+            final IterableValueChanger valueChanger = new IterableValueChanger();
+
+            // when
+            final boolean result = valueChanger.areDifferentValues(testCase.value1, testCase.value2);
+
+            // then
+            assertThat(result).isEqualTo(testCase.result);
+        };
     }
 
     @Test
@@ -68,19 +87,6 @@ public class IterableValueChangerTest {
 
         // then
         assertThat(result).isInstanceOf(type);
-    }
-
-    private Executable Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final AreDifferentCase testCase) {
-        return () -> {
-            // given
-            final IterableValueChanger valueChanger = new IterableValueChanger();
-
-            // when
-            final boolean result = valueChanger.areDifferentValues(testCase.value1, testCase.value2);
-
-            // then
-            assertThat(result).isEqualTo(testCase.result);
-        };
     }
 
     @AllArgsConstructor

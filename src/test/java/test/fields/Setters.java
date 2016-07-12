@@ -10,6 +10,7 @@ public class Setters {
     private int d;
     private int e;
     private int f;
+    private int g;
 
     public void set() {
     }
@@ -23,7 +24,7 @@ public class Setters {
     public void setD() {
     }
 
-    public void setE(final Integer o) {
+    public void setE(final Integer e) {
     }
 
     public Object setF(final int f) {
@@ -32,5 +33,9 @@ public class Setters {
 
     public void setGoodSetter(final int goodSetter) {
         this.goodSetter = goodSetter;
+    }
+
+    public void setXXXXG(final int g) {
+        this.g = g;
     }
 }

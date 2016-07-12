@@ -3,10 +3,6 @@ package org.pojo.tester.instantiator;
 
 class DefaultConstructorInstantiator extends ObjectInstantiator {
 
-    DefaultConstructorInstantiator(final String qualifiedClassName) {
-        super(qualifiedClassName);
-    }
-
     DefaultConstructorInstantiator(final Class<?> clazz) {
         super(clazz);
     }

@@ -1,7 +1,7 @@
 package org.pojo.tester.assertion.equals;
 
 
-public class TransitiveEqualsAssertionError extends EqualsAssertionError {
+class TransitiveEqualsAssertionError extends EqualsAssertionError {
 
     private static final String CONSTRAINT_TRANSITIVE = "The equals method should return true in all cases: a.equals(b), b.equals(c) and "
                                                         + "a.equals(c).\n"
@@ -9,12 +9,12 @@ public class TransitiveEqualsAssertionError extends EqualsAssertionError {
                                                         + "%s for a.equals(b),\n"
                                                         + "%s for b.equals(c),\n"
                                                         + "%s for a.equals(c),\n"
-                                                        + "where a is:\n"
+                                                        + "where 'a' is:\n"
                                                         + "%s\n"
-                                                        + "b is:\n"
+                                                        + "and 'b' is:\n"
                                                         + "%s\n"
-                                                        + "c is:\n"
-                                                        + "%s\n";
+                                                        + "and 'c' is:\n"
+                                                        + "%s";
     private final Object a;
     private final Object b;
     private final Object c;

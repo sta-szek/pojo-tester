@@ -4,7 +4,6 @@ package org.pojo.tester.instantiator;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Executable;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
@@ -17,7 +16,7 @@ import static test.TestHelper.getDefaultDisplayName;
 public class ArrayInstantiatorTest {
 
     @TestFactory
-    public Stream<DynamicTest> Should_Create_Array() {
+    public Stream<DynamicTest> Should_Create_Array_By_Class() {
         return Stream.of(Integer[].class,
                          Byte[].class,
                          Character[].class,
@@ -37,19 +36,7 @@ public class ArrayInstantiatorTest {
                      .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Create_Array(value)));
     }
 
-    @Test
-    public void Should_Create_Array_By_Qualified_Class_Name() {
-        // given
-        final ArrayInstantiator instantiator = new ArrayInstantiator("[B");
-
-        // when
-        final Object result = instantiator.instantiate();
-
-        // then
-        assertThat(result).isInstanceOf(byte[].class);
-    }
-
-    private Executable Should_Create_Array(final Class<?> classToInstantiate) {
+    public Executable Should_Create_Array(final Class<?> classToInstantiate) {
         return () -> {
             // given
             final ArrayInstantiator instantiator = new ArrayInstantiator(classToInstantiate);
@@ -61,5 +48,6 @@ public class ArrayInstantiatorTest {
             assertThat(result).isInstanceOf(classToInstantiate);
         };
     }
+
 
 }

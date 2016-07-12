@@ -6,7 +6,7 @@ public class Getters {
     public boolean getter1;
     public boolean getter2;
     public boolean getter3;
-    public boolean getter4;
+    public Boolean getter4;
     public int getter5;
     private int a;
     private int b;
@@ -28,7 +28,7 @@ public class Getters {
         return getter3;
     }
 
-    public boolean containsGetter4() {
+    public Boolean containsGetter4() {
         return getter4;
     }
 

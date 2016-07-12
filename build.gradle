@@ -5,7 +5,7 @@ buildscript {
     }
     dependencies {
         classpath 'info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.1.9'
-        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.0-SNAPSHOT'
+        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.0-M1'
     }
 }
 
@@ -39,9 +39,9 @@ dependencies {
     compile 'org.javassist:javassist:3.20.0-GA'
 
 
-    testCompile("org.junit.jupiter:junit-jupiter-api:5.0.0-SNAPSHOT")
-    testCompile("org.junit.platform:junit-platform-runner:1.0.0-SNAPSHOT")
-    testRuntime("org.junit.jupiter:junit-jupiter-engine:5.0.0-SNAPSHOT")
+    testCompile("org.junit.jupiter:junit-jupiter-api:5.0.0-M1")
+    testCompile("org.junit.platform:junit-platform-runner:1.0.0-M1")
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:5.0.0-M1")
     testCompile 'org.assertj:assertj-core:3.4.1'
     testCompile 'org.powermock:powermock-api-mockito:1.6.5'
     testCompile 'org.powermock:powermock-module-junit4:1.6.5'
@@ -63,7 +63,7 @@ jacocoTestReport {
 }
 
 pitest {
-    pitestVersion = '1.1.9'
+    pitestVersion = '1.1.10'
     exportLineCoverage = true
     timestampedReports = false
     targetClasses = ['org.pojo.tester.*']

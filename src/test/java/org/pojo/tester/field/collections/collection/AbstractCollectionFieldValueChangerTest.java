@@ -42,14 +42,24 @@ public class AbstractCollectionFieldValueChangerTest {
                                                Should_Return_True_Or_False_Whether_Can_Change_Or_Not(value)));
     }
 
+    public Executable Should_Return_True_Or_False_Whether_Can_Change_Or_Not(final CanChangeCase testCase) {
+        return () -> {
+            // when
+            final boolean result = testCase.valueChanger.canChange(testCase.field);
+
+            // then
+            assertThat(result).isEqualTo(testCase.result);
+        };
+    }
+
     @TestFactory
     public Stream<DynamicTest> Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not() {
-        final Collection collectionABC = new ArrayList<>();
+        final Collection<String> collectionABC = new ArrayList<>();
         collectionABC.add("A");
         collectionABC.add("B");
         collectionABC.add("C");
 
-        final Collection collectionAB = new ArrayList<>();
+        final Collection<String> collectionAB = new ArrayList<>();
         collectionAB.add("A");
         collectionAB.add("B");
 
@@ -65,7 +75,7 @@ public class AbstractCollectionFieldValueChangerTest {
                          new AreDifferentCase(new DequeValueChanger(), null, null, false),
                          new AreDifferentCase(new DequeValueChanger(), new LinkedList<>(), new LinkedList<>(), false),
                          new AreDifferentCase(new DequeValueChanger(), linkedListABC, linkedListABC, false),
-                         new AreDifferentCase(new DequeValueChanger(), null, new LinkedList<>(), true),
+                         new AreDifferentCase(new DequeValueChanger(), new LinkedList<>(), null, true),
                          new AreDifferentCase(new DequeValueChanger(), new LinkedList<>(collectionAB), linkedListABC, true),
                          new AreDifferentCase(new HashSetValueChanger(), null, null, false),
                          new AreDifferentCase(new HashSetValueChanger(), new HashSet<>(), new HashSet<>(), false),
@@ -106,20 +116,10 @@ public class AbstractCollectionFieldValueChangerTest {
                                                Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(value)));
     }
 
-    private Executable Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final AreDifferentCase testCase) {
+    public Executable Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final AreDifferentCase testCase) {
         return () -> {
             // when
             final boolean result = testCase.valueChanger.areDifferentValues(testCase.value1, testCase.value2);
-
-            // then
-            assertThat(result).isEqualTo(testCase.result);
-        };
-    }
-
-    private Executable Should_Return_True_Or_False_Whether_Can_Change_Or_Not(final CanChangeCase testCase) {
-        return () -> {
-            // when
-            final boolean result = testCase.valueChanger.canChange(testCase.field);
 
             // then
             assertThat(result).isEqualTo(testCase.result);
