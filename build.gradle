@@ -63,7 +63,7 @@ jacocoTestReport {
 }
 
 pitest {
-    pitestVersion = '1.1.9'
+    pitestVersion = '1.1.10'
     exportLineCoverage = true
     timestampedReports = false
     targetClasses = ['org.pojo.tester.*']
