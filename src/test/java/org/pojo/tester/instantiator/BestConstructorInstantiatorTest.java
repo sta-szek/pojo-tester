@@ -9,6 +9,7 @@ import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 import org.pojo.tester.FieldPredicate;
 import org.pojo.tester.utils.FieldUtils;
+import org.pojo.tester.utils.MethodUtils;
 import test.instantiator.Constructor_Stream;
 import test.instantiator.Constructor_Thread;
 import test.instantiator.NoDefaultConstructor;
@@ -57,6 +58,7 @@ public class BestConstructorInstantiatorTest {
                          ClassContainingStaticClasses.NestedStaticClass_ProtectedConstructor.class,
                          ClassContainingStaticClasses.NestedStaticClass_PrivateConstructor.class,
                          FieldUtils.class,
+                         MethodUtils.class,
                          FieldPredicate.class)
                      .map(value -> dynamicTest(getDefaultDisplayName(value.getName()),
                                                Should_Create_Object_Using_Best_Constructor(value)));

@@ -8,7 +8,10 @@ import org.apache.commons.lang3.reflect.TypeUtils;
 import org.pojo.tester.GetterNotFoundException;
 import org.pojo.tester.SetterNotFoundException;
 
-public class MethodUtils {
+public final class MethodUtils {
+
+    private MethodUtils() {
+    }
 
     public static Method findSetterFor(final Class<?> clazz, final Field field) {
         final Method[] methods = clazz.getMethods();
