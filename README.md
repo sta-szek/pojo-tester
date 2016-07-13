@@ -4,3 +4,5 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/54c58ff2dd5d402da121e0be62dd493d)](https://www.codacy.com)
 
 [![Codacy Badge](https://api.codacy.com/project/badge/coverage/54c58ff2dd5d402da121e0be62dd493d)](https://www.codacy.com)
+
+[![Sputnik](https://sputnik.ci/conf/badge)](https://sputnik.ci/app#/builds/sta-szek/pojo-tester)
