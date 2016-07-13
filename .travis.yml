@@ -7,3 +7,4 @@ after_success:
   - sudo sh jpmInstall.sh
   - sudo jpm install com.codacy:codacy-coverage-reporter:assembly
   - codacy-coverage-reporter -l Java -r build/reports/test/jacocoTestReport.xml -t 8df7f84ec4b94a1189e7f122553a1598
+  - python <(curl -s https://raw.githubusercontent.com/TouK/sputnik-ci/master/sputnik-ci.py) 
