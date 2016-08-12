@@ -3,12 +3,14 @@ package org.pojo.tester.instantiator;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.stream.Stream;
+import lombok.Data;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Executable;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
+import org.pojo.tester.ClassAndFieldPredicatePair;
 import org.pojo.tester.field.AbstractFieldValueChanger;
 import org.pojo.tester.field.DefaultFieldValueChanger;
 import test.GoodPojo_Equals_HashCode_ToString;
@@ -51,6 +53,19 @@ public class ObjectGeneratorTest {
                      .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Create_Same_Instance(value)));
     }
 
+    public Executable Should_Create_Same_Instance(final Object objectToCreateSameInstance) {
+        return () -> {
+            // given
+            final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger);
+
+            // when
+            final Object result = objectGenerator.generateSameInstance(objectToCreateSameInstance);
+
+            // then
+            assertThat(result).isEqualToComparingFieldByField(objectToCreateSameInstance);
+        };
+    }
+
     @TestFactory
     public Stream<DynamicTest> Should_Create_Different_Instance() {
         return Stream.of(new ObjectContainingArray(),
@@ -63,32 +78,40 @@ public class ObjectGeneratorTest {
                      .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Create_Different_Instance(value)));
     }
 
-    private Executable Should_Create_Different_Instance(final Object objectToCreateSameInstance) {
+    public Executable Should_Create_Different_Instance(final Object objectToCreateSameInstance) {
         return () -> {
             // given
             final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger);
             final List<Field> allFields = TestHelper.getAllFieldsExceptDummyJacocoField(objectToCreateSameInstance.getClass());
 
             // when
-            final Object result = objectGenerator.createInstanceWithDifferentFieldValues(objectToCreateSameInstance, allFields);
+            final Object result = objectGenerator.generateInstanceWithDifferentFieldValues(objectToCreateSameInstance, allFields);
 
             // then
             assertThat(result).isNotEqualTo(objectToCreateSameInstance);
         };
     }
 
-    private Executable Should_Create_Same_Instance(final Object objectToCreateSameInstance) {
-        return () -> {
-            // given
-            final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger);
+    @Test
+    public void Should_Generate_Different_Objects() {
+        // given
+        final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger);
+        final A baseObject = new A();
+        final ClassAndFieldPredicatePair classAndFieldPredicatePair = new ClassAndFieldPredicatePair(A.class);
 
-            // when
-            final Object result = objectGenerator.createSameInstance(objectToCreateSameInstance);
+        // when
+        final List<Object> result = objectGenerator.generateDifferentObjectsFrom(baseObject, classAndFieldPredicatePair);
 
-            // then
-            assertThat(result).isEqualToComparingFieldByField(objectToCreateSameInstance);
-        };
+        // then
+        assertThat(result).hasSize(3)
+                          .doesNotContain(baseObject)
+                          .doesNotHaveDuplicates();
+
     }
 
-
+    @Data
+    class A {
+        int a;
+        int b;
+    }
 }

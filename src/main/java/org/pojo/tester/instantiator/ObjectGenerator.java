@@ -3,6 +3,9 @@ package org.pojo.tester.instantiator;
 
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import org.pojo.tester.ClassAndFieldPredicatePair;
 import org.pojo.tester.GetOrSetValueException;
 import org.pojo.tester.field.AbstractFieldValueChanger;
 import org.pojo.tester.utils.FieldUtils;
@@ -20,7 +23,7 @@ public class ObjectGenerator {
                            .instantiate();
     }
 
-    public Object createSameInstance(final Object object) {
+    public Object generateSameInstance(final Object object) {
         Object newInstance = createNewInstance(object.getClass());
         if (!object.equals(newInstance)) {
             newInstance = makeThemEqual(object, newInstance);
@@ -28,8 +31,20 @@ public class ObjectGenerator {
         return newInstance;
     }
 
-    public Object createInstanceWithDifferentFieldValues(final Object baseObject, final List<Field> fieldsToChange) {
-        final Object objectToChange = createSameInstance(baseObject);
+    public List<Object> generateDifferentObjectsFrom(final Object baseObject, final ClassAndFieldPredicatePair classAndFieldPredicatePair) {
+        final Class clazz = classAndFieldPredicatePair.getClazz();
+        final Predicate<String> fieldsPredicate = classAndFieldPredicatePair.getFieldsPredicate();
+
+        final List<Field> fieldsToChange = FieldUtils.getFields(clazz, fieldsPredicate);
+        final List<List<Field>> permutationOfFields = FieldUtils.permutations(fieldsToChange);
+
+        return permutationOfFields.stream()
+                                  .map(fields -> generateInstanceWithDifferentFieldValues(baseObject, fields))
+                                  .collect(Collectors.toList());
+    }
+
+    Object generateInstanceWithDifferentFieldValues(final Object baseObject, final List<Field> fieldsToChange) {
+        final Object objectToChange = generateSameInstance(baseObject);
         abstractFieldValueChanger.changeFieldsValues(baseObject, objectToChange, fieldsToChange);
 
         return objectToChange;

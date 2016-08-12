@@ -24,15 +24,15 @@ public class SetterGetterTester extends AbstractTester {
 
     @Override
     protected void test(final ClassAndFieldPredicatePair classAndFieldPredicatePair) {
-        final Class testedClass = classAndFieldPredicatePair.getTestedClass();
-        final List<Field> fields = FieldUtils.getFields(testedClass, classAndFieldPredicatePair.getPredicate());
-        final List<SetterGetterPair> setterGetterPairs = findSetterAndGetterPairsForFields(testedClass, fields);
+        final Class testedClass = classAndFieldPredicatePair.getClazz();
+        final List<Field> fields = FieldUtils.getFields(testedClass, classAndFieldPredicatePair.getFieldsPredicate());
+        final List<SetterAndGetterPair> setterAndGetterPairs = findSetterAndGetterPairsForFields(testedClass, fields);
         final Object instance = objectGenerator.createNewInstance(testedClass);
 
-        setterGetterPairs.forEach(eachPair -> testSetterAndGetter(eachPair, instance));
+        setterAndGetterPairs.forEach(eachPair -> testSetterAndGetter(eachPair, instance));
     }
 
-    private void testSetterAndGetter(final SetterGetterPair eachPair, final Object instance) {
+    private void testSetterAndGetter(final SetterAndGetterPair eachPair, final Object instance) {
         final Method setter = eachPair.getSetter();
         final Method getter = eachPair.getGetter();
         final Field field = eachPair.getField();
@@ -49,21 +49,21 @@ public class SetterGetterTester extends AbstractTester {
         }
     }
 
-    private List<SetterGetterPair> findSetterAndGetterPairsForFields(final Class<?> testedClass, final List<Field> fields) {
+    private List<SetterAndGetterPair> findSetterAndGetterPairsForFields(final Class<?> testedClass, final List<Field> fields) {
         return fields.stream()
                      .map(fieldName -> findSetterAndGetterPairForField(testedClass, fieldName))
                      .collect(Collectors.toList());
     }
 
-    private SetterGetterPair findSetterAndGetterPairForField(final Class<?> testedClass, final Field field) {
+    private SetterAndGetterPair findSetterAndGetterPairForField(final Class<?> testedClass, final Field field) {
         final Method setter = MethodUtils.findSetterFor(testedClass, field);
         final Method getter = MethodUtils.findGetterFor(testedClass, field);
-        return new SetterGetterPair(setter, getter, field);
+        return new SetterAndGetterPair(setter, getter, field);
     }
 
     @Getter
     @AllArgsConstructor
-    private class SetterGetterPair {
+    private class SetterAndGetterPair {
         private Method setter;
         private Method getter;
         private Field field;

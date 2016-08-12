@@ -20,8 +20,8 @@ public class ToStringTester extends AbstractTester {
     }
 
     @Override
-    protected void test(final AbstractTester.ClassAndFieldPredicatePair classAndFieldPredicatePair) {
-        final Class<?> testedClass = classAndFieldPredicatePair.getTestedClass();
+    protected void test(final ClassAndFieldPredicatePair classAndFieldPredicatePair) {
+        final Class<?> testedClass = classAndFieldPredicatePair.getClazz();
         final Object instance = objectGenerator.createNewInstance(testedClass);
 
         final List<Field> includedFields = getIncludedFields(classAndFieldPredicatePair);
@@ -31,17 +31,17 @@ public class ToStringTester extends AbstractTester {
         shouldNotContainValues(instance, excludedFields);
     }
 
-    private List<Field> getIncludedFields(final AbstractTester.ClassAndFieldPredicatePair classAndFieldPredicatePair) {
-        final Class<?> testedClass = classAndFieldPredicatePair.getTestedClass();
-        return FieldUtils.getFields(testedClass, classAndFieldPredicatePair.getPredicate());
+    private List<Field> getIncludedFields(final ClassAndFieldPredicatePair classAndFieldPredicatePair) {
+        final Class<?> testedClass = classAndFieldPredicatePair.getClazz();
+        return FieldUtils.getFields(testedClass, classAndFieldPredicatePair.getFieldsPredicate());
     }
 
-    private List<Field> getExcludedFields(final AbstractTester.ClassAndFieldPredicatePair classAndFieldPredicatePair) {
+    private List<Field> getExcludedFields(final ClassAndFieldPredicatePair classAndFieldPredicatePair) {
         final List<Field> includedFields = getIncludedFields(classAndFieldPredicatePair);
         final List<String> included = includedFields.stream()
                                                     .map(Field::getName)
                                                     .collect(Collectors.toList());
-        return FieldUtils.getAllFieldsExcluding(classAndFieldPredicatePair.getTestedClass(), included);
+        return FieldUtils.getAllFieldsExcluding(classAndFieldPredicatePair.getClazz(), included);
     }
 
     private void shouldContainValues(final Object instance, final List<Field> fields) {
