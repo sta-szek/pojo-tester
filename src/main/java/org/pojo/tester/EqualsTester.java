@@ -1,5 +1,6 @@
 package org.pojo.tester;
 
+import java.util.List;
 import java.util.function.Consumer;
 import org.pojo.tester.field.AbstractFieldValueChanger;
 
@@ -63,9 +64,9 @@ public class EqualsTester extends AbstractTester {
     }
 
     private void shouldNotEqualWithGivenFields(final ClassAndFieldPredicatePair classAndFieldPredicatePair) {
-        final Object baseObject = objectGenerator.createNewInstance(classAndFieldPredicatePair.getClazz());
-        objectGenerator.generateDifferentObjectsFrom(baseObject, classAndFieldPredicatePair)
-                       .forEach(assertIsNotEqualTo(baseObject));
+        final List<Object> differentObjects = objectGenerator.generateDifferentObjects(classAndFieldPredicatePair);
+        final Object firstObject = differentObjects.remove(0);
+        differentObjects.forEach(assertIsNotEqualTo(firstObject));
     }
 
     private Consumer<Object> assertIsNotEqualTo(final Object object) {

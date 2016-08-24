@@ -3,6 +3,7 @@ package org.pojo.tester.instantiator;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.stream.Stream;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Executable;
@@ -92,26 +93,54 @@ public class ObjectGeneratorTest {
         };
     }
 
-    @Test
-    public void Should_Generate_Different_Objects() {
-        // given
-        final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger);
-        final A baseObject = new A();
-        final ClassAndFieldPredicatePair classAndFieldPredicatePair = new ClassAndFieldPredicatePair(A.class);
+    @TestFactory
+    public Stream<DynamicTest> Should_Generate_Different_Objects() {
+        return Stream.of(new DifferentObjectTestCase(A.class, 4),
+                         new DifferentObjectTestCase(B.class, 8),
+                         new DifferentObjectTestCase(C.class, 16))
+                     .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Generate_Different_Objects(value)));
+    }
+    
+    public Executable Should_Generate_Different_Objects(final DifferentObjectTestCase testCase) {
+        return () -> {
+            // given
+            final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger);
+            final ClassAndFieldPredicatePair classAndFieldPredicatePair = new ClassAndFieldPredicatePair(testCase.clazz);
 
-        // when
-        final List<Object> result = objectGenerator.generateDifferentObjectsFrom(baseObject, classAndFieldPredicatePair);
+            // when
+            final List<Object> result = objectGenerator.generateDifferentObjects(classAndFieldPredicatePair);
 
-        // then
-        assertThat(result).hasSize(3)
-                          .doesNotContain(baseObject)
-                          .doesNotHaveDuplicates();
-
+            // then
+            assertThat(result).hasSize(testCase.expectedSize)
+                              .doesNotHaveDuplicates();
+        };
     }
 
     @Data
     class A {
         int a;
         int b;
+    }
+
+    @Data
+    class B {
+        int a;
+        int b;
+        int c;
+    }
+
+    @Data
+    class C {
+        int a;
+        int b;
+        int c;
+        int d;
+    }
+
+    @Data
+    @AllArgsConstructor
+    class DifferentObjectTestCase {
+        private Class<?> clazz;
+        private int expectedSize;
     }
 }

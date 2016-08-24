@@ -31,16 +31,20 @@ public class ObjectGenerator {
         return newInstance;
     }
 
-    public List<Object> generateDifferentObjectsFrom(final Object baseObject, final ClassAndFieldPredicatePair classAndFieldPredicatePair) {
+    public List<Object> generateDifferentObjects(final ClassAndFieldPredicatePair classAndFieldPredicatePair) {
         final Class clazz = classAndFieldPredicatePair.getClazz();
-        final Predicate<String> fieldsPredicate = classAndFieldPredicatePair.getFieldsPredicate();
+        final Predicate<String> fieldPredicate = classAndFieldPredicatePair.getFieldsPredicate();
 
-        final List<Field> fieldsToChange = FieldUtils.getFields(clazz, fieldsPredicate);
+        final List<Field> fieldsToChange = FieldUtils.getFields(clazz, fieldPredicate);
         final List<List<Field>> permutationOfFields = FieldUtils.permutations(fieldsToChange);
 
-        return permutationOfFields.stream()
-                                  .map(fields -> generateInstanceWithDifferentFieldValues(baseObject, fields))
-                                  .collect(Collectors.toList());
+        final Object baseObject = createNewInstance(clazz);
+
+        final List<Object> objects = permutationOfFields.stream()
+                                                        .map(fields -> generateInstanceWithDifferentFieldValues(baseObject, fields))
+                                                        .collect(Collectors.toList());
+        objects.add(0, baseObject);
+        return objects;
     }
 
     Object generateInstanceWithDifferentFieldValues(final Object baseObject, final List<Field> fieldsToChange) {

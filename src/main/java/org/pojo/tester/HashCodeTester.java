@@ -1,6 +1,7 @@
 package org.pojo.tester;
 
 
+import java.util.List;
 import java.util.function.Consumer;
 import org.pojo.tester.field.AbstractFieldValueChanger;
 
@@ -37,9 +38,9 @@ public class HashCodeTester extends AbstractTester {
 
 
     private void shouldHaveDifferentHashCodes(final ClassAndFieldPredicatePair classAndFieldPredicatePair) {
-        final Object baseObject = objectGenerator.createNewInstance(classAndFieldPredicatePair.getClazz());
-        objectGenerator.generateDifferentObjectsFrom(baseObject, classAndFieldPredicatePair)
-                       .forEach(assertHaveDifferentHashCodes(baseObject));
+        final List<Object> differentObjects = objectGenerator.generateDifferentObjects(classAndFieldPredicatePair);
+        final Object firstObject = differentObjects.remove(0);
+        differentObjects.forEach(assertHaveDifferentHashCodes(firstObject));
     }
 
     private Consumer<Object> assertHaveDifferentHashCodes(final Object object) {
