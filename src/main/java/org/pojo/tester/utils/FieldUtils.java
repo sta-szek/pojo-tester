@@ -53,6 +53,7 @@ public final class FieldUtils {
     }
 
     public static void setValue(final Object targetObject, final Field field, final Object value) throws IllegalAccessException {
+        // TODO refactor na własne wyjątki
         makeModifiable(field);
         field.set(targetObject, value);
     }

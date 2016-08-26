@@ -1,18 +1,19 @@
+ext {
+    JUNIT_JUPITER_VERSION = "5.0.0-SNAPSHOT"
+    JUNIT_PLATFORM_VERSION = "1.0.0-SNAPSHOT"
+}
+
 buildscript {
     repositories {
         mavenCentral()
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
     }
     dependencies {
-        classpath 'info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.1.9'
-        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.0-M1'
+        classpath "info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.1.9"
+        classpath "org.junit.platform:junit-platform-gradle-plugin:1.0.0-SNAPSHOT"
     }
 }
 
-ext {
-    JUNIT_JUPITER_VERSION = "5.0.0-M2"
-    JUNIT_PLATFORM_VERSION = "1.0.0-M2"
-}
 
 group 'pojo-tester'
 version '0.1.0'
