@@ -116,62 +116,41 @@ public class ObjectGeneratorTest {
         };
     }
 
-    @Test
-    public void Should_Generate_Different_Objects_Recursively_1() throws IllegalAccessException {
-        // given
-        final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger);
-        final ClassAndFieldPredicatePair dClass = new ClassAndFieldPredicatePair(D.class);
-        final ClassAndFieldPredicatePair eClass = new ClassAndFieldPredicatePair(E.class);
-        final ClassAndFieldPredicatePair fClass = new ClassAndFieldPredicatePair(F.class);
-        final int expectedSize = 18;
+    @TestFactory
+    public Stream<DynamicTest> Should_Generate_Different_Objects_Recursively() throws IllegalAccessException {
+        final RecursivelyDifferentObjectTestCase case1 = new RecursivelyDifferentObjectTestCase(18,
+                                                                                                pair(D.class),
+                                                                                                new ClassAndFieldPredicatePair[]{pair(E.class), pair(F.class)});
 
-        // when
-        final List<Object> result = objectGenerator.generateDifferentObjects(dClass, eClass, fClass);
+        final RecursivelyDifferentObjectTestCase case2 = new RecursivelyDifferentObjectTestCase(6,
+                                                                                                pair(G.class),
+                                                                                                new ClassAndFieldPredicatePair[]{pair(F.class)});
 
-        // then
-        assertThat(result).hasSize(expectedSize)
-                          .doesNotHaveDuplicates();
+        final RecursivelyDifferentObjectTestCase case3 = new RecursivelyDifferentObjectTestCase(945,
+                                                                                                pair(H.class),
+                                                                                                new ClassAndFieldPredicatePair[]{pair(A.class),
+                                                                                                                                 pair(B.class),
+                                                                                                                                 pair(F.class),
+                                                                                                                                 pair(G.class)});
+
+        return Stream.of(case1, case2, case3)
+                     .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Generate_Different_Objects_Recursively(value)));
     }
 
-    @Test
-    public void Should_Generate_Different_Objects_Recursively_2() throws IllegalAccessException {
-        // given
-        final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger);
-        final ClassAndFieldPredicatePair gClass = new ClassAndFieldPredicatePair(G.class);
-        final ClassAndFieldPredicatePair fClass = new ClassAndFieldPredicatePair(F.class);
-        final int expectedSize = 6;
+    public Executable Should_Generate_Different_Objects_Recursively(final RecursivelyDifferentObjectTestCase testCase) {
+        return () -> {
+            // given
+            final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger);
 
-        // when
-        final List<Object> result = objectGenerator.generateDifferentObjects(gClass, fClass);
+            // when
+            final List<Object> result = objectGenerator.generateDifferentObjects(testCase.baseClass, testCase.otherClasses);
 
-        // then
-        assertThat(result).hasSize(expectedSize)
-                          .doesNotHaveDuplicates();
+            // then
+            assertThat(result).hasSize(testCase.expectedSize)
+                              .doesNotHaveDuplicates();
+        };
     }
-
-    @Test
-    public void Should_Generate_Different_Objects_Recursively_5() throws IllegalAccessException {
-        // given
-        final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger);
-        final ClassAndFieldPredicatePair hClass = new ClassAndFieldPredicatePair(H.class);
-        final ClassAndFieldPredicatePair aClass = new ClassAndFieldPredicatePair(A.class);
-        final ClassAndFieldPredicatePair bClass = new ClassAndFieldPredicatePair(B.class);
-        final ClassAndFieldPredicatePair fClass = new ClassAndFieldPredicatePair(F.class);
-        final ClassAndFieldPredicatePair gClass = new ClassAndFieldPredicatePair(G.class);
-        final int expectedSize = 945;
-
-        // when
-        final List<Object> result = objectGenerator.generateDifferentObjects(hClass,
-                                                                             aClass,
-                                                                             bClass,
-                                                                             fClass,
-                                                                             gClass);
-
-        // then
-        assertThat(result).hasSize(expectedSize)
-                          .doesNotHaveDuplicates();
-    }
-
+    
     @Test
     public void Should_Not_Fall_In_Endless_Loop() throws IllegalAccessException {
         // given
@@ -185,6 +164,10 @@ public class ObjectGeneratorTest {
         // then
         assertThat(result).hasSize(expectedSize)
                           .doesNotHaveDuplicates();
+    }
+
+    private ClassAndFieldPredicatePair pair(final Class<?> clazz) {
+        return new ClassAndFieldPredicatePair(clazz);
     }
 
     @Data
@@ -244,11 +227,18 @@ public class ObjectGeneratorTest {
         R r;
     }
 
-
     @Data
     @AllArgsConstructor
     class DifferentObjectTestCase {
         private Class<?> clazz;
         private int expectedSize;
+    }
+
+    @Data
+    @AllArgsConstructor
+    class RecursivelyDifferentObjectTestCase {
+        private int expectedSize;
+        private ClassAndFieldPredicatePair baseClass;
+        private ClassAndFieldPredicatePair[] otherClasses;
     }
 }
