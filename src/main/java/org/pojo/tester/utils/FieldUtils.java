@@ -52,10 +52,13 @@ public final class FieldUtils {
         return field.get(targetObject);
     }
 
-    public static void setValue(final Object targetObject, final Field field, final Object value) throws IllegalAccessException {
-        // TODO refactor na własne wyjątki
-        makeModifiable(field);
-        field.set(targetObject, value);
+    public static void setValue(final Object targetObject, final Field field, final Object value) {
+        try {
+            makeModifiable(field);
+            field.set(targetObject, value);
+        } catch (final IllegalAccessException e) {
+            throw new GetOrSetValueException(field.getName(), targetObject.getClass(), e);
+        }
     }
 
     public static List<Field> getFields(final Class<?> testedClass, final Predicate<String> predicate) {

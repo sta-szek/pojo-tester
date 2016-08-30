@@ -123,7 +123,7 @@ public class ObjectGeneratorTest {
         final ClassAndFieldPredicatePair dClass = new ClassAndFieldPredicatePair(D.class);
         final ClassAndFieldPredicatePair eClass = new ClassAndFieldPredicatePair(E.class);
         final ClassAndFieldPredicatePair fClass = new ClassAndFieldPredicatePair(F.class);
-        final int expectedSize = 1;
+        final int expectedSize = 18;
 
         // when
         final List<Object> result = objectGenerator.generateDifferentObjects(dClass, eClass, fClass);
@@ -139,42 +139,10 @@ public class ObjectGeneratorTest {
         final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger);
         final ClassAndFieldPredicatePair gClass = new ClassAndFieldPredicatePair(G.class);
         final ClassAndFieldPredicatePair fClass = new ClassAndFieldPredicatePair(F.class);
-        final int expectedSize = 18;
+        final int expectedSize = 6;
 
         // when
         final List<Object> result = objectGenerator.generateDifferentObjects(gClass, fClass);
-
-        // then
-        assertThat(result).hasSize(expectedSize)
-                          .doesNotHaveDuplicates();
-    }
-
-    @Test
-    public void Should_Generate_Different_Objects_Recursively_3() throws IllegalAccessException {
-        // given
-        final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger);
-        final ClassAndFieldPredicatePair aClass = new ClassAndFieldPredicatePair(A.class);
-        final ClassAndFieldPredicatePair fClass = new ClassAndFieldPredicatePair(F.class);
-        final int expectedSize = 18;
-
-        // when
-        final List<Object> result = objectGenerator.generateDifferentObjects(aClass, fClass);
-
-        // then
-        assertThat(result).hasSize(expectedSize)
-                          .doesNotHaveDuplicates();
-    }
-
-    @Test
-    public void Should_Generate_Different_Objects_Recursively_4() throws IllegalAccessException {
-        // given
-        final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger);
-        final ClassAndFieldPredicatePair bClass = new ClassAndFieldPredicatePair(B.class);
-        final ClassAndFieldPredicatePair fClass = new ClassAndFieldPredicatePair(F.class);
-        final int expectedSize = 18;
-
-        // when
-        final List<Object> result = objectGenerator.generateDifferentObjects(bClass, fClass);
 
         // then
         assertThat(result).hasSize(expectedSize)
@@ -188,22 +156,31 @@ public class ObjectGeneratorTest {
         final ClassAndFieldPredicatePair hClass = new ClassAndFieldPredicatePair(H.class);
         final ClassAndFieldPredicatePair aClass = new ClassAndFieldPredicatePair(A.class);
         final ClassAndFieldPredicatePair bClass = new ClassAndFieldPredicatePair(B.class);
-        final ClassAndFieldPredicatePair cClass = new ClassAndFieldPredicatePair(C.class);
-        final ClassAndFieldPredicatePair dClass = new ClassAndFieldPredicatePair(D.class);
-        final ClassAndFieldPredicatePair eClass = new ClassAndFieldPredicatePair(E.class);
         final ClassAndFieldPredicatePair fClass = new ClassAndFieldPredicatePair(F.class);
         final ClassAndFieldPredicatePair gClass = new ClassAndFieldPredicatePair(G.class);
-        final int expectedSize = 18;
+        final int expectedSize = 945;
 
         // when
         final List<Object> result = objectGenerator.generateDifferentObjects(hClass,
                                                                              aClass,
                                                                              bClass,
-                                                                             cClass,
-                                                                             dClass,
-                                                                             eClass,
                                                                              fClass,
                                                                              gClass);
+
+        // then
+        assertThat(result).hasSize(expectedSize)
+                          .doesNotHaveDuplicates();
+    }
+
+    @Test
+    public void Should_Not_Fall_In_Endless_Loop() throws IllegalAccessException {
+        // given
+        final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger);
+        final ClassAndFieldPredicatePair iClass = new ClassAndFieldPredicatePair(R.class);
+        final int expectedSize = 2;
+
+        // when
+        final List<Object> result = objectGenerator.generateDifferentObjects(iClass, iClass);
 
         // then
         assertThat(result).hasSize(expectedSize)
@@ -258,12 +235,15 @@ public class ObjectGeneratorTest {
     class H {
         A a;
         B b;
-        C c;
-        D d;
-        E e;
         F f;
         G g;
     }
+
+    @Data
+    class R {
+        R r;
+    }
+
 
     @Data
     @AllArgsConstructor
