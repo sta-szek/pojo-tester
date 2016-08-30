@@ -10,7 +10,6 @@ import org.paukov.combinatorics.Factory;
 import org.paukov.combinatorics.Generator;
 import org.paukov.combinatorics.ICombinatoricsVector;
 import org.pojo.tester.GetOrSetValueException;
-import org.pojo.tester.field.GetValueException;
 
 public final class FieldUtils {
 
@@ -103,7 +102,7 @@ public final class FieldUtils {
         try {
             return clazz.getDeclaredField(name);
         } catch (final java.lang.NoSuchFieldException e) {
-            throw new GetValueException(name, clazz, e);
+            throw new GetOrSetValueException(name, clazz, e);
         }
     }
 

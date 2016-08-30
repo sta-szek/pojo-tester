@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import org.pojo.tester.field.AbstractFieldValueChanger;
-import org.pojo.tester.field.GetValueException;
 import org.pojo.tester.utils.FieldUtils;
 
 public class ToStringTester extends AbstractTester {
@@ -60,7 +59,7 @@ public class ToStringTester extends AbstractTester {
                 assertions.assertThatToStringMethodFor(instance)
                           .contains(fieldName, value);
             } catch (final IllegalAccessException e) {
-                throw new GetValueException(fieldName, instance.getClass(), e);
+                throw new GetOrSetValueException(fieldName, instance.getClass(), e);
             }
         };
     }
@@ -73,7 +72,7 @@ public class ToStringTester extends AbstractTester {
                 assertions.assertThatToStringMethodFor(instance)
                           .doestNotContain(fieldName, value);
             } catch (final IllegalAccessException e) {
-                throw new GetValueException(fieldName, instance.getClass(), e);
+                throw new GetOrSetValueException(fieldName, instance.getClass(), e);
             }
         };
     }
