@@ -3,8 +3,8 @@ package org.pojo.tester.instantiator;
 
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DynamicTest;
-import org.junit.jupiter.api.Executable;
 import org.junit.jupiter.api.TestFactory;
+import org.junit.jupiter.api.function.Executable;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 

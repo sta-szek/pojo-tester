@@ -6,9 +6,9 @@ import java.util.stream.Stream;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.junit.jupiter.api.DynamicTest;
-import org.junit.jupiter.api.Executable;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
+import org.junit.jupiter.api.function.Executable;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 import org.pojo.tester.ClassAndFieldPredicatePair;
@@ -150,7 +150,7 @@ public class ObjectGeneratorTest {
                               .doesNotHaveDuplicates();
         };
     }
-    
+
     @Test
     public void Should_Not_Fall_In_Endless_Loop() throws IllegalAccessException {
         // given
