@@ -10,7 +10,7 @@ buildscript {
     }
     dependencies {
         classpath "info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.1.9"
-        classpath "org.junit.platform:junit-platform-gradle-plugin:1.0.0-SNAPSHOT"
+        classpath("org.junit.platform:junit-platform-gradle-plugin:1.0.0-SNAPSHOT") { changing = true }
     }
 }
 
@@ -35,6 +35,10 @@ junitPlatform {
     enableStandardTestTask true
 }
 
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+
 dependencies {
     compile "org.slf4j:slf4j-simple:1.7.21"
     compile "org.apache.commons:commons-lang3:3.4"
@@ -45,9 +49,9 @@ dependencies {
     compile "org.javassist:javassist:3.20.0-GA"
 
 
-    testCompile "org.junit.jupiter:junit-jupiter-api:${JUNIT_JUPITER_VERSION}"
-    testRuntime "org.junit.jupiter:junit-jupiter-engine:${JUNIT_JUPITER_VERSION}"
-    testCompile "org.junit.platform:junit-platform-runner:${JUNIT_PLATFORM_VERSION}"
+    testCompile("org.junit.jupiter:junit-jupiter-api:${JUNIT_JUPITER_VERSION}") { changing = true }
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:${JUNIT_JUPITER_VERSION}") { changing = true }
+    testCompile("org.junit.platform:junit-platform-runner:${JUNIT_PLATFORM_VERSION}") { changing = true }
     testCompile "org.assertj:assertj-core:3.5.2"
     testCompile "org.powermock:powermock-api-mockito:1.6.5"
     testCompile "org.powermock:powermock-module-junit4:1.6.5"

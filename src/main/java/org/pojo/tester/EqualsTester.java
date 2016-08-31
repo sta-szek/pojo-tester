@@ -16,8 +16,8 @@ public class EqualsTester extends AbstractTester {
     }
 
     @Override
-    protected void test(final ClassAndFieldPredicatePair classAndFieldPredicatePair) {
-        final Class<?> testedClass = classAndFieldPredicatePair.getClazz();
+    public void test(final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair, final ClassAndFieldPredicatePair... classAndFieldPredicatePairs) {
+        final Class<?> testedClass = baseClassAndFieldPredicatePair.getClazz();
         final Object instance = objectGenerator.createNewInstance(testedClass);
 
         shouldEqualSameInstance(instance);
@@ -26,7 +26,7 @@ public class EqualsTester extends AbstractTester {
         shouldEqualObjectCifObjectBisEqualToObjectAndC(instance);
         shouldNotEqualNull(instance);
         shouldNotEqualDifferentType(instance);
-        shouldNotEqualWithGivenFields(classAndFieldPredicatePair);
+        shouldNotEqualWithGivenFields(baseClassAndFieldPredicatePair, classAndFieldPredicatePairs);
     }
 
     private void shouldEqualSameInstance(final Object object) {
@@ -63,8 +63,9 @@ public class EqualsTester extends AbstractTester {
                   .isNotEqualToObjectWithDifferentType(objectToCompare);
     }
 
-    private void shouldNotEqualWithGivenFields(final ClassAndFieldPredicatePair classAndFieldPredicatePair) {
-        final List<Object> differentObjects = objectGenerator.generateDifferentObjects(classAndFieldPredicatePair);
+    private void shouldNotEqualWithGivenFields(final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair,
+                                               final ClassAndFieldPredicatePair... classAndFieldPredicatePairs) {
+        final List<Object> differentObjects = objectGenerator.generateDifferentObjects(baseClassAndFieldPredicatePair, classAndFieldPredicatePairs);
         final Object firstObject = differentObjects.remove(0);
         differentObjects.forEach(assertIsNotEqualTo(firstObject));
     }

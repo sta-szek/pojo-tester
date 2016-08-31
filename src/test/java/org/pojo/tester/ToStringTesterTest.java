@@ -25,7 +25,7 @@ public class ToStringTesterTest {
         final ToStringTester hashCodeTester = new ToStringTester(DefaultFieldValueChanger.INSTANCE);
 
         // when
-        final Throwable result = catchThrowable(() -> hashCodeTester.test(classesToTest));
+        final Throwable result = catchThrowable(() -> hashCodeTester.testAll(classesToTest));
 
         // then
         assertThat(result).isNull();
@@ -66,7 +66,7 @@ public class ToStringTesterTest {
         final ToStringTester hashCodeTester = new ToStringTester();
 
         // when
-        final Throwable result = catchThrowable(() -> hashCodeTester.test(classesToTest));
+        final Throwable result = catchThrowable(() -> hashCodeTester.testAll(classesToTest));
 
         // then
         assertThat(result).isInstanceOf(AssertionError.class);

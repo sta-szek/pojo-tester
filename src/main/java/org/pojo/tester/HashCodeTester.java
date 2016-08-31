@@ -16,13 +16,13 @@ public class HashCodeTester extends AbstractTester {
     }
 
     @Override
-    protected void test(final ClassAndFieldPredicatePair classAndFieldPredicatePair) {
-        final Class<?> testedClass = classAndFieldPredicatePair.getClazz();
+    public void test(final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair, final ClassAndFieldPredicatePair... classAndFieldPredicatePairs) {
+        final Class<?> testedClass = baseClassAndFieldPredicatePair.getClazz();
         final Object instance = objectGenerator.createNewInstance(testedClass);
 
         shouldHaveSameHashCodes(instance);
         shouldHaveSameHashCodesWithDifferentInstance(instance);
-        shouldHaveDifferentHashCodes(classAndFieldPredicatePair);
+        shouldHaveDifferentHashCodes(baseClassAndFieldPredicatePair, classAndFieldPredicatePairs);
     }
 
     private void shouldHaveSameHashCodes(final Object object) {
@@ -37,8 +37,9 @@ public class HashCodeTester extends AbstractTester {
     }
 
 
-    private void shouldHaveDifferentHashCodes(final ClassAndFieldPredicatePair classAndFieldPredicatePair) {
-        final List<Object> differentObjects = objectGenerator.generateDifferentObjects(classAndFieldPredicatePair);
+    private void shouldHaveDifferentHashCodes(final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair,
+                                              final ClassAndFieldPredicatePair... classAndFieldPredicatePairs) {
+        final List<Object> differentObjects = objectGenerator.generateDifferentObjects(baseClassAndFieldPredicatePair, classAndFieldPredicatePairs);
         final Object firstObject = differentObjects.remove(0);
         differentObjects.forEach(assertHaveDifferentHashCodes(firstObject));
     }

@@ -1,10 +1,10 @@
 package org.pojo.tester.instantiator;
 
 
-import com.google.common.collect.Lists;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -54,7 +54,8 @@ public class ObjectGenerator {
         final List<List<Field>> baseObjectFieldsPermutations = FieldUtils.permutations(baseClassFieldsToChange);
 
         final Object baseObject = createNewInstance(baseClass);
-        final List<Object> result = Lists.newArrayList(baseObject);
+        final LinkedList<Object> result = new LinkedList<>();
+        result.add(baseObject);
 
         for (final List<Field> eachBaseObjectFieldsPermutation : baseObjectFieldsPermutations) {
             final Object baseObjectCopy = createNewInstance(baseClass);

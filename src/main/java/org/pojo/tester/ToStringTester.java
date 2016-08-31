@@ -19,14 +19,14 @@ public class ToStringTester extends AbstractTester {
     }
 
     @Override
-    protected void test(final ClassAndFieldPredicatePair classAndFieldPredicatePair) {
-        final Class<?> testedClass = classAndFieldPredicatePair.getClazz();
+    public void test(final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair, final ClassAndFieldPredicatePair... classAndFieldPredicatePairs) {
+        final Class<?> testedClass = baseClassAndFieldPredicatePair.getClazz();
         final Object instance = objectGenerator.createNewInstance(testedClass);
 
-        final List<Field> includedFields = getIncludedFields(classAndFieldPredicatePair);
+        final List<Field> includedFields = getIncludedFields(baseClassAndFieldPredicatePair);
         shouldContainValues(instance, includedFields);
 
-        final List<Field> excludedFields = getExcludedFields(classAndFieldPredicatePair);
+        final List<Field> excludedFields = getExcludedFields(baseClassAndFieldPredicatePair);
         shouldNotContainValues(instance, excludedFields);
     }
 

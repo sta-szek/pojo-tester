@@ -26,7 +26,7 @@ public class SetterGetterTesterTest {
         final SetterGetterTester hashCodeTester = new SetterGetterTester(DefaultFieldValueChanger.INSTANCE);
 
         // when
-        final Throwable result = catchThrowable(() -> hashCodeTester.test(classesToTest));
+        final Throwable result = catchThrowable(() -> hashCodeTester.testAll(classesToTest));
 
         // then
         assertThat(result).isNull();
@@ -69,7 +69,7 @@ public class SetterGetterTesterTest {
         final SetterGetterTester hashCodeTester = new SetterGetterTester();
 
         // when
-        final Throwable result = catchThrowable(() -> hashCodeTester.test(classesToTest));
+        final Throwable result = catchThrowable(() -> hashCodeTester.testAll(classesToTest));
 
         // then
         assertThat(result).isInstanceOf(SetterNotFoundException.class);

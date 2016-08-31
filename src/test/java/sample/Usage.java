@@ -8,6 +8,6 @@ public class Usage {
 
     public static void main(final String[] args) {
         final EqualsTester equalsTester = new EqualsTester();
-        equalsTester.test(BadPojoEquals_NotConsistent.class);
+        equalsTester.testAll(BadPojoEquals_NotConsistent.class);
     }
 }

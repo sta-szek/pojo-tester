@@ -102,18 +102,14 @@ public class InstantiableTest {
                          new ClassNameInstantiator("java.lang.Integer", PrimitiveInstantiator.class),
                          new ClassNameInstantiator("java.lang.Long", PrimitiveInstantiator.class),
                          new ClassNameInstantiator("java.lang.Short", PrimitiveInstantiator.class),
-                         new ClassNameInstantiator(
-                                 "test.instantiator.statics.ClassContainingStaticClasses$NestedStaticClass_PublicConstructor",
-                                 DefaultConstructorInstantiator.class),
-                         new ClassNameInstantiator(
-                                 "test.instantiator.statics.ClassContainingStaticClasses$NestedStaticClass_PackageConstructor",
-                                 BestConstructorInstantiator.class),
-                         new ClassNameInstantiator(
-                                 "test.instantiator.statics.ClassContainingStaticClasses$NestedStaticClass_ProtectedConstructor",
-                                 BestConstructorInstantiator.class),
-                         new ClassNameInstantiator(
-                                 "test.instantiator.statics.ClassContainingStaticClasses$NestedStaticClass_PrivateConstructor",
-                                 BestConstructorInstantiator.class),
+                         new ClassNameInstantiator("test.instantiator.statics.ClassContainingStaticClasses$NestedStaticClass_PublicConstructor",
+                                                   DefaultConstructorInstantiator.class),
+                         new ClassNameInstantiator("test.instantiator.statics.ClassContainingStaticClasses$NestedStaticClass_PackageConstructor",
+                                                   BestConstructorInstantiator.class),
+                         new ClassNameInstantiator("test.instantiator.statics.ClassContainingStaticClasses$NestedStaticClass_ProtectedConstructor",
+                                                   BestConstructorInstantiator.class),
+                         new ClassNameInstantiator("test.instantiator.statics.ClassContainingStaticClasses$NestedStaticClass_PrivateConstructor",
+                                                   BestConstructorInstantiator.class),
                          new ClassNameInstantiator("test.instantiator.unpublic.ClassContainingUnpublicClasses$Package_PublicConstructor",
                                                    BestConstructorInstantiator.class),
                          new ClassNameInstantiator("test.instantiator.unpublic.ClassContainingUnpublicClasses$Package_PackageConstructor",
@@ -126,9 +122,8 @@ public class InstantiableTest {
                                                    BestConstructorInstantiator.class),
                          new ClassNameInstantiator("test.instantiator.unpublic.ClassContainingUnpublicClasses$Protected_PackageConstructor",
                                                    BestConstructorInstantiator.class),
-                         new ClassNameInstantiator(
-                                 "test.instantiator.unpublic.ClassContainingUnpublicClasses$Protected_ProtectedConstructor",
-                                 BestConstructorInstantiator.class),
+                         new ClassNameInstantiator("test.instantiator.unpublic.ClassContainingUnpublicClasses$Protected_ProtectedConstructor",
+                                                   BestConstructorInstantiator.class),
                          new ClassNameInstantiator("test.instantiator.unpublic.ClassContainingUnpublicClasses$Protected_PrivateConstructor",
                                                    BestConstructorInstantiator.class),
                          new ClassNameInstantiator("test.instantiator.unpublic.ClassContainingUnpublicClasses$Private_PublicConstructor",

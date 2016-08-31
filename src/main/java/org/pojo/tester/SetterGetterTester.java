@@ -23,9 +23,9 @@ public class SetterGetterTester extends AbstractTester {
     }
 
     @Override
-    protected void test(final ClassAndFieldPredicatePair classAndFieldPredicatePair) {
-        final Class testedClass = classAndFieldPredicatePair.getClazz();
-        final List<Field> fields = FieldUtils.getFields(testedClass, classAndFieldPredicatePair.getFieldsPredicate());
+    public void test(final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair, final ClassAndFieldPredicatePair... classAndFieldPredicatePairs) {
+        final Class testedClass = baseClassAndFieldPredicatePair.getClazz();
+        final List<Field> fields = FieldUtils.getFields(testedClass, baseClassAndFieldPredicatePair.getFieldsPredicate());
         final List<SetterAndGetterPair> setterAndGetterPairs = findSetterAndGetterPairsForFields(testedClass, fields);
         final Object instance = objectGenerator.createNewInstance(testedClass);
 
