@@ -23,8 +23,8 @@ public abstract class AbstractTester {
     }
 
     public void test(final Class<?> clazz) {
-        final Predicate<String> allFields = FieldPredicate.includeAllFields(clazz);
-        test(clazz, allFields);
+        final Predicate<String> predicateAcceptingAllFields = FieldPredicate.includeAllFields(clazz);
+        test(clazz, predicateAcceptingAllFields);
     }
 
     public void test(final Class<?> clazz, final Predicate<String> fieldPredicate) {
@@ -43,7 +43,6 @@ public abstract class AbstractTester {
     public void testAll(final ClassAndFieldPredicatePair... classesAndFieldPredicatesPairs) {
         final List<ClassAndFieldPredicatePair> classAndFieldPredicatePairs = Arrays.asList(classesAndFieldPredicatesPairs);
         classAndFieldPredicatePairs.forEach(base -> test(base, classesAndFieldPredicatesPairs));
-
     }
 
     public abstract void test(final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair, final ClassAndFieldPredicatePair... classAndFieldPredicatePairs);
