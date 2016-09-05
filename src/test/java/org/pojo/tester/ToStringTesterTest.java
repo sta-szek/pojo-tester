@@ -22,10 +22,10 @@ public class ToStringTesterTest {
     public void Should_Pass_All_ToString_Tests() {
         // given
         final Class[] classesToTest = {GoodPojo_Equals_HashCode_ToString.class};
-        final ToStringTester hashCodeTester = new ToStringTester(DefaultFieldValueChanger.INSTANCE);
+        final ToStringTester toStringTester = new ToStringTester(DefaultFieldValueChanger.INSTANCE);
 
         // when
-        final Throwable result = catchThrowable(() -> hashCodeTester.testAll(classesToTest));
+        final Throwable result = catchThrowable(() -> toStringTester.testAll(classesToTest));
 
         // then
         assertThat(result).isNull();
@@ -34,12 +34,12 @@ public class ToStringTesterTest {
     @Test
     public void Should_Pass_All_ToString_Tests_Excluding_Fields() {
         // given
-        final ToStringTester hashCodeTester = new ToStringTester();
+        final ToStringTester toStringTester = new ToStringTester();
         final Class<?> clazz = ToStringWithoutField.class;
         final List<String> excludedFields = newArrayList("testEnum");
 
         // when
-        final Throwable result = catchThrowable(() -> hashCodeTester.test(clazz, exclude(excludedFields)));
+        final Throwable result = catchThrowable(() -> toStringTester.test(clazz, exclude(excludedFields)));
 
         // then
         assertThat(result).isNull();
@@ -48,12 +48,12 @@ public class ToStringTesterTest {
     @Test
     public void Should_Pass_All_ToString_Tests_Including_Fields() {
         // given
-        final ToStringTester hashCodeTester = new ToStringTester();
+        final ToStringTester toStringTester = new ToStringTester();
         final Class<?> clazz = ToStringWithoutField.class;
         final List<String> includedFields = newArrayList("a", "b", "obj");
 
         // when
-        final Throwable result = catchThrowable(() -> hashCodeTester.test(clazz, include(includedFields)));
+        final Throwable result = catchThrowable(() -> toStringTester.test(clazz, include(includedFields)));
 
         // then
         assertThat(result).isNull();
@@ -63,10 +63,10 @@ public class ToStringTesterTest {
     public void Should_Fail_All_ToString_Tests() {
         // given
         final Class[] classesToTest = {ToStringWithoutField.class};
-        final ToStringTester hashCodeTester = new ToStringTester();
+        final ToStringTester toStringTester = new ToStringTester();
 
         // when
-        final Throwable result = catchThrowable(() -> hashCodeTester.testAll(classesToTest));
+        final Throwable result = catchThrowable(() -> toStringTester.testAll(classesToTest));
 
         // then
         assertThat(result).isInstanceOf(AssertionError.class);
@@ -75,12 +75,12 @@ public class ToStringTesterTest {
     @Test
     public void Should_Fail_All_ToString_Tests_Excluding_Fields() {
         // given
-        final ToStringTester hashCodeTester = new ToStringTester();
+        final ToStringTester toStringTester = new ToStringTester();
         final Class<?> clazz = ToStringWithoutField.class;
         final List<String> excludedFields = newArrayList("a");
 
         // when
-        final Throwable result = catchThrowable(() -> hashCodeTester.test(clazz, exclude(excludedFields)));
+        final Throwable result = catchThrowable(() -> toStringTester.test(clazz, exclude(excludedFields)));
 
         // then
         assertThat(result).isInstanceOf(AssertionError.class);
@@ -89,12 +89,12 @@ public class ToStringTesterTest {
     @Test
     public void Should_Fail_All_ToString_Tests_Including_Fields() {
         // given
-        final ToStringTester hashCodeTester = new ToStringTester();
+        final ToStringTester toStringTester = new ToStringTester();
         final Class<?> clazz = ToStringWithoutField.class;
         final List<String> includedFields = newArrayList("a", "b");
 
         // when
-        final Throwable result = catchThrowable(() -> hashCodeTester.test(clazz, include(includedFields)));
+        final Throwable result = catchThrowable(() -> toStringTester.test(clazz, include(includedFields)));
 
         // then
         assertThat(result).isInstanceOf(AssertionError.class);

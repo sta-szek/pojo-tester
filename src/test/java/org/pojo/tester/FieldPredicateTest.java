@@ -26,10 +26,10 @@ public class FieldPredicateTest {
         final List<String> allFieldNames = FieldUtils.getAllFieldNames(TestPredicate.class);
 
         // when
-        final Predicate<String> predicate = FieldPredicate.includeAllFields(TestPredicate.class);
+        final Predicate<String> result = FieldPredicate.includeAllFields(TestPredicate.class);
 
         // then
-        assertThat(predicate).acceptsAll(allFieldNames);
+        assertThat(result).acceptsAll(allFieldNames);
     }
 
     @TestFactory
@@ -44,10 +44,10 @@ public class FieldPredicateTest {
     public Executable Should_Return_Predicate_That_Accept_List_Of_Field_Names(final List<String> includedFields) {
         return () -> {
             // when
-            final Predicate<String> predicate = FieldPredicate.include(includedFields);
+            final Predicate<String> result = FieldPredicate.include(includedFields);
 
             // then
-            assertThat(predicate).acceptsAll(includedFields);
+            assertThat(result).acceptsAll(includedFields);
         };
     }
 
@@ -63,10 +63,10 @@ public class FieldPredicateTest {
     public Executable Should_Return_Predicate_That_Accept_Array_Of_Field_Names(final String... includedFields) {
         return () -> {
             // when
-            final Predicate<String> predicate = FieldPredicate.include(includedFields);
+            final Predicate<String> result = FieldPredicate.include(includedFields);
 
             // then
-            assertThat(predicate).accepts(includedFields);
+            assertThat(result).accepts(includedFields);
         };
     }
 
@@ -82,10 +82,10 @@ public class FieldPredicateTest {
     public Executable Should_Return_Predicate_That_Does_Not_Accept_List_Of_Fields(final List<String> excludedFields) {
         return () -> {
             // when
-            final Predicate<String> predicate = FieldPredicate.exclude(excludedFields);
+            final Predicate<String> result = FieldPredicate.exclude(excludedFields);
 
             // then
-            assertThat(predicate).rejectsAll(excludedFields);
+            assertThat(result).rejectsAll(excludedFields);
         };
     }
 
@@ -94,8 +94,6 @@ public class FieldPredicateTest {
         return Stream.of(new String[]{"a"},
                          new String[]{"a", "b"},
                          new String[]{"a", "b", "c"})
-
-
                      .map(value -> dynamicTest(getDefaultDisplayName(value),
                                                Should_Return_Predicate_That_Does_Not_Accept_Array_Of_Fields(value)));
     }
@@ -103,10 +101,10 @@ public class FieldPredicateTest {
     public Executable Should_Return_Predicate_That_Does_Not_Accept_Array_Of_Fields(final String... excludedFields) {
         return () -> {
             // when
-            final Predicate<String> predicate = FieldPredicate.exclude(excludedFields);
+            final Predicate<String> result = FieldPredicate.exclude(excludedFields);
 
             // then
-            assertThat(predicate).rejects(excludedFields);
+            assertThat(result).rejects(excludedFields);
         };
     }
 
