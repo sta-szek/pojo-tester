@@ -27,7 +27,7 @@ public class HashCodeTesterTest {
         final HashCodeTester hashCodeTester = new HashCodeTester(DefaultFieldValueChanger.INSTANCE);
 
         // when
-        final Throwable result = catchThrowable(() -> hashCodeTester.test(classesToTest));
+        final Throwable result = catchThrowable(() -> hashCodeTester.testAll(classesToTest));
 
         // then
         assertThat(result).isNull();
@@ -68,7 +68,7 @@ public class HashCodeTesterTest {
         final HashCodeTester hashCodeTester = new HashCodeTester();
 
         // when
-        final Throwable result = catchThrowable(() -> hashCodeTester.test(classesToTest));
+        final Throwable result = catchThrowable(() -> hashCodeTester.testAll(classesToTest));
 
         // then
         assertThat(result).isInstanceOf(HashCodeAssertionError.class);
@@ -83,7 +83,7 @@ public class HashCodeTesterTest {
         final HashCodeTester hashCodeTester = new HashCodeTester();
 
         // when
-        final Throwable result = catchThrowable(() -> hashCodeTester.test(classesToTest));
+        final Throwable result = catchThrowable(() -> hashCodeTester.testAll(classesToTest));
 
         // then
         assertThat(result).isInstanceOf(HashCodeAssertionError.class);
@@ -96,7 +96,7 @@ public class HashCodeTesterTest {
         final HashCodeTester hashCodeTester = new HashCodeTester();
 
         // when
-        final Throwable result = catchThrowable(() -> hashCodeTester.test(classesToTest));
+        final Throwable result = catchThrowable(() -> hashCodeTester.testAll(classesToTest));
 
         // then
         assertThat(result).isInstanceOf(HashCodeAssertionError.class);

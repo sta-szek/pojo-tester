@@ -1,11 +1,9 @@
 package org.pojo.tester;
 
 
-import java.lang.reflect.Field;
 import java.util.List;
 import java.util.function.Consumer;
 import org.pojo.tester.field.AbstractFieldValueChanger;
-import org.pojo.tester.utils.FieldUtils;
 
 public class HashCodeTester extends AbstractTester {
 
@@ -18,14 +16,13 @@ public class HashCodeTester extends AbstractTester {
     }
 
     @Override
-    protected void test(final ClassAndFieldPredicatePair classAndFieldPredicatePair) {
-        final Class<?> testedClass = classAndFieldPredicatePair.getTestedClass();
+    public void test(final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair, final ClassAndFieldPredicatePair... classAndFieldPredicatePairs) {
+        final Class<?> testedClass = baseClassAndFieldPredicatePair.getClazz();
         final Object instance = objectGenerator.createNewInstance(testedClass);
-        final List<Field> allFields = FieldUtils.getFields(testedClass, classAndFieldPredicatePair.getPredicate());
 
         shouldHaveSameHashCodes(instance);
         shouldHaveSameHashCodesWithDifferentInstance(instance);
-        shouldHaveDifferentHashCodes(instance, allFields);
+        shouldHaveDifferentHashCodes(baseClassAndFieldPredicatePair, classAndFieldPredicatePairs);
     }
 
     private void shouldHaveSameHashCodes(final Object object) {
@@ -34,23 +31,22 @@ public class HashCodeTester extends AbstractTester {
     }
 
     private void shouldHaveSameHashCodesWithDifferentInstance(final Object object) {
-        final Object otherObject = objectGenerator.createSameInstance(object);
+        final Object otherObject = objectGenerator.generateSameInstance(object);
         assertions.assertThatHashCodeMethodFor(object)
                   .returnsSameValueFor(otherObject);
     }
 
 
-    private void shouldHaveDifferentHashCodes(final Object instance, final List<Field> fields) {
-        final List<List<Field>> permutationFields = FieldUtils.permutations(fields);
-        permutationFields.stream()
-                         .map(testedFields -> objectGenerator.createInstanceWithDifferentFieldValues(instance, testedFields))
-                         .forEach(assertHaveDifferentHashCodes(instance));
+    private void shouldHaveDifferentHashCodes(final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair,
+                                              final ClassAndFieldPredicatePair... classAndFieldPredicatePairs) {
+        final List<Object> differentObjects = objectGenerator.generateDifferentObjects(baseClassAndFieldPredicatePair, classAndFieldPredicatePairs);
+        final Object firstObject = differentObjects.remove(0);
+        differentObjects.forEach(assertHaveDifferentHashCodes(firstObject));
     }
 
     private Consumer<Object> assertHaveDifferentHashCodes(final Object object) {
         return eachDifferentObject -> assertions.assertThatHashCodeMethodFor(object)
                                                 .returnsDifferentValueFor(eachDifferentObject);
     }
-
 
 }

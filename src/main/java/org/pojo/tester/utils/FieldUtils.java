@@ -10,7 +10,6 @@ import org.paukov.combinatorics.Factory;
 import org.paukov.combinatorics.Generator;
 import org.paukov.combinatorics.ICombinatoricsVector;
 import org.pojo.tester.GetOrSetValueException;
-import org.pojo.tester.field.GetValueException;
 
 public final class FieldUtils {
 
@@ -52,9 +51,13 @@ public final class FieldUtils {
         return field.get(targetObject);
     }
 
-    public static void setValue(final Object targetObject, final Field field, final Object value) throws IllegalAccessException {
-        makeModifiable(field);
-        field.set(targetObject, value);
+    public static void setValue(final Object targetObject, final Field field, final Object value) {
+        try {
+            makeModifiable(field);
+            field.set(targetObject, value);
+        } catch (final IllegalAccessException e) {
+            throw new GetOrSetValueException(field.getName(), targetObject.getClass(), e);
+        }
     }
 
     public static List<Field> getFields(final Class<?> testedClass, final Predicate<String> predicate) {
@@ -99,7 +102,7 @@ public final class FieldUtils {
         try {
             return clazz.getDeclaredField(name);
         } catch (final java.lang.NoSuchFieldException e) {
-            throw new GetValueException(name, clazz, e);
+            throw new GetOrSetValueException(name, clazz, e);
         }
     }
 

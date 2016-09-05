@@ -26,9 +26,9 @@ public class EqualsTesterTest {
         // given
         final Class[] classesToTest = {GoodPojo_Equals_HashCode_ToString.class};
         final EqualsTester equalsTester = new EqualsTester(DefaultFieldValueChanger.INSTANCE);
-
+        
         // when
-        final Throwable result = catchThrowable(() -> equalsTester.test(classesToTest));
+        final Throwable result = catchThrowable(() -> equalsTester.testAll(classesToTest));
 
         // then
         assertThat(result).isNull();
@@ -69,7 +69,7 @@ public class EqualsTesterTest {
         final EqualsTester equalsTester = new EqualsTester();
 
         // when
-        final Throwable result = catchThrowable(() -> equalsTester.test(classesToTest));
+        final Throwable result = catchThrowable(() -> equalsTester.testAll(classesToTest));
 
         // then
         assertThat(result).isInstanceOf(AssertionError.class);
@@ -82,7 +82,7 @@ public class EqualsTesterTest {
         final EqualsTester equalsTester = new EqualsTester();
 
         // when
-        final Throwable result = catchThrowable(() -> equalsTester.test(classesToTest));
+        final Throwable result = catchThrowable(() -> equalsTester.testAll(classesToTest));
 
         // then
         assertThat(result).isInstanceOf(AssertionError.class);
@@ -95,7 +95,7 @@ public class EqualsTesterTest {
         final EqualsTester equalsTester = new EqualsTester();
 
         // when
-        final Throwable result = catchThrowable(() -> equalsTester.test(classesToTest));
+        final Throwable result = catchThrowable(() -> equalsTester.testAll(classesToTest));
 
         // then
         assertThat(result).isInstanceOf(AssertionError.class);
@@ -108,7 +108,7 @@ public class EqualsTesterTest {
         final EqualsTester equalsTester = new EqualsTester();
 
         // when
-        final Throwable result = catchThrowable(() -> equalsTester.test(classesToTest));
+        final Throwable result = catchThrowable(() -> equalsTester.testAll(classesToTest));
 
         // then
         assertThat(result).isInstanceOf(AssertionError.class);
@@ -121,7 +121,7 @@ public class EqualsTesterTest {
         final EqualsTester equalsTester = new EqualsTester();
 
         // when
-        final Throwable result = catchThrowable(() -> equalsTester.test(classesToTest));
+        final Throwable result = catchThrowable(() -> equalsTester.testAll(classesToTest));
 
         // then
         assertThat(result).isInstanceOf(AssertionError.class);

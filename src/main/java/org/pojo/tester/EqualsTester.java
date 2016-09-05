@@ -1,10 +1,8 @@
 package org.pojo.tester;
 
-import java.lang.reflect.Field;
 import java.util.List;
 import java.util.function.Consumer;
 import org.pojo.tester.field.AbstractFieldValueChanger;
-import org.pojo.tester.utils.FieldUtils;
 
 
 public class EqualsTester extends AbstractTester {
@@ -18,10 +16,9 @@ public class EqualsTester extends AbstractTester {
     }
 
     @Override
-    protected void test(final AbstractTester.ClassAndFieldPredicatePair classAndFieldPredicatePair) {
-        final Class<?> testedClass = classAndFieldPredicatePair.getTestedClass();
+    public void test(final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair, final ClassAndFieldPredicatePair... classAndFieldPredicatePairs) {
+        final Class<?> testedClass = baseClassAndFieldPredicatePair.getClazz();
         final Object instance = objectGenerator.createNewInstance(testedClass);
-        final List<Field> allFields = FieldUtils.getFields(testedClass, classAndFieldPredicatePair.getPredicate());
 
         shouldEqualSameInstance(instance);
         shouldEqualSameInstanceFewTimes(instance);
@@ -29,7 +26,7 @@ public class EqualsTester extends AbstractTester {
         shouldEqualObjectCifObjectBisEqualToObjectAndC(instance);
         shouldNotEqualNull(instance);
         shouldNotEqualDifferentType(instance);
-        shouldNotEqualWithGivenFields(instance, allFields);
+        shouldNotEqualWithGivenFields(baseClassAndFieldPredicatePair, classAndFieldPredicatePairs);
     }
 
     private void shouldEqualSameInstance(final Object object) {
@@ -43,14 +40,14 @@ public class EqualsTester extends AbstractTester {
     }
 
     private void shouldEqualDifferentInstance(final Object object) {
-        final Object otherObject = objectGenerator.createSameInstance(object);
+        final Object otherObject = objectGenerator.generateSameInstance(object);
         assertions.assertThatEqualsMethodFor(object)
                   .isSymmetric(otherObject);
     }
 
     private void shouldEqualObjectCifObjectBisEqualToObjectAndC(final Object object) {
-        final Object b = objectGenerator.createSameInstance(object);
-        final Object c = objectGenerator.createSameInstance(object);
+        final Object b = objectGenerator.generateSameInstance(object);
+        final Object c = objectGenerator.generateSameInstance(object);
         assertions.assertThatEqualsMethodFor(object)
                   .isTransitive(b, c);
     }
@@ -66,11 +63,11 @@ public class EqualsTester extends AbstractTester {
                   .isNotEqualToObjectWithDifferentType(objectToCompare);
     }
 
-    private void shouldNotEqualWithGivenFields(final Object baseObject, final List<Field> specifiedFields) {
-        final List<List<Field>> permutationFields = FieldUtils.permutations(specifiedFields);
-        permutationFields.stream()
-                         .map(fields -> objectGenerator.createInstanceWithDifferentFieldValues(baseObject, fields))
-                         .forEach(assertIsNotEqualTo(baseObject));
+    private void shouldNotEqualWithGivenFields(final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair,
+                                               final ClassAndFieldPredicatePair... classAndFieldPredicatePairs) {
+        final List<Object> differentObjects = objectGenerator.generateDifferentObjects(baseClassAndFieldPredicatePair, classAndFieldPredicatePairs);
+        final Object firstObject = differentObjects.remove(0);
+        differentObjects.forEach(assertIsNotEqualTo(firstObject));
     }
 
     private Consumer<Object> assertIsNotEqualTo(final Object object) {

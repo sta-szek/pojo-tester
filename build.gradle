@@ -1,13 +1,19 @@
+ext {
+    JUNIT_JUPITER_VERSION = "5.0.0-SNAPSHOT"
+    JUNIT_PLATFORM_VERSION = "1.0.0-SNAPSHOT"
+}
+
 buildscript {
     repositories {
         mavenCentral()
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
     }
     dependencies {
-        classpath 'info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.1.9'
-        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.0-M1'
+        classpath "info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.1.9"
+        classpath("org.junit.platform:junit-platform-gradle-plugin:1.0.0-SNAPSHOT") { changing = true }
     }
 }
+
 
 group 'pojo-tester'
 version '0.1.0'
@@ -29,23 +35,27 @@ junitPlatform {
     enableStandardTestTask true
 }
 
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+
 dependencies {
-    compile 'org.slf4j:slf4j-simple:1.7.20'
-    compile 'org.apache.commons:commons-lang3:3.4'
-    compile 'org.apache.commons:commons-collections4:4.1'
-    compile 'com.google.collections:google-collections:1.0'
-    compile 'com.googlecode.combinatoricslib:combinatoricslib:2.1'
-    compile 'org.projectlombok:lombok:1.16.8'
-    compile 'org.javassist:javassist:3.20.0-GA'
+    compile "org.slf4j:slf4j-simple:1.7.21"
+    compile "org.apache.commons:commons-lang3:3.4"
+    compile "org.apache.commons:commons-collections4:4.1"
+    compile "com.google.collections:google-collections:1.0"
+    compile "com.googlecode.combinatoricslib:combinatoricslib:2.1"
+    compile "org.projectlombok:lombok:1.16.10"
+    compile "org.javassist:javassist:3.20.0-GA"
 
 
-    testCompile("org.junit.jupiter:junit-jupiter-api:5.0.0-M1")
-    testCompile("org.junit.platform:junit-platform-runner:1.0.0-M1")
-    testRuntime("org.junit.jupiter:junit-jupiter-engine:5.0.0-M1")
-    testCompile 'org.assertj:assertj-core:3.4.1'
-    testCompile 'org.powermock:powermock-api-mockito:1.6.5'
-    testCompile 'org.powermock:powermock-module-junit4:1.6.5'
-    testCompile 'org.powermock:powermock-core:1.6.5'
+    testCompile("org.junit.jupiter:junit-jupiter-api:${JUNIT_JUPITER_VERSION}") { changing = true }
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:${JUNIT_JUPITER_VERSION}") { changing = true }
+    testCompile("org.junit.platform:junit-platform-runner:${JUNIT_PLATFORM_VERSION}") { changing = true }
+    testCompile "org.assertj:assertj-core:3.5.2"
+    testCompile "org.powermock:powermock-api-mockito:1.6.5"
+    testCompile "org.powermock:powermock-module-junit4:1.6.5"
+    testCompile "org.powermock:powermock-core:1.6.5"
 
 }
 
@@ -75,5 +85,5 @@ jacocoTestReport.mustRunAfter(test)
 check.dependsOn jacocoTestReport
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.14'
+    gradleVersion = '3.0'
 }

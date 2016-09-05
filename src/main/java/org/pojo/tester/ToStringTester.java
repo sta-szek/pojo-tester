@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import org.pojo.tester.field.AbstractFieldValueChanger;
-import org.pojo.tester.field.GetValueException;
 import org.pojo.tester.utils.FieldUtils;
 
 public class ToStringTester extends AbstractTester {
@@ -20,28 +19,28 @@ public class ToStringTester extends AbstractTester {
     }
 
     @Override
-    protected void test(final AbstractTester.ClassAndFieldPredicatePair classAndFieldPredicatePair) {
-        final Class<?> testedClass = classAndFieldPredicatePair.getTestedClass();
+    public void test(final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair, final ClassAndFieldPredicatePair... classAndFieldPredicatePairs) {
+        final Class<?> testedClass = baseClassAndFieldPredicatePair.getClazz();
         final Object instance = objectGenerator.createNewInstance(testedClass);
 
-        final List<Field> includedFields = getIncludedFields(classAndFieldPredicatePair);
+        final List<Field> includedFields = getIncludedFields(baseClassAndFieldPredicatePair);
         shouldContainValues(instance, includedFields);
 
-        final List<Field> excludedFields = getExcludedFields(classAndFieldPredicatePair);
+        final List<Field> excludedFields = getExcludedFields(baseClassAndFieldPredicatePair);
         shouldNotContainValues(instance, excludedFields);
     }
 
-    private List<Field> getIncludedFields(final AbstractTester.ClassAndFieldPredicatePair classAndFieldPredicatePair) {
-        final Class<?> testedClass = classAndFieldPredicatePair.getTestedClass();
-        return FieldUtils.getFields(testedClass, classAndFieldPredicatePair.getPredicate());
+    private List<Field> getIncludedFields(final ClassAndFieldPredicatePair classAndFieldPredicatePair) {
+        final Class<?> testedClass = classAndFieldPredicatePair.getClazz();
+        return FieldUtils.getFields(testedClass, classAndFieldPredicatePair.getFieldsPredicate());
     }
 
-    private List<Field> getExcludedFields(final AbstractTester.ClassAndFieldPredicatePair classAndFieldPredicatePair) {
+    private List<Field> getExcludedFields(final ClassAndFieldPredicatePair classAndFieldPredicatePair) {
         final List<Field> includedFields = getIncludedFields(classAndFieldPredicatePair);
         final List<String> included = includedFields.stream()
                                                     .map(Field::getName)
                                                     .collect(Collectors.toList());
-        return FieldUtils.getAllFieldsExcluding(classAndFieldPredicatePair.getTestedClass(), included);
+        return FieldUtils.getAllFieldsExcluding(classAndFieldPredicatePair.getClazz(), included);
     }
 
     private void shouldContainValues(final Object instance, final List<Field> fields) {
@@ -60,7 +59,7 @@ public class ToStringTester extends AbstractTester {
                 assertions.assertThatToStringMethodFor(instance)
                           .contains(fieldName, value);
             } catch (final IllegalAccessException e) {
-                throw new GetValueException(fieldName, instance.getClass(), e);
+                throw new GetOrSetValueException(fieldName, instance.getClass(), e);
             }
         };
     }
@@ -73,7 +72,7 @@ public class ToStringTester extends AbstractTester {
                 assertions.assertThatToStringMethodFor(instance)
                           .doestNotContain(fieldName, value);
             } catch (final IllegalAccessException e) {
-                throw new GetValueException(fieldName, instance.getClass(), e);
+                throw new GetOrSetValueException(fieldName, instance.getClass(), e);
             }
         };
     }

@@ -8,6 +8,6 @@ public class GetOrSetValueException extends RuntimeException {
     }
 
     private static String createMessage(final String fieldName, final Class<?> clazz) {
-        return "Unable to get or set value for field '" + fieldName + "' in class '" + clazz.getClass() + "'.";
+        return "Unable to get or set value for field '" + fieldName + "' in class '" + clazz + "'.";
     }
 }
