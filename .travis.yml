@@ -14,4 +14,4 @@ notifications:
     on_start: never     # options: [always|never|change] default: always
     
 after_success:
-  - bash <(curl -s https://codecov.io/bash) -t CODECOV_TOKEN
+  - bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN
