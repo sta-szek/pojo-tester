@@ -1,4 +1,6 @@
 # pojo-tester
+[![Gitter](https://badges.gitter.im/pojo-tester/Lobby.svg)](https://gitter.im/pojo-tester/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
 [![Build Status](https://travis-ci.com/sta-szek/pojo-tester.svg?token=42sCZkoSqqk4rnv2AmRU&branch=master)](https://travis-ci.com/sta-szek/pojo-tester)
 
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/54c58ff2dd5d402da121e0be62dd493d)](https://www.codacy.com)
