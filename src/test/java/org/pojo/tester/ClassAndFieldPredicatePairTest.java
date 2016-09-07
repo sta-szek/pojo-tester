@@ -1,10 +1,13 @@
 package org.pojo.tester;
 
 import org.junit.jupiter.api.Test;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.runner.RunWith;
 import test.GoodPojo_Equals_HashCode_ToString;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@RunWith(JUnitPlatform.class)
 public class ClassAndFieldPredicatePairTest {
 
     @Test

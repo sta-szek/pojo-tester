@@ -40,13 +40,19 @@ public class SetterGetterTester extends AbstractTester {
         final Object newValue = objectGenerator.createNewInstance(fieldType);
 
         try {
-            assertions.assertThatSetMethodFor(instance)
-                      .willSetValueOnField(setter, field, newValue);
+            if (setter != null) {
+                assertions.assertThatSetMethodFor(instance)
+                          .willSetValueOnField(setter, field, newValue);
+            }
             assertions.assertThatGetMethodFor(instance)
                       .willGetValueFromField(getter, field);
         } catch (IllegalAccessException | InvocationTargetException e) {
             throw new GetOrSetValueException(field.getName(), instance.getClass(), e);
         }
+    }
+
+    private boolean isNotFinal(final Field field) {
+        return !FieldUtils.isFinal(field);
     }
 
     private List<SetterAndGetterPair> findSetterAndGetterPairsForFields(final Class<?> testedClass, final List<Field> fields) {
@@ -56,7 +62,10 @@ public class SetterGetterTester extends AbstractTester {
     }
 
     private SetterAndGetterPair findSetterAndGetterPairForField(final Class<?> testedClass, final Field field) {
-        final Method setter = MethodUtils.findSetterFor(testedClass, field);
+        Method setter = null;
+        if (isNotFinal(field)) {
+            setter = MethodUtils.findSetterFor(testedClass, field);
+        }
         final Method getter = MethodUtils.findGetterFor(testedClass, field);
         return new SetterAndGetterPair(setter, getter, field);
     }

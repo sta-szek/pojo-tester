@@ -115,6 +115,27 @@ public class FieldUtilsTest {
         };
     }
 
+    @Test
+    public void Should_Return_True_If_Field_Is_Final() throws NoSuchFieldException {
+        // given
+
+        // when
+        final boolean result = FieldUtils.isFinal(A.class.getField("a"));
+
+        // then
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    public void Should_Return_False_If_Field_Is_Not_Final() throws NoSuchFieldException {
+        // given
+
+        // when
+        final boolean result = FieldUtils.isFinal(A.class.getField("b"));
+
+        // then
+        assertThat(result).isFalse();
+    }
 
     private Field fieldFromPermutation1Class(final String name) throws java.lang.NoSuchFieldException {
         return Permutation1.class.getDeclaredField(name);
@@ -131,4 +152,8 @@ public class FieldUtilsTest {
         private List<List<Field>> fields;
     }
 
+    private class A {
+        public final int a = 1;
+        public int b;
+    }
 }

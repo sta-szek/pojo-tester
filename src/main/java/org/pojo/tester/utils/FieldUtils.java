@@ -66,6 +66,11 @@ public final class FieldUtils {
                                         .collect(Collectors.toList());
     }
 
+    public static boolean isFinal(final Field field) {
+        final int fieldModifiers = field.getModifiers();
+        return Modifier.isFinal(fieldModifiers);
+    }
+
     static List<Field> getSpecifiedFields(final Class<?> clazz, final List<String> names) {
         return names.stream()
                     .map(name -> getField(clazz, name))
@@ -105,6 +110,4 @@ public final class FieldUtils {
             throw new GetOrSetValueException(name, clazz, e);
         }
     }
-
-
 }
