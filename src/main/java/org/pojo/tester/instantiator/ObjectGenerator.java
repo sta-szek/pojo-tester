@@ -1,5 +1,8 @@
 package org.pojo.tester.instantiator;
 
+import org.pojo.tester.ClassAndFieldPredicatePair;
+import org.pojo.tester.field.AbstractFieldValueChanger;
+import org.pojo.tester.utils.FieldUtils;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -12,35 +15,29 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-import org.pojo.tester.ClassAndFieldPredicatePair;
-import org.pojo.tester.GetOrSetValueException;
-import org.pojo.tester.field.AbstractFieldValueChanger;
-import org.pojo.tester.utils.FieldUtils;
 
 public class ObjectGenerator {
 
     private final AbstractFieldValueChanger abstractFieldValueChanger;
+    private final NewInstanceGenerator newInstanceGenerator = new NewInstanceGenerator();
+    private final SameInstanceGenerator sameInstanceGenerator = new SameInstanceGenerator();
 
     public ObjectGenerator(final AbstractFieldValueChanger abstractFieldValueChanger) {
         this.abstractFieldValueChanger = abstractFieldValueChanger;
     }
 
     public Object createNewInstance(final Class<?> clazz) {
-        return Instantiable.forClass(clazz)
-                           .instantiate();
+        return newInstanceGenerator.createNewInstance(clazz);
     }
 
     public Object generateSameInstance(final Object object) {
-        Object newInstance = createNewInstance(object.getClass());
-        if (!object.equals(newInstance)) {
-            newInstance = makeThemEqual(object, newInstance);
-        }
-        return newInstance;
+        return sameInstanceGenerator.generateSameInstance(object);
     }
 
     public List<Object> generateDifferentObjects(final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair,
                                                  final ClassAndFieldPredicatePair... classAndFieldPredicatePairs) {
-        final Map<Class<?>, Predicate<String>> userDefinedClassAndFieldPredicatePairsMap = convertToMap(classAndFieldPredicatePairs);
+        final Map<Class<?>, Predicate<String>> userDefinedClassAndFieldPredicatePairsMap = convertToMap(
+                classAndFieldPredicatePairs);
         final Map<Class<?>, List<Object>> dejaVu = new HashMap<>();
 
         final Class baseClass = baseClassAndFieldPredicatePair.getClazz();
@@ -49,7 +46,8 @@ public class ObjectGenerator {
         final List<Field> baseClassFieldsToChange = FieldUtils.getFields(baseClass, baseClassFieldPredicate);
         userDefinedClassAndFieldPredicatePairsMap.put(baseClass, baseClassFieldPredicate);
 
-        final Map<Class<?>, List<Field>> userDefinedClassAndFieldToChangePairsMap = convertToClassAndFieldsToChange(userDefinedClassAndFieldPredicatePairsMap);
+        final Map<Class<?>, List<Field>> userDefinedClassAndFieldToChangePairsMap = convertToClassAndFieldsToChange(
+                userDefinedClassAndFieldPredicatePairsMap);
 
         final List<List<Field>> baseObjectFieldsPermutations = FieldUtils.permutations(baseClassFieldsToChange);
 
@@ -66,33 +64,40 @@ public class ObjectGenerator {
             for (final Field permutationField : eachBaseObjectFieldsPermutation) {
                 final Class<?> permutationFieldType = permutationField.getType();
 
-                final List<Field> nestedFieldsToChangeInFieldType = userDefinedClassAndFieldToChangePairsMap.get(permutationFieldType);
+                final List<Field> nestedFieldsToChangeInFieldType = userDefinedClassAndFieldToChangePairsMap.get(
+                        permutationFieldType);
 
                 if (nestedFieldsToChangeInFieldType == null || permutationFieldType.equals(baseClass)) {
                     final Object newFieldTypeInstance = createNewInstance(permutationFieldType);
                     FieldUtils.setValue(baseObjectCopy, permutationField, newFieldTypeInstance);
                 } else {
-                    final List<Object> childs;
+                    final List<Object> children;
                     if (dejaVu.containsKey(permutationFieldType)) {
-                        childs = new ArrayList<>(dejaVu.get(permutationFieldType));
+                        children = new ArrayList<>(dejaVu.get(permutationFieldType));
                     } else {
-                        final Predicate<String> fieldPredicate = userDefinedClassAndFieldPredicatePairsMap.get(permutationFieldType);
+                        final Predicate<String> fieldPredicate = userDefinedClassAndFieldPredicatePairsMap.get(
+                                permutationFieldType);
                         final List<Field> fieldClassFields = FieldUtils.getFields(permutationFieldType, fieldPredicate);
 
                         if (hasNestedFieldsToChange(fieldClassFields, userDefinedClassAndFieldPredicatePairsMap)) {
-                            final ClassAndFieldPredicatePair classAndFieldPredicatePair = new ClassAndFieldPredicatePair(permutationFieldType, fieldPredicate);
-                            childs = generateDifferentObjects(classAndFieldPredicatePair, classAndFieldPredicatePairs);
+                            final ClassAndFieldPredicatePair classAndFieldPredicatePair = new
+                                    ClassAndFieldPredicatePair(
+                                    permutationFieldType,
+                                    fieldPredicate);
+                            children = generateDifferentObjects(classAndFieldPredicatePair,
+                                                                classAndFieldPredicatePairs);
                         } else {
-                            childs = generateDifferentObjects(permutationFieldType, fieldClassFields);
+                            children = generateDifferentObjects(permutationFieldType, fieldClassFields);
                         }
-                        dejaVu.putIfAbsent(permutationFieldType, childs);
+                        dejaVu.putIfAbsent(permutationFieldType, children);
                     }
-                    nestedObjectsThatAreWaitingForSetInBaseObjectCopy.put(permutationField, childs);
+                    nestedObjectsThatAreWaitingForSetInBaseObjectCopy.put(permutationField, children);
                 }
             }
 
             partialResult.add(baseObjectCopy);
-            for (final Map.Entry<Field, List<Object>> nestedObjectsToSet : nestedObjectsThatAreWaitingForSetInBaseObjectCopy.entrySet()) {
+            for (final Map.Entry<Field, List<Object>> nestedObjectsToSet :
+                    nestedObjectsThatAreWaitingForSetInBaseObjectCopy.entrySet()) {
                 partialResult = createCopiesAndFillThem(partialResult, nestedObjectsToSet);
             }
             result.addAll(partialResult);
@@ -108,18 +113,19 @@ public class ObjectGenerator {
     }
 
     private List<Object> generateDifferentObjects(final Class<?> clazz, final List<Field> fieldsToChange) {
-        final List<Object> childs;
+        final List<Object> children;
         final List<List<Field>> permutationOfFields = FieldUtils.permutations(fieldsToChange);
         final Object fieldObject = createNewInstance(clazz);
 
-        childs = permutationOfFields.stream()
-                                    .map(fields -> generateInstanceWithDifferentFieldValues(fieldObject, fields))
-                                    .collect(Collectors.toList());
-        childs.add(0, fieldObject);
-        return childs;
+        children = permutationOfFields.stream()
+                                      .map(fields -> generateInstanceWithDifferentFieldValues(fieldObject, fields))
+                                      .collect(Collectors.toList());
+        children.add(0, fieldObject);
+        return children;
     }
 
-    private List<Object> createCopiesAndFillThem(final List<Object> baseObjects, final Map.Entry<Field, List<Object>> nestedObjectsToSet) {
+    private List<Object> createCopiesAndFillThem(final List<Object> baseObjects,
+                                                 final Map.Entry<Field, List<Object>> nestedObjectsToSet) {
         final List<Object> result = new ArrayList<>();
         final Field fieldToFill = nestedObjectsToSet.getKey();
         final List<Object> objectsToFillWith = nestedObjectsToSet.getValue();
@@ -153,31 +159,19 @@ public class ObjectGenerator {
                         .collect(Collectors.toList());
     }
 
-    private Map<Class<?>, List<Field>> convertToClassAndFieldsToChange(final Map<Class<?>, Predicate<String>> classAndFieldPredicatePairMap) {
+    private Map<Class<?>, List<Field>> convertToClassAndFieldsToChange(final Map<Class<?>, Predicate<String>>
+                                                                               classAndFieldPredicatePairMap) {
         return classAndFieldPredicatePairMap.entrySet()
                                             .stream()
                                             .collect(Collectors.toMap(Map.Entry::getKey,
-                                                                      entry -> FieldUtils.getFields(entry.getKey(), entry.getValue())));
+                                                                      entry -> FieldUtils.getFields(entry.getKey(),
+                                                                                                    entry.getValue())));
     }
 
-    private Map<Class<?>, Predicate<String>> convertToMap(final ClassAndFieldPredicatePair[] classAndFieldPredicatePairs) {
+    private Map<Class<?>, Predicate<String>> convertToMap(final ClassAndFieldPredicatePair[]
+                                                                  classAndFieldPredicatePairs) {
         return Stream.of(classAndFieldPredicatePairs)
-                     .collect(Collectors.toMap(ClassAndFieldPredicatePair::getClazz, ClassAndFieldPredicatePair::getFieldsPredicate));
+                     .collect(Collectors.toMap(ClassAndFieldPredicatePair::getClazz,
+                                               ClassAndFieldPredicatePair::getFieldsPredicate));
     }
-
-    private Object makeThemEqual(final Object object, final Object newInstance) {
-        String currentFieldName = "";
-        try {
-            final List<Field> allFields = FieldUtils.getAllFields(object.getClass());
-            for (final Field field : allFields) {
-                currentFieldName = field.getName();
-                final Object value = FieldUtils.getValue(object, field);
-                FieldUtils.setValue(newInstance, field, value);
-            }
-            return newInstance;
-        } catch (final IllegalAccessException e) {
-            throw new GetOrSetValueException(currentFieldName, object.getClass(), e);
-        }
-    }
-
 }

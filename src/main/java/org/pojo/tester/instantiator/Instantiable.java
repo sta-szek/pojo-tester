@@ -1,6 +1,5 @@
 package org.pojo.tester.instantiator;
 
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
@@ -39,7 +38,6 @@ public abstract class Instantiable {
         }
 
         return new BestConstructorInstantiator(clazz);
-
     }
 
     private static boolean qualifiesForProxy(final Class<?> clazz) {
@@ -63,11 +61,15 @@ public abstract class Instantiable {
 
     private static boolean canBeCreatedByDefaultConstructor(final Class<?> clazz) {
         final Constructor<?>[] constructors = clazz.getConstructors();
-        return !qualifiesForProxy(clazz) && Arrays.stream(constructors)
-                                                  .filter(Instantiable::isNoArgs)
-                                                  .filter(Instantiable::isPublic)
-                                                  .findAny()
-                                                  .isPresent();
+        return !qualifiesForProxy(clazz) && hasSuitableConstructor(constructors);
+    }
+
+    private static boolean hasSuitableConstructor(final Constructor<?>[] constructors) {
+        return Arrays.stream(constructors)
+                     .filter(Instantiable::isNoArgs)
+                     .filter(Instantiable::isPublic)
+                     .findAny()
+                     .isPresent();
     }
 
     private static boolean isPublic(final Constructor<?> constructor) {
