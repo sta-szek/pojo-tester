@@ -10,6 +10,9 @@ import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.pojo.tester.field.AbstractFieldValueChanger;
+import org.pojo.tester.field.DefaultFieldValueChanger;
+import org.pojo.tester.instantiator.ObjectGenerator;
+import org.powermock.reflect.Whitebox;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.argThat;
@@ -81,6 +84,21 @@ public class AbstractTesterTest {
         verify(abstractTester, times(1)).test(argThat(new ClassAndFieldPredicatePairArgumentMatcher(bClazz, "b")),
                                               argThat(new ClassAndFieldPredicatePairArgumentMatcher(aClazz, "a")),
                                               argThat(new ClassAndFieldPredicatePairArgumentMatcher(bClazz, "b")));
+    }
+
+    @Test
+    public void Should_Create_New_Object_Generator() {
+        // given
+        final AbstractTester abstractTester = new AbstractTesterImplementation();
+        final AbstractFieldValueChanger fieldValuesChanger = DefaultFieldValueChanger.INSTANCE;
+        final ObjectGenerator beforeChange = Whitebox.getInternalState(abstractTester, "objectGenerator");
+
+        // when
+        abstractTester.setFieldValuesChanger(fieldValuesChanger);
+        final ObjectGenerator afterChange = Whitebox.getInternalState(abstractTester, "objectGenerator");
+
+        // then
+        assertThat(beforeChange).isNotEqualTo(afterChange);
     }
 
     @Test

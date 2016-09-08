@@ -1,5 +1,6 @@
 package org.pojo.tester;
 
+import com.google.common.collect.Sets;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
@@ -12,6 +13,7 @@ import test.equals.BadPojoEqualsItself;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
+import static org.mockito.Mockito.*;
 
 @RunWith(JUnitPlatform.class)
 public class AbstractAssetionTest {
@@ -65,7 +67,7 @@ public class AbstractAssetionTest {
         final Class<GoodPojo_Equals_HashCode_ToString> classUnderTest = GoodPojo_Equals_HashCode_ToString.class;
 
         // when
-        final Throwable result = catchThrowable(() -> Assetions.assertPojoMethodsFor(classUnderTest)
+        final Throwable result = catchThrowable(() -> Assetions.assertPojoMethodsForAll(classUnderTest)
                                                                .areWellImplemented());
 
         // then
@@ -84,6 +86,22 @@ public class AbstractAssetionTest {
 
         // then
         assertThat(result).isInstanceOf(AssertionError.class);
+    }
+
+    @Test
+    public void Should_Set_Field_Value_Changer_To_Testers() {
+        // given
+        final AbstractAssetion abstractAssetion = new AbstractAssetionImplementation();
+        final AbstractFieldValueChanger expectedFieldsValuesChanger = DefaultFieldValueChanger.INSTANCE;
+        final EqualsTester equalsTester = mock(EqualsTester.class);
+        Whitebox.setInternalState(abstractAssetion, "testers", Sets.newHashSet(equalsTester));
+        abstractAssetion.using(expectedFieldsValuesChanger);
+
+        // when
+        abstractAssetion.areWellImplemented();
+
+        // then
+        verify(equalsTester, only()).setFieldValuesChanger(expectedFieldsValuesChanger);
     }
 
     private class AbstractAssetionImplementation extends AbstractAssetion {
