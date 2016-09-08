@@ -73,12 +73,13 @@ public class AbstractAssetionTest {
     }
 
     @Test
-    public void Should_Throw_Exception_When_Class_Has_All_Methods_Implemented_In_Wrong_Way() {
+    public void Should_Throw_Exception_When_Class_Has_Method_Implemented_In_Wrong_Way() {
         // given
         final Class<BadPojoEqualsItself> classUnderTest = BadPojoEqualsItself.class;
 
         // when
         final Throwable result = catchThrowable(() -> Assetions.assertPojoMethodsFor(classUnderTest)
+                                                               .testing(Method.EQUALS)
                                                                .areWellImplemented());
 
         // then
