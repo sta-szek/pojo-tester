@@ -40,7 +40,7 @@ public class SetterGetterTester extends AbstractTester {
         final Object newValue = objectGenerator.createNewInstance(fieldType);
 
         try {
-            if (setter != null) {
+            if (hasSetter(setter)) {
                 assertions.assertThatSetMethodFor(instance)
                           .willSetValueOnField(setter, field, newValue);
             }
@@ -49,6 +49,10 @@ public class SetterGetterTester extends AbstractTester {
         } catch (IllegalAccessException | InvocationTargetException e) {
             throw new GetOrSetValueException(field.getName(), instance.getClass(), e);
         }
+    }
+
+    private boolean hasSetter(final Method setter) {
+        return setter != null;
     }
 
     private boolean isNotFinal(final Field field) {
