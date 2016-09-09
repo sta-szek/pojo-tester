@@ -11,4 +11,27 @@ coverage:
   status:
     project:
       default:
+        target: auto
         threshold: 1
+        base: auto
+        set_pending: yes
+        if_no_uploads: error
+        if_not_found: success
+        if_ci_failed: error
+
+    patch:
+      default:
+        target: auto
+        set_pending: yes
+        base: auto
+        if_no_uploads: success
+        if_not_found: success
+        if_ci_failed: error
+
+    changes:
+      default:
+        base: auto
+        set_pending: yes
+        if_no_uploads: error
+        if_not_found: success
+        if_ci_failed: error
