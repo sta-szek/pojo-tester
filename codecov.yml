@@ -11,8 +11,8 @@ coverage:
   status:
     project:
       default:
-        target: auto
-        threshold: 1
+        target: 90%
+        threshold: 1%
         base: auto
         set_pending: yes
         if_no_uploads: error
@@ -21,7 +21,7 @@ coverage:
 
     patch:
       default:
-        target: auto
+        target: 90%
         set_pending: yes
         base: auto
         if_no_uploads: success
