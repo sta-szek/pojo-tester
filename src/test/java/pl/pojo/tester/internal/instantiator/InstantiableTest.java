@@ -89,7 +89,7 @@ public class InstantiableTest {
 
     @TestFactory
     public Stream<DynamicTest> Should_Return_Expected_Instantiator_For_Class_By_Qualified_Class_Name() throws NoSuchFieldException {
-        return Stream.of(new ClassNameInstantiator("org.pojo.tester.instantiator.Instantiable", ProxyInstantiator.class),
+        return Stream.of(new ClassNameInstantiator("pl.pojo.tester.internal.instantiator.Instantiable", ProxyInstantiator.class),
                          new ClassNameInstantiator("test.instantiator.enums.EmptyEnum", EnumInstantiator.class),
                          new ClassNameInstantiator("test.instantiator.Constructor_Field", BestConstructorInstantiator.class),
                          new ClassNameInstantiator("test.instantiator.Constructor_Stream", BestConstructorInstantiator.class),
