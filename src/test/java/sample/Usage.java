@@ -2,16 +2,16 @@ package sample;
 
 
 import java.util.function.Predicate;
-import pl.pojo.tester.ClassAndFieldPredicatePair;
-import pl.pojo.tester.EqualsTester;
-import pl.pojo.tester.FieldPredicate;
-import pl.pojo.tester.field.AbstractFieldValueChanger;
-import pl.pojo.tester.field.DefaultFieldValueChanger;
+import pl.pojo.tester.api.ClassAndFieldPredicatePair;
+import pl.pojo.tester.api.EqualsTester;
+import pl.pojo.tester.api.FieldPredicate;
+import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
+import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
 import test.equals.BadPojoEquals_NotConsistent;
 
-import static pl.pojo.tester.Assertions.assertPojoMethodsFor;
-import static pl.pojo.tester.Assertions.assertPojoMethodsForAll;
-import static pl.pojo.tester.Method.*;
+import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
+import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsForAll;
+import static pl.pojo.tester.api.assertion.Method.*;
 
 public class Usage {
 

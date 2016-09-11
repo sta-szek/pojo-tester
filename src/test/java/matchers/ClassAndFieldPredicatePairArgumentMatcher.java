@@ -1,7 +1,7 @@
 package matchers;
 
 import org.mockito.ArgumentMatcher;
-import pl.pojo.tester.ClassAndFieldPredicatePair;
+import pl.pojo.tester.api.ClassAndFieldPredicatePair;
 
 public class ClassAndFieldPredicatePairArgumentMatcher extends ArgumentMatcher<ClassAndFieldPredicatePair> {
     private final Class<?> clazz;
