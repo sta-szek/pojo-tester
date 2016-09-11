@@ -9,8 +9,8 @@ import org.pojo.tester.field.AbstractFieldValueChanger;
 import org.pojo.tester.field.DefaultFieldValueChanger;
 import test.equals.BadPojoEquals_NotConsistent;
 
-import static org.pojo.tester.Assetions.assertPojoMethodsFor;
-import static org.pojo.tester.Assetions.assertPojoMethodsForAll;
+import static org.pojo.tester.Assertions.assertPojoMethodsFor;
+import static org.pojo.tester.Assertions.assertPojoMethodsForAll;
 import static org.pojo.tester.Method.*;
 
 public class Usage {

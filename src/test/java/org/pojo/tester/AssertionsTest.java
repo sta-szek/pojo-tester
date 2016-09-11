@@ -13,7 +13,7 @@ import org.powermock.reflect.Whitebox;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(JUnitPlatform.class)
-public class AssetionsTest {
+public class AssertionsTest {
 
     @Test
     public void Should_Create_Expected_Single_Class_Assertion_Using_Class() {
@@ -23,7 +23,7 @@ public class AssetionsTest {
         final ClassAndFieldPredicatePairCondition conditionToMatch = new ClassAndFieldPredicatePairCondition(expectedClass, fieldName);
 
         // when
-        final SingleClassAssetion result = (SingleClassAssetion) Assetions.assertPojoMethodsFor(expectedClass);
+        final SingleClassAssetion result = (SingleClassAssetion) Assertions.assertPojoMethodsFor(expectedClass);
         final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair = Whitebox.getInternalState(result, "baseClassAndFieldPredicatePair");
         final ClassAndFieldPredicatePair[] classAndFieldPredicatePairs = Whitebox.getInternalState(result, "classAndFieldPredicatePairs");
 
@@ -41,7 +41,7 @@ public class AssetionsTest {
         final ClassAndFieldPredicatePairCondition conditionToMatch = new ClassAndFieldPredicatePairCondition(expectedClass, fieldName);
 
         // when
-        final SingleClassAssetion result = (SingleClassAssetion) Assetions.assertPojoMethodsFor(expectedClass, predicate);
+        final SingleClassAssetion result = (SingleClassAssetion) Assertions.assertPojoMethodsFor(expectedClass, predicate);
         final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair = Whitebox.getInternalState(result, "baseClassAndFieldPredicatePair");
         final ClassAndFieldPredicatePair[] classAndFieldPredicatePairs = Whitebox.getInternalState(result, "classAndFieldPredicatePairs");
 
@@ -57,7 +57,8 @@ public class AssetionsTest {
         final ClassAndFieldPredicatePair expectedClassAndFieldPredicate = new ClassAndFieldPredicatePair(expectedClass);
 
         // when
-        final SingleClassAssetion result = (SingleClassAssetion) Assetions.assertPojoMethodsFor(expectedClassAndFieldPredicate, expectedClassAndFieldPredicate);
+        final SingleClassAssetion result = (SingleClassAssetion) Assertions.assertPojoMethodsFor(expectedClassAndFieldPredicate,
+                                                                                                 expectedClassAndFieldPredicate);
         final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair = Whitebox.getInternalState(result, "baseClassAndFieldPredicatePair");
         final ClassAndFieldPredicatePair[] classAndFieldPredicatePairs = Whitebox.getInternalState(result, "classAndFieldPredicatePairs");
 
@@ -74,7 +75,7 @@ public class AssetionsTest {
 
 
         // when
-        final MultiClassAssetion result = (MultiClassAssetion) Assetions.assertPojoMethodsForAll(expectedClass1, expectedClass2);
+        final MultiClassAssetion result = (MultiClassAssetion) Assertions.assertPojoMethodsForAll(expectedClass1, expectedClass2);
         final List<ClassAndFieldPredicatePair> classAndFieldPredicatePairs = Whitebox.getInternalState(result, "classAndFieldPredicatePairs");
 
         // then
@@ -93,7 +94,7 @@ public class AssetionsTest {
 
 
         // when
-        final MultiClassAssetion result = (MultiClassAssetion) Assetions.assertPojoMethodsForAll(pair1, pair2, pair2);
+        final MultiClassAssetion result = (MultiClassAssetion) Assertions.assertPojoMethodsForAll(pair1, pair2, pair2);
         final List<ClassAndFieldPredicatePair> classAndFieldPredicatePairs = Whitebox.getInternalState(result, "classAndFieldPredicatePairs");
 
         // then

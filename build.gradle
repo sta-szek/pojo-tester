@@ -1,3 +1,7 @@
+import java.time.ZoneOffset
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
+
 ext {
     JUNIT_JUPITER_VERSION = "5.0.0-SNAPSHOT"
     JUNIT_PLATFORM_VERSION = "1.0.0-SNAPSHOT"
@@ -14,17 +18,12 @@ buildscript {
     }
 }
 
-
-group 'pojo-tester'
-version '0.1.0'
-
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'jacoco'
 apply plugin: 'info.solidsoft.pitest'
 apply plugin: 'org.junit.platform.gradle.plugin'
-
-sourceCompatibility = 1.8
+apply plugin: 'maven-publish'
 
 repositories {
     mavenCentral()
@@ -81,9 +80,60 @@ pitest {
     outputFormats = ['XML', 'HTML']
 }
 
-jacocoTestReport.mustRunAfter(test)
-check.dependsOn jacocoTestReport
-
 task wrapper(type: Wrapper) {
     gradleVersion = '3.0'
 }
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
+publishing.publications.all {
+    pom.withXml {
+        asNode().dependencies.'*'.findAll() {
+            it.scope.text() == 'runtime' && project.configurations.compile.allDependencies.find { dep ->
+                dep.name == it.artifactId.text()
+            }
+        }.each { it.scope*.value = 'compile' }
+    }
+}
+
+jar {
+    manifest.attributes(createManifestAttributes())
+}
+
+def createManifestAttributes() {
+    Map attributes = new HashMap<>();
+    attributes.put('Manifest-Version', 1.0,)
+    attributes.put('Implementation-Title', rootProject.name,)
+    attributes.put('Implementation-Version', version,)
+    attributes.put('Implementation-Vendor', 'pojo.pl',)
+    attributes.put('Created-By', System.getProperty('java.version') + ' (' + System.getProperty('java.vendor') + ')',)
+    attributes.put('Built-With', "gradle-${project.getGradle().getGradleVersion()}, groovy-${GroovySystem.getVersion()}",)
+    attributes.put('Build-Time', ZonedDateTime.now(ZoneOffset.UTC).format(DateTimeFormatter.ISO_ZONED_DATE_TIME),)
+    attributes.put('Built-By', gitUser())
+    attributes
+}
+
+
+static def gitUser() {
+    def username = ""
+    def useremail = ""
+
+    def userNameProc = "git config user.name".execute()
+    userNameProc.in.eachLine { line -> username = line }
+    userNameProc.waitFor()
+
+    def userEmailProc = "git config user.email".execute()
+    userEmailProc.in.eachLine { line -> useremail = line }
+    userEmailProc.waitFor()
+    username + " " + useremail
+}
+
+check.dependsOn jacocoTestReport
+build.dependsOn publishToMavenLocal
+
