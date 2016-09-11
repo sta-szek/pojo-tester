@@ -1,7 +1,7 @@
 package matchers;
 
 import org.mockito.ArgumentMatcher;
-import org.pojo.tester.ClassAndFieldPredicatePair;
+import pl.pojo.tester.ClassAndFieldPredicatePair;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
