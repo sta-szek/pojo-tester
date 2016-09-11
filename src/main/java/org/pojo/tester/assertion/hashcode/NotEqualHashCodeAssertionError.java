@@ -9,7 +9,7 @@ public class NotEqualHashCodeAssertionError extends HashCodeAssertionError {
                                                        + "%s\n"
                                                        + "and\n"
                                                        + "%s\n"
-                                                       + "have should have different hash codes:\n"
+                                                       + "should have different hash codes:\n"
                                                        + "%s\n"
                                                        + "and\n"
                                                        + "%s";
