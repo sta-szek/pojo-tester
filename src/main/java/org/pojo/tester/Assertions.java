@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
 
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public abstract class Assetions {
+public abstract class Assertions {
 
     public static AbstractAssetion assertPojoMethodsFor(final Class<?> clazz) {
         final Predicate<String> predicateAcceptingAllFields = FieldPredicate.includeAllFields(clazz);

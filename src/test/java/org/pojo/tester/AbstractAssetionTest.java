@@ -67,8 +67,8 @@ public class AbstractAssetionTest {
         final Class<GoodPojo_Equals_HashCode_ToString> classUnderTest = GoodPojo_Equals_HashCode_ToString.class;
 
         // when
-        final Throwable result = catchThrowable(() -> Assetions.assertPojoMethodsForAll(classUnderTest)
-                                                               .areWellImplemented());
+        final Throwable result = catchThrowable(() -> Assertions.assertPojoMethodsForAll(classUnderTest)
+                                                                .areWellImplemented());
 
         // then
         assertThat(result).isNull();
@@ -80,9 +80,9 @@ public class AbstractAssetionTest {
         final Class<BadPojoEqualsItself> classUnderTest = BadPojoEqualsItself.class;
 
         // when
-        final Throwable result = catchThrowable(() -> Assetions.assertPojoMethodsFor(classUnderTest)
-                                                               .testing(Method.EQUALS)
-                                                               .areWellImplemented());
+        final Throwable result = catchThrowable(() -> Assertions.assertPojoMethodsFor(classUnderTest)
+                                                                .testing(Method.EQUALS)
+                                                                .areWellImplemented());
 
         // then
         assertThat(result).isInstanceOf(AssertionError.class);
