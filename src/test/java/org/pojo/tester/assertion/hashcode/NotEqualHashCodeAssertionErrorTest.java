@@ -18,7 +18,7 @@ public class NotEqualHashCodeAssertionErrorTest {
                                        + "testedObject\n"
                                        + "and\n"
                                        + "otherObject\n"
-                                       + "have should have different hash codes:\n"
+                                       + "should have different hash codes:\n"
                                        + "1\n"
                                        + "and\n"
                                        + "2";
