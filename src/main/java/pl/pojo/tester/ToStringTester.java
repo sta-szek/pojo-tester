@@ -56,8 +56,8 @@ public class ToStringTester extends AbstractTester {
             final String fieldName = field.getName();
             try {
                 final Object value = FieldUtils.getValue(instance, field);
-                assertions.assertThatToStringMethodFor(instance)
-                          .contains(fieldName, value);
+                testAssertions.assertThatToStringMethodFor(instance)
+                              .contains(fieldName, value);
             } catch (final IllegalAccessException e) {
                 throw new GetOrSetValueException(fieldName, instance.getClass(), e);
             }
@@ -69,8 +69,8 @@ public class ToStringTester extends AbstractTester {
             final String fieldName = field.getName();
             try {
                 final Object value = FieldUtils.getValue(instance, field);
-                assertions.assertThatToStringMethodFor(instance)
-                          .doestNotContain(fieldName, value);
+                testAssertions.assertThatToStringMethodFor(instance)
+                              .doestNotContain(fieldName, value);
             } catch (final IllegalAccessException e) {
                 throw new GetOrSetValueException(fieldName, instance.getClass(), e);
             }

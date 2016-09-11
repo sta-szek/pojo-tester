@@ -42,9 +42,8 @@ public class AbstractAssetionTest {
         abstractAssetion.testing(Method.EQUALS);
 
         // then
-        org.assertj.core.api.Assertions.assertThat(abstractAssetion.testers)
-                                       .usingRecursiveFieldByFieldElementComparator()
-                                       .containsExactly(expectedTester);
+        assertThat(abstractAssetion.testers).usingRecursiveFieldByFieldElementComparator()
+                                            .containsExactly(expectedTester);
     }
 
     @Test
@@ -58,9 +57,8 @@ public class AbstractAssetionTest {
         abstractAssetion.testing(Method.EQUALS, Method.HASH_CODE);
 
         // then
-        org.assertj.core.api.Assertions.assertThat(abstractAssetion.testers)
-                                       .usingRecursiveFieldByFieldElementComparator()
-                                       .containsExactly(expectedTester1, expectedTester2);
+        assertThat(abstractAssetion.testers).usingRecursiveFieldByFieldElementComparator()
+                                            .containsExactly(expectedTester1, expectedTester2);
     }
 
     @Test

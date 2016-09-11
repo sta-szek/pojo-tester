@@ -41,11 +41,11 @@ public class SetterGetterTester extends AbstractTester {
 
         try {
             if (hasSetter(setter)) {
-                assertions.assertThatSetMethodFor(instance)
-                          .willSetValueOnField(setter, field, newValue);
+                testAssertions.assertThatSetMethodFor(instance)
+                              .willSetValueOnField(setter, field, newValue);
             }
-            assertions.assertThatGetMethodFor(instance)
-                      .willGetValueFromField(getter, field);
+            testAssertions.assertThatGetMethodFor(instance)
+                          .willGetValueFromField(getter, field);
         } catch (IllegalAccessException | InvocationTargetException e) {
             throw new GetOrSetValueException(field.getName(), instance.getClass(), e);
         }

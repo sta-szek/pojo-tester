@@ -26,14 +26,14 @@ public class HashCodeTester extends AbstractTester {
     }
 
     private void shouldHaveSameHashCodes(final Object object) {
-        assertions.assertThatHashCodeMethodFor(object)
-                  .isConsistent();
+        testAssertions.assertThatHashCodeMethodFor(object)
+                      .isConsistent();
     }
 
     private void shouldHaveSameHashCodesWithDifferentInstance(final Object object) {
         final Object otherObject = objectGenerator.generateSameInstance(object);
-        assertions.assertThatHashCodeMethodFor(object)
-                  .returnsSameValueFor(otherObject);
+        testAssertions.assertThatHashCodeMethodFor(object)
+                      .returnsSameValueFor(otherObject);
     }
 
 
@@ -45,8 +45,8 @@ public class HashCodeTester extends AbstractTester {
     }
 
     private Consumer<Object> assertHaveDifferentHashCodes(final Object object) {
-        return eachDifferentObject -> assertions.assertThatHashCodeMethodFor(object)
-                                                .returnsDifferentValueFor(eachDifferentObject);
+        return eachDifferentObject -> testAssertions.assertThatHashCodeMethodFor(object)
+                                                    .returnsDifferentValueFor(eachDifferentObject);
     }
 
 }

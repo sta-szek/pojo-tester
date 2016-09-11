@@ -7,7 +7,7 @@ import pl.pojo.tester.assertion.hashcode.HashCodeAssertions;
 import pl.pojo.tester.assertion.setter.SetterAssertions;
 import pl.pojo.tester.assertion.tostring.ToStringAssertions;
 
-public class Assertions {
+public class TestAssertions {
 
     public EqualAssertions assertThatEqualsMethodFor(final Object objectUnderAssert) {
         return new EqualAssertions(objectUnderAssert);

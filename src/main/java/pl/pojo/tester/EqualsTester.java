@@ -30,37 +30,37 @@ public class EqualsTester extends AbstractTester {
     }
 
     private void shouldEqualSameInstance(final Object object) {
-        assertions.assertThatEqualsMethodFor(object)
-                  .isReflexive();
+        testAssertions.assertThatEqualsMethodFor(object)
+                      .isReflexive();
     }
 
     private void shouldEqualSameInstanceFewTimes(final Object object) {
-        assertions.assertThatEqualsMethodFor(object)
-                  .isConsistent();
+        testAssertions.assertThatEqualsMethodFor(object)
+                      .isConsistent();
     }
 
     private void shouldEqualDifferentInstance(final Object object) {
         final Object otherObject = objectGenerator.generateSameInstance(object);
-        assertions.assertThatEqualsMethodFor(object)
-                  .isSymmetric(otherObject);
+        testAssertions.assertThatEqualsMethodFor(object)
+                      .isSymmetric(otherObject);
     }
 
     private void shouldEqualObjectCifObjectBisEqualToObjectAndC(final Object object) {
         final Object b = objectGenerator.generateSameInstance(object);
         final Object c = objectGenerator.generateSameInstance(object);
-        assertions.assertThatEqualsMethodFor(object)
-                  .isTransitive(b, c);
+        testAssertions.assertThatEqualsMethodFor(object)
+                      .isTransitive(b, c);
     }
 
     private void shouldNotEqualNull(final Object object) {
-        assertions.assertThatEqualsMethodFor(object)
-                  .isNotEqualToNull();
+        testAssertions.assertThatEqualsMethodFor(object)
+                      .isNotEqualToNull();
     }
 
     private void shouldNotEqualDifferentType(final Object object) {
         final Object objectToCompare = this;
-        assertions.assertThatEqualsMethodFor(object)
-                  .isNotEqualToObjectWithDifferentType(objectToCompare);
+        testAssertions.assertThatEqualsMethodFor(object)
+                      .isNotEqualToObjectWithDifferentType(objectToCompare);
     }
 
     private void shouldNotEqualWithGivenFields(final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair,
@@ -71,8 +71,8 @@ public class EqualsTester extends AbstractTester {
     }
 
     private Consumer<Object> assertIsNotEqualTo(final Object object) {
-        return eachDifferentObject -> assertions.assertThatEqualsMethodFor(object)
-                                                .isNotEqualTo(eachDifferentObject);
+        return eachDifferentObject -> testAssertions.assertThatEqualsMethodFor(object)
+                                                    .isNotEqualTo(eachDifferentObject);
     }
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.function.Predicate;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import pl.pojo.tester.assertion.TestAssertions;
 import pl.pojo.tester.field.AbstractFieldValueChanger;
 import pl.pojo.tester.field.DefaultFieldValueChanger;
 import pl.pojo.tester.instantiator.ObjectGenerator;
@@ -13,7 +14,7 @@ import pl.pojo.tester.instantiator.ObjectGenerator;
 public abstract class AbstractTester {
 
     protected ObjectGenerator objectGenerator;
-    protected pl.pojo.tester.assertion.Assertions assertions = new pl.pojo.tester.assertion.Assertions();
+    protected TestAssertions testAssertions = new TestAssertions();
 
     public AbstractTester() {
         this(DefaultFieldValueChanger.INSTANCE);
@@ -65,14 +66,14 @@ public abstract class AbstractTester {
         final AbstractTester that = (AbstractTester) o;
 
         return new EqualsBuilder().append(objectGenerator, that.objectGenerator)
-                                  .append(assertions, that.assertions)
+                                  .append(testAssertions, that.testAssertions)
                                   .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder().append(objectGenerator)
-                                    .append(assertions)
+                                    .append(testAssertions)
                                     .toHashCode();
     }
 }
