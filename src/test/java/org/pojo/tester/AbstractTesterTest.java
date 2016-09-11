@@ -2,15 +2,24 @@ package org.pojo.tester;
 
 import java.util.function.Predicate;
 import lombok.Data;
+import matchers.ClassAndFieldPredicatePairArgumentMatcher;
+import matchers.RecursivelyEqualArgumentMatcher;
+import matchers.StringPredicateArgumentMatcher;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatcher;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import org.pojo.tester.field.AbstractFieldValueChanger;
+import org.pojo.tester.field.DefaultFieldValueChanger;
+import org.pojo.tester.instantiator.ObjectGenerator;
+import org.powermock.reflect.Whitebox;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.argThat;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 
+@RunWith(JUnitPlatform.class)
 public class AbstractTesterTest {
 
     @Test
@@ -77,49 +86,108 @@ public class AbstractTesterTest {
                                               argThat(new ClassAndFieldPredicatePairArgumentMatcher(bClazz, "b")));
     }
 
-    private class StringPredicateArgumentMatcher extends ArgumentMatcher<Predicate<String>> {
-        @Override
-        public boolean matches(final Object argument) {
-            final Predicate<String> stringPredicate = (Predicate<String>) argument;
-            return stringPredicate.test("a");
-        }
+    @Test
+    public void Should_Create_New_Object_Generator() {
+        // given
+        final AbstractTester abstractTester = new AbstractTesterImplementation();
+        final AbstractFieldValueChanger fieldValuesChanger = DefaultFieldValueChanger.INSTANCE;
+        final ObjectGenerator beforeChange = Whitebox.getInternalState(abstractTester, "objectGenerator");
+
+        // when
+        abstractTester.setFieldValuesChanger(fieldValuesChanger);
+        final ObjectGenerator afterChange = Whitebox.getInternalState(abstractTester, "objectGenerator");
+
+        // then
+        assertThat(beforeChange).isNotEqualTo(afterChange);
     }
 
-    private class ClassAndFieldPredicatePairArgumentMatcher extends ArgumentMatcher<ClassAndFieldPredicatePair> {
-        private final Class<?> clazz;
-        private final String fieldName;
+    @Test
+    public void Should_Equal_Itself() {
+        // given
+        final AbstractTester abstractTester = new AbstractTesterImplementation();
 
-        public ClassAndFieldPredicatePairArgumentMatcher(final Class<?> clazz, final String fieldName) {
-            this.clazz = clazz;
-            this.fieldName = fieldName;
-        }
+        // when
+        final boolean result = abstractTester.equals(abstractTester);
 
-        @Override
-        public boolean matches(final Object argument) {
-            final ClassAndFieldPredicatePair classAndFieldPredicatePair = (ClassAndFieldPredicatePair) argument;
-
-            final boolean classesMatches = classAndFieldPredicatePair.getClazz()
-                                                                     .equals(clazz);
-
-            final boolean predicateMatches = classAndFieldPredicatePair.getFieldsPredicate()
-                                                                       .test(fieldName);
-            return classesMatches && predicateMatches;
-        }
+        // then
+        assertThat(result).isTrue();
     }
 
-    private class RecursivelyEqualArgumentMatcher extends ArgumentMatcher<ClassAndFieldPredicatePair> {
-        private final ClassAndFieldPredicatePair expectedParameter;
+    @Test
+    public void Should_Not_Equal_Other_Object_With_Same_Values() {
+        // given
+        final AbstractTester abstractTester1 = new AbstractTesterImplementation();
+        final AbstractTester abstractTester2 = new AbstractTesterImplementation();
 
-        public RecursivelyEqualArgumentMatcher(final ClassAndFieldPredicatePair expectedParameter) {
-            this.expectedParameter = expectedParameter;
-        }
+        // when
+        final boolean result = abstractTester1.equals(abstractTester2);
 
-        @Override
-        public boolean matches(final Object argument) {
-            final ClassAndFieldPredicatePair classAndFieldPredicatePair = (ClassAndFieldPredicatePair) argument;
-            assertThat(classAndFieldPredicatePair).isEqualToComparingFieldByFieldRecursively(expectedParameter);
-            return true;
-        }
+        // then
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    public void Should_Not_Equal_Null() {
+        // given
+        final AbstractTester abstractTester = new AbstractTesterImplementation();
+
+        // when
+        final boolean result = abstractTester.equals(null);
+
+        // then
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    public void Should_Not_Equal_Other_Object_With_Different_Values() {
+        // given
+        final AbstractTester abstractTester1 = new AbstractTesterImplementation();
+        final AbstractTester abstractTester2 = new AbstractTesterImplementation(null);
+
+        // when
+        final boolean result = abstractTester1.equals(abstractTester2);
+
+        // then
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    public void Should_Not_Equal_Other_Class() {
+        // given
+        final AbstractTester abstractTester1 = new AbstractTesterImplementation();
+
+        // when
+        final boolean result = abstractTester1.equals(String.class);
+
+        // then
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    public void Should_Generate_Same_Hash_Codes() {
+        // given
+        final AbstractTester abstractTester1 = new AbstractTesterImplementation();
+
+        // when
+        final int result1 = abstractTester1.hashCode();
+        final int result2 = abstractTester1.hashCode();
+
+        // then
+        assertThat(result1).isEqualTo(result2);
+    }
+
+    @Test
+    public void Should_Generate_Different_Hash_Codes_For_Every_New_Instance() {
+        // given
+        final AbstractTester abstractTester1 = new AbstractTesterImplementation();
+        final AbstractTester abstractTester2 = new AbstractTesterImplementation();
+
+        // when
+        final int result1 = abstractTester1.hashCode();
+        final int result2 = abstractTester2.hashCode();
+
+        // then
+        assertThat(result1).isNotEqualTo(result2);
     }
 
     @Data
@@ -130,5 +198,20 @@ public class AbstractTesterTest {
     @Data
     private class B {
         int b;
+    }
+
+    class AbstractTesterImplementation extends AbstractTester {
+
+        public AbstractTesterImplementation() {
+        }
+
+        public AbstractTesterImplementation(final AbstractFieldValueChanger o) {
+            super(o);
+        }
+
+        @Override
+        public void test(final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair, final ClassAndFieldPredicatePair... classAndFieldPredicatePairs) {
+            // not needed for tests
+        }
     }
 }

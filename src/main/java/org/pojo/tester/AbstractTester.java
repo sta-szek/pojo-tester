@@ -3,6 +3,8 @@ package org.pojo.tester;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.pojo.tester.assertion.Assertions;
 import org.pojo.tester.field.AbstractFieldValueChanger;
 import org.pojo.tester.field.DefaultFieldValueChanger;
@@ -11,8 +13,8 @@ import org.pojo.tester.instantiator.ObjectGenerator;
 
 public abstract class AbstractTester {
 
-    protected final Assertions assertions = new Assertions();
-    protected final ObjectGenerator objectGenerator;
+    protected ObjectGenerator objectGenerator;
+    protected Assertions assertions = new Assertions();
 
     public AbstractTester() {
         this(DefaultFieldValueChanger.INSTANCE);
@@ -47,4 +49,31 @@ public abstract class AbstractTester {
 
     public abstract void test(final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair, final ClassAndFieldPredicatePair... classAndFieldPredicatePairs);
 
+    public void setFieldValuesChanger(final AbstractFieldValueChanger fieldValuesChanger) {
+        objectGenerator = new ObjectGenerator(fieldValuesChanger);
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        final AbstractTester that = (AbstractTester) o;
+
+        return new EqualsBuilder().append(objectGenerator, that.objectGenerator)
+                                  .append(assertions, that.assertions)
+                                  .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(objectGenerator)
+                                    .append(assertions)
+                                    .toHashCode();
+    }
 }

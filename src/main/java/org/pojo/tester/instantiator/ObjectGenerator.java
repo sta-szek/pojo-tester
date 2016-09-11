@@ -72,22 +72,22 @@ public class ObjectGenerator {
                     final Object newFieldTypeInstance = createNewInstance(permutationFieldType);
                     FieldUtils.setValue(baseObjectCopy, permutationField, newFieldTypeInstance);
                 } else {
-                    final List<Object> childs;
+                    final List<Object> nestedObjectsOfFieldType;
                     if (dejaVu.containsKey(permutationFieldType)) {
-                        childs = new ArrayList<>(dejaVu.get(permutationFieldType));
+                        nestedObjectsOfFieldType = new ArrayList<>(dejaVu.get(permutationFieldType));
                     } else {
                         final Predicate<String> fieldPredicate = userDefinedClassAndFieldPredicatePairsMap.get(permutationFieldType);
                         final List<Field> fieldClassFields = FieldUtils.getFields(permutationFieldType, fieldPredicate);
 
                         if (hasNestedFieldsToChange(fieldClassFields, userDefinedClassAndFieldPredicatePairsMap)) {
                             final ClassAndFieldPredicatePair classAndFieldPredicatePair = new ClassAndFieldPredicatePair(permutationFieldType, fieldPredicate);
-                            childs = generateDifferentObjects(classAndFieldPredicatePair, classAndFieldPredicatePairs);
+                            nestedObjectsOfFieldType = generateDifferentObjects(classAndFieldPredicatePair, classAndFieldPredicatePairs);
                         } else {
-                            childs = generateDifferentObjects(permutationFieldType, fieldClassFields);
+                            nestedObjectsOfFieldType = generateDifferentObjects(permutationFieldType, fieldClassFields);
                         }
-                        dejaVu.putIfAbsent(permutationFieldType, childs);
+                        dejaVu.putIfAbsent(permutationFieldType, nestedObjectsOfFieldType);
                     }
-                    nestedObjectsThatAreWaitingForSetInBaseObjectCopy.put(permutationField, childs);
+                    nestedObjectsThatAreWaitingForSetInBaseObjectCopy.put(permutationField, nestedObjectsOfFieldType);
                 }
             }
 
@@ -108,15 +108,15 @@ public class ObjectGenerator {
     }
 
     private List<Object> generateDifferentObjects(final Class<?> clazz, final List<Field> fieldsToChange) {
-        final List<Object> childs;
+        final List<Object> differentObjects;
         final List<List<Field>> permutationOfFields = FieldUtils.permutations(fieldsToChange);
         final Object fieldObject = createNewInstance(clazz);
 
-        childs = permutationOfFields.stream()
-                                    .map(fields -> generateInstanceWithDifferentFieldValues(fieldObject, fields))
-                                    .collect(Collectors.toList());
-        childs.add(0, fieldObject);
-        return childs;
+        differentObjects = permutationOfFields.stream()
+                                              .map(fields -> generateInstanceWithDifferentFieldValues(fieldObject, fields))
+                                              .collect(Collectors.toList());
+        differentObjects.add(0, fieldObject);
+        return differentObjects;
     }
 
     private List<Object> createCopiesAndFillThem(final List<Object> baseObjects, final Map.Entry<Field, List<Object>> nestedObjectsToSet) {
