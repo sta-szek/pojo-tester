@@ -75,7 +75,7 @@ pitest {
     pitestVersion = '1.1.10'
     exportLineCoverage = true
     timestampedReports = false
-    targetClasses = ['org.pojo.tester.*']
+    targetClasses = ['pl.pojo.tester.*']
     threads = 4
     outputFormats = ['XML', 'HTML']
 }
