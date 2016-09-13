@@ -69,7 +69,16 @@ public class ObjectGenerator {
                 final List<Field> nestedFieldsToChangeInFieldType = userDefinedClassAndFieldToChangePairsMap.get(permutationFieldType);
 
                 if (nestedFieldsToChangeInFieldType == null || permutationFieldType.equals(baseClass)) {
-                    final Object newFieldTypeInstance = createNewInstance(permutationFieldType);
+                    Object newFieldTypeInstance = createNewInstance(permutationFieldType);
+                    try {
+                        if (newFieldTypeInstance.equals(FieldUtils.getValue(baseObject, permutationField))) {
+                            newFieldTypeInstance = abstractFieldValueChanger.increaseValue(newFieldTypeInstance);
+                        }
+                    } catch (final IllegalAccessException e) {
+                        // TODO
+                        throw new RuntimeException("Make FieldUtils.getValue(...,...) throw runtime exception");
+                    }
+
                     FieldUtils.setValue(baseObjectCopy, permutationField, newFieldTypeInstance);
                 } else {
                     final List<Object> nestedObjectsOfFieldType;
@@ -100,7 +109,7 @@ public class ObjectGenerator {
         return result;
     }
 
-    Object generateInstanceWithDifferentFieldValues(final Object baseObject, final List<Field> fieldsToChange) {
+    private Object generateInstanceWithDifferentFieldValues(final Object baseObject, final List<Field> fieldsToChange) {
         final Object objectToChange = generateSameInstance(baseObject);
         abstractFieldValueChanger.changeFieldsValues(baseObject, objectToChange, fieldsToChange);
 

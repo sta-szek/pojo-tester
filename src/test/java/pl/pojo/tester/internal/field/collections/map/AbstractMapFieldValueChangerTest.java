@@ -38,7 +38,7 @@ public class AbstractMapFieldValueChangerTest {
     public Executable Should_Return_True_Or_False_Whether_Can_Change_Or_Not(final CanChangeCase testCase) {
         return () -> {
             // when
-            final boolean result = testCase.valueChanger.canChange(testCase.field);
+            final boolean result = testCase.valueChanger.canChange(testCase.field.getType());
 
             // then
             assertThat(result).isEqualTo(testCase.result);

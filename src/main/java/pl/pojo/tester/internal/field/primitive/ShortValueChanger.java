@@ -9,7 +9,7 @@ class ShortValueChanger extends AbstractPrimitiveValueChanger<Short> {
     }
 
     @Override
-    protected Short increaseValue(final Short value) {
+    public Short increaseValue(final Short value, final Class<?> type) {
         return (short) (value + 1);
     }
 }

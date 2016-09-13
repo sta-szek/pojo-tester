@@ -1,6 +1,5 @@
 package pl.pojo.tester.internal.field;
 
-import java.lang.reflect.Field;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
@@ -49,7 +48,7 @@ public class AbstractFieldValueChangerTest {
         }
 
         @Override
-        protected boolean canChange(final Field field) {
+        protected boolean canChange(final Class<?> type) {
             return false;
         }
 

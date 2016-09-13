@@ -1,6 +1,5 @@
 package pl.pojo.tester.internal.instantiator;
 
-import java.lang.reflect.Field;
 import java.util.List;
 import java.util.stream.Stream;
 import lombok.AllArgsConstructor;
@@ -15,7 +14,6 @@ import pl.pojo.tester.api.ClassAndFieldPredicatePair;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
 import test.GoodPojo_Equals_HashCode_ToString;
-import test.TestHelper;
 import test.fields.collections.collection.Collections;
 import test.fields.collections.map.Maps;
 import test.instantiator.arrays.ObjectContainingArray;
@@ -31,6 +29,20 @@ import static test.TestHelper.getDefaultDisplayName;
 public class ObjectGeneratorTest {
 
     private final AbstractFieldValueChanger abstractFieldValueChanger = DefaultFieldValueChanger.INSTANCE;
+
+    @Test
+    public void Should_Generate_Different_Objects_For_Class_Containing_Boolean_Type() {
+        // given
+        final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger);
+        final ClassAndFieldPredicatePair classAndFieldPredicatePair = new ClassAndFieldPredicatePair(ClassWithBooleanField.class);
+
+        // when
+        final List<Object> result = objectGenerator.generateDifferentObjects(classAndFieldPredicatePair);
+
+        // then
+        assertThat(result).hasSize(2)
+                          .doesNotHaveDuplicates();
+    }
 
     @Test
     public void Should_Create_Any_Instance() {
@@ -68,36 +80,17 @@ public class ObjectGeneratorTest {
     }
 
     @TestFactory
-    public Stream<DynamicTest> Should_Create_Different_Instance() {
-        return Stream.of(new ObjectContainingArray(),
-                         new ObjectContainingIterable(),
-                         new ObjectContainingIterator(),
-                         new ObjectContainingStream(),
-                         new Collections(),
-                         new Maps(),
-                         new GoodPojo_Equals_HashCode_ToString())
-                     .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Create_Different_Instance(value)));
-    }
-
-    public Executable Should_Create_Different_Instance(final Object objectToCreateSameInstance) {
-        return () -> {
-            // given
-            final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger);
-            final List<Field> allFields = TestHelper.getAllFieldsExceptDummyJacocoField(objectToCreateSameInstance.getClass());
-
-            // when
-            final Object result = objectGenerator.generateInstanceWithDifferentFieldValues(objectToCreateSameInstance, allFields);
-
-            // then
-            assertThat(result).isNotEqualTo(objectToCreateSameInstance);
-        };
-    }
-
-    @TestFactory
     public Stream<DynamicTest> Should_Generate_Different_Objects() {
         return Stream.of(new DifferentObjectTestCase(A.class, 4),
                          new DifferentObjectTestCase(B.class, 8),
-                         new DifferentObjectTestCase(C.class, 16))
+                         new DifferentObjectTestCase(C.class, 16),
+                         new DifferentObjectTestCase(ObjectContainingArray.class, 2),
+                         new DifferentObjectTestCase(ObjectContainingIterable.class, 2),
+                         new DifferentObjectTestCase(ObjectContainingIterator.class, 2),
+                         new DifferentObjectTestCase(ObjectContainingStream.class, 2),
+                         new DifferentObjectTestCase(Collections.class, 4096),
+                         new DifferentObjectTestCase(Maps.class, 64),
+                         new DifferentObjectTestCase(GoodPojo_Equals_HashCode_ToString.class, 1024))
                      .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Generate_Different_Objects(value)));
     }
 
@@ -225,6 +218,11 @@ public class ObjectGeneratorTest {
     @Data
     class R {
         R r;
+    }
+
+    @Data
+    class ClassWithBooleanField {
+        private boolean booleanField;
     }
 
     @Data

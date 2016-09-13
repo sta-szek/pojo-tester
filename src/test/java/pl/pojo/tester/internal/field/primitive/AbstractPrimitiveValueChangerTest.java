@@ -18,20 +18,21 @@ public class AbstractPrimitiveValueChangerTest {
         final AbstractPrimitiveValueChanger<Object> changerMock = new ImplementationForTest();
 
         // when
-        final boolean result = changerMock.canChange(field);
+        final boolean result = changerMock.canChange(field.getType());
 
         // then
         assertThat(result).isFalse();
     }
 
     private class ImplementationForTest extends AbstractPrimitiveValueChanger<Object> {
+
         @Override
         protected boolean areDifferent(final Object sourceValue, final Object targetValue) {
             return false;
         }
 
         @Override
-        protected Object increaseValue(final Object value) {
+        protected Object increaseValue(final Object value, final Class<?> type) {
             return null;
         }
     }

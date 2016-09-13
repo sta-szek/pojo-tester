@@ -2,6 +2,7 @@ package pl.pojo.tester.internal.instantiator;
 
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import javassist.util.proxy.ProxyFactory;
 
@@ -23,7 +24,20 @@ class ProxyInstantiator extends ObjectInstantiator {
     }
 
     private Object proxyByJava() {
-        return Proxy.newProxyInstance(clazz.getClassLoader(), new Class[]{clazz}, (proxy, method, args) -> 0);
+        return Proxy.newProxyInstance(clazz.getClassLoader(), new Class[]{clazz}, this::createInvocationHandler);
+    }
+
+    private Object createInvocationHandler(final Object proxy, final Method method, final Object[] args) {
+        try {
+            return method.invoke(proxy, args);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            final Class<?> returnType = method.getReturnType();
+            if (returnType.equals(boolean.class) || returnType.equals(Boolean.class)) {
+                return true;
+            } else {
+                return 0;
+            }
+        }
     }
 
     private Object proxyByJavassist() {

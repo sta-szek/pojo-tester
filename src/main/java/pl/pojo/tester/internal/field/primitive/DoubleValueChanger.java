@@ -9,7 +9,7 @@ class DoubleValueChanger extends AbstractPrimitiveValueChanger<Double> {
     }
 
     @Override
-    protected Double increaseValue(final Double value) {
+    public Double increaseValue(final Double value, final Class<?> type) {
         return 2 * (value + 1);
     }
 }

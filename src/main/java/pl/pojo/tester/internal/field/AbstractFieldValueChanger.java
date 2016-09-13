@@ -27,7 +27,18 @@ public abstract class AbstractFieldValueChanger<T> {
         return this;
     }
 
-    protected abstract boolean canChange(final Field field);
+    public T increaseValue(final T value) {
+        if (canChange(value.getClass())) {
+            return increaseValue(value, value.getClass());
+        } else {
+            if (next != null) {
+                return (T) next.increaseValue(value);
+            }
+            return value;
+        }
+    }
+
+    protected abstract boolean canChange(final Class<?> type);
 
     protected abstract T increaseValue(T value, final Class<?> type);
 
@@ -39,7 +50,7 @@ public abstract class AbstractFieldValueChanger<T> {
     }
 
     private void checkAndChange(final Object sourceObject, final Object targetObject, final Field field) {
-        if (canChange(field)) {
+        if (canChange(field.getType())) {
             changeFieldValue(sourceObject, targetObject, field);
         }
     }
