@@ -1,7 +1,6 @@
 package pl.pojo.tester.internal.field.collections.map;
 
 
-import java.lang.reflect.Field;
 import java.util.Map;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 
@@ -27,9 +26,8 @@ public abstract class AbstractMapFieldValueChanger<T extends Map> extends Abstra
     }
 
     @Override
-    protected boolean canChange(final Field field) {
-        return field.getType()
-                    .isAssignableFrom(getGenericTypeClass());
+    protected boolean canChange(final Class<?> type) {
+        return type.isAssignableFrom(getGenericTypeClass());
     }
 
     private boolean haveDifferentSizes(final T sourceValue, final T targetValue) {

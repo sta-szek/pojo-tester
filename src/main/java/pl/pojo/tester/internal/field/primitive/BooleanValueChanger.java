@@ -8,7 +8,7 @@ class BooleanValueChanger extends AbstractPrimitiveValueChanger<Boolean> {
     }
 
     @Override
-    protected Boolean increaseValue(final Boolean value) {
+    protected Boolean increase(final Boolean value) {
         return !value;
     }
 }

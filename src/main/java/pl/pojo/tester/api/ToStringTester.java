@@ -54,28 +54,19 @@ public class ToStringTester extends AbstractTester {
     private Consumer<Field> assertThatToStringContainsValue(final Object instance) {
         return field -> {
             final String fieldName = field.getName();
-            try {
-                final Object value = FieldUtils.getValue(instance, field);
-                testAssertions.assertThatToStringMethodFor(instance)
-                              .contains(fieldName, value);
-            } catch (final IllegalAccessException e) {
-                throw new GetOrSetValueException(fieldName, instance.getClass(), e);
-            }
+            final Object value = FieldUtils.getValue(instance, field);
+            testAssertions.assertThatToStringMethodFor(instance)
+                          .contains(fieldName, value);
         };
     }
 
     private Consumer<Field> assertThatToStringDoesNotContainValue(final Object instance) {
         return field -> {
             final String fieldName = field.getName();
-            try {
-                final Object value = FieldUtils.getValue(instance, field);
-                testAssertions.assertThatToStringMethodFor(instance)
-                              .doestNotContain(fieldName, value);
-            } catch (final IllegalAccessException e) {
-                throw new GetOrSetValueException(fieldName, instance.getClass(), e);
-            }
+            final Object value = FieldUtils.getValue(instance, field);
+            testAssertions.assertThatToStringMethodFor(instance)
+                          .doestNotContain(fieldName, value);
         };
     }
-
 
 }

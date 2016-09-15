@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import pl.pojo.tester.api.ClassAndFieldPredicatePair;
-import pl.pojo.tester.api.GetOrSetValueException;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 import pl.pojo.tester.internal.utils.FieldUtils;
 
@@ -69,7 +68,11 @@ public class ObjectGenerator {
                 final List<Field> nestedFieldsToChangeInFieldType = userDefinedClassAndFieldToChangePairsMap.get(permutationFieldType);
 
                 if (nestedFieldsToChangeInFieldType == null || permutationFieldType.equals(baseClass)) {
-                    final Object newFieldTypeInstance = createNewInstance(permutationFieldType);
+                    Object newFieldTypeInstance = createNewInstance(permutationFieldType);
+                    if (newFieldTypeInstance.equals(FieldUtils.getValue(baseObject, permutationField))) {
+                        newFieldTypeInstance = abstractFieldValueChanger.increaseValue(newFieldTypeInstance);
+                    }
+
                     FieldUtils.setValue(baseObjectCopy, permutationField, newFieldTypeInstance);
                 } else {
                     final List<Object> nestedObjectsOfFieldType;
@@ -100,7 +103,7 @@ public class ObjectGenerator {
         return result;
     }
 
-    Object generateInstanceWithDifferentFieldValues(final Object baseObject, final List<Field> fieldsToChange) {
+    private Object generateInstanceWithDifferentFieldValues(final Object baseObject, final List<Field> fieldsToChange) {
         final Object objectToChange = generateSameInstance(baseObject);
         abstractFieldValueChanger.changeFieldsValues(baseObject, objectToChange, fieldsToChange);
 
@@ -166,18 +169,12 @@ public class ObjectGenerator {
     }
 
     private Object makeThemEqual(final Object object, final Object newInstance) {
-        String currentFieldName = "";
-        try {
-            final List<Field> allFields = FieldUtils.getAllFields(object.getClass());
-            for (final Field field : allFields) {
-                currentFieldName = field.getName();
-                final Object value = FieldUtils.getValue(object, field);
-                FieldUtils.setValue(newInstance, field, value);
-            }
-            return newInstance;
-        } catch (final IllegalAccessException e) {
-            throw new GetOrSetValueException(currentFieldName, object.getClass(), e);
+        final List<Field> allFields = FieldUtils.getAllFields(object.getClass());
+        for (final Field field : allFields) {
+            final Object value = FieldUtils.getValue(object, field);
+            FieldUtils.setValue(newInstance, field, value);
         }
+        return newInstance;
     }
 
 }

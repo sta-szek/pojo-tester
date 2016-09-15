@@ -46,9 +46,13 @@ public final class FieldUtils {
                                   .collect(Collectors.toList());
     }
 
-    public static Object getValue(final Object targetObject, final Field field) throws IllegalAccessException {
-        makeModifiable(field);
-        return field.get(targetObject);
+    public static Object getValue(final Object targetObject, final Field field) {
+        try {
+            makeModifiable(field);
+            return field.get(targetObject);
+        } catch (final IllegalAccessException e) {
+            throw new GetOrSetValueException(field.getName(), targetObject.getClass(), e);
+        }
     }
 
     public static void setValue(final Object targetObject, final Field field, final Object value) {

@@ -9,7 +9,7 @@ class ByteValueChanger extends AbstractPrimitiveValueChanger<Byte> {
     }
 
     @Override
-    protected Byte increaseValue(final Byte value) {
+    protected Byte increase(final Byte value) {
         return (byte) (value + 1);
     }
 

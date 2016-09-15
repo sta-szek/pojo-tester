@@ -8,7 +8,7 @@ class CharacterValueChanger extends AbstractPrimitiveValueChanger<Character> {
     }
 
     @Override
-    protected Character increaseValue(final Character value) {
+    protected Character increase(final Character value) {
         return (char) (value + 1);
     }
 }

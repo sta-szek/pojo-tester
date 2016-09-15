@@ -1,8 +1,6 @@
 package pl.pojo.tester.internal.field;
 
 
-import java.lang.reflect.Field;
-
 class EnumValueChanger extends AbstractFieldValueChanger<Enum> {
 
 
@@ -12,9 +10,8 @@ class EnumValueChanger extends AbstractFieldValueChanger<Enum> {
     }
 
     @Override
-    protected boolean canChange(final Field field) {
-        return field.getType()
-                    .isEnum();
+    protected boolean canChange(final Class<?> type) {
+        return type.isEnum();
     }
 
     @Override

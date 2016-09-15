@@ -9,7 +9,7 @@ class FloatValueChanger extends AbstractPrimitiveValueChanger<Float> {
     }
 
     @Override
-    protected Float increaseValue(final Float value) {
+    protected Float increase(final Float value) {
         return 2 * (value + 1);
     }
 }

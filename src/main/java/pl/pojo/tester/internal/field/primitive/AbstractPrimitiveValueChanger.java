@@ -1,14 +1,13 @@
 package pl.pojo.tester.internal.field.primitive;
 
 import com.google.common.collect.Lists;
-import java.lang.reflect.Field;
 import java.util.List;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
+import pl.pojo.tester.internal.utils.FieldUtils;
 
 public abstract class AbstractPrimitiveValueChanger<T> extends AbstractFieldValueChanger<T> {
 
-    public static final AbstractFieldValueChanger INSTANCE = new BooleanValueChanger().attachNext(new BooleanValueChanger())
-                                                                                      .attachNext(new ByteValueChanger())
+    public static final AbstractFieldValueChanger INSTANCE = new BooleanValueChanger().attachNext(new ByteValueChanger())
                                                                                       .attachNext(new CharacterValueChanger())
                                                                                       .attachNext(new DoubleValueChanger())
                                                                                       .attachNext(new IntegerValueChanger())
@@ -39,51 +38,44 @@ public abstract class AbstractPrimitiveValueChanger<T> extends AbstractFieldValu
         }
     }
 
+    @Override
+    protected T increaseValue(final T value, final Class<?> type) {
+        return increase(value);
+    }
+
+    protected abstract T increase(T value);
 
     protected abstract boolean areDifferent(T sourceValue, T targetValue);
 
     @Override
-    protected boolean canChange(final Field field) {
-        return isPrimitive(field) && isCompatibleWithPrimitive(field)
-               || isWrappedPrimitive(field) && isCompatibleWithWrappedPrimitive(field);
+    protected boolean canChange(final Class<?> type) {
+        return isPrimitive(type) && isCompatibleWithPrimitive(type)
+               || isWrappedPrimitive(type) && isCompatibleWithWrappedPrimitive(type);
     }
 
-    @Override
-    protected T increaseValue(final T value, final Class<?> type) {
-        return increaseValue(value);
+    private boolean isPrimitive(final Class<?> type) {
+        return type.isPrimitive();
     }
 
-    protected abstract T increaseValue(final T value);
-
-    private boolean isPrimitive(final Field field) {
-        return field.getType()
-                    .isPrimitive();
-    }
-
-    private boolean isCompatibleWithPrimitive(final Field field) {
+    private boolean isCompatibleWithPrimitive(final Class<?> type) {
         try {
-            return getGenericTypeClass().getField(FIELD_WITH_PRIMITIVE_CLASS_REFERENCE)
-                                        .get(null)
-                                        .equals(field.getType());
-        } catch (IllegalAccessException | NoSuchFieldException e) {
+            return FieldUtils.getValue(null, getGenericTypeClass().getField(FIELD_WITH_PRIMITIVE_CLASS_REFERENCE))
+                             .equals(type);
+        } catch (final NoSuchFieldException e) {
             return false;
         }
     }
 
-    private boolean isWrappedPrimitive(final Field field) {
-        final Class<?> clazz = field.getType();
-        return PRIMITIVE_CLASSES.contains(clazz);
+    private boolean isWrappedPrimitive(final Class<?> type) {
+        return PRIMITIVE_CLASSES.contains(type);
     }
 
-    private boolean isCompatibleWithWrappedPrimitive(final Field field) {
+    private boolean isCompatibleWithWrappedPrimitive(final Class<?> type) {
         try {
-            final Object fieldPrimitiveType = field.getType()
-                                                   .getField(FIELD_WITH_PRIMITIVE_CLASS_REFERENCE)
-                                                   .get(null);
-            return getGenericTypeClass().getField(FIELD_WITH_PRIMITIVE_CLASS_REFERENCE)
-                                        .get(null)
-                                        .equals(fieldPrimitiveType);
-        } catch (IllegalAccessException | NoSuchFieldException e) {
+            final Object fieldPrimitiveType = FieldUtils.getValue(null, type.getField(FIELD_WITH_PRIMITIVE_CLASS_REFERENCE));
+            return FieldUtils.getValue(null, getGenericTypeClass().getField(FIELD_WITH_PRIMITIVE_CLASS_REFERENCE))
+                             .equals(fieldPrimitiveType);
+        } catch (final NoSuchFieldException e) {
             return false;
         }
     }

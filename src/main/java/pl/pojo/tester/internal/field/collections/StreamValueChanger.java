@@ -1,6 +1,5 @@
 package pl.pojo.tester.internal.field.collections;
 
-import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.stream.Stream;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
@@ -22,9 +21,8 @@ class StreamValueChanger extends AbstractFieldValueChanger<Stream<?>> {
     }
 
     @Override
-    protected boolean canChange(final Field field) {
-        return field.getType()
-                    .isAssignableFrom(getGenericTypeClass());
+    protected boolean canChange(final Class<?> type) {
+        return type.isAssignableFrom(getGenericTypeClass());
     }
 
     @Override

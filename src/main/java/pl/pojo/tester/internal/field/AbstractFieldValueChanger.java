@@ -4,7 +4,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
-import pl.pojo.tester.api.GetOrSetValueException;
 import pl.pojo.tester.internal.utils.FieldUtils;
 
 public abstract class AbstractFieldValueChanger<T> {
@@ -27,7 +26,18 @@ public abstract class AbstractFieldValueChanger<T> {
         return this;
     }
 
-    protected abstract boolean canChange(final Field field);
+    public T increaseValue(final T value) {
+        if (canChange(value.getClass())) {
+            return increaseValue(value, value.getClass());
+        } else {
+            if (next != null) {
+                return (T) next.increaseValue(value);
+            }
+            return value;
+        }
+    }
+
+    protected abstract boolean canChange(final Class<?> type);
 
     protected abstract T increaseValue(T value, final Class<?> type);
 
@@ -39,7 +49,7 @@ public abstract class AbstractFieldValueChanger<T> {
     }
 
     private void checkAndChange(final Object sourceObject, final Object targetObject, final Field field) {
-        if (canChange(field)) {
+        if (canChange(field.getType())) {
             changeFieldValue(sourceObject, targetObject, field);
         }
     }
@@ -51,16 +61,11 @@ public abstract class AbstractFieldValueChanger<T> {
     }
 
     private void changeFieldValue(final Object sourceObject, final Object targetObject, final Field field) {
-        try {
-            final T sourceFieldValue = (T) FieldUtils.getValue(sourceObject, field);
-            final T targetFieldValue = (T) FieldUtils.getValue(targetObject, field);
-            if (!areDifferentValues(sourceFieldValue, targetFieldValue)) {
-                final T increasedValue = increaseValue(targetFieldValue, field.getType());
-                FieldUtils.setValue(targetObject, field, increasedValue);
-            }
-        } catch (final IllegalAccessException e) {
-            throw new GetOrSetValueException(field.getName(), sourceObject.getClass(), e);
+        final T sourceFieldValue = (T) FieldUtils.getValue(sourceObject, field);
+        final T targetFieldValue = (T) FieldUtils.getValue(targetObject, field);
+        if (!areDifferentValues(sourceFieldValue, targetFieldValue)) {
+            final T increasedValue = increaseValue(targetFieldValue, field.getType());
+            FieldUtils.setValue(targetObject, field, increasedValue);
         }
-
     }
 }
