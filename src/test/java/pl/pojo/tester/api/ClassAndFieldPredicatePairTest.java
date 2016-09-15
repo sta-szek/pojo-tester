@@ -1,9 +1,9 @@
 package pl.pojo.tester.api;
 
+import classesForTest.GoodPojo_Equals_HashCode_ToString;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
-import test.GoodPojo_Equals_HashCode_ToString;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -1,6 +1,7 @@
 package pl.pojo.tester.internal.field.collections.map;
 
 
+import classesForTest.fields.collections.map.Maps;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -14,11 +15,10 @@ import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
-import test.fields.collections.map.Maps;
 
+import static classesForTest.TestHelper.getDefaultDisplayName;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
-import static test.TestHelper.getDefaultDisplayName;
 
 @RunWith(JUnitPlatform.class)
 public class AbstractMapFieldValueChangerTest {

@@ -1,6 +1,8 @@
 package pl.pojo.tester.internal.field.collections;
 
 
+import classesForTest.A;
+import classesForTest.fields.ClassContainingStream;
 import java.lang.reflect.Field;
 import java.util.stream.Stream;
 import lombok.AllArgsConstructor;
@@ -9,14 +11,12 @@ import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
-import test.A;
-import test.fields.ClassContainingStream;
 
+import static classesForTest.TestHelper.getDefaultDisplayName;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.util.Lists.newArrayList;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 import static org.powermock.reflect.Whitebox.getInternalState;
-import static test.TestHelper.getDefaultDisplayName;
 
 @RunWith(JUnitPlatform.class)
 public class StreamValueChangerTest {

@@ -14,9 +14,9 @@ import pl.pojo.tester.api.HashCodeTester;
 import pl.pojo.tester.api.SetterGetterTester;
 import pl.pojo.tester.api.ToStringTester;
 
+import static classesForTest.TestHelper.getDefaultDisplayName;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
-import static test.TestHelper.getDefaultDisplayName;
 
 @RunWith(JUnitPlatform.class)
 public class MethodTest {

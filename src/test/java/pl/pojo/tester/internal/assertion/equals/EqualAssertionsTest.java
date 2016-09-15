@@ -1,16 +1,16 @@
 package pl.pojo.tester.internal.assertion.equals;
 
+import classesForTest.GoodPojo_Equals_HashCode_ToString;
+import classesForTest.equals.BadPojoEqualsDifferentType;
+import classesForTest.equals.BadPojoEqualsNull;
+import classesForTest.equals.BadPojoEqualsWithEqualObject;
+import classesForTest.equals.BadPojoEquals_NotConsistent;
+import classesForTest.equals.BadPojoEquals_NotSymmetric;
+import classesForTest.equals.BadPojoEquals_NotTransitive_A_B;
+import classesForTest.equals.BadPojoEquals_NotTransitive_B_C;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
-import test.GoodPojo_Equals_HashCode_ToString;
-import test.equals.BadPojoEqualsDifferentType;
-import test.equals.BadPojoEqualsNull;
-import test.equals.BadPojoEqualsWithEqualObject;
-import test.equals.BadPojoEquals_NotConsistent;
-import test.equals.BadPojoEquals_NotSymmetric;
-import test.equals.BadPojoEquals_NotTransitive_A_B;
-import test.equals.BadPojoEquals_NotTransitive_B_C;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;

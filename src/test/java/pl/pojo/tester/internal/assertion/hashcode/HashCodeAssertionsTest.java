@@ -1,12 +1,12 @@
 package pl.pojo.tester.internal.assertion.hashcode;
 
+import classesForTest.GoodPojo_Equals_HashCode_ToString;
+import classesForTest.hashcode.BadPojoHashCode_DifferentObjects;
+import classesForTest.hashcode.BadPojoHashCode_NotConsistent;
+import classesForTest.hashcode.BadPojoHashCode_SameObjects;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
-import test.GoodPojo_Equals_HashCode_ToString;
-import test.hashcode.BadPojoHashCode_DifferentObjects;
-import test.hashcode.BadPojoHashCode_NotConsistent;
-import test.hashcode.BadPojoHashCode_SameObjects;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
