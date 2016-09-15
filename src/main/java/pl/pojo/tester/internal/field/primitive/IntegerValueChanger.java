@@ -8,7 +8,7 @@ class IntegerValueChanger extends AbstractPrimitiveValueChanger<Integer> {
     }
 
     @Override
-    public Integer increaseValue(final Integer value, final Class<?> type) {
+    protected Integer increase(final Integer value) {
         return value + 1;
     }
 }

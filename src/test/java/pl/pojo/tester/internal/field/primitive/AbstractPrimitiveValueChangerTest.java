@@ -32,7 +32,7 @@ public class AbstractPrimitiveValueChangerTest {
         }
 
         @Override
-        protected Object increaseValue(final Object value, final Class<?> type) {
+        protected Object increase(final Object value) {
             return null;
         }
     }

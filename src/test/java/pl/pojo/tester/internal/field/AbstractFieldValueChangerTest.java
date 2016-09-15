@@ -1,13 +1,18 @@
 package pl.pojo.tester.internal.field;
 
+import com.google.common.collect.Lists;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.*;
 import static org.powermock.reflect.internal.WhiteboxImpl.getInternalState;
 
 @RunWith(JUnitPlatform.class)
@@ -41,6 +46,26 @@ public class AbstractFieldValueChangerTest {
         verify(first).attachNext(second);
     }
 
+    @Test
+    public void Should_Not_Change_If_Values_Are_Different() throws NoSuchFieldException {
+        // given
+        final AbstractFieldValueChanger valueChanger = mock(AbstractFieldValueChanger.class, Mockito.CALLS_REAL_METHODS);
+        when(valueChanger.canChange(any())).thenReturn(true);
+        when(valueChanger.areDifferentValues(any(), any())).thenReturn(true);
+
+        final int expectedResult = 2;
+        final ClassWithSingleIntField sourceObject = new ClassWithSingleIntField(1);
+        final ClassWithSingleIntField targetObject = new ClassWithSingleIntField(expectedResult);
+        final ArrayList<Field> fields = Lists.newArrayList(sourceObject.getClass()
+                                                                       .getDeclaredField("i"));
+
+        // when
+        valueChanger.changeFieldsValues(sourceObject, targetObject, fields);
+
+        // then
+        assertThat(targetObject.getI()).isEqualTo(expectedResult);
+    }
+
     private class ImplementationForTest extends AbstractFieldValueChanger<Object> {
         @Override
         public boolean areDifferentValues(final Object sourceValue, final Object targetValue) {
@@ -56,5 +81,11 @@ public class AbstractFieldValueChangerTest {
         protected Object increaseValue(final Object value, final Class<?> type) {
             return null;
         }
+    }
+
+    @Data
+    @AllArgsConstructor
+    private class ClassWithSingleIntField {
+        private int i;
     }
 }

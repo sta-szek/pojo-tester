@@ -9,7 +9,7 @@ class LongValueChanger extends AbstractPrimitiveValueChanger<Long> {
     }
 
     @Override
-    public Long increaseValue(final Long value, final Class<?> type) {
+    protected Long increase(final Long value) {
         return value + 1;
     }
 }

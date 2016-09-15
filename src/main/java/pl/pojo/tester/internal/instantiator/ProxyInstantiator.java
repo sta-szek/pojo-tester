@@ -27,6 +27,19 @@ class ProxyInstantiator extends ObjectInstantiator {
         return Proxy.newProxyInstance(clazz.getClassLoader(), new Class[]{clazz}, this::createInvocationHandler);
     }
 
+    private Object proxyByJavassist() {
+        try {
+            proxyFactory.setSuperclass(clazz);
+            return proxyFactory.create(new Class[0], new Class[0], this::createMethodHandler);
+        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+            throw new ObjectInstantiationException(clazz, e);
+        }
+    }
+
+    private Object createMethodHandler(final Object self, final Method thisMethod, final Method proceed, final Object[] args) {
+        return createInvocationHandler(self, thisMethod, args);
+    }
+
     private Object createInvocationHandler(final Object proxy, final Method method, final Object[] args) {
         try {
             return method.invoke(proxy, args);
@@ -37,15 +50,6 @@ class ProxyInstantiator extends ObjectInstantiator {
             } else {
                 return 0;
             }
-        }
-    }
-
-    private Object proxyByJavassist() {
-        try {
-            proxyFactory.setSuperclass(clazz);
-            return proxyFactory.create(new Class[0], new Class[0], (self, thisMethod, proceed, args) -> 0);
-        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            throw new ObjectInstantiationException(clazz, e);
         }
     }
 }

@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import pl.pojo.tester.api.ClassAndFieldPredicatePair;
-import pl.pojo.tester.api.GetOrSetValueException;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 import pl.pojo.tester.internal.utils.FieldUtils;
 
@@ -70,13 +69,8 @@ public class ObjectGenerator {
 
                 if (nestedFieldsToChangeInFieldType == null || permutationFieldType.equals(baseClass)) {
                     Object newFieldTypeInstance = createNewInstance(permutationFieldType);
-                    try {
-                        if (newFieldTypeInstance.equals(FieldUtils.getValue(baseObject, permutationField))) {
-                            newFieldTypeInstance = abstractFieldValueChanger.increaseValue(newFieldTypeInstance);
-                        }
-                    } catch (final IllegalAccessException e) {
-                        // TODO
-                        throw new RuntimeException("Make FieldUtils.getValue(...,...) throw runtime exception");
+                    if (newFieldTypeInstance.equals(FieldUtils.getValue(baseObject, permutationField))) {
+                        newFieldTypeInstance = abstractFieldValueChanger.increaseValue(newFieldTypeInstance);
                     }
 
                     FieldUtils.setValue(baseObjectCopy, permutationField, newFieldTypeInstance);
@@ -175,18 +169,12 @@ public class ObjectGenerator {
     }
 
     private Object makeThemEqual(final Object object, final Object newInstance) {
-        String currentFieldName = "";
-        try {
-            final List<Field> allFields = FieldUtils.getAllFields(object.getClass());
-            for (final Field field : allFields) {
-                currentFieldName = field.getName();
-                final Object value = FieldUtils.getValue(object, field);
-                FieldUtils.setValue(newInstance, field, value);
-            }
-            return newInstance;
-        } catch (final IllegalAccessException e) {
-            throw new GetOrSetValueException(currentFieldName, object.getClass(), e);
+        final List<Field> allFields = FieldUtils.getAllFields(object.getClass());
+        for (final Field field : allFields) {
+            final Object value = FieldUtils.getValue(object, field);
+            FieldUtils.setValue(newInstance, field, value);
         }
+        return newInstance;
     }
 
 }
