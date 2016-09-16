@@ -30,6 +30,43 @@ import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 public class BestConstructorInstantiatorTest {
 
     @TestFactory
+    public Stream<DynamicTest> Should_Instantiate_Non_Public_Classes() {
+        return Stream.of("classesForTest.unpublicClasses.UnpublicClass",
+                         "classesForTest.unpublicClasses.UnpublicClass$PrivateStaticFinalNestedClass",
+                         "classesForTest.unpublicClasses.UnpublicClass$PrivateStaticFinalNestedClass$PrivateStaticFinalNestedClass2",
+                         "classesForTest.unpublicClasses.UnpublicClass$ProtectedStaticFinalNestedClass",
+                         "classesForTest.unpublicClasses.UnpublicClass$PackageStaticFinalNestedClass",
+                         "classesForTest.unpublicClasses.UnpublicClass$PublicStaticFinalNestedClass",
+                         "classesForTest.unpublicClasses.UnpublicClass$PrivateStaticNestedClass",
+                         "classesForTest.unpublicClasses.UnpublicClass$ProtectedStaticNestedClass",
+                         "classesForTest.unpublicClasses.UnpublicClass$PackageStaticNestedClass",
+                         "classesForTest.unpublicClasses.UnpublicClass$PublicStaticNestedClass",
+                         "classesForTest.unpublicClasses.UnpublicClass$PrivateFinalNestedClass",
+                         "classesForTest.unpublicClasses.UnpublicClass$ProtectedFinalNestedClass",
+                         "classesForTest.unpublicClasses.UnpublicClass$PackageFinalNestedClass",
+                         "classesForTest.unpublicClasses.UnpublicClass$PublicFinalNestedClass",
+                         "classesForTest.unpublicClasses.UnpublicClass$PrivateNestedClass",
+                         "classesForTest.unpublicClasses.UnpublicClass$ProtectedNestedClass",
+                         "classesForTest.unpublicClasses.UnpublicClass$PackageNestedClass",
+                         "classesForTest.unpublicClasses.UnpublicClass$PublicNestedClass")
+                     .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Instantiate_Non_Public_Classes(value)));
+    }
+
+    public Executable Should_Instantiate_Non_Public_Classes(final String className) {
+        return () -> {
+            // given
+            final Class<?> classUnderTest = Class.forName(className);
+            final BestConstructorInstantiator instantiator = new BestConstructorInstantiator(classUnderTest);
+
+            // when
+            final Object result = instantiator.instantiate();
+
+            // then
+            assertThat(result).isInstanceOf(classUnderTest);
+        };
+    }
+
+    @TestFactory
     public Stream<DynamicTest> Should_Create_Object_Using_Best_Constructor() {
         return Stream.of(Constructor_Array_Boolean.class,
                          Constructor_Array_Boolean_Primitive.class,

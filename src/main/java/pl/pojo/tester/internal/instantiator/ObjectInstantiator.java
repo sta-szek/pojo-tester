@@ -10,5 +10,4 @@ abstract class ObjectInstantiator {
 
     public abstract Object instantiate();
 
-
 }

@@ -133,7 +133,34 @@ public class InstantiableTest {
                          new ClassNameInstantiator("classesForTest.instantiator.unpublic.ClassContainingUnpublicClasses$Private_ProtectedConstructor",
                                                    BestConstructorInstantiator.class),
                          new ClassNameInstantiator("classesForTest.instantiator.unpublic.ClassContainingUnpublicClasses$Private_PrivateConstructor",
-                                                   BestConstructorInstantiator.class)
+                                                   BestConstructorInstantiator.class),
+
+                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PublicStaticFinalNestedClass",
+                                                   DefaultConstructorInstantiator.class),
+                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PublicStaticNestedClass",
+                                                   DefaultConstructorInstantiator.class),
+
+                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass", BestConstructorInstantiator.class),
+                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PrivateStaticFinalNestedClass",
+                                                   BestConstructorInstantiator.class),
+                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PrivateStaticFinalNestedClass$PrivateStaticFinalNestedClass2",
+                                                   BestConstructorInstantiator.class),
+                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$ProtectedStaticFinalNestedClass",
+                                                   BestConstructorInstantiator.class),
+                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PackageStaticFinalNestedClass",
+                                                   BestConstructorInstantiator.class),
+                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PrivateStaticNestedClass", BestConstructorInstantiator.class),
+                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$ProtectedStaticNestedClass",
+                                                   BestConstructorInstantiator.class),
+                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PackageStaticNestedClass", BestConstructorInstantiator.class),
+                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PrivateFinalNestedClass", BestConstructorInstantiator.class),
+                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$ProtectedFinalNestedClass", BestConstructorInstantiator.class),
+                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PackageFinalNestedClass", BestConstructorInstantiator.class),
+                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PublicFinalNestedClass", BestConstructorInstantiator.class),
+                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PrivateNestedClass", BestConstructorInstantiator.class),
+                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$ProtectedNestedClass", BestConstructorInstantiator.class),
+                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PackageNestedClass", BestConstructorInstantiator.class),
+                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PublicNestedClass", BestConstructorInstantiator.class)
         )
                      .map(value -> dynamicTest(getDefaultDisplayName(value.className),
                                                Should_Return_Expected_Instantiator_For_Class_By_Qualified_Class_Name(value)));
