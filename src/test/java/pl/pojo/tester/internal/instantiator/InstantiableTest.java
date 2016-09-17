@@ -33,6 +33,7 @@ public class InstantiableTest {
                          new ClassInstantiator(Constructor_Field.class, BestConstructorInstantiator.class),
                          new ClassInstantiator(Constructor_Stream.class, BestConstructorInstantiator.class),
                          new ClassInstantiator(Constructor_Thread.class, BestConstructorInstantiator.class),
+                         new ClassInstantiator(String.class, StringClassInstantiator.class),
                          new ClassInstantiator(Boolean[].class, ArrayInstantiator.class),
                          new ClassInstantiator(Byte[].class, ArrayInstantiator.class),
                          new ClassInstantiator(Character[].class, ArrayInstantiator.class),
@@ -160,7 +161,8 @@ public class InstantiableTest {
                          new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PrivateNestedClass", BestConstructorInstantiator.class),
                          new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$ProtectedNestedClass", BestConstructorInstantiator.class),
                          new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PackageNestedClass", BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PublicNestedClass", BestConstructorInstantiator.class)
+                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PublicNestedClass", BestConstructorInstantiator.class),
+                         new ClassNameInstantiator("java.lang.String", StringClassInstantiator.class)
         )
                      .map(value -> dynamicTest(getDefaultDisplayName(value.className),
                                                Should_Return_Expected_Instantiator_For_Class_By_Qualified_Class_Name(value)));
