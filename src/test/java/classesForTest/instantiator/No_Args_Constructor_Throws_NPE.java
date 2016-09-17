@@ -3,6 +3,6 @@ package classesForTest.instantiator;
 public class No_Args_Constructor_Throws_NPE {
 
     public No_Args_Constructor_Throws_NPE() {
-        throw new NullPointerException("classesForTest");
+        throw new NullPointerException("test");
     }
 }
