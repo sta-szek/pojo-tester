@@ -2,8 +2,8 @@ package pl.pojo.tester.internal.utils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.function.Predicate;
-import java.util.stream.Stream;
 import org.apache.commons.lang3.reflect.TypeUtils;
 import pl.pojo.tester.api.GetterNotFoundException;
 import pl.pojo.tester.api.SetterNotFoundException;
@@ -14,26 +14,20 @@ public final class MethodUtils {
     }
 
     public static Method findSetterFor(final Class<?> clazz, final Field field) {
-        final Method[] methods = clazz.getMethods();
-        final String fieldName = upperCaseFirstLetter(field.getName());
-        return Stream.of(methods)
-                     .filter(method -> prefixMatchesSettersPrefixAndHasExpectedLength(method, fieldName))
-                     .filter(methodNameEndsWithFieldName(fieldName))
+        return Arrays.stream(clazz.getMethods())
                      .filter(methodHasOnlyOneParameter())
                      .filter(areParameterAndFieldTypeAssignable(field))
                      .filter(returnTypeIsVoid())
+                     .filter(method -> prefixMatchesSettersPrefixAndHasExpectedLength(method, field.getName()))
                      .findAny()
                      .orElseThrow(() -> new SetterNotFoundException(clazz, field));
     }
 
     public static Method findGetterFor(final Class<?> clazz, final Field field) {
-        final Method[] methods = clazz.getMethods();
-        final String fieldName = upperCaseFirstLetter(field.getName());
-        return Stream.of(methods)
-                     .filter(method -> prefixMatchesGettersPrefixAndHasExpectedLength(method, fieldName))
-                     .filter(methodNameEndsWithFieldName(fieldName))
+        return Arrays.stream(clazz.getMethods())
                      .filter(hasZeroParameters())
                      .filter(areReturnAndFieldTypeAssignable(field))
+                     .filter(method -> prefixMatchesGettersPrefixAndHasExpectedLength(method, field.getName()))
                      .findAny()
                      .orElseThrow(() -> new GetterNotFoundException(clazz, field));
     }
@@ -58,30 +52,38 @@ public final class MethodUtils {
         return method -> method.getParameterCount() == 0;
     }
 
-    private static Predicate<Method> methodNameEndsWithFieldName(final String fieldName) {
-        return method -> method.getName()
-                               .endsWith(fieldName);
-    }
-
     private static boolean prefixMatchesGettersPrefixAndHasExpectedLength(final Method method, final String fieldName) {
         final Class<?> returnType = method.getReturnType();
         final String methodName = method.getName();
         final int fieldNameLength = fieldName.length();
+        final String upperCaseFirstLetterfieldName = upperCaseFirstLetter(fieldName);
+
         if (returnType.equals(boolean.class) || returnType.equals(Boolean.class)) {
-            return (methodName.startsWith("is") && methodName.length() == fieldNameLength + 2)
-                   || (methodName.startsWith("has") && methodName.length() == fieldNameLength + 3)
-                   || (methodName.startsWith("get") && methodName.length() == fieldNameLength + 3)
-                   || (methodName.startsWith("have") && methodName.length() == fieldNameLength + 4)
-                   || (methodName.startsWith("contains") && methodName.length() == fieldNameLength + 8);
+            return (methodName.startsWith("is") && methodName.equals(fieldName))
+                   || ((methodName.endsWith(upperCaseFirstLetterfieldName))
+                       && ((methodName.startsWith("is") && (methodName.length() == (fieldNameLength + 2)))
+                           || (methodName.startsWith("has") && (methodName.length() == (fieldNameLength + 3)))
+                           || (methodName.startsWith("get") && (methodName.length() == (fieldNameLength + 3)))
+                           || (methodName.startsWith("have") && (methodName.length() == (fieldNameLength + 4)))
+                           || (methodName.startsWith("contains") && (methodName.length() == (fieldNameLength + 8)))));
         } else {
-            return methodName.startsWith("get") && methodName.length() == fieldNameLength + 3;
+            return methodName.startsWith("get") && methodName.length() == fieldNameLength + 3 && methodName.endsWith(upperCaseFirstLetterfieldName);
         }
     }
 
     private static boolean prefixMatchesSettersPrefixAndHasExpectedLength(final Method method, final String fieldName) {
+        final Class<?> parameterType = method.getParameterTypes()[0];
         final String methodName = method.getName();
         final int fieldNameLength = fieldName.length();
-        return methodName.startsWith("set") && methodName.length() == fieldNameLength + 3;
+        final String upperCaseFirstLetterFieldName = upperCaseFirstLetter(fieldName);
+
+        if ((parameterType.equals(boolean.class) || parameterType.equals(Boolean.class)) && fieldName.startsWith("is")) {
+            final String fieldNameWithoutPrefix = fieldName.substring(2);
+            return methodName.startsWith("set") && methodName.endsWith(fieldNameWithoutPrefix);
+
+        } else {
+            return methodName.startsWith("set") && methodName.length() == fieldNameLength + 3 && methodName.endsWith(upperCaseFirstLetterFieldName);
+        }
     }
 
     private static String upperCaseFirstLetter(final String string) {
