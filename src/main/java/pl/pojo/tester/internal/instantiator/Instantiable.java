@@ -18,6 +18,9 @@ public abstract class Instantiable {
     }
 
     public static ObjectInstantiator forClass(final Class<?> clazz) {
+        if (isStringClass(clazz)) {
+            return new StringClassInstantiator();
+        }
         if (canBeCreatedByDefaultConstructor(clazz)) {
             return new DefaultConstructorInstantiator(clazz);
         }
@@ -40,6 +43,10 @@ public abstract class Instantiable {
 
         return new BestConstructorInstantiator(clazz);
 
+    }
+
+    private static boolean isStringClass(final Class<?> clazz) {
+        return clazz.equals(String.class);
     }
 
     private static boolean qualifiesForProxy(final Class<?> clazz) {
