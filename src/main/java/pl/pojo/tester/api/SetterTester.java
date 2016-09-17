@@ -5,7 +5,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -53,24 +52,12 @@ public class SetterTester extends AbstractTester {
     private List<SetterAndFieldPair> findSetterAndGetterPairsForFields(final Class<?> testedClass, final List<Field> fields) {
         return fields.stream()
                      .map(fieldName -> findSetterAndGetterPairForField(testedClass, fieldName))
-                     .filter(Optional::isPresent)
-                     .map(Optional::get)
                      .collect(Collectors.toList());
     }
 
-    private Optional<SetterAndFieldPair> findSetterAndGetterPairForField(final Class<?> testedClass, final Field field) {
-        if (isNotFinal(field)) {
-            final Method setter = MethodUtils.findSetterFor(testedClass, field);
-            final SetterAndFieldPair setterAndFieldPair = new SetterAndFieldPair(setter, field);
-            return Optional.of(setterAndFieldPair);
-        } else {
-            log.warn("Could not find setter for {}.", field);
-            return Optional.empty();
-        }
-    }
-
-    private boolean isNotFinal(final Field field) {
-        return !FieldUtils.isFinal(field);
+    private SetterAndFieldPair findSetterAndGetterPairForField(final Class<?> testedClass, final Field field) {
+        final Method setter = MethodUtils.findSetterFor(testedClass, field);
+        return new SetterAndFieldPair(setter, field);
     }
 
     @Getter

@@ -12,7 +12,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 @Getter
 @Setter
 public class GoodPojo_Equals_HashCode_ToString {
-    public final long random;
+    public long random;
     public byte byteField;
     public short shortType;
     public int intType;
