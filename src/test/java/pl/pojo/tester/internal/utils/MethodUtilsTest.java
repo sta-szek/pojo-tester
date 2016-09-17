@@ -117,7 +117,7 @@ public class MethodUtilsTest {
     }
 
     @TestFactory
-    public Stream<DynamicTest> Should_Return_Expected_Setter() throws NoSuchFieldException, NoSuchMethodException, IllegalAccessException {
+    public Stream<DynamicTest> Should_Return_Expected_Setter() throws NoSuchFieldException, NoSuchMethodException {
         final Field field1 = fieldFromSettersClass("setter1");
         final Field field2 = fieldFromSettersClass("setter2");
         final Field field3 = fieldFromSettersClass("setter3");
