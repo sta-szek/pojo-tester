@@ -10,8 +10,9 @@ import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 import pl.pojo.tester.api.AbstractTester;
 import pl.pojo.tester.api.EqualsTester;
+import pl.pojo.tester.api.GetterTester;
 import pl.pojo.tester.api.HashCodeTester;
-import pl.pojo.tester.api.SetterGetterTester;
+import pl.pojo.tester.api.SetterTester;
 import pl.pojo.tester.api.ToStringTester;
 
 import static classesForTest.TestHelper.getDefaultDisplayName;
@@ -26,7 +27,8 @@ public class MethodTest {
         return Stream.of(new TestCase(Method.EQUALS, EqualsTester.class),
                          new TestCase(Method.HASH_CODE, HashCodeTester.class),
                          new TestCase(Method.TO_STRING, ToStringTester.class),
-                         new TestCase(Method.SETTERS_AND_GETTERS, SetterGetterTester.class))
+                         new TestCase(Method.SETTER, SetterTester.class),
+                         new TestCase(Method.GETTER, GetterTester.class))
                      .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Return_Expected_Tester(value)));
     }
 
