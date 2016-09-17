@@ -19,6 +19,7 @@ public class SetterAssertions {
 
     public void willSetValueOnField(final Method setter, final Field field, final Object expectedValue)
             throws IllegalAccessException, InvocationTargetException {
+        setter.setAccessible(true);
         setter.invoke(objectUnderAssert, expectedValue);
         final Object value = FieldUtils.getValue(objectUnderAssert, field);
         final boolean result = Objects.equals(value, expectedValue);

@@ -36,11 +36,7 @@ class BestConstructorInstantiator extends ObjectInstantiator {
                                               .toArray();
             try {
                 return constructor.newInstance(parameters);
-            } catch (final InstantiationException
-                    | IllegalAccessException
-                    | InvocationTargetException
-                    | SecurityException
-                    | IllegalArgumentException e) {
+            } catch (final InstantiationException | IllegalAccessException | InvocationTargetException | SecurityException | IllegalArgumentException e) {
                 // ignore, we want to try all constructors
                 // if all constructors fail, it will be handled by caller
                 return null;

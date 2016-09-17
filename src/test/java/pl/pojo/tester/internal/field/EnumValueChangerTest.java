@@ -1,5 +1,11 @@
 package pl.pojo.tester.internal.field;
 
+import classesForTest.fields.AllFiledTypes;
+import classesForTest.fields.AllFiledTypes_Wrapped;
+import classesForTest.fields.EnumFields;
+import classesForTest.fields.EnumWithoutConstants;
+import classesForTest.fields.SingleEnum;
+import classesForTest.fields.TestEnum1;
 import java.lang.reflect.Field;
 import java.util.stream.Stream;
 import lombok.AllArgsConstructor;
@@ -9,19 +15,13 @@ import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
-import test.fields.AllFiledTypes;
-import test.fields.AllFiledTypes_Wrapped;
-import test.fields.EnumFields;
-import test.fields.EnumWithoutConstants;
-import test.fields.SingleEnum;
-import test.fields.TestEnum1;
 
+import static classesForTest.TestHelper.getDefaultDisplayName;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.util.Lists.newArrayList;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 import static org.powermock.reflect.Whitebox.getInternalState;
-import static test.TestHelper.getDefaultDisplayName;
 
 @RunWith(JUnitPlatform.class)
 public class EnumValueChangerTest {

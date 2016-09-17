@@ -1,5 +1,7 @@
 package pl.pojo.tester.api.assertion;
 
+import classesForTest.GoodPojo_Equals_HashCode_ToString;
+import classesForTest.equals.BadPojoEqualsItself;
 import com.google.common.collect.Sets;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
@@ -10,8 +12,6 @@ import pl.pojo.tester.api.HashCodeTester;
 import pl.pojo.tester.internal.assertion.AssertionError;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
-import test.GoodPojo_Equals_HashCode_ToString;
-import test.equals.BadPojoEqualsItself;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;

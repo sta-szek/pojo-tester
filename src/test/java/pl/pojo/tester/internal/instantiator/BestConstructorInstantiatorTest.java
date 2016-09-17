@@ -1,5 +1,15 @@
 package pl.pojo.tester.internal.instantiator;
 
+import classesForTest.instantiator.Constructor_Stream;
+import classesForTest.instantiator.Constructor_Thread;
+import classesForTest.instantiator.NoDefaultConstructor;
+import classesForTest.instantiator.No_Args_Constructor_Throws_NPE;
+import classesForTest.instantiator.One_Arg_Constructor_Throws_NPE;
+import classesForTest.instantiator.PackageConstructor;
+import classesForTest.instantiator.PrivateConstructor;
+import classesForTest.instantiator.ProtectedConstructor;
+import classesForTest.instantiator.arrays.*;
+import classesForTest.instantiator.statics.ClassContainingStaticClasses;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
@@ -10,24 +20,51 @@ import org.junit.runner.RunWith;
 import pl.pojo.tester.api.FieldPredicate;
 import pl.pojo.tester.internal.utils.FieldUtils;
 import pl.pojo.tester.internal.utils.MethodUtils;
-import test.instantiator.Constructor_Stream;
-import test.instantiator.Constructor_Thread;
-import test.instantiator.NoDefaultConstructor;
-import test.instantiator.No_Args_Constructor_Throws_NPE;
-import test.instantiator.One_Arg_Constructor_Throws_NPE;
-import test.instantiator.PackageConstructor;
-import test.instantiator.PrivateConstructor;
-import test.instantiator.ProtectedConstructor;
-import test.instantiator.arrays.*;
-import test.instantiator.statics.ClassContainingStaticClasses;
 
+import static classesForTest.TestHelper.getDefaultDisplayName;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
-import static test.TestHelper.getDefaultDisplayName;
 
 @RunWith(JUnitPlatform.class)
 public class BestConstructorInstantiatorTest {
+
+    @TestFactory
+    public Stream<DynamicTest> Should_Instantiate_Non_Public_Classes() {
+        return Stream.of("classesForTest.unpublicClasses.UnpublicClass",
+                         "classesForTest.unpublicClasses.UnpublicClass$PrivateStaticFinalNestedClass",
+                         "classesForTest.unpublicClasses.UnpublicClass$PrivateStaticFinalNestedClass$PrivateStaticFinalNestedClass2",
+                         "classesForTest.unpublicClasses.UnpublicClass$ProtectedStaticFinalNestedClass",
+                         "classesForTest.unpublicClasses.UnpublicClass$PackageStaticFinalNestedClass",
+                         "classesForTest.unpublicClasses.UnpublicClass$PublicStaticFinalNestedClass",
+                         "classesForTest.unpublicClasses.UnpublicClass$PrivateStaticNestedClass",
+                         "classesForTest.unpublicClasses.UnpublicClass$ProtectedStaticNestedClass",
+                         "classesForTest.unpublicClasses.UnpublicClass$PackageStaticNestedClass",
+                         "classesForTest.unpublicClasses.UnpublicClass$PublicStaticNestedClass",
+                         "classesForTest.unpublicClasses.UnpublicClass$PrivateFinalNestedClass",
+                         "classesForTest.unpublicClasses.UnpublicClass$ProtectedFinalNestedClass",
+                         "classesForTest.unpublicClasses.UnpublicClass$PackageFinalNestedClass",
+                         "classesForTest.unpublicClasses.UnpublicClass$PublicFinalNestedClass",
+                         "classesForTest.unpublicClasses.UnpublicClass$PrivateNestedClass",
+                         "classesForTest.unpublicClasses.UnpublicClass$ProtectedNestedClass",
+                         "classesForTest.unpublicClasses.UnpublicClass$PackageNestedClass",
+                         "classesForTest.unpublicClasses.UnpublicClass$PublicNestedClass")
+                     .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Instantiate_Non_Public_Classes(value)));
+    }
+
+    public Executable Should_Instantiate_Non_Public_Classes(final String className) {
+        return () -> {
+            // given
+            final Class<?> classUnderTest = Class.forName(className);
+            final BestConstructorInstantiator instantiator = new BestConstructorInstantiator(classUnderTest);
+
+            // when
+            final Object result = instantiator.instantiate();
+
+            // then
+            assertThat(result).isInstanceOf(classUnderTest);
+        };
+    }
 
     @TestFactory
     public Stream<DynamicTest> Should_Create_Object_Using_Best_Constructor() {

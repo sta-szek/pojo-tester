@@ -19,6 +19,7 @@ public class GetterAssertions {
 
     public void willGetValueFromField(final Method getter, final Field field)
             throws IllegalAccessException, InvocationTargetException {
+        getter.setAccessible(true);
         final Object valueFromGetter = getter.invoke(objectUnderAssert);
         final Object value = FieldUtils.getValue(objectUnderAssert, field);
         final boolean result = Objects.equals(value, valueFromGetter);

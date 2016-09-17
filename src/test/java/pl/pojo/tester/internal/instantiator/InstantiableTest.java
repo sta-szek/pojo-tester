@@ -1,5 +1,10 @@
 package pl.pojo.tester.internal.instantiator;
 
+import classesForTest.instantiator.Constructor_Field;
+import classesForTest.instantiator.Constructor_Stream;
+import classesForTest.instantiator.Constructor_Thread;
+import classesForTest.instantiator.enums.EmptyEnum;
+import classesForTest.instantiator.statics.ClassContainingStaticClasses;
 import java.io.Serializable;
 import java.util.stream.Stream;
 import lombok.AllArgsConstructor;
@@ -9,16 +14,11 @@ import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
-import test.instantiator.Constructor_Field;
-import test.instantiator.Constructor_Stream;
-import test.instantiator.Constructor_Thread;
-import test.instantiator.enums.EmptyEnum;
-import test.instantiator.statics.ClassContainingStaticClasses;
 
+import static classesForTest.TestHelper.getDefaultDisplayName;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
-import static test.TestHelper.getDefaultDisplayName;
 
 @RunWith(JUnitPlatform.class)
 public class InstantiableTest {
@@ -90,10 +90,10 @@ public class InstantiableTest {
     @TestFactory
     public Stream<DynamicTest> Should_Return_Expected_Instantiator_For_Class_By_Qualified_Class_Name() throws NoSuchFieldException {
         return Stream.of(new ClassNameInstantiator("pl.pojo.tester.internal.instantiator.Instantiable", ProxyInstantiator.class),
-                         new ClassNameInstantiator("test.instantiator.enums.EmptyEnum", EnumInstantiator.class),
-                         new ClassNameInstantiator("test.instantiator.Constructor_Field", BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("test.instantiator.Constructor_Stream", BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("test.instantiator.Constructor_Thread", BestConstructorInstantiator.class),
+                         new ClassNameInstantiator("classesForTest.instantiator.enums.EmptyEnum", EnumInstantiator.class),
+                         new ClassNameInstantiator("classesForTest.instantiator.Constructor_Field", BestConstructorInstantiator.class),
+                         new ClassNameInstantiator("classesForTest.instantiator.Constructor_Stream", BestConstructorInstantiator.class),
+                         new ClassNameInstantiator("classesForTest.instantiator.Constructor_Thread", BestConstructorInstantiator.class),
                          new ClassNameInstantiator("java.lang.Boolean", PrimitiveInstantiator.class),
                          new ClassNameInstantiator("java.lang.Byte", PrimitiveInstantiator.class),
                          new ClassNameInstantiator("java.lang.Character", PrimitiveInstantiator.class),
@@ -102,38 +102,65 @@ public class InstantiableTest {
                          new ClassNameInstantiator("java.lang.Integer", PrimitiveInstantiator.class),
                          new ClassNameInstantiator("java.lang.Long", PrimitiveInstantiator.class),
                          new ClassNameInstantiator("java.lang.Short", PrimitiveInstantiator.class),
-                         new ClassNameInstantiator("test.instantiator.statics.ClassContainingStaticClasses$NestedStaticClass_PublicConstructor",
+                         new ClassNameInstantiator("classesForTest.instantiator.statics.ClassContainingStaticClasses$NestedStaticClass_PublicConstructor",
                                                    DefaultConstructorInstantiator.class),
-                         new ClassNameInstantiator("test.instantiator.statics.ClassContainingStaticClasses$NestedStaticClass_PackageConstructor",
+                         new ClassNameInstantiator("classesForTest.instantiator.statics.ClassContainingStaticClasses$NestedStaticClass_PackageConstructor",
                                                    BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("test.instantiator.statics.ClassContainingStaticClasses$NestedStaticClass_ProtectedConstructor",
+                         new ClassNameInstantiator("classesForTest.instantiator.statics.ClassContainingStaticClasses$NestedStaticClass_ProtectedConstructor",
                                                    BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("test.instantiator.statics.ClassContainingStaticClasses$NestedStaticClass_PrivateConstructor",
+                         new ClassNameInstantiator("classesForTest.instantiator.statics.ClassContainingStaticClasses$NestedStaticClass_PrivateConstructor",
                                                    BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("test.instantiator.unpublic.ClassContainingUnpublicClasses$Package_PublicConstructor",
+                         new ClassNameInstantiator("classesForTest.instantiator.unpublic.ClassContainingUnpublicClasses$Package_PublicConstructor",
                                                    BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("test.instantiator.unpublic.ClassContainingUnpublicClasses$Package_PackageConstructor",
+                         new ClassNameInstantiator("classesForTest.instantiator.unpublic.ClassContainingUnpublicClasses$Package_PackageConstructor",
                                                    BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("test.instantiator.unpublic.ClassContainingUnpublicClasses$Package_ProtectedConstructor",
+                         new ClassNameInstantiator("classesForTest.instantiator.unpublic.ClassContainingUnpublicClasses$Package_ProtectedConstructor",
                                                    BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("test.instantiator.unpublic.ClassContainingUnpublicClasses$Package_PrivateConstructor",
+                         new ClassNameInstantiator("classesForTest.instantiator.unpublic.ClassContainingUnpublicClasses$Package_PrivateConstructor",
                                                    BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("test.instantiator.unpublic.ClassContainingUnpublicClasses$Protected_PublicConstructor",
+                         new ClassNameInstantiator("classesForTest.instantiator.unpublic.ClassContainingUnpublicClasses$Protected_PublicConstructor",
                                                    BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("test.instantiator.unpublic.ClassContainingUnpublicClasses$Protected_PackageConstructor",
+                         new ClassNameInstantiator("classesForTest.instantiator.unpublic.ClassContainingUnpublicClasses$Protected_PackageConstructor",
                                                    BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("test.instantiator.unpublic.ClassContainingUnpublicClasses$Protected_ProtectedConstructor",
+                         new ClassNameInstantiator("classesForTest.instantiator.unpublic.ClassContainingUnpublicClasses$Protected_ProtectedConstructor",
                                                    BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("test.instantiator.unpublic.ClassContainingUnpublicClasses$Protected_PrivateConstructor",
+                         new ClassNameInstantiator("classesForTest.instantiator.unpublic.ClassContainingUnpublicClasses$Protected_PrivateConstructor",
                                                    BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("test.instantiator.unpublic.ClassContainingUnpublicClasses$Private_PublicConstructor",
+                         new ClassNameInstantiator("classesForTest.instantiator.unpublic.ClassContainingUnpublicClasses$Private_PublicConstructor",
                                                    BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("test.instantiator.unpublic.ClassContainingUnpublicClasses$Private_PackageConstructor",
+                         new ClassNameInstantiator("classesForTest.instantiator.unpublic.ClassContainingUnpublicClasses$Private_PackageConstructor",
                                                    BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("test.instantiator.unpublic.ClassContainingUnpublicClasses$Private_ProtectedConstructor",
+                         new ClassNameInstantiator("classesForTest.instantiator.unpublic.ClassContainingUnpublicClasses$Private_ProtectedConstructor",
                                                    BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("test.instantiator.unpublic.ClassContainingUnpublicClasses$Private_PrivateConstructor",
-                                                   BestConstructorInstantiator.class)
+                         new ClassNameInstantiator("classesForTest.instantiator.unpublic.ClassContainingUnpublicClasses$Private_PrivateConstructor",
+                                                   BestConstructorInstantiator.class),
+
+                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PublicStaticFinalNestedClass",
+                                                   DefaultConstructorInstantiator.class),
+                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PublicStaticNestedClass",
+                                                   DefaultConstructorInstantiator.class),
+
+                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass", BestConstructorInstantiator.class),
+                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PrivateStaticFinalNestedClass",
+                                                   BestConstructorInstantiator.class),
+                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PrivateStaticFinalNestedClass$PrivateStaticFinalNestedClass2",
+                                                   BestConstructorInstantiator.class),
+                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$ProtectedStaticFinalNestedClass",
+                                                   BestConstructorInstantiator.class),
+                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PackageStaticFinalNestedClass",
+                                                   BestConstructorInstantiator.class),
+                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PrivateStaticNestedClass", BestConstructorInstantiator.class),
+                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$ProtectedStaticNestedClass",
+                                                   BestConstructorInstantiator.class),
+                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PackageStaticNestedClass", BestConstructorInstantiator.class),
+                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PrivateFinalNestedClass", BestConstructorInstantiator.class),
+                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$ProtectedFinalNestedClass", BestConstructorInstantiator.class),
+                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PackageFinalNestedClass", BestConstructorInstantiator.class),
+                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PublicFinalNestedClass", BestConstructorInstantiator.class),
+                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PrivateNestedClass", BestConstructorInstantiator.class),
+                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$ProtectedNestedClass", BestConstructorInstantiator.class),
+                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PackageNestedClass", BestConstructorInstantiator.class),
+                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PublicNestedClass", BestConstructorInstantiator.class)
         )
                      .map(value -> dynamicTest(getDefaultDisplayName(value.className),
                                                Should_Return_Expected_Instantiator_For_Class_By_Qualified_Class_Name(value)));

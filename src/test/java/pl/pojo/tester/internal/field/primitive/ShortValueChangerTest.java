@@ -1,5 +1,7 @@
 package pl.pojo.tester.internal.field.primitive;
 
+import classesForTest.fields.AllFiledTypes;
+import classesForTest.fields.AllFiledTypes_Wrapped;
 import java.util.stream.Stream;
 import lombok.AllArgsConstructor;
 import org.assertj.core.util.Lists;
@@ -9,13 +11,11 @@ import org.junit.jupiter.api.function.Executable;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
-import test.fields.AllFiledTypes;
-import test.fields.AllFiledTypes_Wrapped;
 
+import static classesForTest.TestHelper.getDefaultDisplayName;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 import static org.powermock.reflect.Whitebox.getInternalState;
-import static test.TestHelper.getDefaultDisplayName;
 
 @RunWith(JUnitPlatform.class)
 public class ShortValueChangerTest {

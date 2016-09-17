@@ -1,5 +1,7 @@
 package pl.pojo.tester.internal.utils;
 
+import classesForTest.fields.Getters;
+import classesForTest.fields.Setters;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.stream.Stream;
@@ -12,13 +14,11 @@ import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 import pl.pojo.tester.api.GetterNotFoundException;
 import pl.pojo.tester.api.SetterNotFoundException;
-import test.fields.Getters;
-import test.fields.Setters;
 
+import static classesForTest.TestHelper.getDefaultDisplayName;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
-import static test.TestHelper.getDefaultDisplayName;
 
 @RunWith(JUnitPlatform.class)
 public class MethodUtilsTest {

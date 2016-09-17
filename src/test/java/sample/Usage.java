@@ -1,13 +1,13 @@
 package sample;
 
 
+import classesForTest.equals.BadPojoEquals_NotConsistent;
 import java.util.function.Predicate;
 import pl.pojo.tester.api.ClassAndFieldPredicatePair;
 import pl.pojo.tester.api.EqualsTester;
 import pl.pojo.tester.api.FieldPredicate;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
-import test.equals.BadPojoEquals_NotConsistent;
 
 import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
 import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsForAll;

@@ -1,16 +1,16 @@
 package pl.pojo.tester.api;
 
+import classesForTest.GoodPojo_Equals_HashCode_ToString;
+import classesForTest.equals.BadPojoEqualsDifferentObjectSameType;
+import classesForTest.equals.BadPojoEqualsDifferentType;
+import classesForTest.equals.BadPojoEqualsItself;
+import classesForTest.equals.BadPojoEqualsNull;
 import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 import pl.pojo.tester.internal.assertion.AssertionError;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
-import test.GoodPojo_Equals_HashCode_ToString;
-import test.equals.BadPojoEqualsDifferentObjectSameType;
-import test.equals.BadPojoEqualsDifferentType;
-import test.equals.BadPojoEqualsItself;
-import test.equals.BadPojoEqualsNull;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;

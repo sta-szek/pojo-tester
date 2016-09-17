@@ -1,14 +1,14 @@
 package pl.pojo.tester.api;
 
+import classesForTest.fields.Getters;
+import classesForTest.fields.Setters;
+import classesForTest.settergetter.BadPojoSetterGetter;
+import classesForTest.settergetter.GoodPojoSetterGetter;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
-import test.fields.Getters;
-import test.fields.Setters;
-import test.settergetter.BadPojoSetterGetter;
-import test.settergetter.GoodPojoSetterGetter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;

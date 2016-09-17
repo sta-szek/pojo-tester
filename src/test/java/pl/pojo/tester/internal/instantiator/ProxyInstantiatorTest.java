@@ -1,20 +1,20 @@
 package pl.pojo.tester.internal.instantiator;
 
 
+import classesForTest.instantiator.abstracts.Abstract;
+import classesForTest.instantiator.abstracts.Abstract_PrivateConstructor;
+import classesForTest.instantiator.abstracts.Annotation;
+import classesForTest.instantiator.abstracts.Interface;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
-import test.instantiator.abstracts.Abstract;
-import test.instantiator.abstracts.Abstract_PrivateConstructor;
-import test.instantiator.abstracts.Annotation;
-import test.instantiator.abstracts.Interface;
 
+import static classesForTest.TestHelper.getDefaultDisplayName;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
-import static test.TestHelper.getDefaultDisplayName;
 
 @RunWith(JUnitPlatform.class)
 public class ProxyInstantiatorTest {

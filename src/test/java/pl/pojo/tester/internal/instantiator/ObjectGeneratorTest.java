@@ -1,5 +1,12 @@
 package pl.pojo.tester.internal.instantiator;
 
+import classesForTest.GoodPojo_Equals_HashCode_ToString;
+import classesForTest.fields.collections.collection.Collections;
+import classesForTest.fields.collections.map.Maps;
+import classesForTest.instantiator.arrays.ObjectContainingArray;
+import classesForTest.instantiator.arrays.ObjectContainingIterable;
+import classesForTest.instantiator.arrays.ObjectContainingIterator;
+import classesForTest.instantiator.arrays.ObjectContainingStream;
 import java.util.List;
 import java.util.stream.Stream;
 import lombok.AllArgsConstructor;
@@ -13,17 +20,10 @@ import org.junit.runner.RunWith;
 import pl.pojo.tester.api.ClassAndFieldPredicatePair;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
-import test.GoodPojo_Equals_HashCode_ToString;
-import test.fields.collections.collection.Collections;
-import test.fields.collections.map.Maps;
-import test.instantiator.arrays.ObjectContainingArray;
-import test.instantiator.arrays.ObjectContainingIterable;
-import test.instantiator.arrays.ObjectContainingIterator;
-import test.instantiator.arrays.ObjectContainingStream;
 
+import static classesForTest.TestHelper.getDefaultDisplayName;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
-import static test.TestHelper.getDefaultDisplayName;
 
 @RunWith(JUnitPlatform.class)
 public class ObjectGeneratorTest {
