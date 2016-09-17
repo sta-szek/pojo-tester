@@ -74,7 +74,7 @@ public final class MethodUtils {
                    || (methodName.startsWith("have") && methodName.length() == fieldNameLength + 4)
                    || (methodName.startsWith("contains") && methodName.length() == fieldNameLength + 8);
         } else {
-            return methodName.startsWith("get");
+            return methodName.startsWith("get") && methodName.length() == fieldNameLength + 3;
         }
     }
 
