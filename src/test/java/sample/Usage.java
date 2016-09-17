@@ -30,28 +30,29 @@ public class Usage {
         assertPojoMethodsFor(stringClass).using(fieldValueChanger)
                                          .testing(EQUALS)
                                          .testing(HASH_CODE)
-                                         .testing(SETTERS_AND_GETTERS)
+                                         .testing(GETTER)
+                                         .testing(SETTER)
                                          .testing(TO_STRING)
                                          .areWellImplemented();
 
         assertPojoMethodsFor(stringClass, fieldPredicate).using(fieldValueChanger)
-                                                         .testing(EQUALS, HASH_CODE, SETTERS_AND_GETTERS, TO_STRING)
+                                                         .testing(EQUALS, HASH_CODE, GETTER, SETTER, TO_STRING)
                                                          .areWellImplemented();
 
         assertPojoMethodsFor(classAndFieldPredicatePair).using(fieldValueChanger)
-                                                        .testing(EQUALS, HASH_CODE, SETTERS_AND_GETTERS, TO_STRING)
+                                                        .testing(EQUALS, HASH_CODE, GETTER, SETTER, TO_STRING)
                                                         .areWellImplemented();
 
         assertPojoMethodsFor(classAndFieldPredicatePair, classAndFieldPredicatePair).using(fieldValueChanger)
-                                                                                    .testing(EQUALS, HASH_CODE, SETTERS_AND_GETTERS, TO_STRING)
+                                                                                    .testing(EQUALS, HASH_CODE, GETTER, SETTER, TO_STRING)
                                                                                     .areWellImplemented();
 
         assertPojoMethodsForAll(stringClass, stringClass).using(fieldValueChanger)
-                                                         .testing(EQUALS, HASH_CODE, SETTERS_AND_GETTERS, TO_STRING)
+                                                         .testing(EQUALS, HASH_CODE, GETTER, SETTER, TO_STRING)
                                                          .areWellImplemented();
 
         assertPojoMethodsForAll(classAndFieldPredicatePair, classAndFieldPredicatePair).using(fieldValueChanger)
-                                                                                       .testing(EQUALS, HASH_CODE, SETTERS_AND_GETTERS, TO_STRING)
+                                                                                       .testing(EQUALS, HASH_CODE, GETTER, SETTER, TO_STRING)
                                                                                        .areWellImplemented();
     }
 }
