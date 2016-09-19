@@ -4,11 +4,15 @@ package pl.pojo.tester.internal.instantiator;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
+import java.util.Map;
 
 class BestConstructorInstantiator extends ObjectInstantiator {
 
-    BestConstructorInstantiator(final Class<?> clazz) {
+    private final Map<Class<?>, Object[]> classAndConstructorParameters;
+
+    BestConstructorInstantiator(final Class<?> clazz, final Map<Class<?>, Object[]> classAndConstructorParameters) {
         super(clazz);
+        this.classAndConstructorParameters = classAndConstructorParameters;
     }
 
     @Override
@@ -45,7 +49,7 @@ class BestConstructorInstantiator extends ObjectInstantiator {
     }
 
     private Object instantiate(final Class<?> clazz) {
-        return Instantiable.forClass(clazz)
+        return Instantiable.forClass(clazz, classAndConstructorParameters)
                            .instantiate();
     }
 

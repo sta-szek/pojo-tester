@@ -26,13 +26,14 @@ public class Usage {
         final Predicate<String> fieldPredicate = FieldPredicate.includeAllFields(stringClass);
         final ClassAndFieldPredicatePair classAndFieldPredicatePair = new ClassAndFieldPredicatePair(stringClass);
 
-
         assertPojoMethodsFor(stringClass).using(fieldValueChanger)
                                          .testing(EQUALS)
                                          .testing(HASH_CODE)
                                          .testing(GETTER)
                                          .testing(SETTER)
                                          .testing(TO_STRING)
+                                         .create(Sample.class, 3, 2, 1)
+                                         .create(Sample.class, 1, 2)
                                          .areWellImplemented();
 
         assertPojoMethodsFor(stringClass, fieldPredicate).using(fieldValueChanger)
@@ -55,4 +56,6 @@ public class Usage {
                                                                                        .testing(EQUALS, HASH_CODE, GETTER, SETTER, TO_STRING)
                                                                                        .areWellImplemented();
     }
+
+
 }

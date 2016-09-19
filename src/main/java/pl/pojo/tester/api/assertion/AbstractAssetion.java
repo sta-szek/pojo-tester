@@ -1,7 +1,9 @@
 package pl.pojo.tester.api.assertion;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -20,6 +22,7 @@ public abstract class AbstractAssetion {
               .forEach(DEFAULT_TESTERS::add);
     }
 
+    private final Map<Class<?>, Object[]> classAndConstructorParameters = new HashMap<>();
     Set<AbstractTester> testers = new HashSet<>();
     private AbstractFieldValueChanger abstractFieldValueChanger;
 
@@ -48,7 +51,14 @@ public abstract class AbstractAssetion {
             testers.forEach(tester -> tester.setFieldValuesChanger(abstractFieldValueChanger));
         }
 
+        testers.forEach(tester -> tester.setUserDefinedConstructors(classAndConstructorParameters));
+
         testImplementation();
+    }
+
+    public AbstractAssetion create(final Class<?> clazz, final Object... constructorParameters) {
+        classAndConstructorParameters.put(clazz, constructorParameters);
+        return this;
     }
 
     protected abstract void testImplementation();

@@ -7,7 +7,9 @@ import classesForTest.instantiator.arrays.ObjectContainingArray;
 import classesForTest.instantiator.arrays.ObjectContainingIterable;
 import classesForTest.instantiator.arrays.ObjectContainingIterator;
 import classesForTest.instantiator.arrays.ObjectContainingStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,11 +31,12 @@ import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 public class ObjectGeneratorTest {
 
     private final AbstractFieldValueChanger abstractFieldValueChanger = DefaultFieldValueChanger.INSTANCE;
+    private final Map<Class<?>, Object[]> classAndConstructorParameters = new HashMap<>();
 
     @Test
     public void Should_Generate_Different_Objects_For_Class_Containing_Boolean_Type() {
         // given
-        final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger);
+        final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger, classAndConstructorParameters);
         final ClassAndFieldPredicatePair classAndFieldPredicatePair = new ClassAndFieldPredicatePair(ClassWithBooleanField.class);
 
         // when
@@ -47,7 +50,7 @@ public class ObjectGeneratorTest {
     @Test
     public void Should_Create_Any_Instance() {
         // given
-        final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger);
+        final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger, classAndConstructorParameters);
         final Class<GoodPojo_Equals_HashCode_ToString> expectedClass = GoodPojo_Equals_HashCode_ToString.class;
 
         // when
@@ -69,7 +72,7 @@ public class ObjectGeneratorTest {
     public Executable Should_Create_Same_Instance(final Object objectToCreateSameInstance) {
         return () -> {
             // given
-            final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger);
+            final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger, classAndConstructorParameters);
 
             // when
             final Object result = objectGenerator.generateSameInstance(objectToCreateSameInstance);
@@ -97,7 +100,7 @@ public class ObjectGeneratorTest {
     public Executable Should_Generate_Different_Objects(final DifferentObjectTestCase testCase) {
         return () -> {
             // given
-            final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger);
+            final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger, classAndConstructorParameters);
             final ClassAndFieldPredicatePair classAndFieldPredicatePair = new ClassAndFieldPredicatePair(testCase.clazz);
 
             // when
@@ -133,7 +136,7 @@ public class ObjectGeneratorTest {
     public Executable Should_Generate_Different_Objects_Recursively(final RecursivelyDifferentObjectTestCase testCase) {
         return () -> {
             // given
-            final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger);
+            final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger, classAndConstructorParameters);
 
             // when
             final List<Object> result = objectGenerator.generateDifferentObjects(testCase.baseClass, testCase.otherClasses);
@@ -147,7 +150,7 @@ public class ObjectGeneratorTest {
     @Test
     public void Should_Not_Fall_In_Endless_Loop() throws IllegalAccessException {
         // given
-        final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger);
+        final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger, classAndConstructorParameters);
         final ClassAndFieldPredicatePair iClass = new ClassAndFieldPredicatePair(R.class);
         final int expectedSize = 2;
 

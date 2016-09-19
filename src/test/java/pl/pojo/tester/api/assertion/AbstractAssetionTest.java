@@ -3,6 +3,7 @@ package pl.pojo.tester.api.assertion;
 import classesForTest.GoodPojo_Equals_HashCode_ToString;
 import classesForTest.equals.BadPojoEqualsItself;
 import com.google.common.collect.Sets;
+import matchers.MapMatcher;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
@@ -103,7 +104,24 @@ public class AbstractAssetionTest {
         abstractAssetion.areWellImplemented();
 
         // then
-        verify(equalsTester, only()).setFieldValuesChanger(expectedFieldsValuesChanger);
+        verify(equalsTester, times(1)).setFieldValuesChanger(expectedFieldsValuesChanger);
+    }
+
+    @Test
+    public void Should_Set_User_Defined_Class_And_Constructor_Paramters_To_Tester() {
+        // given
+        final AbstractAssetion abstractAssetion = new AbstractAssetionImplementation();
+        final EqualsTester equalsTester = mock(EqualsTester.class);
+        Whitebox.setInternalState(abstractAssetion, "testers", Sets.newHashSet(equalsTester));
+        final Class<String> expectedClass = String.class;
+        final Object[] expectedArguments = {'c', 'h', 'a', 'r'};
+        abstractAssetion.create(expectedClass, expectedArguments);
+
+        // when
+        abstractAssetion.areWellImplemented();
+
+        // then
+        verify(equalsTester, times(1)).setUserDefinedConstructors(argThat(new MapMatcher(expectedClass, expectedArguments)));
     }
 
     private class AbstractAssetionImplementation extends AbstractAssetion {
