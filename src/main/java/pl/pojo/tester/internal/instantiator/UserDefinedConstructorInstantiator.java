@@ -10,17 +10,17 @@ import pl.pojo.tester.api.ConstructorParameters;
 
 class UserDefinedConstructorInstantiator extends ObjectInstantiator {
 
-    private final Map<Class<?>, ConstructorParameters> constructorInfo;
+    private final Map<Class<?>, ConstructorParameters> constructorParameters;
 
-    UserDefinedConstructorInstantiator(final Class<?> clazz, final Map<Class<?>, ConstructorParameters> constructorInfo) {
+    UserDefinedConstructorInstantiator(final Class<?> clazz, final Map<Class<?>, ConstructorParameters> constructorParameters) {
         super(clazz);
-        this.constructorInfo = constructorInfo;
+        this.constructorParameters = constructorParameters;
     }
 
     @Override
     public Object instantiate() {
         try {
-            final ConstructorParameters constructorParameters = this.constructorInfo.get(clazz);
+            final ConstructorParameters constructorParameters = this.constructorParameters.get(clazz);
             Class<?>[] constructorParametersTypes = constructorParameters.getConstructorParametersTypes();
             Object[] arguments = constructorParameters.getConstructorParameters();
 
@@ -40,7 +40,7 @@ class UserDefinedConstructorInstantiator extends ObjectInstantiator {
 
     private Object instantiateEnclosingClass() {
         final Class<?> enclosingClass = clazz.getEnclosingClass();
-        return Instantiable.forClass(enclosingClass, constructorInfo)
+        return Instantiable.forClass(enclosingClass, constructorParameters)
                            .instantiate();
     }
 

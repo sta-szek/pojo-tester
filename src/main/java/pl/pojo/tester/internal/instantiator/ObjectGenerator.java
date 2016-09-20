@@ -20,15 +20,15 @@ import pl.pojo.tester.internal.utils.FieldUtils;
 public class ObjectGenerator {
 
     private final AbstractFieldValueChanger abstractFieldValueChanger;
-    private final Map<Class<?>, ConstructorParameters> constructorInfo;
+    private final Map<Class<?>, ConstructorParameters> constructorParameters;
 
-    public ObjectGenerator(final AbstractFieldValueChanger abstractFieldValueChanger, final Map<Class<?>, ConstructorParameters> constructorInfo) {
+    public ObjectGenerator(final AbstractFieldValueChanger abstractFieldValueChanger, final Map<Class<?>, ConstructorParameters> constructorParameters) {
         this.abstractFieldValueChanger = abstractFieldValueChanger;
-        this.constructorInfo = constructorInfo;
+        this.constructorParameters = constructorParameters;
     }
 
     public Object createNewInstance(final Class<?> clazz) {
-        return Instantiable.forClass(clazz, constructorInfo)
+        return Instantiable.forClass(clazz, constructorParameters)
                            .instantiate();
     }
 

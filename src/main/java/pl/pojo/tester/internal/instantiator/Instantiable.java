@@ -9,19 +9,19 @@ import pl.pojo.tester.api.ConstructorParameters;
 
 public abstract class Instantiable {
 
-    public static ObjectInstantiator forClass(final String qualifiedClassName, final Map<Class<?>, ConstructorParameters> constructorInfo) {
+    public static ObjectInstantiator forClass(final String qualifiedClassName, final Map<Class<?>, ConstructorParameters> constructorParameters) {
         final Class<?> clazz;
         try {
             clazz = Class.forName(qualifiedClassName);
         } catch (final ClassNotFoundException e) {
             throw new ObjectInstantiationException(qualifiedClassName, e);
         }
-        return forClass(clazz, constructorInfo);
+        return forClass(clazz, constructorParameters);
     }
 
-    static ObjectInstantiator forClass(final Class<?> clazz, final Map<Class<?>, ConstructorParameters> constructorInfo) {
-        if (userDefinedConstructorParametersFor(clazz, constructorInfo)) {
-            return new UserDefinedConstructorInstantiator(clazz, constructorInfo);
+    static ObjectInstantiator forClass(final Class<?> clazz, final Map<Class<?>, ConstructorParameters> constructorParameters) {
+        if (userDefinedConstructorParametersFor(clazz, constructorParameters)) {
+            return new UserDefinedConstructorInstantiator(clazz, constructorParameters);
         }
 
         if (isStringClass(clazz)) {
@@ -48,11 +48,11 @@ public abstract class Instantiable {
             return new ProxyInstantiator(clazz);
         }
 
-        return new BestConstructorInstantiator(clazz, constructorInfo);
+        return new BestConstructorInstantiator(clazz, constructorParameters);
     }
 
-    private static boolean userDefinedConstructorParametersFor(final Class<?> clazz, final Map<Class<?>, ConstructorParameters> constructorInfo) {
-        return constructorInfo.containsKey(clazz);
+    private static boolean userDefinedConstructorParametersFor(final Class<?> clazz, final Map<Class<?>, ConstructorParameters> constructorParameters) {
+        return constructorParameters.containsKey(clazz);
     }
 
     private static boolean isStringClass(final Class<?> clazz) {

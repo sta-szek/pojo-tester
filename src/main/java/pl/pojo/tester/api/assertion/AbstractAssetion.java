@@ -23,7 +23,7 @@ public abstract class AbstractAssetion {
               .forEach(DEFAULT_TESTERS::add);
     }
 
-    private final Map<Class<?>, ConstructorParameters> constructorInfo = new HashMap<>();
+    private final Map<Class<?>, ConstructorParameters> constructorParameters = new HashMap<>();
     Set<AbstractTester> testers = new HashSet<>();
     private AbstractFieldValueChanger abstractFieldValueChanger;
 
@@ -52,18 +52,18 @@ public abstract class AbstractAssetion {
             testers.forEach(tester -> tester.setFieldValuesChanger(abstractFieldValueChanger));
         }
 
-        testers.forEach(tester -> tester.setUserDefinedConstructors(constructorInfo));
+        testers.forEach(tester -> tester.setUserDefinedConstructors(constructorParameters));
 
         testImplementation();
     }
 
     public AbstractAssetion create(final Class<?> clazz, final Object[] constructorParameters, final Class<?>[] constructorParameterTypes) {
-        final ConstructorParameters constructorInfo = new ConstructorParameters(constructorParameters, constructorParameterTypes);
-        return create(clazz, constructorInfo);
+        final ConstructorParameters constructorParameters = new ConstructorParameters(constructorParameters, constructorParameterTypes);
+        return create(clazz, constructorParameters);
     }
 
     public AbstractAssetion create(final Class<?> clazz, final ConstructorParameters constructorParameters) {
-        this.constructorInfo.put(clazz, constructorParameters);
+        this.constructorParameters.put(clazz, constructorParameters);
         return this;
     }
 

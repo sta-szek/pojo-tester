@@ -9,11 +9,11 @@ import pl.pojo.tester.api.ConstructorParameters;
 
 class BestConstructorInstantiator extends ObjectInstantiator {
 
-    private final Map<Class<?>, ConstructorParameters> constructorInfo;
+    private final Map<Class<?>, ConstructorParameters> constructorParameters;
 
-    BestConstructorInstantiator(final Class<?> clazz, final Map<Class<?>, ConstructorParameters> constructorInfo) {
+    BestConstructorInstantiator(final Class<?> clazz, final Map<Class<?>, ConstructorParameters> constructorParameters) {
         super(clazz);
-        this.constructorInfo = constructorInfo;
+        this.constructorParameters = constructorParameters;
     }
 
     @Override
@@ -50,7 +50,7 @@ class BestConstructorInstantiator extends ObjectInstantiator {
     }
 
     private Object instantiate(final Class<?> clazz) {
-        return Instantiable.forClass(clazz, constructorInfo)
+        return Instantiable.forClass(clazz, constructorParameters)
                            .instantiate();
     }
 
