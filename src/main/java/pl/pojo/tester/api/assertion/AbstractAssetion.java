@@ -58,8 +58,8 @@ public abstract class AbstractAssetion {
     }
 
     public AbstractAssetion create(final Class<?> clazz, final Object[] constructorParameters, final Class<?>[] constructorParameterTypes) {
-        final ConstructorParameters constructorParameters = new ConstructorParameters(constructorParameters, constructorParameterTypes);
-        return create(clazz, constructorParameters);
+        final ConstructorParameters constructorParameter = new ConstructorParameters(constructorParameters, constructorParameterTypes);
+        return create(clazz, constructorParameter);
     }
 
     public AbstractAssetion create(final Class<?> clazz, final ConstructorParameters constructorParameters) {
