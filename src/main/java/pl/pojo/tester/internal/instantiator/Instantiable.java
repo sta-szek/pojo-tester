@@ -4,23 +4,30 @@ package pl.pojo.tester.internal.instantiator;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
+import java.util.Map;
+import pl.pojo.tester.api.ConstructorParameters;
 
 public abstract class Instantiable {
 
-    public static ObjectInstantiator forClass(final String qualifiedClassName) {
+    public static ObjectInstantiator forClass(final String qualifiedClassName, final Map<Class<?>, ConstructorParameters> constructorParameters) {
         final Class<?> clazz;
         try {
             clazz = Class.forName(qualifiedClassName);
         } catch (final ClassNotFoundException e) {
             throw new ObjectInstantiationException(qualifiedClassName, e);
         }
-        return forClass(clazz);
+        return forClass(clazz, constructorParameters);
     }
 
-    public static ObjectInstantiator forClass(final Class<?> clazz) {
+    static ObjectInstantiator forClass(final Class<?> clazz, final Map<Class<?>, ConstructorParameters> constructorParameters) {
+        if (userDefinedConstructorParametersFor(clazz, constructorParameters)) {
+            return new UserDefinedConstructorInstantiator(clazz, constructorParameters);
+        }
+
         if (isStringClass(clazz)) {
             return new StringClassInstantiator();
         }
+
         if (canBeCreatedByDefaultConstructor(clazz)) {
             return new DefaultConstructorInstantiator(clazz);
         }
@@ -41,8 +48,11 @@ public abstract class Instantiable {
             return new ProxyInstantiator(clazz);
         }
 
-        return new BestConstructorInstantiator(clazz);
+        return new BestConstructorInstantiator(clazz, constructorParameters);
+    }
 
+    private static boolean userDefinedConstructorParametersFor(final Class<?> clazz, final Map<Class<?>, ConstructorParameters> constructorParameters) {
+        return constructorParameters.containsKey(clazz);
     }
 
     private static boolean isStringClass(final Class<?> clazz) {

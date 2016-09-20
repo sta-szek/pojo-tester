@@ -10,6 +10,8 @@ import classesForTest.instantiator.PrivateConstructor;
 import classesForTest.instantiator.ProtectedConstructor;
 import classesForTest.instantiator.arrays.*;
 import classesForTest.instantiator.statics.ClassContainingStaticClasses;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
@@ -17,6 +19,7 @@ import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
+import pl.pojo.tester.api.ConstructorParameters;
 import pl.pojo.tester.api.FieldPredicate;
 import pl.pojo.tester.internal.utils.FieldUtils;
 import pl.pojo.tester.internal.utils.MethodUtils;
@@ -28,6 +31,8 @@ import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 @RunWith(JUnitPlatform.class)
 public class BestConstructorInstantiatorTest {
+
+    private final Map<Class<?>, ConstructorParameters> constructorParameters = new HashMap<>();
 
     @TestFactory
     public Stream<DynamicTest> Should_Instantiate_Non_Public_Classes() {
@@ -56,7 +61,7 @@ public class BestConstructorInstantiatorTest {
         return () -> {
             // given
             final Class<?> classUnderTest = Class.forName(className);
-            final BestConstructorInstantiator instantiator = new BestConstructorInstantiator(classUnderTest);
+            final BestConstructorInstantiator instantiator = new BestConstructorInstantiator(classUnderTest, constructorParameters);
 
             // when
             final Object result = instantiator.instantiate();
@@ -104,7 +109,7 @@ public class BestConstructorInstantiatorTest {
     public Executable Should_Create_Object_Using_Best_Constructor(final Class<?> classToInstantiate) {
         return () -> {
             // given
-            final BestConstructorInstantiator instantiator = new BestConstructorInstantiator(classToInstantiate);
+            final BestConstructorInstantiator instantiator = new BestConstructorInstantiator(classToInstantiate, constructorParameters);
 
             // when
             final Object result = instantiator.instantiate();
@@ -125,7 +130,7 @@ public class BestConstructorInstantiatorTest {
     public Executable Should_Throw_Exception_When_Cannot_Instantiate_Class(final Class<?> classToInstantiate) {
         return () -> {
             // given
-            final BestConstructorInstantiator instantiator = new BestConstructorInstantiator(classToInstantiate);
+            final BestConstructorInstantiator instantiator = new BestConstructorInstantiator(classToInstantiate, constructorParameters);
 
             // when
             final Throwable result = catchThrowable(instantiator::instantiate);
@@ -139,7 +144,7 @@ public class BestConstructorInstantiatorTest {
     public void Should_Create_Object_Using_Private_Constructor() {
         // given
         final Class<PrivateConstructor> classToInstantiate = PrivateConstructor.class;
-        final BestConstructorInstantiator instantiator = new BestConstructorInstantiator(classToInstantiate);
+        final BestConstructorInstantiator instantiator = new BestConstructorInstantiator(classToInstantiate, constructorParameters);
 
         // when
         final Object result = instantiator.instantiate();

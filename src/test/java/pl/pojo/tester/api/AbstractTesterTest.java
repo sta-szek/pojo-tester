@@ -1,5 +1,6 @@
 package pl.pojo.tester.api;
 
+import java.util.HashMap;
 import java.util.function.Predicate;
 import lombok.Data;
 import matchers.ClassAndFieldPredicatePairArgumentMatcher;
@@ -87,7 +88,7 @@ public class AbstractTesterTest {
     }
 
     @Test
-    public void Should_Create_New_Object_Generator() {
+    public void Should_Create_New_Object_Generator_When_Set_Field_Value_Changer() {
         // given
         final AbstractTester abstractTester = new AbstractTesterImplementation();
         final AbstractFieldValueChanger fieldValuesChanger = DefaultFieldValueChanger.INSTANCE;
@@ -95,6 +96,20 @@ public class AbstractTesterTest {
 
         // when
         abstractTester.setFieldValuesChanger(fieldValuesChanger);
+        final ObjectGenerator afterChange = Whitebox.getInternalState(abstractTester, "objectGenerator");
+
+        // then
+        assertThat(beforeChange).isNotEqualTo(afterChange);
+    }
+
+    @Test
+    public void Should_Create_New_Object_Generator_When_User_Defined_Class_And_Constructor() {
+        // given
+        final AbstractTester abstractTester = new AbstractTesterImplementation();
+        final ObjectGenerator beforeChange = Whitebox.getInternalState(abstractTester, "objectGenerator");
+
+        // when
+        abstractTester.setUserDefinedConstructors(new HashMap<>());
         final ObjectGenerator afterChange = Whitebox.getInternalState(abstractTester, "objectGenerator");
 
         // then
