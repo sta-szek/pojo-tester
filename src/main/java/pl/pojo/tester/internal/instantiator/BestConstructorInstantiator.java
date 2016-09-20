@@ -5,14 +5,15 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.Map;
+import pl.pojo.tester.api.ConstructorParameters;
 
 class BestConstructorInstantiator extends ObjectInstantiator {
 
-    private final Map<Class<?>, Object[]> classAndConstructorParameters;
+    private final Map<Class<?>, ConstructorParameters> constructorInfo;
 
-    BestConstructorInstantiator(final Class<?> clazz, final Map<Class<?>, Object[]> classAndConstructorParameters) {
+    BestConstructorInstantiator(final Class<?> clazz, final Map<Class<?>, ConstructorParameters> constructorInfo) {
         super(clazz);
-        this.classAndConstructorParameters = classAndConstructorParameters;
+        this.constructorInfo = constructorInfo;
     }
 
     @Override
@@ -49,7 +50,7 @@ class BestConstructorInstantiator extends ObjectInstantiator {
     }
 
     private Object instantiate(final Class<?> clazz) {
-        return Instantiable.forClass(clazz, classAndConstructorParameters)
+        return Instantiable.forClass(clazz, constructorInfo)
                            .instantiate();
     }
 

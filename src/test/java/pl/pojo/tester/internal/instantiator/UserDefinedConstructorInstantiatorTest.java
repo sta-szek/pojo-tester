@@ -13,6 +13,7 @@ import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
+import pl.pojo.tester.api.ConstructorParameters;
 
 import static classesForTest.TestHelper.getDefaultDisplayName;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -22,22 +23,22 @@ import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 @RunWith(JUnitPlatform.class)
 public class UserDefinedConstructorInstantiatorTest {
 
-    private final Map<Class<?>, Object[]> classAndConstructorParameters = new HashMap<>();
+    private final Map<Class<?>, ConstructorParameters> constructorInfo = new HashMap<>();
 
     {
-        classAndConstructorParameters.put(UserDefinedClass.class, new Integer[]{1, 2});
-        classAndConstructorParameters.put(ClassWithPrivateConstructor.class, new Integer[]{1});
-        classAndConstructorParameters.put(One_Arg_Constructor_Throws_NPE.class, new Object[]{1});
-        classAndConstructorParameters.put(No_Args_Constructor_Throws_NPE.class, new Object[0]);
-        classAndConstructorParameters.put(InnerClass.class, new Object[]{1});
-        classAndConstructorParameters.put(NestedClass.class, new Object[]{1});
+        constructorInfo.put(UserDefinedClass.class, new ConstructorParameters(new Object[]{1, 2}, new Class<?>[]{int.class, int.class}));
+        constructorInfo.put(ClassWithPrivateConstructor.class, new ConstructorParameters(new Object[]{1}, new Class<?>[]{int.class}));
+        constructorInfo.put(One_Arg_Constructor_Throws_NPE.class, new ConstructorParameters(new Object[]{1}, new Class<?>[]{Object.class}));
+        constructorInfo.put(No_Args_Constructor_Throws_NPE.class, new ConstructorParameters(new Object[0], new Class<?>[0]));
+        constructorInfo.put(InnerClass.class, new ConstructorParameters(new Object[]{1}, new Class<?>[]{int.class}));
+        constructorInfo.put(NestedClass.class, new ConstructorParameters(new Object[]{1}, new Class<?>[]{int.class}));
     }
 
     @Test
     public void Should_Create_Object_Using_Private_Constructor() {
         // given
         final Class<ClassWithPrivateConstructor> classToInstantiate = ClassWithPrivateConstructor.class;
-        final UserDefinedConstructorInstantiator instantiator = new UserDefinedConstructorInstantiator(classToInstantiate, classAndConstructorParameters);
+        final UserDefinedConstructorInstantiator instantiator = new UserDefinedConstructorInstantiator(classToInstantiate, constructorInfo);
 
         // when
         final Object result = instantiator.instantiate();
@@ -50,7 +51,7 @@ public class UserDefinedConstructorInstantiatorTest {
     public void Should_Create_Object_For_Inner_Class() {
         // given
         final Class<InnerClass> classToInstantiate = InnerClass.class;
-        final UserDefinedConstructorInstantiator instantiator = new UserDefinedConstructorInstantiator(classToInstantiate, classAndConstructorParameters);
+        final UserDefinedConstructorInstantiator instantiator = new UserDefinedConstructorInstantiator(classToInstantiate, constructorInfo);
 
         // when
         final Object result = instantiator.instantiate();
@@ -63,7 +64,7 @@ public class UserDefinedConstructorInstantiatorTest {
     public void Should_Create_Object_For_Nested_Class() {
         // given
         final Class<NestedClass> classToInstantiate = NestedClass.class;
-        final UserDefinedConstructorInstantiator instantiator = new UserDefinedConstructorInstantiator(classToInstantiate, classAndConstructorParameters);
+        final UserDefinedConstructorInstantiator instantiator = new UserDefinedConstructorInstantiator(classToInstantiate, constructorInfo);
 
         // when
         final Object result = instantiator.instantiate();
@@ -84,7 +85,7 @@ public class UserDefinedConstructorInstantiatorTest {
         return () -> {
             // given
             final UserDefinedConstructorInstantiator instantiator = new UserDefinedConstructorInstantiator(classToInstantiate,
-                                                                                                           classAndConstructorParameters);
+                                                                                                           constructorInfo);
 
             // when
             final Throwable result = catchThrowable(instantiator::instantiate);

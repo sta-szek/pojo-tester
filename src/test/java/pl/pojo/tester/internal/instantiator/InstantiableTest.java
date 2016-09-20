@@ -17,6 +17,7 @@ import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
+import pl.pojo.tester.api.ConstructorParameters;
 
 import static classesForTest.TestHelper.getDefaultDisplayName;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,7 +26,7 @@ import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 @RunWith(JUnitPlatform.class)
 public class InstantiableTest {
-    private static final Map<Class<?>, Object[]> CLASS_AND_CONSTRUCTOR_PARAMETERS = new HashMap<>();
+    private static final Map<Class<?>, ConstructorParameters> CLASS_AND_CONSTRUCTOR_PARAMETERS = new HashMap<>();
 
     @BeforeAll
     private static void beforeAll() {

@@ -6,25 +6,26 @@ import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Stream;
+import pl.pojo.tester.api.ConstructorParameters;
 
 class UserDefinedConstructorInstantiator extends ObjectInstantiator {
 
-    private final Map<Class<?>, Object[]> classAndConstructorParameters;
+    private final Map<Class<?>, ConstructorParameters> constructorInfo;
 
-    UserDefinedConstructorInstantiator(final Class<?> clazz, final Map<Class<?>, Object[]> classAndConstructorParameters) {
+    UserDefinedConstructorInstantiator(final Class<?> clazz, final Map<Class<?>, ConstructorParameters> constructorInfo) {
         super(clazz);
-        this.classAndConstructorParameters = classAndConstructorParameters;
+        this.constructorInfo = constructorInfo;
     }
 
     @Override
     public Object instantiate() {
         try {
-            final Object[] constructorParameters = classAndConstructorParameters.get(clazz);
-            Class[] constructorParametersTypes = convertToParameterTypes(constructorParameters);
-            Object[] arguments = constructorParameters;
+            final ConstructorParameters constructorParameters = this.constructorInfo.get(clazz);
+            Class<?>[] constructorParametersTypes = constructorParameters.getConstructorParametersTypes();
+            Object[] arguments = constructorParameters.getConstructorParameters();
 
             if (isInnerClass()) {
-                constructorParametersTypes = putEnclosingClassAsFirstParameterType(clazz.getEnclosingClass(), constructorParameters);
+                constructorParametersTypes = putEnclosingClassAsFirstParameterType(clazz.getEnclosingClass(), constructorParametersTypes);
                 final Object enclosingClassInstance = instantiateEnclosingClass();
                 arguments = putEnclosingClassInstanceAsFirstParameter(enclosingClassInstance, arguments);
             }
@@ -39,7 +40,7 @@ class UserDefinedConstructorInstantiator extends ObjectInstantiator {
 
     private Object instantiateEnclosingClass() {
         final Class<?> enclosingClass = clazz.getEnclosingClass();
-        return Instantiable.forClass(enclosingClass, classAndConstructorParameters)
+        return Instantiable.forClass(enclosingClass, constructorInfo)
                            .instantiate();
     }
 
@@ -49,9 +50,8 @@ class UserDefinedConstructorInstantiator extends ObjectInstantiator {
     }
 
 
-    private Class[] putEnclosingClassAsFirstParameterType(final Class<?> enclosingClass, final Object[] constructorParameters) {
-        final Class[] parameterTypes = convertToParameterTypes(constructorParameters);
-        return Stream.concat(Stream.of(enclosingClass), Arrays.stream(parameterTypes))
+    private Class[] putEnclosingClassAsFirstParameterType(final Class<?> enclosingClass, final Class<?>[] constructorParametersTypes) {
+        return Stream.concat(Stream.of(enclosingClass), Arrays.stream(constructorParametersTypes))
                      .toArray(Class[]::new);
     }
 
@@ -59,9 +59,4 @@ class UserDefinedConstructorInstantiator extends ObjectInstantiator {
         return clazz.getEnclosingClass() != null && !Modifier.isStatic(clazz.getModifiers());
     }
 
-    private Class[] convertToParameterTypes(final Object[] constructorParameters) {
-        return Arrays.stream(constructorParameters)
-                     .map(Object::getClass)
-                     .toArray(Class[]::new);
-    }
 }

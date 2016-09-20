@@ -32,9 +32,10 @@ public class Usage {
                                          .testing(GETTER)
                                          .testing(SETTER)
                                          .testing(TO_STRING)
-                                         .create(Sample.class, 3, 2, 1)
-                                         .create(Sample.class, 1, 2)
+                                         .create(Sample.class, new Object[]{3, 2, 1}, new Class[]{int.class, int.class, int.class})
+                                         .create(Sample.class, new Object[]{3, 2}, new Class[]{int.class, int.class})
                                          .areWellImplemented();
+
 
         assertPojoMethodsFor(stringClass, fieldPredicate).using(fieldValueChanger)
                                                          .testing(EQUALS, HASH_CODE, GETTER, SETTER, TO_STRING)

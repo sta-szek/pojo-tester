@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 import org.powermock.reflect.Whitebox;
+import pl.pojo.tester.api.ConstructorParameters;
 import pl.pojo.tester.api.EqualsTester;
 import pl.pojo.tester.api.HashCodeTester;
 import pl.pojo.tester.internal.assertion.AssertionError;
@@ -115,13 +116,15 @@ public class AbstractAssetionTest {
         Whitebox.setInternalState(abstractAssetion, "testers", Sets.newHashSet(equalsTester));
         final Class<String> expectedClass = String.class;
         final Object[] expectedArguments = {'c', 'h', 'a', 'r'};
-        abstractAssetion.create(expectedClass, expectedArguments);
+        final Class[] expectedTypes = {char.class, char.class, char.class, char.class};
+        final ConstructorParameters constructorParameters = new ConstructorParameters(expectedArguments, expectedTypes);
+        abstractAssetion.create(expectedClass, constructorParameters);
 
         // when
         abstractAssetion.areWellImplemented();
 
         // then
-        verify(equalsTester, times(1)).setUserDefinedConstructors(argThat(new MapMatcher(expectedClass, expectedArguments)));
+        verify(equalsTester, times(1)).setUserDefinedConstructors(argThat(new MapMatcher(expectedClass, constructorParameters)));
     }
 
     private class AbstractAssetionImplementation extends AbstractAssetion {

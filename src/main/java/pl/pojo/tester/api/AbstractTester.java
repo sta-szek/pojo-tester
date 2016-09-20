@@ -17,7 +17,7 @@ public abstract class AbstractTester {
 
     protected ObjectGenerator objectGenerator;
     protected TestAssertions testAssertions = new TestAssertions();
-    private Map<Class<?>, Object[]> classAndConstructorParameters = new HashMap<>();
+    private Map<Class<?>, ConstructorParameters> constructorInfo = new HashMap<>();
     private AbstractFieldValueChanger fieldValuesChanger = DefaultFieldValueChanger.INSTANCE;
 
     public AbstractTester() {
@@ -25,7 +25,7 @@ public abstract class AbstractTester {
     }
 
     public AbstractTester(final AbstractFieldValueChanger abstractFieldValueChanger) {
-        objectGenerator = new ObjectGenerator(abstractFieldValueChanger, classAndConstructorParameters);
+        objectGenerator = new ObjectGenerator(abstractFieldValueChanger, constructorInfo);
     }
 
     public void test(final Class<?> clazz) {
@@ -55,12 +55,12 @@ public abstract class AbstractTester {
 
     public void setFieldValuesChanger(final AbstractFieldValueChanger fieldValuesChanger) {
         this.fieldValuesChanger = fieldValuesChanger;
-        objectGenerator = new ObjectGenerator(fieldValuesChanger, classAndConstructorParameters);
+        objectGenerator = new ObjectGenerator(fieldValuesChanger, constructorInfo);
     }
 
-    public void setUserDefinedConstructors(final Map<Class<?>, Object[]> classAndConstructorParameters) {
-        this.classAndConstructorParameters = classAndConstructorParameters;
-        objectGenerator = new ObjectGenerator(fieldValuesChanger, classAndConstructorParameters);
+    public void setUserDefinedConstructors(final Map<Class<?>, ConstructorParameters> constructorInfo) {
+        this.constructorInfo = constructorInfo;
+        objectGenerator = new ObjectGenerator(fieldValuesChanger, constructorInfo);
     }
 
     @Override
@@ -77,7 +77,7 @@ public abstract class AbstractTester {
 
         return new EqualsBuilder().append(objectGenerator, that.objectGenerator)
                                   .append(testAssertions, that.testAssertions)
-                                  .append(classAndConstructorParameters, that.classAndConstructorParameters)
+                                  .append(constructorInfo, that.constructorInfo)
                                   .append(fieldValuesChanger, that.fieldValuesChanger)
                                   .isEquals();
     }
@@ -86,7 +86,7 @@ public abstract class AbstractTester {
     public int hashCode() {
         return new HashCodeBuilder().append(objectGenerator)
                                     .append(testAssertions)
-                                    .append(classAndConstructorParameters)
+                                    .append(constructorInfo)
                                     .append(fieldValuesChanger)
                                     .toHashCode();
     }

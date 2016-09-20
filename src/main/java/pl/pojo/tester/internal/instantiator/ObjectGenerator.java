@@ -13,22 +13,22 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import pl.pojo.tester.api.ClassAndFieldPredicatePair;
+import pl.pojo.tester.api.ConstructorParameters;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 import pl.pojo.tester.internal.utils.FieldUtils;
 
 public class ObjectGenerator {
 
     private final AbstractFieldValueChanger abstractFieldValueChanger;
-    private final Map<Class<?>, Object[]> classAndConstructorParameters;
+    private final Map<Class<?>, ConstructorParameters> constructorInfo;
 
-    public ObjectGenerator(final AbstractFieldValueChanger abstractFieldValueChanger,
-                           final Map<Class<?>, Object[]> classAndConstructorParameters) {
+    public ObjectGenerator(final AbstractFieldValueChanger abstractFieldValueChanger, final Map<Class<?>, ConstructorParameters> constructorInfo) {
         this.abstractFieldValueChanger = abstractFieldValueChanger;
-        this.classAndConstructorParameters = classAndConstructorParameters;
+        this.constructorInfo = constructorInfo;
     }
 
     public Object createNewInstance(final Class<?> clazz) {
-        return Instantiable.forClass(clazz, classAndConstructorParameters)
+        return Instantiable.forClass(clazz, constructorInfo)
                            .instantiate();
     }
 
