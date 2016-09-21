@@ -3,7 +3,7 @@ package matchers;
 import org.mockito.ArgumentMatcher;
 import pl.pojo.tester.api.ClassAndFieldPredicatePair;
 
-public class ClassAndFieldPredicatePairArgumentMatcher extends ArgumentMatcher<ClassAndFieldPredicatePair> {
+public class ClassAndFieldPredicatePairArgumentMatcher implements ArgumentMatcher<ClassAndFieldPredicatePair> {
     private final Class<?> clazz;
     private final String fieldName;
 
@@ -13,14 +13,12 @@ public class ClassAndFieldPredicatePairArgumentMatcher extends ArgumentMatcher<C
     }
 
     @Override
-    public boolean matches(final Object argument) {
-        final ClassAndFieldPredicatePair classAndFieldPredicatePair = (ClassAndFieldPredicatePair) argument;
+    public boolean matches(final ClassAndFieldPredicatePair argument) {
+        final boolean classesMatches = argument.getClazz()
+                                               .equals(clazz);
 
-        final boolean classesMatches = classAndFieldPredicatePair.getClazz()
-                                                                 .equals(clazz);
-
-        final boolean predicateMatches = classAndFieldPredicatePair.getFieldsPredicate()
-                                                                   .test(fieldName);
+        final boolean predicateMatches = argument.getFieldsPredicate()
+                                                 .test(fieldName);
         return classesMatches && predicateMatches;
     }
 }

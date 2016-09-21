@@ -5,11 +5,11 @@ import lombok.Data;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
-import org.powermock.reflect.Whitebox;
 import pl.pojo.tester.api.ClassAndFieldPredicatePair;
 import pl.pojo.tester.api.EqualsTester;
 
 import static org.mockito.Mockito.*;
+import static org.powermock.reflect.Whitebox.setInternalState;
 
 @RunWith(JUnitPlatform.class)
 public class SingleClassAssetionTest {
@@ -22,7 +22,7 @@ public class SingleClassAssetionTest {
         final SingleClassAssetion singleClassAssetion = new SingleClassAssetion(classAndFieldPredicatePair, classAndFieldPredicatePairs);
         final EqualsTester equalsTester1 = mock(EqualsTester.class);
         final EqualsTester equalsTester2 = mock(EqualsTester.class);
-        Whitebox.setInternalState(singleClassAssetion, "testers", Sets.newHashSet(equalsTester1, equalsTester2));
+        setInternalState(singleClassAssetion, "testers", Sets.newHashSet(equalsTester1, equalsTester2));
 
         // when
         singleClassAssetion.testImplementation();

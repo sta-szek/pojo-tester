@@ -5,7 +5,7 @@ import pl.pojo.tester.api.ClassAndFieldPredicatePair;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class RecursivelyEqualArgumentMatcher extends ArgumentMatcher<ClassAndFieldPredicatePair> {
+public class RecursivelyEqualArgumentMatcher implements ArgumentMatcher<ClassAndFieldPredicatePair> {
     private final ClassAndFieldPredicatePair expectedParameter;
 
     public RecursivelyEqualArgumentMatcher(final ClassAndFieldPredicatePair expectedParameter) {
@@ -13,9 +13,8 @@ public class RecursivelyEqualArgumentMatcher extends ArgumentMatcher<ClassAndFie
     }
 
     @Override
-    public boolean matches(final Object argument) {
-        final ClassAndFieldPredicatePair classAndFieldPredicatePair = (ClassAndFieldPredicatePair) argument;
-        assertThat(classAndFieldPredicatePair).isEqualToComparingFieldByFieldRecursively(expectedParameter);
+    public boolean matches(final ClassAndFieldPredicatePair argument) {
+        assertThat(argument).isEqualToComparingFieldByFieldRecursively(expectedParameter);
         return true;
     }
 }

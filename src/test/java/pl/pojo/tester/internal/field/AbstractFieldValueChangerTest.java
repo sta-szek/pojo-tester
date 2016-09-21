@@ -13,7 +13,7 @@ import org.mockito.Mockito;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
-import static org.powermock.reflect.internal.WhiteboxImpl.getInternalState;
+import static org.powermock.reflect.Whitebox.getInternalState;
 
 @RunWith(JUnitPlatform.class)
 public class AbstractFieldValueChangerTest {

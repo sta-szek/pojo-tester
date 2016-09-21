@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.powermock.reflect.Whitebox;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
 import pl.pojo.tester.internal.instantiator.ObjectGenerator;
@@ -19,6 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.argThat;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
+import static org.powermock.reflect.Whitebox.getInternalState;
 
 @RunWith(JUnitPlatform.class)
 public class AbstractTesterTest {
@@ -92,11 +92,11 @@ public class AbstractTesterTest {
         // given
         final AbstractTester abstractTester = new AbstractTesterImplementation();
         final AbstractFieldValueChanger fieldValuesChanger = DefaultFieldValueChanger.INSTANCE;
-        final ObjectGenerator beforeChange = Whitebox.getInternalState(abstractTester, "objectGenerator");
+        final ObjectGenerator beforeChange = getInternalState(abstractTester, "objectGenerator");
 
         // when
         abstractTester.setFieldValuesChanger(fieldValuesChanger);
-        final ObjectGenerator afterChange = Whitebox.getInternalState(abstractTester, "objectGenerator");
+        final ObjectGenerator afterChange = getInternalState(abstractTester, "objectGenerator");
 
         // then
         assertThat(beforeChange).isNotEqualTo(afterChange);
@@ -106,11 +106,11 @@ public class AbstractTesterTest {
     public void Should_Create_New_Object_Generator_When_User_Defined_Class_And_Constructor() {
         // given
         final AbstractTester abstractTester = new AbstractTesterImplementation();
-        final ObjectGenerator beforeChange = Whitebox.getInternalState(abstractTester, "objectGenerator");
+        final ObjectGenerator beforeChange = getInternalState(abstractTester, "objectGenerator");
 
         // when
         abstractTester.setUserDefinedConstructors(new HashMap<>());
-        final ObjectGenerator afterChange = Whitebox.getInternalState(abstractTester, "objectGenerator");
+        final ObjectGenerator afterChange = getInternalState(abstractTester, "objectGenerator");
 
         // then
         assertThat(beforeChange).isNotEqualTo(afterChange);
