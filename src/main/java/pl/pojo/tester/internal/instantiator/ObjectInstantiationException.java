@@ -3,20 +3,12 @@ package pl.pojo.tester.internal.instantiator;
 
 class ObjectInstantiationException extends RuntimeException {
 
-    ObjectInstantiationException(final Class<?> clazz, final Throwable cause) {
-        this(clazz.getName(), cause);
-    }
-
-    ObjectInstantiationException(final String qualifiedClassName, final Throwable cause) {
-        super(createMessage(qualifiedClassName), cause);
+    ObjectInstantiationException(final Class<?> clazz, final String message, final Throwable cause) {
+        super(createMessage(clazz) + " " + message, cause);
     }
 
     ObjectInstantiationException(final Class<?> clazz, final String message) {
-        super(createMessage(clazz) + " " + message);
-    }
-
-    private static String createMessage(final String qualifiedClassName) {
-        return "Unable to load class: " + qualifiedClassName;
+        this(clazz, message, null);
     }
 
     private static String createMessage(final Class<?> clazz) {

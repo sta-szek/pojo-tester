@@ -34,7 +34,7 @@ class UserDefinedConstructorInstantiator extends ObjectInstantiator {
             constructor.setAccessible(true);
             return constructor.newInstance(arguments);
         } catch (final NoSuchMethodException | InstantiationException | InvocationTargetException | IllegalAccessException | IllegalArgumentException e) {
-            throw new ObjectInstantiationException(clazz, e);
+            throw new ObjectInstantiationException(clazz, e.getMessage(), e);
         }
     }
 

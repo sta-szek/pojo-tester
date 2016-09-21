@@ -7,10 +7,10 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class ClassAndFieldPredicatePair {
-    private final Class clazz;
+    private final Class<?> clazz;
     private final Predicate<String> fieldsPredicate;
 
-    public ClassAndFieldPredicatePair(final Class clazz) {
+    public ClassAndFieldPredicatePair(final Class<?> clazz) {
         this(clazz, FieldPredicate.includeAllFields(clazz));
     }
 }

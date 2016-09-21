@@ -9,16 +9,6 @@ import pl.pojo.tester.api.ConstructorParameters;
 
 public abstract class Instantiable {
 
-    public static ObjectInstantiator forClass(final String qualifiedClassName, final Map<Class<?>, ConstructorParameters> constructorParameters) {
-        final Class<?> clazz;
-        try {
-            clazz = Class.forName(qualifiedClassName);
-        } catch (final ClassNotFoundException e) {
-            throw new ObjectInstantiationException(qualifiedClassName, e);
-        }
-        return forClass(clazz, constructorParameters);
-    }
-
     static ObjectInstantiator forClass(final Class<?> clazz, final Map<Class<?>, ConstructorParameters> constructorParameters) {
         if (userDefinedConstructorParametersFor(clazz, constructorParameters)) {
             return new UserDefinedConstructorInstantiator(clazz, constructorParameters);
