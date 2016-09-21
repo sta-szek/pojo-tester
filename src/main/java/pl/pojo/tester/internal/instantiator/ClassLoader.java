@@ -1,6 +1,10 @@
 package pl.pojo.tester.internal.instantiator;
 
-public class ClassLoader {
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public abstract class ClassLoader {
 
     public static Class<?> loadClass(final String qualifiedClassName) {
         try {
