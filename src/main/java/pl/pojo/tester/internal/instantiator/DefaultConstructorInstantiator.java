@@ -17,7 +17,7 @@ class DefaultConstructorInstantiator extends ObjectInstantiator {
             defaultConstructor.setAccessible(true);
             return defaultConstructor.newInstance();
         } catch (final NoSuchMethodException | InstantiationException | InvocationTargetException | IllegalAccessException e) {
-            throw new ObjectInstantiationException(clazz, e);
+            throw new ObjectInstantiationException(clazz, e.getMessage(), e);
         }
     }
 }

@@ -12,7 +12,6 @@ import java.util.stream.Stream;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DynamicTest;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.platform.runner.JUnitPlatform;
@@ -21,7 +20,6 @@ import pl.pojo.tester.api.ConstructorParameters;
 
 import static classesForTest.TestHelper.getDefaultDisplayName;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 @RunWith(JUnitPlatform.class)
@@ -99,117 +97,11 @@ public class InstantiableTest {
         };
     }
 
-    @TestFactory
-    public Stream<DynamicTest> Should_Return_Expected_Instantiator_For_Class_By_Qualified_Class_Name() throws NoSuchFieldException {
-        return Stream.of(new ClassNameInstantiator("pl.pojo.tester.internal.instantiator.Instantiable", ProxyInstantiator.class),
-                         new ClassNameInstantiator("classesForTest.instantiator.enums.EmptyEnum", EnumInstantiator.class),
-                         new ClassNameInstantiator("classesForTest.instantiator.Constructor_Field", BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("classesForTest.instantiator.Constructor_Stream", BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("classesForTest.instantiator.Constructor_Thread", BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("java.lang.Boolean", PrimitiveInstantiator.class),
-                         new ClassNameInstantiator("java.lang.Byte", PrimitiveInstantiator.class),
-                         new ClassNameInstantiator("java.lang.Character", PrimitiveInstantiator.class),
-                         new ClassNameInstantiator("java.lang.Double", PrimitiveInstantiator.class),
-                         new ClassNameInstantiator("java.lang.Float", PrimitiveInstantiator.class),
-                         new ClassNameInstantiator("java.lang.Integer", PrimitiveInstantiator.class),
-                         new ClassNameInstantiator("java.lang.Long", PrimitiveInstantiator.class),
-                         new ClassNameInstantiator("java.lang.Short", PrimitiveInstantiator.class),
-                         new ClassNameInstantiator("classesForTest.instantiator.statics.ClassContainingStaticClasses$NestedStaticClass_PublicConstructor",
-                                                   DefaultConstructorInstantiator.class),
-                         new ClassNameInstantiator("classesForTest.instantiator.statics.ClassContainingStaticClasses$NestedStaticClass_PackageConstructor",
-                                                   BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("classesForTest.instantiator.statics.ClassContainingStaticClasses$NestedStaticClass_ProtectedConstructor",
-                                                   BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("classesForTest.instantiator.statics.ClassContainingStaticClasses$NestedStaticClass_PrivateConstructor",
-                                                   BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("classesForTest.instantiator.unpublic.ClassContainingUnpublicClasses$Package_PublicConstructor",
-                                                   BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("classesForTest.instantiator.unpublic.ClassContainingUnpublicClasses$Package_PackageConstructor",
-                                                   BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("classesForTest.instantiator.unpublic.ClassContainingUnpublicClasses$Package_ProtectedConstructor",
-                                                   BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("classesForTest.instantiator.unpublic.ClassContainingUnpublicClasses$Package_PrivateConstructor",
-                                                   BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("classesForTest.instantiator.unpublic.ClassContainingUnpublicClasses$Protected_PublicConstructor",
-                                                   BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("classesForTest.instantiator.unpublic.ClassContainingUnpublicClasses$Protected_PackageConstructor",
-                                                   BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("classesForTest.instantiator.unpublic.ClassContainingUnpublicClasses$Protected_ProtectedConstructor",
-                                                   BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("classesForTest.instantiator.unpublic.ClassContainingUnpublicClasses$Protected_PrivateConstructor",
-                                                   BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("classesForTest.instantiator.unpublic.ClassContainingUnpublicClasses$Private_PublicConstructor",
-                                                   BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("classesForTest.instantiator.unpublic.ClassContainingUnpublicClasses$Private_PackageConstructor",
-                                                   BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("classesForTest.instantiator.unpublic.ClassContainingUnpublicClasses$Private_ProtectedConstructor",
-                                                   BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("classesForTest.instantiator.unpublic.ClassContainingUnpublicClasses$Private_PrivateConstructor",
-                                                   BestConstructorInstantiator.class),
-
-                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PublicStaticFinalNestedClass",
-                                                   DefaultConstructorInstantiator.class),
-                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PublicStaticNestedClass",
-                                                   DefaultConstructorInstantiator.class),
-
-                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass", BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PrivateStaticFinalNestedClass",
-                                                   BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PrivateStaticFinalNestedClass$PrivateStaticFinalNestedClass2",
-                                                   BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$ProtectedStaticFinalNestedClass",
-                                                   BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PackageStaticFinalNestedClass",
-                                                   BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PrivateStaticNestedClass", BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$ProtectedStaticNestedClass",
-                                                   BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PackageStaticNestedClass", BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PrivateFinalNestedClass", BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$ProtectedFinalNestedClass", BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PackageFinalNestedClass", BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PublicFinalNestedClass", BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PrivateNestedClass", BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$ProtectedNestedClass", BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PackageNestedClass", BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("classesForTest.unpublicClasses.UnpublicClass$PublicNestedClass", BestConstructorInstantiator.class),
-                         new ClassNameInstantiator("java.lang.String", StringClassInstantiator.class)
-        )
-                     .map(value -> dynamicTest(getDefaultDisplayName(value.className),
-                                               Should_Return_Expected_Instantiator_For_Class_By_Qualified_Class_Name(value)));
-    }
-
-    public Executable Should_Return_Expected_Instantiator_For_Class_By_Qualified_Class_Name(final ClassNameInstantiator testCase) {
-        return () -> {
-            // when
-            final Object result = Instantiable.forClass(testCase.className, CLASS_AND_CONSTRUCTOR_PARAMETERS);
-
-            // then
-            assertThat(result).isInstanceOf(testCase.instantiator);
-        };
-    }
-
-    @Test
-    public void Should_Throw_Exception_If_Class_Does_Not_Exist() {
-        // given
-
-        // when
-        final Throwable result = catchThrowable(() -> Instantiable.forClass("lopopopo.ale.tlucze", CLASS_AND_CONSTRUCTOR_PARAMETERS));
-
-        // then
-        assertThat(result).isInstanceOf(ObjectInstantiationException.class);
-    }
-
     @AllArgsConstructor
     private class ClassInstantiator {
         private Class<?> clazz;
         private Class<?> instantiator;
-    }
 
-    @AllArgsConstructor
-    private class ClassNameInstantiator {
-        private String className;
-        private Class<?> instantiator;
     }
 
     private class UserDefinedClass {

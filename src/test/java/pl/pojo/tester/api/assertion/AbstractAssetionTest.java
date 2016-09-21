@@ -117,14 +117,71 @@ public class AbstractAssetionTest {
         final Class<String> expectedClass = String.class;
         final Object[] expectedArguments = {'c', 'h', 'a', 'r'};
         final Class[] expectedTypes = {char.class, char.class, char.class, char.class};
-        final ConstructorParameters constructorParameters = new ConstructorParameters(expectedArguments, expectedTypes);
-        abstractAssetion.create(expectedClass, constructorParameters);
+        final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments, expectedTypes);
+        abstractAssetion.create(expectedClass, expectedConstructorParameters);
 
         // when
         abstractAssetion.areWellImplemented();
 
         // then
-        verify(equalsTester, times(1)).setUserDefinedConstructors(argThat(new MapMatcher(expectedClass, constructorParameters)));
+        verify(equalsTester, times(1)).setUserDefinedConstructors(argThat(new MapMatcher(expectedClass, expectedConstructorParameters)));
+    }
+
+    @Test
+    public void Should_Call_Next_Create_Method() {
+        // given
+        final AbstractAssetion abstractAssetion = spy(new AbstractAssetionImplementation());
+        final EqualsTester equalsTester = mock(EqualsTester.class);
+        Whitebox.setInternalState(abstractAssetion, "testers", Sets.newHashSet(equalsTester));
+        final Class<String> expectedClass = String.class;
+        final Object[] expectedArguments = {'c', 'h', 'a', 'r'};
+        final Class[] expectedTypes = {char.class, char.class, char.class, char.class};
+        final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments, expectedTypes);
+        abstractAssetion.create(expectedClass, expectedArguments, expectedTypes);
+
+        // when
+        abstractAssetion.areWellImplemented();
+
+        // then
+        verify(abstractAssetion).create(eq(expectedClass), eq(expectedConstructorParameters));
+    }
+
+    @Test
+    public void Should_Set_User_Defined_Class_And_Constructor_Paramters_To_Tester_Using_Class_Name() {
+        // given
+        final AbstractAssetion abstractAssetion = new AbstractAssetionImplementation();
+        final EqualsTester equalsTester = mock(EqualsTester.class);
+        Whitebox.setInternalState(abstractAssetion, "testers", Sets.newHashSet(equalsTester));
+        final Class<?> expectedClass = String.class;
+        final Object[] expectedArguments = {'c', 'h', 'a', 'r'};
+        final Class[] expectedTypes = {char.class, char.class, char.class, char.class};
+        final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments, expectedTypes);
+        abstractAssetion.create("java.lang.String", expectedConstructorParameters);
+
+        // when
+        abstractAssetion.areWellImplemented();
+
+        // then
+        verify(equalsTester, times(1)).setUserDefinedConstructors(argThat(new MapMatcher(expectedClass, expectedConstructorParameters)));
+    }
+
+    @Test
+    public void Should_Call_Next_Create_Method_Using_Class_Name() {
+        // given
+        final AbstractAssetion abstractAssetion = spy(new AbstractAssetionImplementation());
+        final EqualsTester equalsTester = mock(EqualsTester.class);
+        Whitebox.setInternalState(abstractAssetion, "testers", Sets.newHashSet(equalsTester));
+        final Object[] expectedArguments = {'c', 'h', 'a', 'r'};
+        final Class[] expectedTypes = {char.class, char.class, char.class, char.class};
+        final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments, expectedTypes);
+        final String expectedClassName = "java.lang.String";
+        abstractAssetion.create(expectedClassName, expectedArguments, expectedTypes);
+
+        // when
+        abstractAssetion.areWellImplemented();
+
+        // then
+        verify(abstractAssetion).create(eq(expectedClassName), eq(expectedConstructorParameters));
     }
 
     private class AbstractAssetionImplementation extends AbstractAssetion {

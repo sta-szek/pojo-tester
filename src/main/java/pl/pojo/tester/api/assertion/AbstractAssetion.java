@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import pl.pojo.tester.api.AbstractTester;
 import pl.pojo.tester.api.ConstructorParameters;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
+import pl.pojo.tester.internal.instantiator.ClassLoader;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractAssetion {
@@ -55,6 +56,17 @@ public abstract class AbstractAssetion {
         testers.forEach(tester -> tester.setUserDefinedConstructors(constructorParameters));
 
         testImplementation();
+    }
+
+    public AbstractAssetion create(final String qualifiedClassName, final Object[] constructorParameters, final Class<?>[] constructorParameterTypes) {
+        final ConstructorParameters constructorParameter = new ConstructorParameters(constructorParameters, constructorParameterTypes);
+        return create(qualifiedClassName, constructorParameter);
+    }
+
+    public AbstractAssetion create(final String qualifiedClassName, final ConstructorParameters constructorParameters) {
+        final Class<?> clazz = ClassLoader.loadClass(qualifiedClassName);
+        this.constructorParameters.put(clazz, constructorParameters);
+        return this;
     }
 
     public AbstractAssetion create(final Class<?> clazz, final Object[] constructorParameters, final Class<?>[] constructorParameterTypes) {

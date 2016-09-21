@@ -32,7 +32,7 @@ class ProxyInstantiator extends ObjectInstantiator {
             proxyFactory.setSuperclass(clazz);
             return proxyFactory.create(new Class[0], new Class[0], this::createMethodHandler);
         } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            throw new ObjectInstantiationException(clazz, e);
+            throw new ObjectInstantiationException(clazz, e.getMessage(), e);
         }
     }
 
