@@ -7,12 +7,12 @@ import matchers.ClassAndFieldPredicatePairArgumentMatcher;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
-import org.powermock.reflect.Whitebox;
 import pl.pojo.tester.api.ClassAndFieldPredicatePair;
 import pl.pojo.tester.api.EqualsTester;
 
 import static org.mockito.Matchers.argThat;
 import static org.mockito.Mockito.*;
+import static org.powermock.reflect.Whitebox.setInternalState;
 
 @RunWith(JUnitPlatform.class)
 public class MultiClassAssetionTest {
@@ -24,7 +24,7 @@ public class MultiClassAssetionTest {
         final MultiClassAssetion multiClassAssetion = new MultiClassAssetion(Lists.newArrayList(classAndFieldPredicatePair));
         final EqualsTester equalsTester1 = mock(EqualsTester.class);
         final EqualsTester equalsTester2 = mock(EqualsTester.class);
-        Whitebox.setInternalState(multiClassAssetion, "testers", Sets.newHashSet(equalsTester1, equalsTester2));
+        setInternalState(multiClassAssetion, "testers", Sets.newHashSet(equalsTester1, equalsTester2));
 
         // when
         multiClassAssetion.testImplementation();

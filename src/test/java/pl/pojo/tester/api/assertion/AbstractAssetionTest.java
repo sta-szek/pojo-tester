@@ -7,7 +7,6 @@ import matchers.MapMatcher;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
-import org.powermock.reflect.Whitebox;
 import pl.pojo.tester.api.ConstructorParameters;
 import pl.pojo.tester.api.EqualsTester;
 import pl.pojo.tester.api.HashCodeTester;
@@ -18,6 +17,8 @@ import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.Mockito.*;
+import static org.powermock.reflect.Whitebox.getInternalState;
+import static org.powermock.reflect.Whitebox.setInternalState;
 
 @RunWith(JUnitPlatform.class)
 public class AbstractAssetionTest {
@@ -30,7 +31,7 @@ public class AbstractAssetionTest {
 
         // when
         abstractAssetion.using(expectedFieldsValuesChanger);
-        final AbstractFieldValueChanger result = Whitebox.getInternalState(abstractAssetion, "abstractFieldValueChanger");
+        final AbstractFieldValueChanger result = getInternalState(abstractAssetion, "abstractFieldValueChanger");
 
         // then
         assertThat(result).isEqualTo(expectedFieldsValuesChanger);
@@ -98,7 +99,7 @@ public class AbstractAssetionTest {
         final AbstractAssetion abstractAssetion = new AbstractAssetionImplementation();
         final AbstractFieldValueChanger expectedFieldsValuesChanger = DefaultFieldValueChanger.INSTANCE;
         final EqualsTester equalsTester = mock(EqualsTester.class);
-        Whitebox.setInternalState(abstractAssetion, "testers", Sets.newHashSet(equalsTester));
+        setInternalState(abstractAssetion, "testers", Sets.newHashSet(equalsTester));
         abstractAssetion.using(expectedFieldsValuesChanger);
 
         // when
@@ -113,7 +114,7 @@ public class AbstractAssetionTest {
         // given
         final AbstractAssetion abstractAssetion = new AbstractAssetionImplementation();
         final EqualsTester equalsTester = mock(EqualsTester.class);
-        Whitebox.setInternalState(abstractAssetion, "testers", Sets.newHashSet(equalsTester));
+        setInternalState(abstractAssetion, "testers", Sets.newHashSet(equalsTester));
         final Class<String> expectedClass = String.class;
         final Object[] expectedArguments = {'c', 'h', 'a', 'r'};
         final Class[] expectedTypes = {char.class, char.class, char.class, char.class};
@@ -132,7 +133,7 @@ public class AbstractAssetionTest {
         // given
         final AbstractAssetion abstractAssetion = spy(new AbstractAssetionImplementation());
         final EqualsTester equalsTester = mock(EqualsTester.class);
-        Whitebox.setInternalState(abstractAssetion, "testers", Sets.newHashSet(equalsTester));
+        setInternalState(abstractAssetion, "testers", Sets.newHashSet(equalsTester));
         final Class<String> expectedClass = String.class;
         final Object[] expectedArguments = {'c', 'h', 'a', 'r'};
         final Class[] expectedTypes = {char.class, char.class, char.class, char.class};
@@ -151,7 +152,7 @@ public class AbstractAssetionTest {
         // given
         final AbstractAssetion abstractAssetion = new AbstractAssetionImplementation();
         final EqualsTester equalsTester = mock(EqualsTester.class);
-        Whitebox.setInternalState(abstractAssetion, "testers", Sets.newHashSet(equalsTester));
+        setInternalState(abstractAssetion, "testers", Sets.newHashSet(equalsTester));
         final Class<?> expectedClass = String.class;
         final Object[] expectedArguments = {'c', 'h', 'a', 'r'};
         final Class[] expectedTypes = {char.class, char.class, char.class, char.class};
@@ -170,7 +171,7 @@ public class AbstractAssetionTest {
         // given
         final AbstractAssetion abstractAssetion = spy(new AbstractAssetionImplementation());
         final EqualsTester equalsTester = mock(EqualsTester.class);
-        Whitebox.setInternalState(abstractAssetion, "testers", Sets.newHashSet(equalsTester));
+        setInternalState(abstractAssetion, "testers", Sets.newHashSet(equalsTester));
         final Object[] expectedArguments = {'c', 'h', 'a', 'r'};
         final Class[] expectedTypes = {char.class, char.class, char.class, char.class};
         final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments, expectedTypes);
