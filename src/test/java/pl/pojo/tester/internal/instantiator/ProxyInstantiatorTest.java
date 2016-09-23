@@ -7,6 +7,7 @@ import classesForTest.instantiator.abstracts.Annotation;
 import classesForTest.instantiator.abstracts.Interface;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DynamicTest;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.platform.runner.JUnitPlatform;
@@ -37,6 +38,20 @@ public class ProxyInstantiatorTest {
             // then
             assertThat(result).isInstanceOf(classToInstantiate);
         };
+    }
+
+    @Test
+    public void Should_Create_Java_Proxy_Which_Returns_Expected_Values() {
+        // given
+        final ProxyInstantiator instantiator = new ProxyInstantiator(Interface.class);
+
+        // when
+        final Object result = instantiator.instantiate();
+
+        // then
+        assertThat(result.toString()).isEqualTo("string");
+        assertThat(result.equals(null)).isTrue();
+        assertThat(result.hashCode()).isZero();
     }
 
 }
