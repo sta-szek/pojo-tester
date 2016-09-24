@@ -10,3 +10,4 @@
 [![Sputnik](https://sputnik.ci/conf/badge)](https://sputnik.ci/app#/builds/sta-szek/pojo-tester)
 
 test
+test2
