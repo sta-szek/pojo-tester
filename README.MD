@@ -1,16 +1,11 @@
-# pojo-tester
-[![Gitter](https://badges.gitter.im/pojo-tester/Lobby.svg)](https://gitter.im/pojo-tester/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+# `POJO-TESTER` - Java framework for pojo-testing
 
-[![Build Status](https://travis-ci.com/sta-szek/pojo-tester.svg?token=42sCZkoSqqk4rnv2AmRU&branch=master)](https://travis-ci.com/sta-szek/pojo-tester)
+This is a java based framework for writing `pojo-tests`.
 
-[![Codacy Badge](https://api.codacy.com/project/badge/grade/54c58ff2dd5d402da121e0be62dd493d)](https://www.codacy.com) [![Codacy Badge](https://api.codacy.com/project/badge/coverage/54c58ff2dd5d402da121e0be62dd493d)](https://www.codacy.com)
+If you have any questions, we can [![Gitter](https://badges.gitter.im/pojo-tester/Lobby.svg)](https://gitter.im/pojo-tester/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-[![codecov](https://codecov.io/gh/sta-szek/pojo-tester/branch/master/graph/badge.svg?token=YjQ8Z7Xyra)](https://codecov.io/gh/sta-szek/pojo-tester)
+Build status is provided by [![Build Status](https://travis-ci.com/sta-szek/pojo-tester.svg?token=42sCZkoSqqk4rnv2AmRU&branch=master)](https://travis-ci.com/sta-szek/pojo-tester)
 
-[![Sputnik](https://sputnik.ci/conf/badge)](https://sputnik.ci/app#/builds/sta-szek/pojo-tester)
+Current coverage is [![codecov](https://codecov.io/gh/sta-szek/pojo-tester/branch/master/graph/badge.svg?token=YjQ8Z7Xyra)](https://codecov.io/gh/sta-szek/pojo-tester)
 
-test
-test2
-test3
-test4
-test5
+Get more information at [pojo-tester-pages](https://pojo.pl)
