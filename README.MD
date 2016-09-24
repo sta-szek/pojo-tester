@@ -8,3 +8,5 @@
 [![codecov](https://codecov.io/gh/sta-szek/pojo-tester/branch/master/graph/badge.svg?token=YjQ8Z7Xyra)](https://codecov.io/gh/sta-szek/pojo-tester)
 
 [![Sputnik](https://sputnik.ci/conf/badge)](https://sputnik.ci/app#/builds/sta-szek/pojo-tester)
+
+test
