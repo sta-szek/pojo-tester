@@ -30,23 +30,22 @@ class ProxyInstantiator extends ObjectInstantiator {
     private Object proxyByJavassist() {
         try {
             proxyFactory.setSuperclass(clazz);
-            return proxyFactory.create(new Class[0], new Class[0], this::createMethodHandler);
+            return proxyFactory.create(new Class[0], new Class[0]);
         } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
             throw new ObjectInstantiationException(clazz, e.getMessage(), e);
         }
     }
 
-    private Object createMethodHandler(final Object self, final Method thisMethod, final Method proceed, final Object[] args) {
-        return createInvocationHandler(self, thisMethod, args);
-    }
-
     private Object createInvocationHandler(final Object proxy, final Method method, final Object[] args) {
         try {
+            method.setAccessible(true);
             return method.invoke(proxy, args);
         } catch (IllegalAccessException | InvocationTargetException e) {
             final Class<?> returnType = method.getReturnType();
             if (returnType.equals(boolean.class) || returnType.equals(Boolean.class)) {
                 return true;
+            } else if (returnType.equals(String.class)) {
+                return "string";
             } else {
                 return 0;
             }
