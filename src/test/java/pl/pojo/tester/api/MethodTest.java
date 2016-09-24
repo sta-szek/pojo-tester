@@ -1,4 +1,4 @@
-package pl.pojo.tester.api.assertion;
+package pl.pojo.tester.api;
 
 import java.util.stream.Stream;
 import lombok.AllArgsConstructor;
@@ -8,12 +8,6 @@ import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
-import pl.pojo.tester.api.AbstractTester;
-import pl.pojo.tester.api.EqualsTester;
-import pl.pojo.tester.api.GetterTester;
-import pl.pojo.tester.api.HashCodeTester;
-import pl.pojo.tester.api.SetterTester;
-import pl.pojo.tester.api.ToStringTester;
 
 import static classesForTest.TestHelper.getDefaultDisplayName;
 import static org.assertj.core.api.Assertions.assertThat;

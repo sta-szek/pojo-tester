@@ -1,16 +1,19 @@
 package pl.pojo.tester.api;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-@AllArgsConstructor
 @Getter
 public class ConstructorParameters {
 
-    private Object[] constructorParameters;
-    private Class<?>[] constructorParametersTypes;
+    private final Object[] constructorParameters;
+    private final Class<?>[] constructorParametersTypes;
+
+    public ConstructorParameters(final Object[] constructorParameters, final Class<?>[] constructorParametersTypes) {
+        this.constructorParameters = constructorParameters;
+        this.constructorParametersTypes = constructorParametersTypes;
+    }
 
     @Override
     public boolean equals(final Object o) {

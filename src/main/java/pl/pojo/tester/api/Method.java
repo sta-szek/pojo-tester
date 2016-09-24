@@ -1,12 +1,6 @@
-package pl.pojo.tester.api.assertion;
+package pl.pojo.tester.api;
 
 import lombok.Getter;
-import pl.pojo.tester.api.AbstractTester;
-import pl.pojo.tester.api.EqualsTester;
-import pl.pojo.tester.api.GetterTester;
-import pl.pojo.tester.api.HashCodeTester;
-import pl.pojo.tester.api.SetterTester;
-import pl.pojo.tester.api.ToStringTester;
 
 @Getter
 public enum Method {

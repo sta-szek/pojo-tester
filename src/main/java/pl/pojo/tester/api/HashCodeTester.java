@@ -7,11 +7,11 @@ import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 
 public class HashCodeTester extends AbstractTester {
 
-    public HashCodeTester() {
+    HashCodeTester() {
         super();
     }
 
-    public HashCodeTester(final AbstractFieldValueChanger abstractFieldValueChanger) {
+    HashCodeTester(final AbstractFieldValueChanger abstractFieldValueChanger) {
         super(abstractFieldValueChanger);
     }
 
