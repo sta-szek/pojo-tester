@@ -9,7 +9,6 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import pl.pojo.tester.api.AbstractTester;
 import pl.pojo.tester.api.ConstructorParameters;
-import pl.pojo.tester.api.Method;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 import pl.pojo.tester.internal.instantiator.ClassLoader;
 

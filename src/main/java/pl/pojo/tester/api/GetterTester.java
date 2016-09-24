@@ -14,11 +14,11 @@ import pl.pojo.tester.internal.utils.MethodUtils;
 
 public class GetterTester extends AbstractTester {
 
-    GetterTester() {
+    public GetterTester() {
         super();
     }
 
-    GetterTester(final AbstractFieldValueChanger abstractFieldValueChanger) {
+    public GetterTester(final AbstractFieldValueChanger abstractFieldValueChanger) {
         super(abstractFieldValueChanger);
     }
 

@@ -7,11 +7,11 @@ import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 
 public class EqualsTester extends AbstractTester {
 
-    EqualsTester() {
+    public EqualsTester() {
         super();
     }
 
-    EqualsTester(final AbstractFieldValueChanger abstractFieldValueChanger) {
+    public EqualsTester(final AbstractFieldValueChanger abstractFieldValueChanger) {
         super(abstractFieldValueChanger);
     }
 

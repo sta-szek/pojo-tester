@@ -10,7 +10,6 @@ import org.junit.runner.RunWith;
 import pl.pojo.tester.api.ConstructorParameters;
 import pl.pojo.tester.api.EqualsTester;
 import pl.pojo.tester.api.HashCodeTester;
-import pl.pojo.tester.api.Method;
 import pl.pojo.tester.internal.assertion.AssertionError;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
@@ -42,7 +41,7 @@ public class AbstractAssetionTest {
     public void Should_Add_Equals_Tester() {
         // given
         final AbstractAssetion abstractAssetion = new AbstractAssetionImplementation();
-        final EqualsTester expectedTester = (EqualsTester) Method.EQUALS.getTester();
+        final EqualsTester expectedTester = new EqualsTester();
 
         // when
         abstractAssetion.testing(Method.EQUALS);
@@ -56,8 +55,8 @@ public class AbstractAssetionTest {
     public void Should_Add_Equals_And_Hash_Code_Testers() {
         // given
         final AbstractAssetion abstractAssetion = new AbstractAssetionImplementation();
-        final EqualsTester expectedTester1 = (EqualsTester) Method.EQUALS.getTester();
-        final HashCodeTester expectedTester2 = (HashCodeTester) Method.HASH_CODE.getTester();
+        final EqualsTester expectedTester1 = new EqualsTester();
+        final HashCodeTester expectedTester2 = new HashCodeTester();
 
         // when
         abstractAssetion.testing(Method.EQUALS, Method.HASH_CODE);

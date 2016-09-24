@@ -10,11 +10,11 @@ import pl.pojo.tester.internal.utils.FieldUtils;
 
 public class ToStringTester extends AbstractTester {
 
-    ToStringTester() {
+    public ToStringTester() {
         super();
     }
 
-    ToStringTester(final AbstractFieldValueChanger abstractFieldValueChanger) {
+    public ToStringTester(final AbstractFieldValueChanger abstractFieldValueChanger) {
         super(abstractFieldValueChanger);
     }
 
