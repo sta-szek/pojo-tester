@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
 import pl.pojo.tester.api.ClassAndFieldPredicatePair;
 import pl.pojo.tester.api.EqualsTester;
 
-import static org.mockito.Matchers.argThat;
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.*;
 import static org.powermock.reflect.Whitebox.setInternalState;
 

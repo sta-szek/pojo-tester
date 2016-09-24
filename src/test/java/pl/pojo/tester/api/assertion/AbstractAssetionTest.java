@@ -69,7 +69,7 @@ public class AbstractAssetionTest {
     @Test
     public void Should_Not_Throw_Exception_When_Class_Has_All_Methods_Well_Implemented() {
         // given
-        final Class<GoodPojo_Equals_HashCode_ToString> classUnderTest = GoodPojo_Equals_HashCode_ToString.class;
+        final Class<?> classUnderTest = GoodPojo_Equals_HashCode_ToString.class;
 
         // when
         final Throwable result = catchThrowable(() -> Assertions.assertPojoMethodsForAll(classUnderTest)
@@ -82,7 +82,7 @@ public class AbstractAssetionTest {
     @Test
     public void Should_Throw_Exception_When_Class_Has_Method_Implemented_In_Wrong_Way() {
         // given
-        final Class<BadPojoEqualsItself> classUnderTest = BadPojoEqualsItself.class;
+        final Class<?> classUnderTest = BadPojoEqualsItself.class;
 
         // when
         final Throwable result = catchThrowable(() -> Assertions.assertPojoMethodsFor(classUnderTest)
