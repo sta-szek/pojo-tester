@@ -22,6 +22,5 @@ TODO
 `POJO-TESTER` announcement is scheduled for 02.10.2016.
 Keep watching! 
 
-github-pages test
 
 :beers:
