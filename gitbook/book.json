@@ -9,13 +9,12 @@
                "nocache", 
                "git-author",
                "back-to-top-button",
-	       "disqus",
                "advanced-emoji",
                "ga",
                "github"],
   "pluginsConfig": {
       "git-author": {
-          "position": "top",
+          "position": "bottom",
           "modifyTpl": "Last modified by {user} {timeStamp}",
           "createTpl": "Created by {user} {timeStamp}",
           "timeStampFormat": "YYYY-MM-DD HH:mm:ss"
@@ -42,10 +41,6 @@
           "fork",
           "follow"
         ]
-      },
-      "disqus":{
-      	"shortName": "pojo"
-      }
-   
+    }
   }
 }
