@@ -5,7 +5,8 @@
                "editlink",
                "github-buttons",
                "share",
-               "sitemap", 
+               "sitemap",
+	       "disqus",
                "nocache", 
                "git-author",
                "back-to-top-button",
@@ -41,6 +42,9 @@
           "fork",
           "follow"
         ]
-    }
+      },
+      "disqus":{
+      	"shortName": "pojo"
+      }
   }
 }
