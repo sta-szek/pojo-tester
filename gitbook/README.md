@@ -20,4 +20,8 @@ Current coverage is [![codecov](https://codecov.io/gh/sta-szek/pojo-tester/branc
 ## Installation {#installation}
 TODO
 `POJO-TESTER` announcement is scheduled for 02.10.2016.
-Keep watching! :beers:
+Keep watching! 
+
+github-pages test
+
+:beers:
