@@ -2,8 +2,8 @@ package pl.pojo.tester.api.assertion;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import helpers.ClassAndFieldPredicatePairArgumentMatcher;
 import lombok.Data;
-import matchers.ClassAndFieldPredicatePairArgumentMatcher;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;

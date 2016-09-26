@@ -1,10 +1,10 @@
 package pl.pojo.tester.internal.instantiator;
 
-import classesForTest.instantiator.Constructor_Field;
-import classesForTest.instantiator.Constructor_Stream;
-import classesForTest.instantiator.Constructor_Thread;
-import classesForTest.instantiator.enums.EmptyEnum;
-import classesForTest.instantiator.statics.ClassContainingStaticClasses;
+import classesForTest.ClassContainingStaticClasses;
+import classesForTest.Constructor_Field;
+import classesForTest.Constructor_Stream;
+import classesForTest.Constructor_Thread;
+import classesForTest.EmptyEnum;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +18,7 @@ import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 import pl.pojo.tester.api.ConstructorParameters;
 
-import static classesForTest.TestHelper.getDefaultDisplayName;
+import static helpers.TestHelper.getDefaultDisplayName;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 

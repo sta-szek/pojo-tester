@@ -1,7 +1,5 @@
 package pl.pojo.tester.internal.instantiator;
 
-import classesForTest.instantiator.No_Args_Constructor_Throws_NPE;
-import classesForTest.instantiator.One_Arg_Constructor_Throws_NPE;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -15,7 +13,7 @@ import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 import pl.pojo.tester.api.ConstructorParameters;
 
-import static classesForTest.TestHelper.getDefaultDisplayName;
+import static helpers.TestHelper.getDefaultDisplayName;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
@@ -126,4 +124,16 @@ public class UserDefinedConstructorInstantiatorTest {
         }
     }
 
+    private class One_Arg_Constructor_Throws_NPE {
+        public One_Arg_Constructor_Throws_NPE(final Object o) {
+            throw new NullPointerException("test");
+        }
+    }
+
+    private class No_Args_Constructor_Throws_NPE {
+
+        public No_Args_Constructor_Throws_NPE() {
+            throw new NullPointerException("test");
+        }
+    }
 }

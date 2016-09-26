@@ -1,10 +1,10 @@
 package pl.pojo.tester.api.assertion;
 
+import helpers.ClassAndFieldPredicatePairArgumentMatcher;
+import helpers.ClassNameAndFieldPredicatePairArgumentMatcher;
 import java.util.List;
 import java.util.function.Predicate;
 import lombok.Data;
-import matchers.ClassAndFieldPredicatePairArgumentMatcher;
-import matchers.ClassNameAndFieldPredicatePairArgumentMatcher;
 import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;

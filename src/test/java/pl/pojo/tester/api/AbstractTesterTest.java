@@ -1,11 +1,11 @@
 package pl.pojo.tester.api;
 
+import helpers.ClassAndFieldPredicatePairArgumentMatcher;
+import helpers.RecursivelyEqualArgumentMatcher;
+import helpers.StringPredicateArgumentMatcher;
 import java.util.HashMap;
 import java.util.function.Predicate;
 import lombok.Data;
-import matchers.ClassAndFieldPredicatePairArgumentMatcher;
-import matchers.RecursivelyEqualArgumentMatcher;
-import matchers.StringPredicateArgumentMatcher;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;

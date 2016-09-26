@@ -15,7 +15,7 @@ import pl.pojo.tester.api.HashCodeTester;
 import pl.pojo.tester.api.SetterTester;
 import pl.pojo.tester.api.ToStringTester;
 
-import static classesForTest.TestHelper.getDefaultDisplayName;
+import static helpers.TestHelper.getDefaultDisplayName;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 

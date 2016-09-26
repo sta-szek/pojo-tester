@@ -1,6 +1,7 @@
 package pl.pojo.tester.internal.assertion.tostring;
 
-import classesForTest.tostring.ToStringWithoutField;
+import classesForTest.fields.TestEnum1;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
@@ -64,5 +65,19 @@ public class ToStringAssertionsTest {
         assertThat(result).isNull();
     }
 
+    private class ToStringWithoutField {
 
+        private final int a = 1;
+        private final float b = 1.43F;
+        private final Object obj = null;
+        private TestEnum1 testEnum;
+
+        @Override
+        public String toString() {
+            return new ToStringBuilder(this).append("a", a)
+                                            .append("b", b)
+                                            .append("obj", obj)
+                                            .toString();
+        }
+    }
 }

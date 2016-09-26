@@ -1,9 +1,9 @@
 package pl.pojo.tester.internal.utils;
 
-import classesForTest.TestHelper;
 import classesForTest.fields.ClassWithAllAvailableFieldModifiers;
 import classesForTest.fields.Permutation1;
 import classesForTest.fields.Permutation2;
+import helpers.TestHelper;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,7 +17,7 @@ import org.junit.jupiter.api.function.Executable;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 
-import static classesForTest.TestHelper.getDefaultDisplayName;
+import static helpers.TestHelper.getDefaultDisplayName;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.util.Lists.newArrayList;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;

@@ -14,7 +14,7 @@ import org.junit.runner.RunWith;
 import pl.pojo.tester.api.GetterNotFoundException;
 import pl.pojo.tester.api.SetterNotFoundException;
 
-import static classesForTest.TestHelper.getDefaultDisplayName;
+import static helpers.TestHelper.getDefaultDisplayName;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
