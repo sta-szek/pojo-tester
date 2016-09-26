@@ -1,7 +1,6 @@
 package pl.pojo.tester.api;
 
 import classesForTest.fields.TestEnum1;
-import classesForTest.tostring.ToStringWithoutField;
 import java.util.List;
 import java.util.Random;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -252,6 +251,22 @@ public class ToStringTesterTest {
 
         public void setTestEnum1(final TestEnum1 testEnum1) {
             this.testEnum1 = testEnum1;
+        }
+    }
+
+    private class ToStringWithoutField {
+
+        private final int a = 1;
+        private final float b = 1.43F;
+        private final Object obj = null;
+        private TestEnum1 testEnum;
+
+        @Override
+        public String toString() {
+            return new ToStringBuilder(this).append("a", a)
+                                            .append("b", b)
+                                            .append("obj", obj)
+                                            .toString();
         }
     }
 }

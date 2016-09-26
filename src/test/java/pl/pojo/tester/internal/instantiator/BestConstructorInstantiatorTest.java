@@ -36,24 +36,24 @@ public class BestConstructorInstantiatorTest {
 
     @TestFactory
     public Stream<DynamicTest> Should_Instantiate_Non_Public_Classes() {
-        return Stream.of("classesForTest.unpublicClasses.UnpublicClass",
-                         "classesForTest.unpublicClasses.UnpublicClass$PrivateStaticFinalNestedClass",
-                         "classesForTest.unpublicClasses.UnpublicClass$PrivateStaticFinalNestedClass$PrivateStaticFinalNestedClass2",
-                         "classesForTest.unpublicClasses.UnpublicClass$ProtectedStaticFinalNestedClass",
-                         "classesForTest.unpublicClasses.UnpublicClass$PackageStaticFinalNestedClass",
-                         "classesForTest.unpublicClasses.UnpublicClass$PublicStaticFinalNestedClass",
-                         "classesForTest.unpublicClasses.UnpublicClass$PrivateStaticNestedClass",
-                         "classesForTest.unpublicClasses.UnpublicClass$ProtectedStaticNestedClass",
-                         "classesForTest.unpublicClasses.UnpublicClass$PackageStaticNestedClass",
-                         "classesForTest.unpublicClasses.UnpublicClass$PublicStaticNestedClass",
-                         "classesForTest.unpublicClasses.UnpublicClass$PrivateFinalNestedClass",
-                         "classesForTest.unpublicClasses.UnpublicClass$ProtectedFinalNestedClass",
-                         "classesForTest.unpublicClasses.UnpublicClass$PackageFinalNestedClass",
-                         "classesForTest.unpublicClasses.UnpublicClass$PublicFinalNestedClass",
-                         "classesForTest.unpublicClasses.UnpublicClass$PrivateNestedClass",
-                         "classesForTest.unpublicClasses.UnpublicClass$ProtectedNestedClass",
-                         "classesForTest.unpublicClasses.UnpublicClass$PackageNestedClass",
-                         "classesForTest.unpublicClasses.UnpublicClass$PublicNestedClass")
+        return Stream.of("classesForTest.UnpublicClass",
+                         "classesForTest.UnpublicClass$PrivateStaticFinalNestedClass",
+                         "classesForTest.UnpublicClass$PrivateStaticFinalNestedClass$PrivateStaticFinalNestedClass2",
+                         "classesForTest.UnpublicClass$ProtectedStaticFinalNestedClass",
+                         "classesForTest.UnpublicClass$PackageStaticFinalNestedClass",
+                         "classesForTest.UnpublicClass$PublicStaticFinalNestedClass",
+                         "classesForTest.UnpublicClass$PrivateStaticNestedClass",
+                         "classesForTest.UnpublicClass$ProtectedStaticNestedClass",
+                         "classesForTest.UnpublicClass$PackageStaticNestedClass",
+                         "classesForTest.UnpublicClass$PublicStaticNestedClass",
+                         "classesForTest.UnpublicClass$PrivateFinalNestedClass",
+                         "classesForTest.UnpublicClass$ProtectedFinalNestedClass",
+                         "classesForTest.UnpublicClass$PackageFinalNestedClass",
+                         "classesForTest.UnpublicClass$PublicFinalNestedClass",
+                         "classesForTest.UnpublicClass$PrivateNestedClass",
+                         "classesForTest.UnpublicClass$ProtectedNestedClass",
+                         "classesForTest.UnpublicClass$PackageNestedClass",
+                         "classesForTest.UnpublicClass$PublicNestedClass")
                      .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Instantiate_Non_Public_Classes(value)));
     }
 
