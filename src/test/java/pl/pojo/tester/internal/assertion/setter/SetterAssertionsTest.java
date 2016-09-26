@@ -2,7 +2,6 @@ package pl.pojo.tester.internal.assertion.setter;
 
 
 import classesForTest.fields.TestEnum1;
-import classesForTest.settergetter.BadPojoSetterGetter;
 import java.lang.reflect.Method;
 import java.util.Random;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -202,5 +201,38 @@ public class SetterAssertionsTest {
         public void setTestEnum1(final TestEnum1 testEnum1) {
             this.testEnum1 = testEnum1;
         }
+    }
+
+    private class BadPojoSetterGetter {
+
+        public char charY = 'y';
+        private int a;
+        private int b;
+        private int c;
+        private int d;
+
+        public int getA() {
+            return a;
+        }
+
+        public void setA(final int a) {
+            this.a = a;
+        }
+
+        public int getB() {
+            return b;
+        }
+
+        public void setB(final int b) {
+            this.b = b;
+        }
+
+        public char getX() {
+            return 'x';
+        }
+
+        public void setX(final char x) {
+        }
+
     }
 }
