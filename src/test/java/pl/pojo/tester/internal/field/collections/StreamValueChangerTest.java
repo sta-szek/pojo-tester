@@ -1,7 +1,6 @@
 package pl.pojo.tester.internal.field.collections;
 
 
-import classesForTest.A;
 import classesForTest.fields.ClassContainingStream;
 import java.lang.reflect.Field;
 import java.util.stream.Stream;
@@ -45,13 +44,13 @@ public class StreamValueChangerTest {
     public Stream<DynamicTest> Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not() {
         return Stream.of(new AreDifferentCase(null, null, false),
                          new AreDifferentCase(Stream.of(1), Stream.of(1), false),
-                         new AreDifferentCase(Stream.of(new A()), Stream.of(new A()), false),
+                         new AreDifferentCase(Stream.of(new Pojo()), Stream.of(new Pojo()), false),
                          new AreDifferentCase(Stream.empty(), Stream.empty(), false),
                          new AreDifferentCase(Stream.empty(), null, true),
                          new AreDifferentCase(null, Stream.empty(), true),
-                         new AreDifferentCase(Stream.of(new A()), null, true),
-                         new AreDifferentCase(Stream.of(new A()), Stream.of(1), true),
-                         new AreDifferentCase(Stream.of(new A()), Stream.empty(), true))
+                         new AreDifferentCase(Stream.of(new Pojo()), null, true),
+                         new AreDifferentCase(Stream.of(new Pojo()), Stream.of(1), true),
+                         new AreDifferentCase(Stream.of(new Pojo()), Stream.empty(), true))
                      .map(value -> dynamicTest(getDefaultDisplayName(value.value1 + " " + value.value2),
                                                Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(value)));
     }
@@ -106,5 +105,7 @@ public class StreamValueChangerTest {
         private Stream<?> value2;
         private boolean result;
     }
+
+    private class Pojo {}
 
 }

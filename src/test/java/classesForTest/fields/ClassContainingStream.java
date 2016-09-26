@@ -1,7 +1,6 @@
 package classesForTest.fields;
 
 
-import classesForTest.A;
 import java.util.stream.Stream;
 
 public class ClassContainingStream {
@@ -12,4 +11,6 @@ public class ClassContainingStream {
     private Stream<A> stream_A;
     private Stream stream;
     private A a;
+
+    private class A {}
 }

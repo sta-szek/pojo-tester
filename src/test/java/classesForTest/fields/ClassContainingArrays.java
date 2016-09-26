@@ -1,8 +1,6 @@
 package classesForTest.fields;
 
 
-import classesForTest.A;
-
 public class ClassContainingArrays {
 
     private final Object[] a_object = new Object[1];
@@ -25,4 +23,6 @@ public class ClassContainingArrays {
     private Object[] a_object_null;
     private A a;
     private A[] a_a;
+
+    private class A {}
 }
