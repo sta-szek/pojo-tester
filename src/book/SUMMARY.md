@@ -18,6 +18,8 @@
   * [Create class using selected constructor](writing-tests/README.md#choose-constructor)
   * [Bulk pojos testing](writing-tests/README.md#bulk-testing)
 * [Comparison](comparison/README.md)
+  * [Other libraries](comparison/README.md#other-libs)
+  * [Tests preconditions](comparison/README.md#precondtioions)
 * [Contributors](contributors/README.md)
 * [Release Notes](release-notes/README.md)
   * [Release 0.3.0](release-notes/README.md#release-0.3.0)

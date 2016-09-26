@@ -2,7 +2,7 @@
 
 `POJO-TESTER` is a java testing library, which makes your `pojo-tests` much easier. You can test your `pojo` against `equals`, `hashCode`, `toString`, `getters` and `setters`.
 
-Get more information at [pojo-tester documentation site](https://pojo.pl)
+Get more information at [pojo-tester documentation site](http://pojo.pl)
 
 If you have any questions, we can [![Gitter](https://badges.gitter.im/pojo-tester/Lobby.svg)](https://gitter.im/pojo-tester/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
