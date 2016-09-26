@@ -24,7 +24,7 @@ import pl.pojo.tester.api.FieldPredicate;
 import pl.pojo.tester.internal.utils.FieldUtils;
 import pl.pojo.tester.internal.utils.MethodUtils;
 
-import static classesForTest.TestHelper.getDefaultDisplayName;
+import static helpers.TestHelper.getDefaultDisplayName;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;

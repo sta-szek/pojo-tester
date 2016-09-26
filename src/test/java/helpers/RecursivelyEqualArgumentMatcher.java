@@ -1,4 +1,4 @@
-package matchers;
+package helpers;
 
 import org.mockito.ArgumentMatcher;
 import pl.pojo.tester.api.ClassAndFieldPredicatePair;

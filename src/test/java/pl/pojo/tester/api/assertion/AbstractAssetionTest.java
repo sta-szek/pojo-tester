@@ -3,7 +3,7 @@ package pl.pojo.tester.api.assertion;
 import classesForTest.GoodPojo_Equals_HashCode_ToString;
 import classesForTest.equals.BadPojoEqualsItself;
 import com.google.common.collect.Sets;
-import matchers.MapMatcher;
+import helpers.MapMatcher;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;

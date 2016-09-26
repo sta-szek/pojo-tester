@@ -12,7 +12,7 @@ import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 import pl.pojo.tester.internal.utils.FieldUtils;
 
-import static classesForTest.TestHelper.getDefaultDisplayName;
+import static helpers.TestHelper.getDefaultDisplayName;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.util.Lists.newArrayList;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;

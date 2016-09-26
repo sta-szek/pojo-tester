@@ -1,4 +1,4 @@
-package classesForTest;
+package helpers;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
