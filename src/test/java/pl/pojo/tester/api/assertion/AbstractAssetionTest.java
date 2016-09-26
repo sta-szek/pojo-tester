@@ -1,6 +1,5 @@
 package pl.pojo.tester.api.assertion;
 
-import classesForTest.equals.BadPojoEqualsItself;
 import classesForTest.fields.TestEnum1;
 import com.google.common.collect.Sets;
 import helpers.MapMatcher;
@@ -349,4 +348,35 @@ public class AbstractAssetionTest {
             this.testEnum1 = testEnum1;
         }
     }
+
+    class BadPojoEqualsItself {
+        private byte byteField;
+        private short shortType;
+        private int intType;
+        private long longType;
+        private double doubleType;
+        private boolean booleanType;
+        private char charType;
+        private float floatType;
+
+        @Override
+        public String toString() {
+            return "";
+        }
+
+        @Override
+        public boolean equals(final Object o) {
+            if (o == null || o.getClass() != getClass()) {
+                return false;
+            }
+            return o != this;
+        }
+
+        @Override
+        public int hashCode() {
+            return 1;
+        }
+
+    }
+
 }

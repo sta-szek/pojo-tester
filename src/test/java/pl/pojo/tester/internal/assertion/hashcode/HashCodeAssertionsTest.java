@@ -15,16 +15,6 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 @RunWith(JUnitPlatform.class)
 public class HashCodeAssertionsTest {
 
-publ c
-adP joHashCo
-
-int hashCode
-jects. ount r
-        eturn  adPojo
-class BadPojoHashCode_SameO
-ashCode_Sam
-        counte ;
-
     @Test
     public void Should_Throw_Exception_When_HashCode_Method_Is_Not_Consistent() {
         // given
@@ -51,7 +41,6 @@ ashCode_Sam
         assertThat(result).isInstanceOf(EqualHashCodeAssertionError.class);
     }
 
-    private stati
     @Test
     public void Should_Throw_Exception_When_HashCode_Method_Returns_Same_HashCode_For_Different_Objects() {
         // given
@@ -65,9 +54,6 @@ ashCode_Sam
         // then
         assertThat(result).isInstanceOf(NotEqualHashCodeAssertionError.class);
     }
-         = 0;
-
-                @Overri
 
     @Test
     public void Should_Not_Throw_Exception_When_HashCode_Method_Returns_Different_HashCode_For_Different_Objects() {
@@ -83,6 +69,7 @@ ashCode_Sam
         // then
         assertThat(result).isNull();
     }
+
     @Test
     public void Should_Not_Throw_Exception_When_HashCode_Method_Returns_Same_HashCode_For_Same_Objects() {
         // given
@@ -107,7 +94,7 @@ ashCode_Sam
 
         // then
         assertThat(result).isNull();
-    }()++;
+    }
 
     private static class BadPojoHashCode_NotConsistent {
 
@@ -118,9 +105,16 @@ ashCode_Sam
             BadPojoHashCode_NotConsistent.counter++;
             return BadPojoHashCode_NotConsistent.counter % 2;
         }
-    }bject
+    }
 
-          priv te s atic in
+    private static class BadPojoHashCode_SameObjects {
+
+        private static int counter = 0;
+
+        @Override
+        public int hashCode() {
+            BadPojoHashCode_SameObjects.counter++;
+            return BadPojoHashCode_SameObjects.counter;
         }
     }
 
@@ -273,28 +267,20 @@ ashCode_Sam
         }
 
         public void setTestEnum1(final TestEnum1 testEnum1) {
-            this.testEnum1 = testEn
+            this.testEnum1 = testEnum1;
+        }
+    }
 
+    private class BadPojoHashCode_DifferentObjects {
 
-     }
+        int a;
 
-
-     rivat  class BadPojoHashCode_Diff r
-         {
-
-        in  a;
-
-         ub
-
-        oHashCode
-blic i
-
-        @Overri
-
-        tObjec s(f nal int a) {
+        public BadPojoHashCode_DifferentObjects(final int a) {
             this.a = a;
         }
-t hashCode() {
+
+        @Override
+        public int hashCode() {
             return 0;
         }
     }

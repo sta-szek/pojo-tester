@@ -1,9 +1,5 @@
 package pl.pojo.tester.api;
 
-import classesForTest.equals.BadPojoEqualsDifferentObjectSameType;
-import classesForTest.equals.BadPojoEqualsDifferentType;
-import classesForTest.equals.BadPojoEqualsItself;
-import classesForTest.equals.BadPojoEqualsNull;
 import classesForTest.fields.TestEnum1;
 import java.util.ArrayList;
 import java.util.Random;
@@ -281,5 +277,140 @@ public class EqualsTesterTest {
             this.testEnum1 = testEnum1;
         }
     }
+
+    class BadPojoEqualsDifferentObjectSameType {
+        private byte byteField;
+        private short shortType;
+        private byte notIncludedToEqual_byteField;
+        private short notIncludedToEqual_shortType;
+
+        @Override
+        public String toString() {
+            return byteField + " " +
+                   shortType + " " +
+                   notIncludedToEqual_byteField + " " +
+                   notIncludedToEqual_shortType;
+        }
+
+        @Override
+        public boolean equals(final Object o) {
+            if (this == o) {
+                return true;
+            }
+
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+
+            final BadPojoEqualsDifferentObjectSameType that = (BadPojoEqualsDifferentObjectSameType) o;
+
+            return new EqualsBuilder().append(byteField, that.byteField)
+                                      .append(shortType, that.shortType)
+                                      .isEquals();
+        }
+
+        @Override
+        public int hashCode() {
+            return new HashCodeBuilder().append(byteField)
+                                        .append(shortType)
+                                        .toHashCode();
+        }
+    }
+
+    class BadPojoEqualsDifferentType {
+        private byte byteField;
+        private short shortType;
+        private int intType;
+        private long longType;
+        private double doubleType;
+        private boolean booleanType;
+        private char charType;
+        private float floatType;
+
+        @Override
+        public String toString() {
+            return "";
+        }
+
+        @Override
+        public boolean equals(final Object o) {
+            if (o == null) {
+                return false;
+            }
+            return o.getClass() != getClass();
+        }
+
+        @Override
+        public int hashCode() {
+            return 1;
+        }
+
+    }
+
+    class BadPojoEqualsItself {
+        private byte byteField;
+        private short shortType;
+        private int intType;
+        private long longType;
+        private double doubleType;
+        private boolean booleanType;
+        private char charType;
+        private float floatType;
+
+        @Override
+        public String toString() {
+            return "";
+        }
+
+        @Override
+        public boolean equals(final Object o) {
+            if (o == null || o.getClass() != getClass()) {
+                return false;
+            }
+            return o != this;
+        }
+
+        @Override
+        public int hashCode() {
+            return 1;
+        }
+
+    }
+
+    class BadPojoEqualsNull {
+        private byte byteField;
+        private short shortType;
+        private int intType;
+        private long longType;
+        private double doubleType;
+        private boolean booleanType;
+        private char charType;
+        private float floatType;
+
+        @Override
+        public boolean equals(final Object o) {
+            return o == null;
+        }
+
+        @Override
+        public int hashCode() {
+            return 1;
+        }
+
+        @Override
+        public String toString() {
+            return new ToStringBuilder(this)
+                    .append("byteField", byteField)
+                    .append("shortType", shortType)
+                    .append("intType", intType)
+                    .append("longType", longType)
+                    .append("doubleType", doubleType)
+                    .append("booleanType", booleanType)
+                    .append("charType", charType)
+                    .append("floatType", floatType)
+                    .toString();
+        }
+    }
+
 
 }

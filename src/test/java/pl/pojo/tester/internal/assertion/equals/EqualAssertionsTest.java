@@ -1,12 +1,6 @@
 package pl.pojo.tester.internal.assertion.equals;
 
-import classesForTest.equals.BadPojoEqualsDifferentType;
-import classesForTest.equals.BadPojoEqualsNull;
-import classesForTest.equals.BadPojoEqualsWithEqualObject;
-import classesForTest.equals.BadPojoEquals_NotConsistent;
-import classesForTest.equals.BadPojoEquals_NotSymmetric;
-import classesForTest.equals.BadPojoEquals_NotTransitive_A_B;
-import classesForTest.equals.BadPojoEquals_NotTransitive_B_C;
+
 import classesForTest.fields.TestEnum1;
 import java.util.Random;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -234,6 +228,28 @@ public class EqualAssertionsTest {
         assertThat(result).isNull();
     }
 
+    private static class BadPojoEquals_NotTransitive_A_B {
+
+        private static int counter = -1;
+
+        @Override
+        public boolean equals(final Object obj) {
+            BadPojoEquals_NotTransitive_A_B.counter++;
+            return BadPojoEquals_NotTransitive_A_B.counter % 3 == 0;
+        }
+    }
+
+    private static class BadPojoEquals_NotTransitive_B_C {
+
+        private static int counter = 0;
+
+        @Override
+        public boolean equals(final Object obj) {
+            BadPojoEquals_NotTransitive_B_C.counter++;
+            return BadPojoEquals_NotTransitive_B_C.counter % 3 == 0;
+        }
+    }
+
     private class GoodPojo_Equals_HashCode_ToString {
         public long random;
         public byte byteField;
@@ -386,4 +402,183 @@ public class EqualAssertionsTest {
             this.testEnum1 = testEnum1;
         }
     }
+
+    private class BadPojoEquals_NotConsistent {
+
+        private final boolean[] equalReturnValues = new boolean[2];
+        private int counter = -1;
+
+        public BadPojoEquals_NotConsistent(final boolean firstReturn, final boolean secondReturn) {
+            this.equalReturnValues[0] = firstReturn;
+            this.equalReturnValues[1] = secondReturn;
+        }
+
+        @Override
+        public boolean equals(final Object obj) {
+            counter++;
+            return equalReturnValues[counter];
+        }
+    }
+
+    private class BadPojoEquals_NotSymmetric {
+        private byte byteField;
+        private short shortType;
+        private int intType;
+        private long longType;
+        private double doubleType;
+        private boolean booleanType;
+        private char charType;
+        private float floatType;
+
+        private boolean flipFlop;
+
+        @Override
+        public boolean equals(final Object o) {
+            flipFlop = !flipFlop;
+            return flipFlop;
+        }
+
+        @Override
+        public int hashCode() {
+            return 1;
+        }
+
+        @Override
+        public String toString() {
+            return new ToStringBuilder(this)
+                    .append("byteField", byteField)
+                    .append("shortType", shortType)
+                    .append("intType", intType)
+                    .append("longType", longType)
+                    .append("doubleType", doubleType)
+                    .append("booleanType", booleanType)
+                    .append("charType", charType)
+                    .append("floatType", floatType)
+                    .toString();
+        }
+    }
+
+    private class BadPojoEqualsDifferentType {
+        private byte byteField;
+        private short shortType;
+        private int intType;
+        private long longType;
+        private double doubleType;
+        private boolean booleanType;
+        private char charType;
+        private float floatType;
+
+        @Override
+        public String toString() {
+            return "";
+        }
+
+        @Override
+        public boolean equals(final Object o) {
+            if (o == null) {
+                return false;
+            }
+            return o.getClass() != getClass();
+        }
+
+        @Override
+        public int hashCode() {
+            return 1;
+        }
+
+    }
+
+    private class BadPojoEqualsNull {
+        private byte byteField;
+        private short shortType;
+        private int intType;
+        private long longType;
+        private double doubleType;
+        private boolean booleanType;
+        private char charType;
+        private float floatType;
+
+        @Override
+        public boolean equals(final Object o) {
+            return o == null;
+        }
+
+        @Override
+        public int hashCode() {
+            return 1;
+        }
+
+        @Override
+        public String toString() {
+            return new ToStringBuilder(this)
+                    .append("byteField", byteField)
+                    .append("shortType", shortType)
+                    .append("intType", intType)
+                    .append("longType", longType)
+                    .append("doubleType", doubleType)
+                    .append("booleanType", booleanType)
+                    .append("charType", charType)
+                    .append("floatType", floatType)
+                    .toString();
+        }
+    }
+
+    private class BadPojoEqualsWithEqualObject {
+        public byte byteField;
+        public short shortType;
+        public int intType;
+        public long longType;
+        public double doubleType;
+        public boolean booleanType;
+        public char charType;
+        public float floatType;
+
+        @Override
+        public String toString() {
+            return "";
+        }
+
+        @Override
+        public boolean equals(final Object o) {
+            return !trueEqual(o);
+        }
+
+        @Override
+        public int hashCode() {
+            return new HashCodeBuilder(17, 37)
+                    .append(byteField)
+                    .append(shortType)
+                    .append(intType)
+                    .append(longType)
+                    .append(doubleType)
+                    .append(booleanType)
+                    .append(charType)
+                    .append(floatType)
+                    .toHashCode();
+        }
+
+        private boolean trueEqual(final Object o) {
+            if (this == o) {
+                return true;
+            }
+
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+
+            final BadPojoEqualsWithEqualObject that = (BadPojoEqualsWithEqualObject) o;
+
+            return new EqualsBuilder()
+                    .append(byteField, that.byteField)
+                    .append(shortType, that.shortType)
+                    .append(intType, that.intType)
+                    .append(longType, that.longType)
+                    .append(doubleType, that.doubleType)
+                    .append(booleanType, that.booleanType)
+                    .append(charType, that.charType)
+                    .append(floatType, that.floatType)
+                    .isEquals();
+        }
+    }
+
 }
