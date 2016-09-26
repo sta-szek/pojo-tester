@@ -4,6 +4,7 @@ import classesForTest.ClassContainingStaticClasses;
 import classesForTest.Constructor_Field;
 import classesForTest.Constructor_Stream;
 import classesForTest.Constructor_Thread;
+import classesForTest.EmptyEnum;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,10 +25,6 @@ import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 @RunWith(JUnitPlatform.class)
 public class InstantiableTest {
     private static final Map<Class<?>, ConstructorParameters> CLASS_AND_CONSTRUCTOR_PARAMETERS = new HashMap<>();
-
-    {
-
-    }
 
     @BeforeAll
     private static void beforeAll() {
@@ -90,7 +87,6 @@ public class InstantiableTest {
                                                Should_Return_Expected_Instantiator_For_Class(value)));
     }
 
-    rDefinedClass
     public Executable Should_Return_Expected_Instantiator_For_Class(final ClassInstantiator testCase) {
         return () -> {
             // when
@@ -101,19 +97,14 @@ public class InstantiableTest {
         };
     }
 
-    lass<?
-
-    enum EmptyEnum {
-    }
-
     @AllArgsConstructor
     private class ClassInstantiator {
         private Class<?> clazz;
-        private Css Use
->instantiator;
+        private Class<?> instantiator;
 
     }
 
-    private cla
+    private class UserDefinedClass {
 
+    }
 }

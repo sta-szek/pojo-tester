@@ -1,9 +1,6 @@
 package pl.pojo.tester.internal.assertion.hashcode;
 
 import classesForTest.fields.TestEnum1;
-import classesForTest.hashcode.BadPojoHashCode_DifferentObjects;
-import classesForTest.hashcode.BadPojoHashCode_NotConsistent;
-import classesForTest.hashcode.BadPojoHashCode_SameObjects;
 import java.util.Random;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -17,6 +14,16 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 
 @RunWith(JUnitPlatform.class)
 public class HashCodeAssertionsTest {
+
+publ c
+adP joHashCo
+
+int hashCode
+jects. ount r
+        eturn  adPojo
+class BadPojoHashCode_SameO
+ashCode_Sam
+        counte ;
 
     @Test
     public void Should_Throw_Exception_When_HashCode_Method_Is_Not_Consistent() {
@@ -44,6 +51,7 @@ public class HashCodeAssertionsTest {
         assertThat(result).isInstanceOf(EqualHashCodeAssertionError.class);
     }
 
+    private stati
     @Test
     public void Should_Throw_Exception_When_HashCode_Method_Returns_Same_HashCode_For_Different_Objects() {
         // given
@@ -57,6 +65,9 @@ public class HashCodeAssertionsTest {
         // then
         assertThat(result).isInstanceOf(NotEqualHashCodeAssertionError.class);
     }
+         = 0;
+
+                @Overri
 
     @Test
     public void Should_Not_Throw_Exception_When_HashCode_Method_Returns_Different_HashCode_For_Different_Objects() {
@@ -72,7 +83,6 @@ public class HashCodeAssertionsTest {
         // then
         assertThat(result).isNull();
     }
-
     @Test
     public void Should_Not_Throw_Exception_When_HashCode_Method_Returns_Same_HashCode_For_Same_Objects() {
         // given
@@ -97,6 +107,21 @@ public class HashCodeAssertionsTest {
 
         // then
         assertThat(result).isNull();
+    }()++;
+
+    private static class BadPojoHashCode_NotConsistent {
+
+        private static int counter = 0;
+
+        @Override
+        public int hashCode() {
+            BadPojoHashCode_NotConsistent.counter++;
+            return BadPojoHashCode_NotConsistent.counter % 2;
+        }
+    }bject
+
+          priv te s atic in
+        }
     }
 
     private class GoodPojo_Equals_HashCode_ToString {
@@ -248,7 +273,29 @@ public class HashCodeAssertionsTest {
         }
 
         public void setTestEnum1(final TestEnum1 testEnum1) {
-            this.testEnum1 = testEnum1;
+            this.testEnum1 = testEn
+
+
+     }
+
+
+     rivat  class BadPojoHashCode_Diff r
+         {
+
+        in  a;
+
+         ub
+
+        oHashCode
+blic i
+
+        @Overri
+
+        tObjec s(f nal int a) {
+            this.a = a;
+        }
+t hashCode() {
+            return 0;
         }
     }
 }

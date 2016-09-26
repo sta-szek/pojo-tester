@@ -1,9 +1,6 @@
 package pl.pojo.tester.api;
 
 import classesForTest.fields.TestEnum1;
-import classesForTest.hashcode.BadPojoHashCode;
-import classesForTest.hashcode.BadPojoHashCodeDifferentObjectSameType;
-import classesForTest.hashcode.BadPojoHashCodeItself;
 import java.util.List;
 import java.util.Random;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -104,6 +101,16 @@ public class HashCodeTesterTest {
 
         // then
         assertThat(result).isInstanceOf(HashCodeAssertionError.class);
+    }
+
+    private static class BadPojoHashCodeDifferentObjectSameType {
+
+        private static int increment;
+
+        @Override
+        public int hashCode() {
+            return BadPojoHashCodeDifferentObjectSameType.increment++;
+        }
     }
 
     private class GoodPojo_Equals_HashCode_ToString {
@@ -256,6 +263,31 @@ public class HashCodeTesterTest {
 
         public void setTestEnum1(final TestEnum1 testEnum1) {
             this.testEnum1 = testEnum1;
+        }
+    }
+
+    private class BadPojoHashCode {
+
+        private int increment1;
+        private int increment2;
+        private int increment3;
+        private int increment4;
+
+        @Override
+        public int hashCode() {
+            return new HashCodeBuilder().append(increment1)
+                                        .append(increment2)
+                                        .toHashCode();
+        }
+    }
+
+    class BadPojoHashCodeItself {
+
+        private int increment;
+
+        @Override
+        public int hashCode() {
+            return increment++;
         }
     }
 }
