@@ -1,11 +1,11 @@
-package classesForTest.instantiator.arrays;
+package classesForTest;
 
 import java.util.List;
-import lombok.ToString;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
-@ToString
+
 public class ObjectContainingList {
 
     private List<Integer> list;
@@ -30,5 +30,12 @@ public class ObjectContainingList {
     public int hashCode() {
         return new HashCodeBuilder().append(list)
                                     .toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("list", list)
+                .toString();
     }
 }

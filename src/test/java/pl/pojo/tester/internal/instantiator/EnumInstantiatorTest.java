@@ -1,8 +1,7 @@
 package pl.pojo.tester.internal.instantiator;
 
 
-import classesForTest.instantiator.enums.DoubleEnum;
-import classesForTest.instantiator.enums.EmptyEnum;
+import classesForTest.EmptyEnum;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
@@ -27,7 +26,7 @@ public class EnumInstantiatorTest {
     @Test
     public void Should_Return_Any_Enum_Value() {
         // given
-        final Class<DoubleEnum> doubleEnumClass = DoubleEnum.class;
+        final Class<?> doubleEnumClass = DoubleEnum.class;
         final EnumInstantiator instantiator = new EnumInstantiator(doubleEnumClass);
 
         // when
@@ -36,5 +35,11 @@ public class EnumInstantiatorTest {
         // then
         assertThat(result).isInstanceOf(doubleEnumClass);
     }
+
+    enum DoubleEnum {
+        FIRST,
+        SECOND
+    }
+
 
 }

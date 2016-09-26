@@ -1,7 +1,5 @@
 package pl.pojo.tester.internal.instantiator;
 
-import classesForTest.instantiator.No_Args_Constructor_Throws_NPE;
-import classesForTest.instantiator.One_Arg_Constructor_Throws_NPE;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -126,4 +124,16 @@ public class UserDefinedConstructorInstantiatorTest {
         }
     }
 
+    private class One_Arg_Constructor_Throws_NPE {
+        public One_Arg_Constructor_Throws_NPE(final Object o) {
+            throw new NullPointerException("test");
+        }
+    }
+
+    private class No_Args_Constructor_Throws_NPE {
+
+        public No_Args_Constructor_Throws_NPE() {
+            throw new NullPointerException("test");
+        }
+    }
 }

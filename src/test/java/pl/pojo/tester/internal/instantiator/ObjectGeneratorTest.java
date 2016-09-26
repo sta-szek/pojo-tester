@@ -1,12 +1,12 @@
 package pl.pojo.tester.internal.instantiator;
 
+import classesForTest.ObjectContainingArray;
+import classesForTest.ObjectContainingIterable;
+import classesForTest.ObjectContainingIterator;
+import classesForTest.ObjectContainingStream;
 import classesForTest.fields.TestEnum1;
 import classesForTest.fields.collections.collection.Collections;
 import classesForTest.fields.collections.map.Maps;
-import classesForTest.instantiator.arrays.ObjectContainingArray;
-import classesForTest.instantiator.arrays.ObjectContainingIterable;
-import classesForTest.instantiator.arrays.ObjectContainingIterator;
-import classesForTest.instantiator.arrays.ObjectContainingStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -400,4 +400,6 @@ public class ObjectGeneratorTest {
             this.testEnum1 = testEnum1;
         }
     }
+
+
 }

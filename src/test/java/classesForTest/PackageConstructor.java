@@ -1,4 +1,4 @@
-package classesForTest.instantiator;
+package classesForTest;
 
 
 public class PackageConstructor {

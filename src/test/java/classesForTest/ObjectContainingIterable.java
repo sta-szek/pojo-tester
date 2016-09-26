@@ -1,10 +1,9 @@
-package classesForTest.instantiator.arrays;
+package classesForTest;
 
-import lombok.ToString;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
-@ToString
 public class ObjectContainingIterable {
 
     private Iterable<Integer> iterable;
@@ -29,5 +28,12 @@ public class ObjectContainingIterable {
     public int hashCode() {
         return new HashCodeBuilder().append(iterable)
                                     .toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("iterable", iterable)
+                .toString();
     }
 }

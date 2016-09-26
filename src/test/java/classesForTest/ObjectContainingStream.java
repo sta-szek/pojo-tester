@@ -1,11 +1,11 @@
-package classesForTest.instantiator.arrays;
+package classesForTest;
 
 import java.util.stream.Stream;
-import lombok.ToString;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
-@ToString
+
 public class ObjectContainingStream {
 
     private Stream<Integer> stream;
@@ -30,5 +30,12 @@ public class ObjectContainingStream {
     public int hashCode() {
         return new HashCodeBuilder().append(stream)
                                     .toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("stream", stream)
+                .toString();
     }
 }

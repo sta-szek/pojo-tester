@@ -1,10 +1,10 @@
 package pl.pojo.tester.internal.instantiator;
 
 
-import classesForTest.instantiator.abstracts.Abstract;
-import classesForTest.instantiator.abstracts.Abstract_PrivateConstructor;
-import classesForTest.instantiator.abstracts.Annotation;
-import classesForTest.instantiator.abstracts.Interface;
+import classesForTest.Abstract;
+import classesForTest.Abstract_PrivateConstructor;
+import classesForTest.Annotation;
+import classesForTest.Interface;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;

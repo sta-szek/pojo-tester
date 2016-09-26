@@ -1,5 +1,4 @@
-package classesForTest.instantiator;
-
+package classesForTest;
 
 public class Constructor_Thread {
 

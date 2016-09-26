@@ -1,4 +1,4 @@
-package classesForTest.instantiator;
+package classesForTest;
 
 
 import java.lang.reflect.Field;

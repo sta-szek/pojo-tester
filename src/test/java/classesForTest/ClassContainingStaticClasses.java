@@ -1,4 +1,4 @@
-package classesForTest.instantiator.statics;
+package classesForTest;
 
 
 public class ClassContainingStaticClasses {

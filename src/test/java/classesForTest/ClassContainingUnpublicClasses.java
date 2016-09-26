@@ -1,4 +1,4 @@
-package classesForTest.instantiator.unpublic;
+package classesForTest;
 
 
 public class ClassContainingUnpublicClasses {
