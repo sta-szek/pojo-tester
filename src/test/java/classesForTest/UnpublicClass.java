@@ -1,4 +1,4 @@
-package classesForTest.unpublicClasses;
+package classesForTest;
 
 class UnpublicClass {
     final static private class PrivateStaticFinalNestedClass {
