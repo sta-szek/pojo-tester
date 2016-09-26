@@ -1,6 +1,5 @@
 package pl.pojo.tester.api;
 
-import classesForTest.predicate.TestPredicate;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
@@ -108,4 +107,10 @@ public class FieldPredicateTest {
         };
     }
 
+    class TestPredicate {
+
+        private int a;
+        private int b;
+        private int c;
+    }
 }
