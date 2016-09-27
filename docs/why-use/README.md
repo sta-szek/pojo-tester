@@ -2,7 +2,7 @@
 There are numbers of reasons you should use it.
 
 
-### `POJO-TESTER` makes you more productive {#productivity}
+## `POJO-TESTER` makes you more productive {#productivity}
 Before `POJO-TESTER` you had to write number of tests to check that you implemented your `pojo-methods` well. Let's see. 
 
 For simple `Pojo` class:
@@ -128,7 +128,7 @@ Do you really want to write all those tests each time you create a new `pojo` cl
 
 Not really, just use `POJO-TESTER`
 
-### Improve your coverage {#improve-coverage}
+## Improve your coverage {#improve-coverage}
 
 In example above, you made it! You wrote 8 tedious tests! Or just copied them from another test class and changed the class name. You changed it, didn't you?
 
@@ -142,7 +142,7 @@ Will you improve your coverage with hand-written tests?
 
 Not really, just use `POJO-TESTER`
 
-### Be resistant to bugs {#resistant-bugs}
+## Be resistant to bugs {#resistant-bugs}
 Yeah, be resistant to bugs in your `pojo-methods`! 
 
 Let's say you not a big fan of coverage. You don't even want to write tests :)
@@ -168,14 +168,14 @@ Do you want to be responsible for it?
 
 Not really, just use `POJO-TESTER`
 
-### Be resistant to changes {#resistant-changes}
+## Be resistant to changes {#resistant-changes}
 Yeah, we don't forget to write an additional test for each extra field. But what happens if you have to remove fields, getters or setters?
 
 Would you maintain all the broken tests?
 
 Not really, just use `POJO-TESTER`
 
-### Don't write boiler plate tests {#avoid-boiler-plate-code}
+## Don't write boiler plate tests {#avoid-boiler-plate-code}
 Ok, lets assume you write `pojo-methods` tests by yourself. You even maintain your implementation-depending tests (really wrong tests).
 
 How about `getters`, `setters` and `toString` tests? Will you write them all again? Really?
