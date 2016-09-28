@@ -4,7 +4,7 @@ Writing `pojo-methods` tests was never so easy. Using `POJO-TESTER` you just hav
 
 ## Basic pojo test {#basic-test}
 
-#### Basic tests for Pojo class
+### Basic tests for Pojo class
 The simpliest pojo test may look like this:
 ```java
 import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
@@ -25,7 +25,7 @@ It will test a `Pojo` class agains `equals`, `hashCode`, `toString`, `getters` a
 
 If your `pojo-methods` are well implemented the test will pass. Ortherwise exception will be thrown.
 
-#### Testing with AssertJ catchThrowable()
+### Testing with AssertJ catchThrowable()
 If you prefer more `given-when-then` convention, you can use [AssertJ](http://joel-costigliola.github.io/assertj/) and test may look a little bit better.
 ```java
 import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
@@ -44,7 +44,7 @@ public void Should_Pass_All_Pojo_Tests() {
 ```
 But remember with this solution you will lose exception message and you may not know why your `pojo-methods` are not well implemented.
 
-#### Testing by class name
+### Testing by class name
 If your class is not public, you cannot access it. Solution for this problem is testing classes via their names:
 ```java
 import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
@@ -62,7 +62,7 @@ public void Should_Pass_All_Pojo_Tests_When_Testing_By_Name() {
 ```
 When testing by class name you need to pass fully qualified class name.
 
-#### Testing with `ClassAndFieldPredicatePair`
+### Testing with `ClassAndFieldPredicatePair`
 When testing your classes you can pair classes and fields, that should be testes in such a class, in `ClassAndFieldPredicatePair`. This objects is just a facilitation to you:
 ```java
 import pl.pojo.tester.api.ClassAndFieldPredicatePair;
@@ -81,7 +81,7 @@ public void Should_Pass_All_Pojo_Tests_Using_ClassAndFieldPredicatePair() {
 }
 ```
 
-#### Changing nested fields
+### Changing nested fields
 By default, `Assertions::assertPojoMethodsFor` performs tests on objects with changed field values. It uses fields values changers to do that (see [fields values changer](#configure-fvc)). When it encouters field, that cannot be changed e.g. `CustomPojo` type, it just create new instance of that type and do not perform changes in that instance. When you want `POJO-TESTER` to recursively change fields values you have to pass all classes with their field predicates.
 
 For classes:
@@ -119,7 +119,7 @@ There is no need for testing `pojo-methods` in class that they are not implement
 
 You can choose which testers you want to run via `pl.pojo.tester.api.assertion.AbstractAssetion::testing` method.
 
-#### Running testers
+### Running testers
 ```java
 import pl.pojo.tester.api.assertion.Method;
 import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
@@ -145,7 +145,7 @@ Next step is `excluding` or `including` fields which should be tested. By defaul
 
 You can include or exclude fields using `pl.pojo.tester.api.FieldPredicate` which creates java 8 `Predicate` that accepts given fields names..
 
-#### Include all fields (default behavior)
+### Include all fields (default behavior)
 
 ```java
 import static pl.pojo.tester.api.FieldPredicate.includeAllFields;
@@ -163,7 +163,7 @@ public void Should_Pass_All_Pojo_Tests_Including_All_Fields() {
 }
 ```
 
-#### Include specified fields
+### Include specified fields
 
 ```java
 import static pl.pojo.tester.api.FieldPredicate.include;
@@ -181,7 +181,7 @@ public void Should_Pass_All_Pojo_Tests_Including_Specified_Fields() {
 }
 ```
 
-#### Exclude spcified fields
+### Exclude spcified fields
 
 ```java
 import static pl.pojo.tester.api.FieldPredicate.exclude;
@@ -221,7 +221,7 @@ public void Should_Pass_All_Pojo_Tests_Using_Custom_Fields_Values_Changer() {
 }
 ```
 
-#### Define custom fields values changer
+### Define custom fields values changer
 To define your own `fields values changer` you have to extend `pl.pojo.tester.internal.field.AbstractFieldValueChanger` class.
 
 `AbstractFieldValueChanger` defines three methods that you have to override:
@@ -253,7 +253,7 @@ public class CustomFieldsValuesChanger extends AbstractFieldValueChanger<String>
 ```
 
 
-#### Attaching custom fields values changer
+### Attaching custom fields values changer
 Fields values changer uses `chain of responsibility` pattern which allows you to register new fields values changer to default one.
 
 ```java
@@ -265,7 +265,7 @@ final AbstractFieldValueChanger valueChanger = DefaultFieldValueChanger.INSTANCE
                                                                                 .attachNext(customFieldsValuesChanger);
 ```
 
-#### Default fields values changer
+### Default fields values changer
 Default fields values changer is a composition of listed changers:
 * `EnumValueChanger`
 * `BooleanValueChanger`
