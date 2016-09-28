@@ -1,9 +1,8 @@
 # Comparison
-
 Here you can compare pojo-tester to existing java libraries that test `pojo-methods`.
 
 ## Other libraries {#other-libs}
-Here is list of libraries that were found on the Internet. If you find another one, just make a comparison and send PR.
+Here is the list of libraries that were found on the Internet. If you find another one, feel free to write a comparison and include it into your pull request.
 
 * pojo-tester 0.4.0
 * [openpojo](http://openpojo.com) 0.8.4
@@ -13,17 +12,17 @@ Here is list of libraries that were found on the Internet. If you find another o
 * [meanBean](http://meanbean.sourceforge.net/) 0.1.3
 
 ## Tests Preconditions {#precondtioions}
-Our tests will be performed on `pojo-classes`. 
-Each library has it's own `pojo-class` in a package name like library name.
-There are few of them, beacuse we want to try generate `pojo-methos` using 
+Tests are performed on `pojo-classes`. 
+
+Every framework is tested against several classes, each using different `pojo-methods` generation mechanism:
 [Lombok](https://projectlombok.org/), 
 [Apache's commons lang 3](https://commons.apache.org/proper/commons-lang/),
 [Google's guava](https://github.com/google/guava) and
 standard IntelliJ method generation.
 
-We measure code coverage using [JaCoCo 0.7.7.201606060606](http://www.eclemma.org/jacoco/).
+Code coverage is measured using [JaCoCo 0.7.7.201606060606](http://www.eclemma.org/jacoco/).
 
-Classes contains fiels as shown below:
+Classes contains fields as shown below:
 
 ```java
 public class Pojo {
@@ -35,7 +34,7 @@ public class Pojo {
 ```
 
 ## Kind of tests {#kind-of-tests}
-Each library provides different testing features. Here is comparison.
+Each library provides different testing features. Here is the comparison.
 
 ### Features comparision
 
@@ -43,25 +42,25 @@ Basic `pojo-methods` test support:
 
 | Kind of tests                                | pojo-tester    | OpenPojo | SmartUnit | testUtils | testUtil  | Mean Bean  |
 |---                                           |:---:           |:---:     |:---:      |:---:      |:---:      |:---:       |
-| getters                                      | v              | v        | v^        | v         | v^        | v          |
-| setters                                      | v              | v        | v^        | v         | v^        | v          |
-| equals                                       | v              | v*^      | x         | v         | x         | v^         |
-| hashCode                                     | v              | v*^      | x         | v         | x         | v^         |
-| toString                                     | v              | v*^      | x         | v         | x         | x          |
+| getters                                      | &#10003              | &#10003        | &#10003^        | &#10003         | &#10003^        | &#10003          |
+| setters                                      | &#10003              | &#10003        | &#10003^        | &#10003         | &#10003^        | &#10003          |
+| equals                                       | &#10003              | &#10003*^      | &#10005         | &#10003         | &#10005         | &#10003^         |
+| hashCode                                     | &#10003              | &#10003*^      | &#10005         | &#10003         | &#10005         | &#10003^         |
+| toString                                     | &#10003              | &#10003*^      | &#10005         | &#10003         | &#10005         | &#10005          |
 |||||||||
 |                                                         Additional features                                              ||
-| field selection                              | v              | v        | v         | v         | x         | v          |
-| method selection                             | v              | v        | x         | x         | x         | v          |
-| supports unpublic classes                    | v              | v        | x         | v         | x         | x          |
-| supports non-default constructors            | v              | v        | x         | v         | x         | x          |
-| recurection support                          | v              | x        | x         | x         | x         | x          |
-| creating object by user definied constructor | v              | x        | x         | x         | x         | x          |
-| custom changing fields values                | v              | x        | x         | x         | x         | x          |
-| package-testing                              | x              | v        | x         | x         | x         | x          |
+| field selection                              | &#10003              | &#10003        | &#10003         | &#10003         | &#10005         | &#10003          |
+| method selection                             | &#10003              | &#10003        | &#10005         | &#10005         | &#10005         | &#10003          |
+| supports nonpublic classes                   | &#10003              | &#10003        | &#10005         | &#10003         | &#10005         | &#10005          |
+| supports non-default constructors            | &#10003              | &#10003        | &#10005         | &#10003         | &#10005         | &#10005          |
+| recurrence support                           | &#10003              | &#10005        | &#10005         | &#10005         | &#10005         | &#10005          |
+| creating object by user defined constructor  | &#10003              | &#10005        | &#10005         | &#10005         | &#10005         | &#10005          |
+| custom changing fields values                | &#10003              | &#10005        | &#10005         | &#10005         | &#10005         | &#10005          |
+| package-testing                              | &#10005              | &#10003        | &#10005         | &#10005         | &#10005         | &#10005          |
 
-\* means it does not support changing field recursively and libraries have problems with fields other than primitives. 
+\* limited support for changing fields recursively and otherwise having problems with fields other than primitives. 
 Libraries throw exceptions from java core, which does mean nothing.
-^ means you have to make additional changes in your production code
+^ requires additional changes in your production code
 
 ### Tests
 
@@ -85,10 +84,10 @@ That's all. No matter what `getter`, `setter`, `equals`, `hashCode` or `toString
 
 
 #### OpenPojo
-We actually cannot test all classes using openpojo, beacuse this library requires special `hashCode`, `equals` and `toString` method implementation.
+We actually cannot test all classes using openpojo, because this library requires special `hashCode`, `equals` and `toString` method implementation.
 So instead we will test just one `pojo` class.
 First of all, we need to modify our `pojo` class by adding special annotation `@BusinessKey` to each field we want to be tested.
-Overmore we have to delegate `hashCode`, `equals` and `toString` method to `BusinessIdentity`.
+Furthermore we have to delegate `hashCode`, `equals` and `toString` method to `BusinessIdentity`.
 
 Our modified `pojo` class looks like this:
 ```java
@@ -166,9 +165,9 @@ public void Should_Test_Pojo() throws Exception {
 ```
 
 #### testUtils
-At first glance this library could concurent with `POJO-TESTER` and OpenPojo, but we were unable to run tests getting exception:
+At first glance, this library could compete with `POJO-TESTER` and OpenPojo, but we were unable to run tests getting exception:
 
-We tried our best, so there is nothing we can just pastes test code:
+We tried our best, so there is nothing we can do but paste the attempted test code:
 ```java
 @Test
 public void Should_Test_Pojo() {
@@ -241,7 +240,7 @@ public void Should_Test_Pojo() {
 ```
 
 #### Mean Bean
-Testing `pojos`` using Mean Bean is almost as simply as using `POJO-TESTER` or OpenPojo. But we have to create three testers:
+Testing `pojos` using Mean Bean is almost as easy as using `POJO-TESTER` or OpenPojo. But we have to create three testers:
 
 ```java
 @Test
@@ -267,26 +266,26 @@ public void Should_Test_Pojo() {
 ```
 
 ## Coverage Comparison {#coverage-comparison}
-OK! Let's see at the coverage. 
+OK! Now let us look at the coverage. 
 
-First of all, three libraries (Smart Unit, testUtil and testUtils) have lowest code coverage as they tests only getters and setters.
+First of all, three libraries (Smart Unit, testUtil and testUtils) have lowest code coverage as they test only getters and setters.
 
-Next, is Open Pojo, that is loosing the fight against Mean Bean and `POJO-TESTER`.
-Open Pojo cannot tests classes that implements custom `equals`, `hashCodes` and `toString`, so you cannot just use it in your project without production code modifications.
+Next is Open Pojo, loosing the fight only against Mean Bean and `POJO-TESTER`.
+Open Pojo cannot test classes that implement custom `equals`, `hashCodes` and `toString`, so you cannot use it in your existing project without prior production code modifications.
 
-Mean Bean looks pretty nice, but due to it's implementation, the coverage is unstable. 
-Mean Bean generates `pojo`'s fields values randomly, so you can have lower and bigger coverage, but always below `POJO-TESTER` level. 
-And there is one more thing. Tests (internal, in library implementation) using Mean Beans are repeated 100 hundred times, by default.
+Mean Bean looks pretty nice, but due to its implementation the coverage is unstable. 
+Mean Bean generates `pojo`'s fields values randomly, so you can have lower or higher coverage, but always below `POJO-TESTER` level. 
+And there is one more thing. Tests (internal, in library implementation) using Mean Beans are repeated hundred times, by default.
 
-`POJO-TESTER` does the job. It provides stable coverage and the bigest coverage. As we can see below.
+`POJO-TESTER` does the job. It provides stable coverage with the highest percentage. See numbers below.
 ![](coverage-comparison.png)
 
-Next thing that `POJO-TESTER` can do, but other libraries not is testing fields recursively.
+Next thing that `POJO-TESTER` can do, but other libraries cannot, is recursively testing fields.
 This means your tests are more sure.
 
-We've done one more code coverage reports using changing nested fields. 
-From those tests, we excluded three libraries - Mean Bean, Smart Unit and TestUtil.
-They just cannot perfom such a tests and thorws undefinied exceptions.
+We have done one more code coverage report using changing nested fields. 
+From those tests we excluded three libraries - Mean Bean, Smart Unit and TestUtil.
+They simply could not perform such tests and threw undefined exceptions.
 
 Here are results:
 ![](pojo-the-winner.png)
@@ -296,25 +295,25 @@ Here is a quick overview of tests.
 
 Libraries like `testUtil`, `testUtils`, and `smart-unit` are just outdated. 
 No one is implementing them. (Our definitions of `implement` is the more bugs are reported the more library is up to date).
-Those libraries tests just `setters` and `getters` which are the least wanted and the least liable for bugs.
-But one good thing is that, the testUtils has very nice logs, that are missing in other libraries.
+Those libraries test only `setters` and `getters`, which are the least wanted and the least liable for bugs.
+One good thing about testUtils that other libraries miss is really nice logs.
 
-OK. Let's see who is the boss.
+OK. Let us see who is the boss.
 
-Let's start from Open Pojo.
+Let us start from Open Pojo.
 
-The biggest disadvantage of this library is that, it required to be `compide dependency`, which means when you build `fatJar` it will be inside.
-We don't like test libraries to be included in production code. It also does not support recurrency. 
-Overmore `equals`, `hashCode` and `toString` methods implementation needs to be delegated to this library, which prevents you from hiding fields in `toString` e.g. `userPassword`.
+The biggest disadvantage of this library is that it needs to be a `compile dependency`, which means that when you build a `fatJar` this library will be inside it.
+We don't like our test libraries to be included in production code. It also does not support recurrence. 
+Furthermore `equals`, `hashCode` and `toString` methods implementation needs to be delegated to this library, which prevents you from hiding fields in `toString` e.g. `userPassword`.
 
-On the other hand, the biggest advantage over `POJO-TESTER` and Mean Bean is that, the Open Pojo has more rules.
-It can check that class has getters or setters, does not have primitives, public fields, or fields shadowing.
-But say it openly, those are just never-used additions.
+On the other hand, the biggest advantage over `POJO-TESTER` and Mean Bean is that the Open Pojo has more rules.
+It can check that class has getters or setters, does not have primitives, public fields or field shadowing.
+But say it openly, those are very rarely-used bonuses.
 
-The biggest opponent of `POJO-TESTER` is Mean Bean. Actually, this library has same advantages as `POJO-TESTER`.
+The biggest opponent of `POJO-TESTER` is Mean Bean. Actually, this library has the same advantages as `POJO-TESTER`.
 
 Disadvantages are: 
-* it has changeable coverage report, which can cause unwanted CI reports
-* it does not support recurency which can be the key, especially when you use enum or VO (Value Obects)
+* it has variable coverage report, which can cause unwanted CI reports
+* it does not support recurrence which can be a deal breaker, especially if you use enums or VOs (Value Objects)
 
-Assuming that, `POJO-TESTER` has the biggest coverage and it's features makes your tests more sure.
+To sum up, `POJO-TESTER` has the highest consistent coverage and its features make your tests more bulletproof.
