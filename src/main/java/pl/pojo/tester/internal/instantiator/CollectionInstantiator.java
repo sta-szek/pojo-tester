@@ -22,7 +22,6 @@ class CollectionInstantiator extends ObjectInstantiator {
         PREPARED_OBJECTS.put(Hashtable.class, new Hashtable<>());
         PREPARED_OBJECTS.put(NavigableMap.class, new TreeMap<>());
         PREPARED_OBJECTS.put(TreeMap.class, new TreeMap<>());
-
         PREPARED_OBJECTS.put(SortedMap.class, new TreeMap<>());
         PREPARED_OBJECTS.put(Map.class, new HashMap<>());
         PREPARED_OBJECTS.put(NavigableSet.class, new TreeSet<>());
@@ -32,7 +31,6 @@ class CollectionInstantiator extends ObjectInstantiator {
         PREPARED_OBJECTS.put(Deque.class, new LinkedList<>());
         PREPARED_OBJECTS.put(Queue.class, new LinkedList<>());
         PREPARED_OBJECTS.put(Collection.class, new ArrayList<>());
-
         PREPARED_OBJECTS.put(Iterable.class, new ArrayList<>());
     }
 
