@@ -1,7 +1,7 @@
 require([
     'gitbook',
     'jquery'
-], function(gitbook, $) {
+], function (gitbook, $) {
     var MAX_RESULTS = 15;
     var MAX_DESCRIPTION_SIZE = 500;
 
@@ -20,10 +20,10 @@ require([
     function throttle(fn, wait) {
         var timeout;
 
-        return function() {
+        return function () {
             var ctx = this, args = arguments;
             if (!timeout) {
-                timeout = setTimeout(function() {
+                timeout = setTimeout(function () {
                     timeout = null;
                     fn.apply(ctx, args);
                 }, wait);
@@ -45,7 +45,7 @@ require([
         $searchQuery.text(res.query);
 
         // Create an <li> element for each result
-        res.results.forEach(function(res) {
+        res.results.forEach(function (res) {
             var $li = $('<li>', {
                 'class': 'search-results-item'
             });
@@ -59,7 +59,7 @@ require([
 
             var content = res.body.trim();
             if (content.length > MAX_DESCRIPTION_SIZE) {
-                content = content.slice(0, MAX_DESCRIPTION_SIZE).trim()+'...';
+                content = content.slice(0, MAX_DESCRIPTION_SIZE).trim() + '...';
             }
             var $content = $('<p>').html(content);
 
@@ -77,12 +77,12 @@ require([
 
         // Launch search query
         throttle(gitbook.search.query(q, 0, MAX_RESULTS)
-        .then(function(results) {
-            displayResults(results);
-        })
-        .always(function() {
-            $body.removeClass('search-loading');
-        }), 1000);
+            .then(function (results) {
+                displayResults(results);
+            })
+            .always(function () {
+                $body.removeClass('search-loading');
+            }), 1000);
     }
 
     function closeSearch() {
@@ -103,12 +103,12 @@ require([
 
     function bindSearch() {
         // Bind DOM
-        $searchInput        = $('#book-search-input input');
-        $bookSearchResults  = $('#book-search-results');
-        $searchList         = $bookSearchResults.find('.search-results-list');
-        $searchTitle        = $bookSearchResults.find('.search-results-title');
+        $searchInput = $('#book-search-input input');
+        $bookSearchResults = $('#book-search-results');
+        $searchList = $bookSearchResults.find('.search-results-list');
+        $searchTitle = $bookSearchResults.find('.search-results-title');
         $searchResultsCount = $searchTitle.find('.search-results-count');
-        $searchQuery        = $searchTitle.find('.search-query');
+        $searchQuery = $searchTitle.find('.search-query');
 
         // Launch query based on input content
         function handleUpdate() {
@@ -125,14 +125,14 @@ require([
         // Detect true content change in search input
         // Workaround for IE < 9
         var propertyChangeUnbound = false;
-        $searchInput.on('propertychange', function(e) {
+        $searchInput.on('propertychange', function (e) {
             if (e.originalEvent.propertyName == 'value') {
                 handleUpdate();
             }
         });
 
         // HTML5 (IE9 & others)
-        $searchInput.on('input', function(e) {
+        $searchInput.on('input', function (e) {
             // Unbind propertychange event for IE9+
             if (!propertyChangeUnbound) {
                 $(this).unbind('propertychange');
@@ -143,16 +143,16 @@ require([
         });
 
         // Push to history on blur
-        $searchInput.on('blur', function(e) {
+        $searchInput.on('blur', function (e) {
             // Update history state
             if (usePushState) {
                 var uri = updateQueryString('q', $(this).val());
-                history.pushState({ path: uri }, null, uri);
+                history.pushState({path: uri}, null, uri);
             }
         });
     }
 
-    gitbook.events.on('page.change', function() {
+    gitbook.events.on('page.change', function () {
         bindSearch();
         closeSearch();
 
@@ -162,7 +162,7 @@ require([
         }
     });
 
-    gitbook.events.on('search.ready', function() {
+    gitbook.events.on('search.ready', function () {
         bindSearch();
 
         // Launch search from query param at start

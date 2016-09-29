@@ -6,8 +6,7 @@ import classesForTest.Constructor_Stream;
 import classesForTest.Constructor_Thread;
 import classesForTest.EmptyEnum;
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Stream;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.BeforeAll;
@@ -75,6 +74,32 @@ public class InstantiableTest {
                          new ClassInstantiator(int.class, PrimitiveInstantiator.class),
                          new ClassInstantiator(long.class, PrimitiveInstantiator.class),
                          new ClassInstantiator(short.class, PrimitiveInstantiator.class),
+
+                         new ClassInstantiator(Stream.class, CollectionInstantiator.class),
+                         new ClassInstantiator(Stack.class, CollectionInstantiator.class),
+                         new ClassInstantiator(Vector.class, CollectionInstantiator.class),
+                         new ClassInstantiator(ArrayList.class, CollectionInstantiator.class),
+                         new ClassInstantiator(LinkedList.class, CollectionInstantiator.class),
+                         new ClassInstantiator(LinkedHashSet.class, CollectionInstantiator.class),
+                         new ClassInstantiator(HashSet.class, CollectionInstantiator.class),
+                         new ClassInstantiator(TreeSet.class, CollectionInstantiator.class),
+                         new ClassInstantiator(Iterator.class, CollectionInstantiator.class),
+                         new ClassInstantiator(LinkedHashMap.class, CollectionInstantiator.class),
+                         new ClassInstantiator(HashMap.class, CollectionInstantiator.class),
+                         new ClassInstantiator(Hashtable.class, CollectionInstantiator.class),
+                         new ClassInstantiator(NavigableMap.class, CollectionInstantiator.class),
+                         new ClassInstantiator(TreeMap.class, CollectionInstantiator.class),
+                         new ClassInstantiator(SortedMap.class, CollectionInstantiator.class),
+                         new ClassInstantiator(Map.class, CollectionInstantiator.class),
+                         new ClassInstantiator(NavigableSet.class, CollectionInstantiator.class),
+                         new ClassInstantiator(SortedSet.class, CollectionInstantiator.class),
+                         new ClassInstantiator(Set.class, CollectionInstantiator.class),
+                         new ClassInstantiator(List.class, CollectionInstantiator.class),
+                         new ClassInstantiator(Deque.class, CollectionInstantiator.class),
+                         new ClassInstantiator(Queue.class, CollectionInstantiator.class),
+                         new ClassInstantiator(Collection.class, CollectionInstantiator.class),
+                         new ClassInstantiator(Iterable.class, CollectionInstantiator.class),
+
                          new ClassInstantiator(ClassContainingStaticClasses.NestedStaticClass_PublicConstructor.class,
                                                DefaultConstructorInstantiator.class),
                          new ClassInstantiator(ClassContainingStaticClasses.NestedStaticClass_PackageConstructor.class,
