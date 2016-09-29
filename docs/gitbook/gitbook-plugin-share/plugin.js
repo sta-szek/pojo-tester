@@ -1,6 +1,6 @@
-require(["gitbook"], function (gitbook) {
+require(["gitbook"], function(gitbook) {
 
-    var redditButtonCreate = function (cfg) {
+    var redditButtonCreate = function(cfg) {
         var base_url;
         if ('https:' == document.location.protocol) {
             base_url = 'https://redditstatic.s3.amazonaws.com';
@@ -38,23 +38,22 @@ require(["gitbook"], function (gitbook) {
     };
 
     var shareConfig;
-    var reloadShare = function () {
+    var reloadShare = function() {
         if (shareConfig.reddit) {
             var out = redditButtonCreate(shareConfig.reddit);
             $(".gitbook-share .reddit").append($(out));
         }
     };
 
-    gitbook.events.bind("start", function (e, config) {
+    gitbook.events.bind("start", function(e, config) {
         shareConfig = config.share || {};
         reloadShare();
     });
 
-    gitbook.events.bind("page.change", function () {
+    gitbook.events.bind("page.change", function() {
         shareConfig = shareConfig || {};
         reloadShare();
     });
 
-    gitbook.events.bind("exercise.submit", function (e, data) {
-    });
+    gitbook.events.bind("exercise.submit", function(e, data) {});
 });
