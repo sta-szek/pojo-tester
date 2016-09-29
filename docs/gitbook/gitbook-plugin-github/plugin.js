@@ -1,4 +1,4 @@
-require([ 'gitbook' ], function (gitbook) {
+require(['gitbook'], function (gitbook) {
     gitbook.events.bind('start', function (e, config) {
         var githubURL = config.github.url;
 
@@ -6,7 +6,7 @@ require([ 'gitbook' ], function (gitbook) {
             icon: 'fa fa-github',
             label: 'GitHub',
             position: 'right',
-            onClick: function() {
+            onClick: function () {
                 window.open(githubURL)
             }
         });

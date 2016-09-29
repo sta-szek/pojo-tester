@@ -1,50 +1,45 @@
 {
-  "plugins" : ["anchors",
-               "toggle-chapters",
-               "sharing",
-               "editlink",
-               "github-buttons",
-               "share",
-               "sitemap",
-	       "disqus",
-               "nocache", 
-               "git-author",
-               "back-to-top-button",
-               "advanced-emoji",
-               "ga",
-               "github"],
+  "title": "POJO-TESTER User Guide",
+  "description": "POJO-TESTER is java testing library, which makes your pojo methods tests much easier and more bulletproof!",
+  "plugins": [
+    "anchors",
+    "toggle-chapters",
+    "sharing",
+    "editlink",
+    "share",
+    "sitemap",
+    "disqus",
+    "nocache",
+    "git-author",
+    "back-to-top-button",
+    "advanced-emoji",
+    "prettify-html",
+    "ga",
+    "github"
+  ],
   "pluginsConfig": {
-      "git-author": {
-          "position": "bottom",
-          "modifyTpl": "Last modified by {user} {timeStamp}",
-          "createTpl": "Created by {user} {timeStamp}",
-          "timeStampFormat": "YYYY-MM-DD HH:mm:ss"
-      },
-      "ga": {
-          "token": "UA-84695813-1"
-      },
-      "sitemap": {
-          "hostname": "https://pojo.pl/"
-      },
-      "github": {
-          "url": "https://github.com/sta-szek/pojo-tester"
-      },
-      "editlink": {
-        "base": "https://github.com/sta-szek/pojo-tester/edit/master/gitbook",
-        "label": "Edit This Page",
-        "multilingual": false
-      },
-      "github-buttons": {
-        "repo": "sta-szek/pojo-tester",
-        "types": [
-          "star",
-          "watch",
-          "fork",
-          "follow"
-        ]
-      },
-      "disqus":{
-      	"shortName": "pojo"
-      }
+    "git-author": {
+      "position": "bottom",
+      "modifyTpl": "Last modified by {user} {timeStamp}",
+      "createTpl": "Created by {user} {timeStamp}",
+      "timeStampFormat": "YYYY-MM-DD HH:mm:ss"
+    },
+    "ga": {
+      "token": "UA-84695813-1"
+    },
+    "sitemap": {
+      "hostname": "https://pojo.pl/"
+    },
+    "github": {
+      "url": "https://github.com/sta-szek/pojo-tester"
+    },
+    "editlink": {
+      "base": "https://github.com/sta-szek/pojo-tester/edit/master/src/book",
+      "label": "Edit This Page",
+      "multilingual": false
+    },
+    "disqus": {
+      "shortName": "pojo"
+    }
   }
 }
