@@ -121,6 +121,11 @@ def createManifestAttributes() {
     attributes
 }
 
+javadoc {
+    source = sourceSets.main.allJava
+    classpath = configurations.compile
+    destinationDir = file("docs/javadoc")
+}
 
 static def gitUser() {
     def username = ""
@@ -136,6 +141,7 @@ static def gitUser() {
     username + " " + useremail
 }
 
+assemble.dependsOn javadoc
 check.dependsOn jacocoTestReport
 build.dependsOn publishToMavenLocal
 
