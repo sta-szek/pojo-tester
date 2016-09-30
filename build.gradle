@@ -124,7 +124,7 @@ def createManifestAttributes() {
 javadoc {
     source = sourceSets.main.allJava
     classpath = configurations.compile
-    destinationDir = file("docs/javadoc")
+    destinationDir = file("src/book/javadoc")
 }
 
 static def gitUser() {
