@@ -132,7 +132,6 @@ public abstract class AbstractTester {
         objectGenerator = new ObjectGenerator(fieldValuesChanger, constructorParameters);
     }
 
-
     /**
      * {@inheritDoc}
      */

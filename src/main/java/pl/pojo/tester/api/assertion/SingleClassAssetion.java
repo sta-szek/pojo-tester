@@ -13,7 +13,7 @@ class SingleClassAssetion extends AbstractAssetion {
     }
 
     @Override
-    public void testImplementation() {
+    protected void testImplementation() {
         testers.forEach(tester -> tester.test(baseClassAndFieldPredicatePair, classAndFieldPredicatePairs));
     }
 }

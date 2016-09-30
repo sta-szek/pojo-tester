@@ -9,7 +9,7 @@ import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 import pl.pojo.tester.internal.utils.FieldUtils;
 
 /**
- * ToStringTester tests classes if the implementation of {@code toString} method are good.
+ * ToStringTester tests classes if the implementation of {@code toString} method is good.
  *
  * @author Piotr Joński
  * @since 0.1.0
