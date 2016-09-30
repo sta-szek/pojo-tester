@@ -12,16 +12,31 @@ import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 import pl.pojo.tester.internal.utils.FieldUtils;
 import pl.pojo.tester.internal.utils.MethodUtils;
 
+/**
+ * GetterTester tests classes if the implementation of {@code getter} methods is good.
+ *
+ * @author Piotr Joński
+ * @since 0.1.0
+ */
 public class GetterTester extends AbstractTester {
 
+    /**
+     * {@inheritDoc}
+     */
     public GetterTester() {
         super();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public GetterTester(final AbstractFieldValueChanger abstractFieldValueChanger) {
         super(abstractFieldValueChanger);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void test(final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair, final ClassAndFieldPredicatePair... classAndFieldPredicatePairs) {
         final Class testedClass = baseClassAndFieldPredicatePair.getClazz();

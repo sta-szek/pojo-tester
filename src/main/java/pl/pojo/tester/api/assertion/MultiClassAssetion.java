@@ -12,7 +12,7 @@ class MultiClassAssetion extends AbstractAssetion {
     }
 
     @Override
-    public void testImplementation() {
+    protected void testImplementation() {
         final ClassAndFieldPredicatePair[] classes = classAndFieldPredicatePairs.toArray(new ClassAndFieldPredicatePair[classAndFieldPredicatePairs.size()]);
         testers.forEach(tester -> tester.testAll(classes));
     }

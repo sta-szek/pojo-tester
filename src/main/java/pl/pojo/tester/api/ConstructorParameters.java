@@ -4,17 +4,36 @@ import lombok.Getter;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+/**
+ * Defines constructor parameters and constructor parameter's types.
+ * <p>
+ * Constructor parameters's types are used to select constructor.
+ * <p>
+ * Constructor parameters are passed to selected constructor
+ *
+ * @author Piotr Joński
+ * @since 0.1.0
+ */
 @Getter
 public class ConstructorParameters {
 
     private final Object[] constructorParameters;
     private final Class<?>[] constructorParametersTypes;
 
+    /**
+     * Instantaites {@code ConstructorParameters} with given constructor parameters and constructor parameter's types.
+     *
+     * @param constructorParameters      constructor paramters
+     * @param constructorParametersTypes constructor paramter's types
+     */
     public ConstructorParameters(final Object[] constructorParameters, final Class<?>[] constructorParametersTypes) {
         this.constructorParameters = constructorParameters;
         this.constructorParametersTypes = constructorParametersTypes;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -32,6 +51,9 @@ public class ConstructorParameters {
                                   .isEquals();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode() {
         return new HashCodeBuilder().append(constructorParameters)

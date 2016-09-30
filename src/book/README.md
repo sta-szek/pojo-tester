@@ -21,3 +21,6 @@ Current coverage is [![codecov](https://codecov.io/gh/sta-szek/pojo-tester/branc
 TODO
 `POJO-TESTER` announcement is scheduled for 02.10.2016.
 Keep watching! :beers:
+
+## JavaDoc documentation {#javadoc}
+Javadoc can be found [here](http://www.pojo.pl/javadoc/index.html).

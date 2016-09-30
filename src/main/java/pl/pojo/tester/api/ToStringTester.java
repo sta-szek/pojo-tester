@@ -8,16 +8,31 @@ import java.util.stream.Collectors;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 import pl.pojo.tester.internal.utils.FieldUtils;
 
+/**
+ * ToStringTester tests classes if the implementation of {@code toString} method is good.
+ *
+ * @author Piotr Joński
+ * @since 0.1.0
+ */
 public class ToStringTester extends AbstractTester {
 
+    /**
+     * {@inheritDoc}
+     */
     public ToStringTester() {
         super();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public ToStringTester(final AbstractFieldValueChanger abstractFieldValueChanger) {
         super(abstractFieldValueChanger);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void test(final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair, final ClassAndFieldPredicatePair... classAndFieldPredicatePairs) {
         final Class<?> testedClass = baseClassAndFieldPredicatePair.getClazz();

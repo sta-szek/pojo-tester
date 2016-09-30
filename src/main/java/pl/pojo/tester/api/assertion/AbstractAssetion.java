@@ -15,6 +15,15 @@ import pl.pojo.tester.internal.instantiator.ClassLoader;
 import static pl.pojo.tester.internal.preconditions.ParameterPreconditions.checkNotBlank;
 import static pl.pojo.tester.internal.preconditions.ParameterPreconditions.checkNotNull;
 
+
+/**
+ * This is abstract class for all assertion classes.
+ * <p>
+ * For more documentation, please refer <a href="http://pojo.pl">POJO-TESTER User Guide documentation</a>
+ *
+ * @author Piotr Joński
+ * @since 0.1.0
+ */
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractAssetion {
 
@@ -31,6 +40,15 @@ public abstract class AbstractAssetion {
     Set<AbstractTester> testers = new HashSet<>();
     private AbstractFieldValueChanger abstractFieldValueChanger;
 
+    /**
+     * Specifies what field values changer will be used for testing.
+     *
+     * @param abstractFieldValueChanger field values changer
+     *
+     * @return itself
+     *
+     * @see AbstractFieldValueChanger
+     */
     public AbstractAssetion using(final AbstractFieldValueChanger abstractFieldValueChanger) {
         checkNotNull("abstractFieldValueChanger", abstractFieldValueChanger);
 
@@ -38,6 +56,15 @@ public abstract class AbstractAssetion {
         return this;
     }
 
+    /**
+     * Specifies what tests will be performed.
+     *
+     * @param methods methods to test
+     *
+     * @return itself
+     *
+     * @see Method
+     */
     public AbstractAssetion testing(final Method... methods) {
         checkNotNull("methods", methods);
 
@@ -46,6 +73,15 @@ public abstract class AbstractAssetion {
         return this;
     }
 
+    /**
+     * Specifies what test will be performed.
+     *
+     * @param method method to test
+     *
+     * @return itself
+     *
+     * @see Method
+     */
     public AbstractAssetion testing(final Method method) {
         checkNotNull("method", method);
 
@@ -54,6 +90,12 @@ public abstract class AbstractAssetion {
         return this;
     }
 
+    /**
+     * Performs specified tests on classes using declared field value changer.
+     *
+     * @see Method
+     * @see AbstractFieldValueChanger
+     */
     public void areWellImplemented() {
         if (testers.isEmpty()) {
             testers = DEFAULT_TESTERS;
@@ -67,6 +109,17 @@ public abstract class AbstractAssetion {
         testImplementation();
     }
 
+    /**
+     * Indicates, that class should be constructed using given constructor parameters. Constructor will be selected based on constructor paramter's types.
+     *
+     * @param qualifiedClassName        class to instantiate
+     * @param constructorParameters     constructor paramters
+     * @param constructorParameterTypes constructor parameter's types
+     *
+     * @return itself
+     *
+     * @see ConstructorParameters
+     */
     public AbstractAssetion create(final String qualifiedClassName, final Object[] constructorParameters, final Class<?>[] constructorParameterTypes) {
         checkNotBlank("qualifiedClassName", qualifiedClassName);
 
@@ -74,6 +127,16 @@ public abstract class AbstractAssetion {
         return create(qualifiedClassName, constructorParameter);
     }
 
+    /**
+     * Indicates, that class should be constructed using given constructor parameters. Constructor will be selected based on constructor paramter's types.
+     *
+     * @param qualifiedClassName    class to instantiate
+     * @param constructorParameters constructor paramters
+     *
+     * @return itself
+     *
+     * @see ConstructorParameters
+     */
     public AbstractAssetion create(final String qualifiedClassName, final ConstructorParameters constructorParameters) {
         checkNotBlank("qualifiedClassName", qualifiedClassName);
         checkNotNull("constructorParameters", constructorParameters);
@@ -83,6 +146,17 @@ public abstract class AbstractAssetion {
         return this;
     }
 
+    /**
+     * Indicates, that class should be constructed using given constructor parameters. Constructor will be selected based on constructor paramter's types.
+     *
+     * @param clazz                     class to instantiate
+     * @param constructorParameters     constructor paramters
+     * @param constructorParameterTypes constructor parameter's types
+     *
+     * @return itself
+     *
+     * @see ConstructorParameters
+     */
     public AbstractAssetion create(final Class<?> clazz, final Object[] constructorParameters, final Class<?>[] constructorParameterTypes) {
         checkNotNull("clazz", clazz);
 
@@ -90,6 +164,17 @@ public abstract class AbstractAssetion {
         return create(clazz, constructorParameter);
     }
 
+
+    /**
+     * Indicates, that class should be constructed using given constructor parameters. Constructor will be selected based on constructor paramter's types.
+     *
+     * @param clazz                 class to instantiate
+     * @param constructorParameters constructor paramters
+     *
+     * @return itself
+     *
+     * @see ConstructorParameters
+     */
     public AbstractAssetion create(final Class<?> clazz, final ConstructorParameters constructorParameters) {
         checkNotNull("clazz", clazz);
         checkNotNull("constructorParameters", constructorParameters);
