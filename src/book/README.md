@@ -11,6 +11,9 @@ Current coverage is [![codecov](https://codecov.io/gh/sta-szek/pojo-tester/branc
 
 Download latest version [![Download](https://api.bintray.com/packages/sta-szek/maven/pojo-tester/images/download.svg) ](https://bintray.com/sta-szek/maven/pojo-tester/_latestVersion)
 
+Get automatic notifications about new `POJO-TESTER` versions
+<a href='https://bintray.com/sta-szek/maven/pojo-tester?source=watch' alt='Get automatic notifications about new "pojo-tester" versions'><img src='https://www.bintray.com/docs/images/bintray_badge_color.png'></a>
+
 
 ## What is pojo-tester? {#what-is-pojo-tester}
 `POJO-TESTER` is a java testing library, which makes your `pojo-tests` much easier. You can test your `pojo` against `equals`, `hashCode`, `toString`, `getters` and `setters`.
