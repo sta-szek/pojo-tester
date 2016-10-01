@@ -7,9 +7,9 @@ If you have any questions, we can [![Gitter](https://badges.gitter.im/pojo-teste
 
 Build status is provided by [![Build Status](https://travis-ci.org/sta-szek/pojo-tester.svg?branch=master)](https://travis-ci.org/sta-szek/pojo-tester)
 
-Current coverage is [[![codecov](https://codecov.io/gh/sta-szek/pojo-tester/branch/master/graph/badge.svg)](https://codecov.io/gh/sta-szek/pojo-tester)
+Current coverage is [![codecov](https://codecov.io/gh/sta-szek/pojo-tester/branch/master/graph/badge.svg)](https://codecov.io/gh/sta-szek/pojo-tester)
 
-Download latest version [ ![Download](https://api.bintray.com/packages/sta-szek/maven/pojo-tester/images/download.svg) ](https://bintray.com/sta-szek/maven/pojo-tester/_latestVersion)
+Download latest version [![Download](https://api.bintray.com/packages/sta-szek/maven/pojo-tester/images/download.svg) ](https://bintray.com/sta-szek/maven/pojo-tester/_latestVersion)
 
 
 ## What is pojo-tester? {#what-is-pojo-tester}
