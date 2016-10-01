@@ -10,3 +10,5 @@ Build status is provided by [![Build Status](https://travis-ci.com/sta-szek/pojo
 
 Current coverage is [![codecov](https://codecov.io/gh/sta-szek/pojo-tester/branch/master/graph/badge.svg?token=YjQ8Z7Xyra)](https://codecov.io/gh/sta-szek/pojo-tester)
 
+Download latest version [ ![Download](https://api.bintray.com/packages/sta-szek/maven/pojo-tester/images/download.svg) ](https://bintray.com/sta-szek/maven/pojo-tester/_latestVersion)
+

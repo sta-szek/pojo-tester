@@ -9,6 +9,8 @@ Build status is provided by [![Build Status](https://travis-ci.com/sta-szek/pojo
 
 Current coverage is [![codecov](https://codecov.io/gh/sta-szek/pojo-tester/branch/master/graph/badge.svg?token=YjQ8Z7Xyra)](https://codecov.io/gh/sta-szek/pojo-tester)
 
+Download latest version [ ![Download](https://api.bintray.com/packages/sta-szek/maven/pojo-tester/images/download.svg) ](https://bintray.com/sta-szek/maven/pojo-tester/_latestVersion)
+
 
 ## What is pojo-tester? {#what-is-pojo-tester}
 `POJO-TESTER` is a java testing library, which makes your `pojo-tests` much easier. You can test your `pojo` against `equals`, `hashCode`, `toString`, `getters` and `setters`.
@@ -18,9 +20,35 @@ Current coverage is [![codecov](https://codecov.io/gh/sta-szek/pojo-tester/branc
 `POJO-TESTER` requires Java 8. 
 
 ## Installation {#installation}
-TODO
-`POJO-TESTER` announcement is scheduled for 02.10.2016.
-Keep watching! :beers:
+`POJO-TESTER` library can be found on `jCenter` repository.
+
+### Gradle
+```
+repositories {
+    jcenter()
+}
+
+dependencies {
+    testCompile 'pl.pojo:pojo-tester:0.3.0'
+}
+```
+
+### Maven
+```xm
+<repositories>
+<repository>
+  <id>jcenter</id>
+  <url>http://jcenter.bintray.com/</url>
+</repository>
+</repositories>
+  
+<dependency>
+  <groupId>pl.pojo</groupId>
+  <artifactId>pojo-tester</artifactId>
+  <version>0.3.0</version>
+  <type>pom</type>
+</dependency>
+```
 
 ## JavaDoc documentation {#javadoc}
 Javadoc can be found [here](http://www.pojo.pl/javadoc/index.html).
