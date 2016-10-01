@@ -2,6 +2,17 @@
 
 Download latest version [ ![Download](https://api.bintray.com/packages/sta-szek/maven/pojo-tester/images/download.svg) ](https://bintray.com/sta-szek/maven/pojo-tester/_latestVersion)
 
+## Release version 0.4.0 {#release-0.4.0}
+
+First `POJO-TESTER` open source release.
+
+### Features
+* Javadocs
+* `POJO-TESTER` creates collections objects instead of mocking them (#112)
+
+
+
+
 
 ## Release version 0.3.0 {#release-0.3.0}
 
@@ -12,6 +23,8 @@ Download latest version [ ![Download](https://api.bintray.com/packages/sta-szek/
 
 ### Bugfixes
 * Wrong proxy implementation ([#88](https://github.com/sta-szek/pojo-tester/issues/88)) 
+
+
 
 
 
@@ -26,6 +39,8 @@ Download latest version [ ![Download](https://api.bintray.com/packages/sta-szek/
 * Wrong getter is found for fields with same endingd ([#90](https://github.com/sta-szek/pojo-tester/issues/90))
 * Accessing not public classes, setters and getters in those classes ([#75](https://github.com/sta-szek/pojo-tester/issues/75), [#78](https://github.com/sta-szek/pojo-tester/issues/78))
 * Tests test same objects, which cause assertion exception ([#85](https://github.com/sta-szek/pojo-tester/issues/85))
+
+
 
 
 
