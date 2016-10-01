@@ -2,14 +2,6 @@ import java.time.ZoneOffset
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
-ext {
-    JUNIT_JUPITER_VERSION = "5.0.0-SNAPSHOT"
-    JUNIT_PLATFORM_VERSION = "1.0.0-SNAPSHOT"
-    MOCKITO_VERSION = "2.1.0-RC.1"
-    POWER_MOCK_UTILS_VERSION = "1.6.5"
-    ASSERTJ_CORE_VERSION = "3.5.2"
-}
-
 buildscript {
     repositories {
         mavenCentral()
@@ -19,6 +11,18 @@ buildscript {
         classpath("info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.1.9")
         classpath("org.junit.platform:junit-platform-gradle-plugin:1.0.0-SNAPSHOT") { changing = true }
     }
+}
+
+plugins {
+    id "com.jfrog.bintray" version "1.7"
+}
+
+ext {
+    JUNIT_JUPITER_VERSION = "5.0.0-SNAPSHOT"
+    JUNIT_PLATFORM_VERSION = "1.0.0-SNAPSHOT"
+    MOCKITO_VERSION = "2.1.0-RC.1"
+    POWER_MOCK_UTILS_VERSION = "1.6.5"
+    ASSERTJ_CORE_VERSION = "3.5.2"
 }
 
 apply plugin: 'java'
@@ -101,6 +105,25 @@ publishing.publications.all {
                 dep.name == it.artifactId.text()
             }
         }.each { it.scope*.value = 'compile' }
+    }
+}
+
+bintray {
+    user = 'sta-szek'
+    key = System.getenv('BINTRAY_API_KEY')
+    pkg {
+        repo = 'maven'
+        name = 'pojo-tester'
+        licenses = ['GPL-3.0']
+        vcsUrl = 'https://github.com/sta-szek/pojo-tester.git'
+        publications = ['mavenJava']
+        version {
+            name = version
+            desc = 'Java pojo-methods testing library.'
+            released = new Date();
+            vcsTag = version
+            attributes = ['gradle-plugin': 'com.use.less:com.use.less.gradle:gradle-useless-plugin']
+        }
     }
 }
 

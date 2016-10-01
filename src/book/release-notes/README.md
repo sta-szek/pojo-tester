@@ -1,5 +1,6 @@
 # Release Notes
 
+Download latest version [ ![Download](https://api.bintray.com/packages/sta-szek/maven/pojo-tester/images/download.svg) ](https://bintray.com/sta-szek/maven/pojo-tester/_latestVersion)
 
 
 ## Release version 0.3.0 {#release-0.3.0}
