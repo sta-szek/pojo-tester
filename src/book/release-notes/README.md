@@ -8,7 +8,7 @@ First `POJO-TESTER` open source release.
 
 ### Features
 * Javadocs
-* `POJO-TESTER` creates collections objects instead of mocking them (#112)
+* `POJO-TESTER` creates collections objects instead of mocking them ([#112](https://github.com/sta-szek/pojo-tester/issues/112))
 
 
 
