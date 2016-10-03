@@ -36,12 +36,17 @@ class BestConstructorInstantiator extends ObjectInstantiator {
             return createObjectFromNoArgsConstructor(constructor);
         } else {
             final Class<?>[] parameterTypes = constructor.getParameterTypes();
-            final Object[] parameters = Arrays.stream(parameterTypes)
-                                              .map(this::instantiate)
-                                              .toArray();
             try {
+                final Object[] parameters = Arrays.stream(parameterTypes)
+                                                  .map(this::instantiate)
+                                                  .toArray();
                 return constructor.newInstance(parameters);
-            } catch (final InstantiationException | IllegalAccessException | InvocationTargetException | SecurityException | IllegalArgumentException e) {
+            } catch (final InstantiationException
+                    | IllegalAccessException
+                    | InvocationTargetException
+                    | SecurityException
+                    | IllegalArgumentException
+                    | ObjectInstantiationException e) {
                 // ignore, we want to try all constructors
                 // if all constructors fail, it will be handled by caller
                 return null;

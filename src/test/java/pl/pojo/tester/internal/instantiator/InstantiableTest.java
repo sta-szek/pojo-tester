@@ -100,6 +100,7 @@ public class InstantiableTest {
                          new ClassInstantiator(Collection.class, CollectionInstantiator.class),
                          new ClassInstantiator(Iterable.class, CollectionInstantiator.class),
 
+                         new ClassInstantiator(ClassContainingStaticClasses.class, DefaultConstructorInstantiator.class),
                          new ClassInstantiator(ClassContainingStaticClasses.NestedStaticClass_PublicConstructor.class,
                                                DefaultConstructorInstantiator.class),
                          new ClassInstantiator(ClassContainingStaticClasses.NestedStaticClass_PackageConstructor.class,
