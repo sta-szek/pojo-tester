@@ -4,6 +4,7 @@ import classesForTest.ClassContainingStaticClasses;
 import classesForTest.Constructor_Stream;
 import classesForTest.Constructor_Thread;
 import classesForTest.PackageConstructor;
+import classesForTest.Person;
 import classesForTest.PrivateConstructor;
 import classesForTest.ProtectedConstructor;
 import java.util.HashMap;
@@ -49,7 +50,14 @@ public class BestConstructorInstantiatorTest {
                          "classesForTest.UnpublicClass$PrivateNestedClass",
                          "classesForTest.UnpublicClass$ProtectedNestedClass",
                          "classesForTest.UnpublicClass$PackageNestedClass",
-                         "classesForTest.UnpublicClass$PublicNestedClass")
+                         "classesForTest.UnpublicClass$PublicNestedClass",
+                         "classesForTest.ClassContainingStaticClasses$NestedStaticClass_PublicConstructor",
+                         "classesForTest.ClassContainingStaticClasses$NestedStaticClass_PackageConstructor",
+                         "classesForTest.ClassContainingStaticClasses$NestedStaticClass_ProtectedConstructor",
+                         "classesForTest.ClassContainingStaticClasses$NestedStaticClass_PrivateConstructor",
+                         "classesForTest.Person",
+                         "classesForTest.Person$PersonBuilder"
+        )
                      .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Instantiate_Non_Public_Classes(value)));
     }
 
@@ -95,6 +103,8 @@ public class BestConstructorInstantiatorTest {
                          ClassContainingStaticClasses.NestedStaticClass_PackageConstructor.class,
                          ClassContainingStaticClasses.NestedStaticClass_ProtectedConstructor.class,
                          ClassContainingStaticClasses.NestedStaticClass_PrivateConstructor.class,
+                         Person.class,
+                         Person.PersonBuilder.class,
                          FieldUtils.class,
                          MethodUtils.class,
                          FieldPredicate.class)
