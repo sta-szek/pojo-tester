@@ -10,6 +10,7 @@ import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 
 @RunWith(JUnitPlatform.class)
@@ -39,5 +40,17 @@ public class DefaultPackageFilterTest {
 
         // then
         assertThat(result).containsExactlyInAnyOrder(expectedClasses);
+    }
+
+    @Test
+    public void Should_Throw_Exception_When_Invalid_Package_Name() {
+        // given
+
+        // when
+        final Throwable result = catchThrowable(() -> DefaultPackageFilter.forPackage("invalid.package.name")
+                                                                          .getClasses());
+
+        // then
+        assertThat(result).isInstanceOf(PacakgeFilterException.class);
     }
 }
