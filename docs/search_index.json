@@ -20,7 +20,7 @@
       "store": {
         "./": [
           "'pl.pojo:pojo",
-          "0.3.0",
+          "0.4.0",
           "01",
           "09",
           "10",
@@ -76,7 +76,7 @@
           "test",
           "testcompil",
           "tester",
-          "tester:0.3.0'",
+          "tester:0.4.0'",
           "tester?pojo",
           "tostring,",
           "us",
@@ -1523,12 +1523,7 @@
               "docs": {},
               ".": {
                 "0": {
-                  "docs": {
-                    "./": {
-                      "ref": "./",
-                      "tf": 0.010869565217391304
-                    }
-                  },
+                  "docs": {},
                   "f": {
                     "docs": {},
                     "e": {
@@ -1588,6 +1583,10 @@
               ".": {
                 "0": {
                   "docs": {
+                    "./": {
+                      "ref": "./",
+                      "tf": 0.010869565217391304
+                    },
                     "comparison/": {
                       "ref": "comparison/",
                       "tf": 0.0009832841691248771
@@ -21412,7 +21411,7 @@
                       "0": {
                         "docs": {},
                         ".": {
-                          "3": {
+                          "4": {
                             "docs": {},
                             ".": {
                               "0": {
@@ -26221,7 +26220,6 @@
       "0.1.3",
       "0.10.2",
       "0.2.0featuressettergettertest",
-      "0.3.0",
       "0.3.0featuresparamet",
       "0.4.0",
       "0.4.0first",
@@ -27026,7 +27024,7 @@
       "tester.",
       "tester.disadvantag",
       "tester:",
-      "tester:0.3.0'",
+      "tester:0.4.0'",
       "tester:@test",
       "tester?",
       "tester?pojo",
@@ -27150,7 +27148,7 @@
       "url": "./",
       "title": "Introduction",
       "keywords": "",
-      "body": "POJO-TESTER User GuideIntroductionThis is a documentation for writing pojo-tests using pojo-tester library.If you have any questions, we can Build status is provided by Current coverage is Download latest version  Get automatic notifications about new POJO-TESTER versions\nWhat is pojo-tester?POJO-TESTER is a java testing library, which makes your pojo-tests much easier. You can test your pojo against equals, hashCode, toString, getters and setters.Supported Java versionsPOJO-TESTER requires Java 8.InstallationPOJO-TESTER library can be found on jCenter repository.Gradlerepositories {\n    jcenter()\n}\n\ndependencies {\n    testCompile 'pl.pojo:pojo-tester:0.3.0'\n}\nMaven\n\n  jcenter\n  http://jcenter.bintray.com/\n\n\n\n\n  pl.pojo\n  pojo-tester\n  0.3.0\n  pom\n\nJavaDoc documentationJavadoc can be found here.\n\n\n\nLast modified by Piotr Joński 2016-10-01 23:51:22Created by Piotr Joński 2016-09-26 20:08:20"
+      "body": "POJO-TESTER User GuideIntroductionThis is a documentation for writing pojo-tests using pojo-tester library.If you have any questions, we can Build status is provided by Current coverage is Download latest version  Get automatic notifications about new POJO-TESTER versions\nWhat is pojo-tester?POJO-TESTER is a java testing library, which makes your pojo-tests much easier. You can test your pojo against equals, hashCode, toString, getters and setters.Supported Java versionsPOJO-TESTER requires Java 8.InstallationPOJO-TESTER library can be found on jCenter repository.Gradlerepositories {\n    jcenter()\n}\n\ndependencies {\n    testCompile 'pl.pojo:pojo-tester:0.4.0'\n}\nMaven\n\n  jcenter\n  http://jcenter.bintray.com/\n\n\n\n\n  pl.pojo\n  pojo-tester\n  0.4.0\n  pom\n\nJavaDoc documentationJavadoc can be found here.\n\n\n\nLast modified by Piotr Joński 2016-10-01 23:51:22Created by Piotr Joński 2016-09-26 20:08:20"
     },
     "why-use/": {
       "url": "why-use/",
