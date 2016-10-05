@@ -4,7 +4,7 @@ package pl.pojo.tester.api;
  * Interface for package filtering.
  *
  * @author Piotr Joński
- * @since 0.4.0
+ * @since 0.5.0
  */
 @FunctionalInterface
 public interface PackageFilter {

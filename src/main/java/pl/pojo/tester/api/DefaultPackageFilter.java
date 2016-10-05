@@ -17,7 +17,7 @@ import static pl.pojo.tester.internal.preconditions.ParameterPreconditions.check
  * Default package filter filters classes from package name recursively.
  *
  * @author Piotr Joński
- * @since 0.4.0
+ * @since 0.5.0
  */
 public class DefaultPackageFilter implements PackageFilter {
 

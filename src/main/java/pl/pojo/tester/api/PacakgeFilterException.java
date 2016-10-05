@@ -7,7 +7,7 @@ import java.io.IOException;
  * Exception is thrown when package or converted to filename package does not exist in file system.
  *
  * @author Piotr Joński
- * @since 0.4.0
+ * @since 0.5.0
  */
 public class PacakgeFilterException extends RuntimeException {
 
