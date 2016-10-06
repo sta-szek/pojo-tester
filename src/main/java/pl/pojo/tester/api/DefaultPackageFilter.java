@@ -19,7 +19,7 @@ import static pl.pojo.tester.internal.preconditions.ParameterPreconditions.check
  * @author Piotr Joński
  * @since 0.5.0
  */
-public class DefaultPackageFilter implements PackageFilter {
+public final class DefaultPackageFilter implements PackageFilter {
 
     private static final String PACKAGE_SEPARATOR = ".";
     private static final String FILE_SEPARATOR = "/";
