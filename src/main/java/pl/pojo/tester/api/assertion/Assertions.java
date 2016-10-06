@@ -1,14 +1,16 @@
 package pl.pojo.tester.api.assertion;
 
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.function.Predicate;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import pl.pojo.tester.api.ClassAndFieldPredicatePair;
 import pl.pojo.tester.api.FieldPredicate;
+import pl.pojo.tester.api.PackageFilter;
 import pl.pojo.tester.internal.instantiator.ClassLoader;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Predicate;
 
 import static pl.pojo.tester.internal.preconditions.ParameterPreconditions.checkNotBlank;
 import static pl.pojo.tester.internal.preconditions.ParameterPreconditions.checkNotNull;
@@ -74,7 +76,8 @@ public abstract class Assertions {
      * @see MultiClassAssetion
      * @see SingleClassAssetion
      */
-    public static AbstractAssetion assertPojoMethodsFor(final String qualifiedClassName, final Predicate<String> fieldPredicate) {
+    public static AbstractAssetion assertPojoMethodsFor(final String qualifiedClassName,
+                                                        final Predicate<String> fieldPredicate) {
         checkNotBlank("qualifiedClassName", qualifiedClassName);
         checkNotNull("fieldPredicate", fieldPredicate);
 
@@ -98,7 +101,8 @@ public abstract class Assertions {
         checkNotNull("clazz", clazz);
         checkNotNull("fieldPredicate", fieldPredicate);
 
-        final ClassAndFieldPredicatePair classAndFieldPredicatePair = new ClassAndFieldPredicatePair(clazz, fieldPredicate);
+        final ClassAndFieldPredicatePair classAndFieldPredicatePair = new ClassAndFieldPredicatePair(clazz,
+                                                                                                     fieldPredicate);
         return assertPojoMethodsFor(classAndFieldPredicatePair);
     }
 
@@ -115,7 +119,8 @@ public abstract class Assertions {
      * @see SingleClassAssetion
      */
     public static AbstractAssetion assertPojoMethodsFor(final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair,
-                                                        final ClassAndFieldPredicatePair... classAndFieldPredicatePairs) {
+                                                        final ClassAndFieldPredicatePair...
+                                                                classAndFieldPredicatePairs) {
         checkNotNull("baseClassAndFieldPredicatePair", baseClassAndFieldPredicatePair);
         return new SingleClassAssetion(baseClassAndFieldPredicatePair, classAndFieldPredicatePairs);
     }
@@ -141,6 +146,20 @@ public abstract class Assertions {
     }
 
     /**
+     * Creates assertion for all classes returned by {@link PackageFilter}.
+     *
+     * @param packageFilter package filter
+     *
+     * @return assertion for all classes
+     *
+     * @see PackageFilter
+     */
+    public static AbstractAssetion assertPojoMethodsForAll(final PackageFilter packageFilter) {
+        checkNotNull("packageFilter", packageFilter);
+        return assertPojoMethodsForAll(packageFilter.getClasses());
+    }
+
+    /**
      * Creates assertion for all classes.
      *
      * @param classes classes to test
@@ -160,7 +179,6 @@ public abstract class Assertions {
         return assertPojoMethodsForAll(classesAndFieldPredicatesPairs);
     }
 
-
     /**
      * Creates assertion for all classes declared as {@link ClassAndFieldPredicatePair} objects.
      *
@@ -172,10 +190,12 @@ public abstract class Assertions {
      * @see MultiClassAssetion
      * @see SingleClassAssetion
      */
-    public static AbstractAssetion assertPojoMethodsForAll(final ClassAndFieldPredicatePair... classesAndFieldPredicatesPairs) {
+    public static AbstractAssetion assertPojoMethodsForAll(final ClassAndFieldPredicatePair...
+                                                                   classesAndFieldPredicatesPairs) {
         checkNotNull("classesAndFieldPredicatesPairs", classesAndFieldPredicatesPairs);
 
-        final List<ClassAndFieldPredicatePair> classAndFieldPredicatePairs = Arrays.asList(classesAndFieldPredicatesPairs);
+        final List<ClassAndFieldPredicatePair> classAndFieldPredicatePairs = Arrays.asList(
+                classesAndFieldPredicatesPairs);
         return new MultiClassAssetion(classAndFieldPredicatePairs);
     }
 
