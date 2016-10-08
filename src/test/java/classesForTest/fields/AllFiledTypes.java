@@ -11,6 +11,11 @@ public class AllFiledTypes {
     private boolean booleanType;
     private char characterType;
     private float floatType;
+    private String stringType;
+
+    public AllFiledTypes(final String stringType) {
+        this.stringType = stringType;
+    }
 
     public AllFiledTypes(final byte byteType) {
         this.byteType = byteType;

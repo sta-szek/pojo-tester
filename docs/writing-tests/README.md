@@ -238,7 +238,7 @@ public class CustomFieldsValuesChanger extends AbstractFieldValueChanger<String>
 
     @Override
     public boolean areDifferentValues(final String sourceValue, final String targetValue) {
-        return sourceValue.equals(targetValue);
+        return !sourceValue.equals(targetValue);
     }
 
     @Override
@@ -276,6 +276,7 @@ Default fields values changer is a composition of listed changers:
 * `IntegerValueChanger`
 * `LongValueChanger`
 * `ShortValueChanger`
+* `StringValueChanger`
 * `FloatValueChanger`
 * `ArrayValueChanger`
 * `StreamValueChanger`
