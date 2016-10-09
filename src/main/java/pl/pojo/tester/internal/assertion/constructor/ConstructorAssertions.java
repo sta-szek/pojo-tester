@@ -14,7 +14,7 @@ public class ConstructorAssertions {
         this.classUnderTest = constructorUnderAssert.getDeclaringClass();
     }
 
-    public void willInstantiateClassUsing(final Object[] constructorParameters) {
+    public void willInstantiateClassUsing(final Object... constructorParameters) {
         constructorUnderAssert.setAccessible(true);
         try {
             constructorUnderAssert.newInstance(constructorParameters);

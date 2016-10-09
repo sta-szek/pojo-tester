@@ -19,16 +19,18 @@ public class ConstructorAssertionError extends AssertionError {
                                                         + "%s";
     private final Constructor<?> constructorUnderAssert;
     private final Object[] constructorParameters;
-    private final ReflectiveOperationException e;
+    private final ReflectiveOperationException cause;
 
     ConstructorAssertionError(final Class<?> classUnderTest,
                               final Constructor<?> constructorUnderAssert,
                               final Object[] constructorParameters,
-                              final ReflectiveOperationException e) {
+                              final ReflectiveOperationException cause) {
         super(classUnderTest);
         this.constructorUnderAssert = constructorUnderAssert;
-        this.constructorParameters = constructorParameters;
-        this.e = e;
+        this.cause = cause;
+        this.constructorParameters = constructorParameters == null
+                                     ? null
+                                     : Arrays.copyOf(constructorParameters, constructorParameters.length);
     }
 
     @Override
@@ -42,10 +44,10 @@ public class ConstructorAssertionError extends AssertionError {
                              constructorUnderAssert,
                              testedCass,
                              createArrayContentString(constructorParameters),
-                             e.getMessage());
+                             cause.getMessage());
     }
 
-    private String createArrayContentString(final Object[] array) {
+    private String createArrayContentString(final Object... array) {
         if (array == null) {
             return "<no parameters>";
         }

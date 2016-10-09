@@ -73,6 +73,19 @@ public abstract class AbstractTester {
     }
 
     /**
+     * Tests base class using specified fields. {@code classAndFieldPredicatePairs} are used for chaning nested fields
+     * recursivelly, if occures.
+     *
+     * @param baseClassAndFieldPredicatePair base to test
+     * @param classAndFieldPredicatePairs    classes used for changing nested fields recursively
+     *
+     * @see ClassAndFieldPredicatePair
+     * @see FieldPredicate
+     */
+    public abstract void test(final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair,
+                              final ClassAndFieldPredicatePair... classAndFieldPredicatePairs);
+
+    /**
      * Tests multiple classes. Fields of classes are changed recursively if {@code classes} contains nested field class.
      * By default, all fields of given classes are included in tests.
      *
@@ -100,19 +113,6 @@ public abstract class AbstractTester {
                 classesAndFieldPredicatesPairs);
         classAndFieldPredicatePairs.forEach(base -> test(base, classesAndFieldPredicatesPairs));
     }
-
-    /**
-     * Tests base class using specified fields. {@code classAndFieldPredicatePairs} are used for chaning nested fields
-     * recursivelly, if occures.
-     *
-     * @param baseClassAndFieldPredicatePair base to test
-     * @param classAndFieldPredicatePairs    classes used for changing nested fields recursively
-     *
-     * @see ClassAndFieldPredicatePair
-     * @see FieldPredicate
-     */
-    public abstract void test(final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair,
-                              final ClassAndFieldPredicatePair... classAndFieldPredicatePairs);
 
     /**
      * Sets new field values changer.
