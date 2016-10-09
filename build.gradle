@@ -164,7 +164,6 @@ static def gitUser() {
     username + " " + useremail
 }
 
-assemble.dependsOn javadoc
 check.dependsOn jacocoTestReport
 build.dependsOn publishToMavenLocal
 
