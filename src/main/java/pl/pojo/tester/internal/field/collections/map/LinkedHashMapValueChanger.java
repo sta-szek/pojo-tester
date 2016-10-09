@@ -7,8 +7,8 @@ class LinkedHashMapValueChanger extends AbstractMapFieldValueChanger<LinkedHashM
 
     @Override
     protected LinkedHashMap<?, ?> increaseValue(final LinkedHashMap<?, ?> value, final Class<?> type) {
-        return value != null
-               ? null
-               : new LinkedHashMap<>();
+        return value == null
+               ? new LinkedHashMap<>()
+               : null;
     }
 }
