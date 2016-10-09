@@ -1,12 +1,7 @@
 package pl.pojo.tester.api.assertion;
 
 import lombok.Getter;
-import pl.pojo.tester.api.AbstractTester;
-import pl.pojo.tester.api.EqualsTester;
-import pl.pojo.tester.api.GetterTester;
-import pl.pojo.tester.api.HashCodeTester;
-import pl.pojo.tester.api.SetterTester;
-import pl.pojo.tester.api.ToStringTester;
+import pl.pojo.tester.api.*;
 
 /**
  * Declares methods that can be tested using POJO-TESTER.
@@ -22,7 +17,8 @@ public enum Method {
     HASH_CODE(new HashCodeTester()),
     SETTER(new SetterTester()),
     GETTER(new GetterTester()),
-    TO_STRING(new ToStringTester());
+    TO_STRING(new ToStringTester()),
+    CONSTRUCTOR(new ConstructorTester());
 
     private final AbstractTester tester;
 

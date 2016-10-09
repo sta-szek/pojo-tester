@@ -1,16 +1,17 @@
 package pl.pojo.tester.api;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Predicate;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import pl.pojo.tester.internal.assertion.TestAssertions;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
 import pl.pojo.tester.internal.instantiator.ObjectGenerator;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Predicate;
 
 /**
  * AbstractTester is basic class for all pojo method testers.
@@ -66,7 +67,8 @@ public abstract class AbstractTester {
      * @see FieldPredicate
      */
     public void test(final Class<?> clazz, final Predicate<String> fieldPredicate) {
-        final ClassAndFieldPredicatePair classAndFieldPredicatePair = new ClassAndFieldPredicatePair(clazz, fieldPredicate);
+        final ClassAndFieldPredicatePair classAndFieldPredicatePair = new ClassAndFieldPredicatePair(clazz,
+                                                                                                     fieldPredicate);
         test(classAndFieldPredicatePair);
     }
 
@@ -85,7 +87,8 @@ public abstract class AbstractTester {
     }
 
     /**
-     * Tests multiple classes. Fields of classes are changed recursively if {@code classesAndFieldPredicatesPairs} contains nested field class.
+     * Tests multiple classes. Fields of classes are changed recursively if {@code classesAndFieldPredicatesPairs}
+     * contains nested field class.
      *
      * @param classesAndFieldPredicatesPairs class to test
      *
@@ -93,12 +96,14 @@ public abstract class AbstractTester {
      * @see FieldPredicate
      */
     public void testAll(final ClassAndFieldPredicatePair... classesAndFieldPredicatesPairs) {
-        final List<ClassAndFieldPredicatePair> classAndFieldPredicatePairs = Arrays.asList(classesAndFieldPredicatesPairs);
+        final List<ClassAndFieldPredicatePair> classAndFieldPredicatePairs = Arrays.asList(
+                classesAndFieldPredicatesPairs);
         classAndFieldPredicatePairs.forEach(base -> test(base, classesAndFieldPredicatesPairs));
     }
 
     /**
-     * Tests base class using specified fields. {@code classAndFieldPredicatePairs} are used for chaning nested fields recursivelly, if occures.
+     * Tests base class using specified fields. {@code classAndFieldPredicatePairs} are used for chaning nested fields
+     * recursivelly, if occures.
      *
      * @param baseClassAndFieldPredicatePair base to test
      * @param classAndFieldPredicatePairs    classes used for changing nested fields recursively
@@ -106,7 +111,8 @@ public abstract class AbstractTester {
      * @see ClassAndFieldPredicatePair
      * @see FieldPredicate
      */
-    public abstract void test(final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair, final ClassAndFieldPredicatePair... classAndFieldPredicatePairs);
+    public abstract void test(final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair,
+                              final ClassAndFieldPredicatePair... classAndFieldPredicatePairs);
 
     /**
      * Sets new field values changer.
@@ -164,5 +170,9 @@ public abstract class AbstractTester {
                                     .append(constructorParameters)
                                     .append(fieldValuesChanger)
                                     .toHashCode();
+    }
+
+    protected Map<Class<?>, ConstructorParameters> getConstructorParameters() {
+        return constructorParameters;
     }
 }

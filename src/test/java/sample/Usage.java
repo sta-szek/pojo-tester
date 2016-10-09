@@ -1,19 +1,30 @@
 package sample;
 
 
-import java.util.function.Predicate;
 import pl.pojo.tester.api.ClassAndFieldPredicatePair;
 import pl.pojo.tester.api.FieldPredicate;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
 
+import java.util.function.Predicate;
+
 import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
 import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsForAll;
 import static pl.pojo.tester.api.assertion.Method.*;
 
+
 public class Usage {
 
     public static void main(final String[] args) {
+        assertPojoMethodsFor(ConstructorTests.class).testing(CONSTRUCTOR)
+                                                    .areWellImplemented();
+        assertPojoMethodsFor(ConstructorTests.InnerPublicClass.class).testing(CONSTRUCTOR)
+                                                                     .areWellImplemented();
+        assertPojoMethodsFor(ConstructorTests.NestedPublicStaticClass.class).testing(CONSTRUCTOR)
+                                                                            .areWellImplemented();
+        assertPojoMethodsFor(ConstructorTests.Builder.class).testing(CONSTRUCTOR)
+                                                            .areWellImplemented();
+        System.exit(0);
 
         // ------
         final AbstractFieldValueChanger fieldValueChanger = DefaultFieldValueChanger.INSTANCE;
@@ -28,7 +39,9 @@ public class Usage {
                                          .testing(GETTER)
                                          .testing(SETTER)
                                          .testing(TO_STRING)
-                                         .create(Sample.class, new Object[]{3, 2, 1}, new Class[]{int.class, int.class, int.class})
+                                         .create(Sample.class,
+                                                 new Object[]{3, 2, 1},
+                                                 new Class[]{int.class, int.class, int.class})
                                          .create(Sample.class, new Object[]{3, 2}, new Class[]{int.class, int.class})
                                          .areWellImplemented();
 
@@ -42,7 +55,11 @@ public class Usage {
                                                         .areWellImplemented();
 
         assertPojoMethodsFor(classAndFieldPredicatePair, classAndFieldPredicatePair).using(fieldValueChanger)
-                                                                                    .testing(EQUALS, HASH_CODE, GETTER, SETTER, TO_STRING)
+                                                                                    .testing(EQUALS,
+                                                                                             HASH_CODE,
+                                                                                             GETTER,
+                                                                                             SETTER,
+                                                                                             TO_STRING)
                                                                                     .areWellImplemented();
 
         assertPojoMethodsForAll(stringClass, stringClass).using(fieldValueChanger)
@@ -50,8 +67,13 @@ public class Usage {
                                                          .areWellImplemented();
 
         assertPojoMethodsForAll(classAndFieldPredicatePair, classAndFieldPredicatePair).using(fieldValueChanger)
-                                                                                       .testing(EQUALS, HASH_CODE, GETTER, SETTER, TO_STRING)
+                                                                                       .testing(EQUALS,
+                                                                                                HASH_CODE,
+                                                                                                GETTER,
+                                                                                                SETTER,
+                                                                                                TO_STRING)
                                                                                        .areWellImplemented();
+
     }
 
 

@@ -1,6 +1,5 @@
 package pl.pojo.tester.api.assertion;
 
-import java.util.stream.Stream;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.junit.jupiter.api.DynamicTest;
@@ -8,12 +7,9 @@ import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
-import pl.pojo.tester.api.AbstractTester;
-import pl.pojo.tester.api.EqualsTester;
-import pl.pojo.tester.api.GetterTester;
-import pl.pojo.tester.api.HashCodeTester;
-import pl.pojo.tester.api.SetterTester;
-import pl.pojo.tester.api.ToStringTester;
+import pl.pojo.tester.api.*;
+
+import java.util.stream.Stream;
 
 import static helpers.TestHelper.getDefaultDisplayName;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -28,7 +24,8 @@ public class MethodTest {
                          new TestCase(Method.HASH_CODE, HashCodeTester.class),
                          new TestCase(Method.TO_STRING, ToStringTester.class),
                          new TestCase(Method.SETTER, SetterTester.class),
-                         new TestCase(Method.GETTER, GetterTester.class))
+                         new TestCase(Method.GETTER, GetterTester.class),
+                         new TestCase(Method.CONSTRUCTOR, ConstructorTester.class))
                      .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Return_Expected_Tester(value)));
     }
 
