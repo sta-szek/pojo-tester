@@ -2,7 +2,23 @@
 
 Download latest version [ ![Download](https://api.bintray.com/packages/sta-szek/maven/pojo-tester/images/download.svg) ](https://bintray.com/sta-szek/maven/pojo-tester/_latestVersion)
 
-## Release version 0.4.0 {#release-0.4.0}
+## Release version 0.5.0 {#release-050}
+
+First `POJO-TESTER` open source release.
+
+### Features
+* `POJO-TESTER` can test constructors ([#113](https://github.com/sta-szek/pojo-tester/issues/113))
+* `POJO-TESTER` will change `String` fields by default ([#133](https://github.com/sta-szek/pojo-tester/issues/133))
+* Testing classes by package name or class package ([#114](https://github.com/sta-szek/pojo-tester/issues/114))
+
+### Bugfixes
+* `POJO-TESTER` fails on synthetic constructors ([#126](https://github.com/sta-szek/pojo-tester/issues/126)) 
+
+
+
+
+
+## Release version 0.4.0 {#release-040}
 
 First `POJO-TESTER` open source release.
 
@@ -14,7 +30,7 @@ First `POJO-TESTER` open source release.
 
 
 
-## Release version 0.3.0 {#release-0.3.0}
+## Release version 0.3.0 {#release-030}
 
 ### Features
 * Parameters validation on API layer ([#66](https://github.com/sta-szek/pojo-tester/issues/66))
@@ -28,7 +44,7 @@ First `POJO-TESTER` open source release.
 
 
 
-## Release version 0.2.0 {#release-0.2.0}
+## Release version 0.2.0 {#release-020}
 
 ### Features
 * `SetterGetterTester` split into `SetterTester` and `GetterTester` ([#87](https://github.com/sta-szek/pojo-tester/issues/87))
@@ -44,7 +60,7 @@ First `POJO-TESTER` open source release.
 
 
 
-## Release version 0.1.0 {#release-0.1.0}
+## Release version 0.1.0 {#release-010}
 
 ### Features
 * Testing methods: `equals`, `hashCode`, `toString`, `getters and setters`
