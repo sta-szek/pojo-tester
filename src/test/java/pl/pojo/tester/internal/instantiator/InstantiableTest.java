@@ -5,9 +5,6 @@ import classesForTest.Constructor_Field;
 import classesForTest.Constructor_Stream;
 import classesForTest.Constructor_Thread;
 import classesForTest.EmptyEnum;
-import java.io.Serializable;
-import java.util.*;
-import java.util.stream.Stream;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DynamicTest;
@@ -16,6 +13,31 @@ import org.junit.jupiter.api.function.Executable;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 import pl.pojo.tester.api.ConstructorParameters;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.NavigableMap;
+import java.util.NavigableSet;
+import java.util.Queue;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.SortedSet;
+import java.util.Stack;
+import java.util.TreeMap;
+import java.util.TreeSet;
+import java.util.Vector;
+import java.util.stream.Stream;
 
 import static helpers.TestHelper.getDefaultDisplayName;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -34,9 +56,9 @@ public class InstantiableTest {
     public Stream<DynamicTest> Should_Return_Expected_Instantiator_For_Class() throws NoSuchFieldException {
         return Stream.of(new ClassInstantiator(Serializable.class, ProxyInstantiator.class),
                          new ClassInstantiator(Override.class, ProxyInstantiator.class),
-                         new ClassInstantiator(Instantiable.class, ProxyInstantiator.class),
                          new ClassInstantiator(Runnable.class, ProxyInstantiator.class),
                          new ClassInstantiator(EmptyEnum.class, EnumInstantiator.class),
+                         new ClassInstantiator(Instantiable.class, BestConstructorInstantiator.class),
                          new ClassInstantiator(Constructor_Field.class, BestConstructorInstantiator.class),
                          new ClassInstantiator(Constructor_Stream.class, BestConstructorInstantiator.class),
                          new ClassInstantiator(Constructor_Thread.class, BestConstructorInstantiator.class),
@@ -100,12 +122,14 @@ public class InstantiableTest {
                          new ClassInstantiator(Collection.class, CollectionInstantiator.class),
                          new ClassInstantiator(Iterable.class, CollectionInstantiator.class),
 
-                         new ClassInstantiator(ClassContainingStaticClasses.class, DefaultConstructorInstantiator.class),
+                         new ClassInstantiator(ClassContainingStaticClasses.class,
+                                               DefaultConstructorInstantiator.class),
                          new ClassInstantiator(ClassContainingStaticClasses.NestedStaticClass_PublicConstructor.class,
                                                DefaultConstructorInstantiator.class),
                          new ClassInstantiator(ClassContainingStaticClasses.NestedStaticClass_PackageConstructor.class,
                                                BestConstructorInstantiator.class),
-                         new ClassInstantiator(ClassContainingStaticClasses.NestedStaticClass_ProtectedConstructor.class,
+                         new ClassInstantiator(ClassContainingStaticClasses.NestedStaticClass_ProtectedConstructor
+                                                       .class,
                                                BestConstructorInstantiator.class),
                          new ClassInstantiator(ClassContainingStaticClasses.NestedStaticClass_PrivateConstructor.class,
                                                BestConstructorInstantiator.class))

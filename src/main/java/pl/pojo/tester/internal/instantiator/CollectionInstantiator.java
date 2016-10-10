@@ -78,7 +78,7 @@ class CollectionInstantiator extends ObjectInstantiator {
     private Supplier<ObjectInstantiationException> createObjectInstantiationExceptionSupplier() {
         return () -> new ObjectInstantiationException(clazz,
                                                       "There is no declared object for that class. "
-                                                      +
-                                                      "Please report a bug at https://github.com/sta-szek/pojo-tester");
+                                                      + "Please report an issue at "
+                                                      + "https://github.com/sta-szek/pojo-tester");
     }
 }

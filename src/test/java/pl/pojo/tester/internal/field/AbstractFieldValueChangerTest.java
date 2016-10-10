@@ -1,14 +1,15 @@
 package pl.pojo.tester.internal.field;
 
 import com.google.common.collect.Lists;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -18,11 +19,10 @@ import static org.powermock.reflect.Whitebox.getInternalState;
 @RunWith(JUnitPlatform.class)
 public class AbstractFieldValueChangerTest {
 
-    private final AbstractFieldValueChanger abstractFieldValueChanger = new ImplementationForTest();
-
     @Test
     public void Should_Register_First_Value_Changer() {
         // given
+        final AbstractFieldValueChanger abstractFieldValueChanger = new ImplementationForTest();
 
         // when
         abstractFieldValueChanger.attachNext(abstractFieldValueChanger);
@@ -33,8 +33,23 @@ public class AbstractFieldValueChangerTest {
     }
 
     @Test
+    public void Should_Not_Change_If_No_Matching_Changer() {
+        // given
+        final AbstractFieldValueChanger abstractFieldValueChanger = new ImplementationForTest();
+        final String expectedValue = "string";
+
+        // when
+        final Object result = abstractFieldValueChanger.increaseValue(expectedValue);
+
+        // then
+        assertThat(result).isEqualTo(expectedValue);
+    }
+
+    @Test
     public void Should_Register_Value_Changer_To_Already_Registered_One() {
         // given
+        final AbstractFieldValueChanger abstractFieldValueChanger = new ImplementationForTest();
+
         final AbstractFieldValueChanger first = mock(AbstractFieldValueChanger.class, Mockito.CALLS_REAL_METHODS);
         final AbstractFieldValueChanger second = mock(AbstractFieldValueChanger.class, Mockito.CALLS_REAL_METHODS);
 
@@ -49,7 +64,8 @@ public class AbstractFieldValueChangerTest {
     @Test
     public void Should_Not_Change_If_Values_Are_Different() throws NoSuchFieldException {
         // given
-        final AbstractFieldValueChanger valueChanger = mock(AbstractFieldValueChanger.class, Mockito.CALLS_REAL_METHODS);
+        final AbstractFieldValueChanger valueChanger = mock(AbstractFieldValueChanger.class,
+                                                            Mockito.CALLS_REAL_METHODS);
         when(valueChanger.canChange(any())).thenReturn(true);
         when(valueChanger.areDifferentValues(any(), any())).thenReturn(true);
 

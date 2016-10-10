@@ -1,17 +1,21 @@
 package pl.pojo.tester.internal.instantiator;
 
 
+import pl.pojo.tester.api.ConstructorParameters;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.stream.Stream;
-import pl.pojo.tester.api.ConstructorParameters;
 
-public abstract class Instantiable {
+public final class Instantiable {
 
-    static ObjectInstantiator forClass(final Class<?> clazz, final Map<Class<?>, ConstructorParameters> constructorParameters) {
+    private Instantiable() {}
+
+    static ObjectInstantiator forClass(final Class<?> clazz,
+                                       final Map<Class<?>, ConstructorParameters> constructorParameters) {
         if (userDefinedConstructorParametersFor(clazz, constructorParameters)) {
             return new UserDefinedConstructorInstantiator(clazz, constructorParameters);
         }
@@ -54,7 +58,9 @@ public abstract class Instantiable {
                || Stream.class.isAssignableFrom(clazz);
     }
 
-    private static boolean userDefinedConstructorParametersFor(final Class<?> clazz, final Map<Class<?>, ConstructorParameters> constructorParameters) {
+    private static boolean userDefinedConstructorParametersFor(final Class<?> clazz,
+                                                               final Map<Class<?>, ConstructorParameters>
+                                                                       constructorParameters) {
         return constructorParameters.containsKey(clazz);
     }
 

@@ -1,8 +1,6 @@
 package pl.pojo.tester.api.assertion;
 
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import pl.pojo.tester.api.ClassAndFieldPredicatePair;
 import pl.pojo.tester.api.FieldPredicate;
 import pl.pojo.tester.api.PackageFilter;
@@ -25,8 +23,9 @@ import static pl.pojo.tester.internal.preconditions.ParameterPreconditions.check
  * @author Piotr Joński
  * @since 0.1.0
  */
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public abstract class Assertions {
+public final class Assertions {
+
+    private Assertions() {}
 
     /**
      * Creates assertion for class, by qualified class name.
