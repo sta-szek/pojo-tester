@@ -2,7 +2,9 @@ package pl.pojo.tester.internal.preconditions;
 
 import java.util.Arrays;
 
-public abstract class ParameterPreconditions {
+public final class ParameterPreconditions {
+
+    private ParameterPreconditions() {}
 
     public static void checkNotBlank(final String parameterName, final String parameterValue) {
         checkNotNull(parameterName, parameterValue);

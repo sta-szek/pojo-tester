@@ -4,7 +4,7 @@ Here you can compare pojo-tester to existing java libraries that test `pojo-meth
 ## Other libraries {#other-libs}
 Here is the list of libraries that were found on the Internet. If you find another one, feel free to write a comparison and include it into your pull request.
 
-* pojo-tester 0.4.0
+* pojo-tester 0.5.0
 * [openpojo](http://openpojo.com) 0.8.4
 * [SmartUnit](https://github.com/rlogiacco/SmartUnit) 0.10.2
 * [testUtils](http://outsidemybox.github.io/testUtils/index.html) 0.1.3
@@ -40,15 +40,16 @@ Each library provides different testing features. Here is the comparison.
 
 Basic `pojo-methods` test support:
 
-| Kind of tests                                | pojo-tester    | OpenPojo | SmartUnit | testUtils | testUtil  | Mean Bean  |
-|---                                           |:---:           |:---:     |:---:      |:---:      |:---:      |:---:       |
-| getters                                      | &#10003              | &#10003        | &#10003^        | &#10003         | &#10003^        | &#10003          |
-| setters                                      | &#10003              | &#10003        | &#10003^        | &#10003         | &#10003^        | &#10003          |
-| equals                                       | &#10003              | &#10003*^      | &#10005         | &#10003         | &#10005         | &#10003^         |
-| hashCode                                     | &#10003              | &#10003*^      | &#10005         | &#10003         | &#10005         | &#10003^         |
-| toString                                     | &#10003              | &#10003*^      | &#10005         | &#10003         | &#10005         | &#10005          |
-|||||||||
-|                                                         Additional features                                              ||
+| Kind of tests                                | pojo-tester    | OpenPojo       | SmartUnit       | testUtils       | testUtil        | Mean Bean        |
+|---                                           |:---:           |:---:           |:---:            |:---:            |:---:            |:---:             |
+| getters                                      | &#10003        | &#10003        | &#10003^        | &#10003         | &#10003^        | &#10003          |
+| setters                                      | &#10003        | &#10003        | &#10003^        | &#10003         | &#10003^        | &#10003          |
+| equals                                       | &#10003        | &#10003*^      | &#10005         | &#10003         | &#10005         | &#10003^         |
+| hashCode                                     | &#10003        | &#10003*^      | &#10005         | &#10003         | &#10005         | &#10003^         |
+| toString                                     | &#10003        | &#10003*^      | &#10005         | &#10003         | &#10005         | &#10005          |
+| constructors                                 | &#10003        | &#10005        | &#10005         | &#10005         | &#10005         | &#10005          |
+||||||||
+|                                                         Additional features                                              |
 | field selection                              | &#10003              | &#10003        | &#10003         | &#10003         | &#10005         | &#10003          |
 | method selection                             | &#10003              | &#10003        | &#10005         | &#10005         | &#10005         | &#10003          |
 | supports nonpublic classes                   | &#10003              | &#10003        | &#10005         | &#10003         | &#10005         | &#10005          |
@@ -56,10 +57,10 @@ Basic `pojo-methods` test support:
 | recurrence support                           | &#10003              | &#10005        | &#10005         | &#10005         | &#10005         | &#10005          |
 | creating object by user defined constructor  | &#10003              | &#10005        | &#10005         | &#10005         | &#10005         | &#10005          |
 | custom changing fields values                | &#10003              | &#10005        | &#10005         | &#10005         | &#10005         | &#10005          |
-| package-testing                              | &#10005              | &#10003        | &#10005         | &#10005         | &#10005         | &#10005          |
+| package-testing                              | &#10003              | &#10003        | &#10005         | &#10005         | &#10005         | &#10005          |
 
 \* limited support for changing fields recursively and otherwise having problems with fields other than primitives. 
-Libraries throw exceptions from java core, which does mean nothing.
+
 ^ requires additional changes in your production code
 
 ### Tests
@@ -280,9 +281,6 @@ And there is one more thing. Tests (internal, in library implementation) using M
 `POJO-TESTER` does the job. It provides stable coverage with the highest percentage. See numbers below.
 ![](coverage-comparison.png)
 
-Next thing that `POJO-TESTER` can do, but other libraries cannot, is recursively testing fields.
-This means your tests are more sure.
-
 We have done one more code coverage report using changing nested fields. 
 From those tests we excluded three libraries - Mean Bean, Smart Unit and TestUtil.
 They simply could not perform such tests and threw undefined exceptions.
@@ -315,5 +313,12 @@ The biggest opponent of `POJO-TESTER` is Mean Bean. Actually, this library has t
 Disadvantages are: 
 * it has variable coverage report, which can cause unwanted CI reports
 * it does not support recurrence which can be a deal breaker, especially if you use enums or VOs (Value Objects)
+
+Next thing that `POJO-TESTER` can do, but other libraries cannot, is recursively testing fields.
+This means your tests are more sure. 
+
+And last but not least which makes `POJO-TESTER` awesome is that it can test constructors! 
+Now you can forget about getting constructors via reflection, invoking them... What a nightmare. And who is doing this?
+No more reflection in your tests!
 
 To sum up, `POJO-TESTER` has the highest consistent coverage and its features make your tests more bulletproof.

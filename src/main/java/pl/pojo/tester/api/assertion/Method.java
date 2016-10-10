@@ -2,6 +2,7 @@ package pl.pojo.tester.api.assertion;
 
 import lombok.Getter;
 import pl.pojo.tester.api.AbstractTester;
+import pl.pojo.tester.api.ConstructorTester;
 import pl.pojo.tester.api.EqualsTester;
 import pl.pojo.tester.api.GetterTester;
 import pl.pojo.tester.api.HashCodeTester;
@@ -22,7 +23,8 @@ public enum Method {
     HASH_CODE(new HashCodeTester()),
     SETTER(new SetterTester()),
     GETTER(new GetterTester()),
-    TO_STRING(new ToStringTester());
+    TO_STRING(new ToStringTester()),
+    CONSTRUCTOR(new ConstructorTester());
 
     private final AbstractTester tester;
 

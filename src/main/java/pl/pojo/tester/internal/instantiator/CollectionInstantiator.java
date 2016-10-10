@@ -1,6 +1,28 @@
 package pl.pojo.tester.internal.instantiator;
 
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.NavigableMap;
+import java.util.NavigableSet;
+import java.util.Queue;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.SortedSet;
+import java.util.Stack;
+import java.util.TreeMap;
+import java.util.TreeSet;
+import java.util.Vector;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
@@ -56,6 +78,7 @@ class CollectionInstantiator extends ObjectInstantiator {
     private Supplier<ObjectInstantiationException> createObjectInstantiationExceptionSupplier() {
         return () -> new ObjectInstantiationException(clazz,
                                                       "There is no declared object for that class. "
-                                                      + "Please report a bug at https://github.com/sta-szek/pojo-tester");
+                                                      + "Please report an issue at "
+                                                      + "https://github.com/sta-szek/pojo-tester");
     }
 }

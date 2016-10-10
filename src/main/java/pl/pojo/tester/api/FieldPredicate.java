@@ -1,20 +1,22 @@
 package pl.pojo.tester.api;
 
+import pl.pojo.tester.internal.utils.FieldUtils;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-import pl.pojo.tester.internal.utils.FieldUtils;
 
 /**
- * This class is used to create field predicates. It has methods that allow to create common predicates e.g. accept all fields.
+ * This class is used to create field predicates. It has methods that allow to create common predicates e.g. accept all
+ * fields.
  *
  * @author Piotr Joński
  * @since 0.1.0
  */
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class FieldPredicate {
+
+    private FieldPredicate() {
+    }
 
     /**
      * Creates {@link Predicate} that accepts all fields of specified class.

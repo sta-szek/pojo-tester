@@ -136,6 +136,7 @@ public void Should_Pass_All_Pojo_Tests_Using_All_Testers() {
     assertPojoMethodsFor(classUnderTest).testing(Method.GETTER, Method.SETTER, Method.TO_STRING)
                                         .testing(Method.EQUALS)
                                         .testing(Method.HASH_CODE)
+                                        .testing(Method.CONSTRUCTOR)
                                         .areWellImplemented();
 }
 ```

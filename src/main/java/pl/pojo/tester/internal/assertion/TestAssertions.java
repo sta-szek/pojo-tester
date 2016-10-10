@@ -1,11 +1,14 @@
 package pl.pojo.tester.internal.assertion;
 
 
+import pl.pojo.tester.internal.assertion.constructor.ConstructorAssertions;
 import pl.pojo.tester.internal.assertion.equals.EqualAssertions;
 import pl.pojo.tester.internal.assertion.getter.GetterAssertions;
 import pl.pojo.tester.internal.assertion.hashcode.HashCodeAssertions;
 import pl.pojo.tester.internal.assertion.setter.SetterAssertions;
 import pl.pojo.tester.internal.assertion.tostring.ToStringAssertions;
+
+import java.lang.reflect.Constructor;
 
 public class TestAssertions {
 
@@ -27,5 +30,9 @@ public class TestAssertions {
 
     public GetterAssertions assertThatGetMethodFor(final Object objectUnderAssert) {
         return new GetterAssertions(objectUnderAssert);
+    }
+
+    public ConstructorAssertions assertThatConstructor(final Constructor<?> constructorUnderAssert) {
+        return new ConstructorAssertions(constructorUnderAssert);
     }
 }

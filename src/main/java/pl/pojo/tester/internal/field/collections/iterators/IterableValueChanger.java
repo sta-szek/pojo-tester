@@ -1,9 +1,10 @@
 package pl.pojo.tester.internal.field.collections.iterators;
 
 
+import org.apache.commons.collections4.IteratorUtils;
+
 import java.util.Arrays;
 import java.util.Collections;
-import org.apache.commons.collections4.IteratorUtils;
 
 class IterableValueChanger extends AbstractIteratorsFieldValueChanger<Iterable<?>> {
 
@@ -24,8 +25,8 @@ class IterableValueChanger extends AbstractIteratorsFieldValueChanger<Iterable<?
 
     @Override
     protected Iterable<?> increaseValue(final Iterable<?> value, final Class<?> type) {
-        return value != null
-               ? null
-               : Collections.EMPTY_LIST;
+        return value == null
+               ? Collections.EMPTY_LIST
+               : null;
     }
 }

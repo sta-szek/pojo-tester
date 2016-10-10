@@ -7,8 +7,8 @@ class SetValueChanger extends AbstractCollectionFieldValueChanger<Set<?>> {
 
     @Override
     protected Set<?> increaseValue(final Set<?> value, final Class<?> type) {
-        return value != null
-               ? null
-               : Collections.EMPTY_SET;
+        return value == null
+               ? Collections.EMPTY_SET
+               : null;
     }
 }

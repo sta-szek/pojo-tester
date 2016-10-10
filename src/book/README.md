@@ -16,7 +16,10 @@ Get automatic notifications about new `POJO-TESTER` versions
 
 
 ## What is pojo-tester? {#what-is-pojo-tester}
-`POJO-TESTER` is a java testing library, which makes your `pojo-tests` much easier. You can test your `pojo` against `equals`, `hashCode`, `toString`, `getters` and `setters`.
+`POJO-TESTER` is a java testing library, which makes your `pojo-method` tests much easier. 
+You can test your `pojo` against `equals`, `hashCode`, `toString`, `getters`, `setters` and even `constructors`.
+
+`POJO-TESTER` automatically performs tests on basic `pojo-methods` so you don't have to copy-paste all dummy tests over and over.
 
 
 ## Supported Java versions {#supported-java}
@@ -32,7 +35,7 @@ repositories {
 }
 
 dependencies {
-    testCompile 'pl.pojo:pojo-tester:0.4.0'
+    testCompile 'pl.pojo:pojo-tester:0.5.0'
 }
 ```
 
@@ -48,7 +51,7 @@ dependencies {
 <dependency>
   <groupId>pl.pojo</groupId>
   <artifactId>pojo-tester</artifactId>
-  <version>0.4.0</version>
+  <version>0.5.0</version>
   <type>pom</type>
 </dependency>
 ```

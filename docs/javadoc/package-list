@@ -1,6 +1,7 @@
 pl.pojo.tester.api
 pl.pojo.tester.api.assertion
 pl.pojo.tester.internal.assertion
+pl.pojo.tester.internal.assertion.constructor
 pl.pojo.tester.internal.assertion.equals
 pl.pojo.tester.internal.assertion.getter
 pl.pojo.tester.internal.assertion.hashcode
