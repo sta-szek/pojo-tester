@@ -4,6 +4,7 @@ import lombok.Data;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
+import pl.pojo.tester.internal.GetOrSetValueException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

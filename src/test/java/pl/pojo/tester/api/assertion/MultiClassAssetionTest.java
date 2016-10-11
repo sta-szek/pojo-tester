@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 import pl.pojo.tester.api.ClassAndFieldPredicatePair;
-import pl.pojo.tester.api.EqualsTester;
+import pl.pojo.tester.internal.tester.EqualsTester;
 
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.*;
@@ -21,7 +21,8 @@ public class MultiClassAssetionTest {
     public void Should_Test_Against_Each_Tester() {
         // given
         final ClassAndFieldPredicatePair classAndFieldPredicatePair = new ClassAndFieldPredicatePair(A.class);
-        final MultiClassAssetion multiClassAssetion = new MultiClassAssetion(Lists.newArrayList(classAndFieldPredicatePair));
+        final MultiClassAssetion multiClassAssetion = new MultiClassAssetion(Lists.newArrayList(
+                classAndFieldPredicatePair));
         final EqualsTester equalsTester1 = mock(EqualsTester.class);
         final EqualsTester equalsTester2 = mock(EqualsTester.class);
         setInternalState(multiClassAssetion, "testers", Sets.newHashSet(equalsTester1, equalsTester2));

@@ -1,12 +1,11 @@
 package pl.pojo.tester.internal.utils;
 
+import org.apache.commons.lang3.reflect.TypeUtils;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.function.Predicate;
-import org.apache.commons.lang3.reflect.TypeUtils;
-import pl.pojo.tester.api.GetterNotFoundException;
-import pl.pojo.tester.api.SetterNotFoundException;
 
 public final class MethodUtils {
 
@@ -67,7 +66,8 @@ public final class MethodUtils {
                            || (methodName.startsWith("have") && (methodName.length() == (fieldNameLength + 4)))
                            || (methodName.startsWith("contains") && (methodName.length() == (fieldNameLength + 8)))));
         } else {
-            return methodName.startsWith("get") && methodName.length() == fieldNameLength + 3 && methodName.endsWith(upperCaseFirstLetterfieldName);
+            return methodName.startsWith("get") && methodName.length() == fieldNameLength + 3 && methodName.endsWith(
+                    upperCaseFirstLetterfieldName);
         }
     }
 
@@ -77,12 +77,14 @@ public final class MethodUtils {
         final int fieldNameLength = fieldName.length();
         final String upperCaseFirstLetterFieldName = upperCaseFirstLetter(fieldName);
 
-        if ((parameterType.equals(boolean.class) || parameterType.equals(Boolean.class)) && fieldName.startsWith("is")) {
+        if ((parameterType.equals(boolean.class) || parameterType.equals(Boolean.class)) &&
+            fieldName.startsWith("is")) {
             final String fieldNameWithoutPrefix = fieldName.substring(2);
             return methodName.startsWith("set") && methodName.endsWith(fieldNameWithoutPrefix);
 
         } else {
-            return methodName.startsWith("set") && methodName.length() == fieldNameLength + 3 && methodName.endsWith(upperCaseFirstLetterFieldName);
+            return methodName.startsWith("set") && methodName.length() == fieldNameLength + 3 && methodName.endsWith(
+                    upperCaseFirstLetterFieldName);
         }
     }
 

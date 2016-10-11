@@ -3,7 +3,6 @@ package pl.pojo.tester.api.assertion;
 import classesForTest.fields.TestEnum1;
 import com.google.common.collect.Sets;
 import helpers.MapMatcher;
-import java.util.Random;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -11,11 +10,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 import pl.pojo.tester.api.ConstructorParameters;
-import pl.pojo.tester.api.EqualsTester;
-import pl.pojo.tester.api.HashCodeTester;
 import pl.pojo.tester.internal.assertion.AssertionError;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
+import pl.pojo.tester.internal.tester.EqualsTester;
+import pl.pojo.tester.internal.tester.HashCodeTester;
+
+import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -121,14 +122,16 @@ public class AbstractAssetionTest {
         final Class<String> expectedClass = String.class;
         final Object[] expectedArguments = {'c', 'h', 'a', 'r'};
         final Class[] expectedTypes = {char.class, char.class, char.class, char.class};
-        final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments, expectedTypes);
+        final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments,
+                                                                                              expectedTypes);
         abstractAssetion.create(expectedClass, expectedConstructorParameters);
 
         // when
         abstractAssetion.areWellImplemented();
 
         // then
-        verify(equalsTester, times(1)).setUserDefinedConstructors(argThat(new MapMatcher(expectedClass, expectedConstructorParameters)));
+        verify(equalsTester, times(1)).setUserDefinedConstructors(argThat(new MapMatcher(expectedClass,
+                                                                                         expectedConstructorParameters)));
     }
 
     @Test
@@ -140,7 +143,8 @@ public class AbstractAssetionTest {
         final Class<String> expectedClass = String.class;
         final Object[] expectedArguments = {'c', 'h', 'a', 'r'};
         final Class[] expectedTypes = {char.class, char.class, char.class, char.class};
-        final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments, expectedTypes);
+        final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments,
+                                                                                              expectedTypes);
         abstractAssetion.create(expectedClass, expectedArguments, expectedTypes);
 
         // when
@@ -159,14 +163,16 @@ public class AbstractAssetionTest {
         final Class<?> expectedClass = String.class;
         final Object[] expectedArguments = {'c', 'h', 'a', 'r'};
         final Class[] expectedTypes = {char.class, char.class, char.class, char.class};
-        final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments, expectedTypes);
+        final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments,
+                                                                                              expectedTypes);
         abstractAssetion.create("java.lang.String", expectedConstructorParameters);
 
         // when
         abstractAssetion.areWellImplemented();
 
         // then
-        verify(equalsTester, times(1)).setUserDefinedConstructors(argThat(new MapMatcher(expectedClass, expectedConstructorParameters)));
+        verify(equalsTester, times(1)).setUserDefinedConstructors(argThat(new MapMatcher(expectedClass,
+                                                                                         expectedConstructorParameters)));
     }
 
     @Test
@@ -177,7 +183,8 @@ public class AbstractAssetionTest {
         setInternalState(abstractAssetion, "testers", Sets.newHashSet(equalsTester));
         final Object[] expectedArguments = {'c', 'h', 'a', 'r'};
         final Class[] expectedTypes = {char.class, char.class, char.class, char.class};
-        final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments, expectedTypes);
+        final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments,
+                                                                                              expectedTypes);
         final String expectedClassName = "java.lang.String";
         abstractAssetion.create(expectedClassName, expectedArguments, expectedTypes);
 

@@ -11,6 +11,7 @@ import pl.pojo.tester.internal.field.collections.CollectionsFieldValueChanger;
 import pl.pojo.tester.internal.instantiator.ClassLoader;
 import pl.pojo.tester.internal.instantiator.Instantiable;
 import pl.pojo.tester.internal.preconditions.ParameterPreconditions;
+import pl.pojo.tester.internal.tester.ConstructorTester;
 
 import java.util.HashMap;
 

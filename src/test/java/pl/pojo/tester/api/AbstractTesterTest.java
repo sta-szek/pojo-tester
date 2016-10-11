@@ -3,8 +3,6 @@ package pl.pojo.tester.api;
 import helpers.ClassAndFieldPredicatePairArgumentMatcher;
 import helpers.RecursivelyEqualArgumentMatcher;
 import helpers.StringPredicateArgumentMatcher;
-import java.util.HashMap;
-import java.util.function.Predicate;
 import lombok.Data;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
@@ -13,6 +11,10 @@ import org.mockito.Mockito;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
 import pl.pojo.tester.internal.instantiator.ObjectGenerator;
+import pl.pojo.tester.internal.tester.AbstractTester;
+
+import java.util.HashMap;
+import java.util.function.Predicate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.argThat;
@@ -225,7 +227,8 @@ public class AbstractTesterTest {
         }
 
         @Override
-        public void test(final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair, final ClassAndFieldPredicatePair... classAndFieldPredicatePairs) {
+        public void test(final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair,
+                         final ClassAndFieldPredicatePair... classAndFieldPredicatePairs) {
             // not needed for tests
         }
     }
