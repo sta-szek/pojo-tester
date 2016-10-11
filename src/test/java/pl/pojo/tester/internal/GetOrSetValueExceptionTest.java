@@ -1,4 +1,4 @@
-package pl.pojo.tester.api;
+package pl.pojo.tester.internal;
 
 import lombok.Data;
 import org.junit.jupiter.api.Test;

@@ -1,16 +1,18 @@
-package pl.pojo.tester.api;
+package pl.pojo.tester.internal.tester;
 
 import classesForTest.fields.TestEnum1;
-import java.util.List;
-import java.util.Random;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
+import pl.pojo.tester.api.FieldPredicate;
 import pl.pojo.tester.internal.assertion.AssertionError;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
+
+import java.util.List;
+import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -40,7 +42,8 @@ public class ToStringTesterTest {
         final List<String> excludedFields = newArrayList("testEnum");
 
         // when
-        final Throwable result = catchThrowable(() -> toStringTester.test(clazz, FieldPredicate.exclude(excludedFields)));
+        final Throwable result = catchThrowable(() -> toStringTester.test(clazz,
+                                                                          FieldPredicate.exclude(excludedFields)));
 
         // then
         assertThat(result).isNull();
@@ -54,7 +57,8 @@ public class ToStringTesterTest {
         final List<String> includedFields = newArrayList("a", "b", "obj");
 
         // when
-        final Throwable result = catchThrowable(() -> toStringTester.test(clazz, FieldPredicate.include(includedFields)));
+        final Throwable result = catchThrowable(() -> toStringTester.test(clazz,
+                                                                          FieldPredicate.include(includedFields)));
 
         // then
         assertThat(result).isNull();
@@ -81,7 +85,8 @@ public class ToStringTesterTest {
         final List<String> excludedFields = newArrayList("a");
 
         // when
-        final Throwable result = catchThrowable(() -> toStringTester.test(clazz, FieldPredicate.exclude(excludedFields)));
+        final Throwable result = catchThrowable(() -> toStringTester.test(clazz,
+                                                                          FieldPredicate.exclude(excludedFields)));
 
         // then
         assertThat(result).isInstanceOf(AssertionError.class);
@@ -95,7 +100,8 @@ public class ToStringTesterTest {
         final List<String> includedFields = newArrayList("a", "b");
 
         // when
-        final Throwable result = catchThrowable(() -> toStringTester.test(clazz, FieldPredicate.include(includedFields)));
+        final Throwable result = catchThrowable(() -> toStringTester.test(clazz,
+                                                                          FieldPredicate.include(includedFields)));
 
         // then
         assertThat(result).isInstanceOf(AssertionError.class);

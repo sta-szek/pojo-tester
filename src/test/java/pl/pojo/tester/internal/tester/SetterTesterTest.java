@@ -1,11 +1,14 @@
-package pl.pojo.tester.api;
+package pl.pojo.tester.internal.tester;
 
-import java.util.List;
 import lombok.Setter;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
+import pl.pojo.tester.api.FieldPredicate;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
+import pl.pojo.tester.internal.utils.SetterNotFoundException;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;

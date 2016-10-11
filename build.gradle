@@ -114,15 +114,17 @@ bintray {
     pkg {
         repo = 'maven'
         name = 'pojo-tester'
-        licenses = ['GPL-3.0']
+        desc = 'Java pojo-methods testing library.'
+        websiteUrl = 'http://www.pojo.pl'
+        issueTrackerUrl = 'https://github.com/sta-szek/pojo-tester/issues'
         vcsUrl = 'https://github.com/sta-szek/pojo-tester.git'
+        licenses = ['GPL-3.0']
         publications = ['mavenJava']
         version {
-            name = version
+            name = rootProject.version
             desc = 'Java pojo-methods testing library.'
             released = new Date();
-            vcsTag = version
-            attributes = ['gradle-plugin': 'com.use.less:com.use.less.gradle:gradle-useless-plugin']
+            vcsTag = rootProject.version
         }
     }
 }

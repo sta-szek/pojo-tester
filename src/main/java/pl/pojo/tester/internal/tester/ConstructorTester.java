@@ -1,6 +1,7 @@
-package pl.pojo.tester.api;
+package pl.pojo.tester.internal.tester;
 
 
+import pl.pojo.tester.api.ClassAndFieldPredicatePair;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 
 import java.lang.reflect.Constructor;
@@ -8,31 +9,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * ConstructorTester tests constructors is given classes. It tries to instantiate class with all avaivable constructors.
- *
- * @author Piotr Joński
- * @since 0.5.0
- */
 public class ConstructorTester extends AbstractTester {
 
-    /**
-     * {@inheritDoc}
-     */
     public ConstructorTester() {
         super();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public ConstructorTester(final AbstractFieldValueChanger abstractFieldValueChanger) {
         super(abstractFieldValueChanger);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void test(final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair,
                      final ClassAndFieldPredicatePair... classAndFieldPredicatePairs) {

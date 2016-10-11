@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 import pl.pojo.tester.api.ClassAndFieldPredicatePair;
-import pl.pojo.tester.api.EqualsTester;
+import pl.pojo.tester.internal.tester.EqualsTester;
 
 import static org.mockito.Mockito.*;
 import static org.powermock.reflect.Whitebox.setInternalState;
@@ -19,7 +19,8 @@ public class SingleClassAssetionTest {
         // given
         final ClassAndFieldPredicatePair classAndFieldPredicatePair = new ClassAndFieldPredicatePair(A.class);
         final ClassAndFieldPredicatePair[] classAndFieldPredicatePairs = {classAndFieldPredicatePair};
-        final SingleClassAssetion singleClassAssetion = new SingleClassAssetion(classAndFieldPredicatePair, classAndFieldPredicatePairs);
+        final SingleClassAssetion singleClassAssetion = new SingleClassAssetion(classAndFieldPredicatePair,
+                                                                                classAndFieldPredicatePairs);
         final EqualsTester equalsTester1 = mock(EqualsTester.class);
         final EqualsTester equalsTester2 = mock(EqualsTester.class);
         setInternalState(singleClassAssetion, "testers", Sets.newHashSet(equalsTester1, equalsTester2));

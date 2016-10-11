@@ -1,9 +1,10 @@
-package pl.pojo.tester.api;
+package pl.pojo.tester.internal.tester;
 
 import classesForTest.ClassWithSyntheticConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
+import pl.pojo.tester.api.ConstructorParameters;
 import pl.pojo.tester.api.assertion.Assertions;
 import pl.pojo.tester.internal.assertion.constructor.ConstructorAssertionError;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;

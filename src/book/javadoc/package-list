@@ -1,5 +1,6 @@
 pl.pojo.tester.api
 pl.pojo.tester.api.assertion
+pl.pojo.tester.internal
 pl.pojo.tester.internal.assertion
 pl.pojo.tester.internal.assertion.constructor
 pl.pojo.tester.internal.assertion.equals
@@ -15,4 +16,5 @@ pl.pojo.tester.internal.field.collections.map
 pl.pojo.tester.internal.field.primitive
 pl.pojo.tester.internal.instantiator
 pl.pojo.tester.internal.preconditions
+pl.pojo.tester.internal.tester
 pl.pojo.tester.internal.utils

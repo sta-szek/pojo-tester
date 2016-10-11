@@ -1,46 +1,36 @@
-package pl.pojo.tester.api;
+package pl.pojo.tester.internal.tester;
 
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import pl.pojo.tester.api.ClassAndFieldPredicatePair;
+import pl.pojo.tester.internal.GetOrSetValueException;
+import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
+import pl.pojo.tester.internal.utils.FieldUtils;
+import pl.pojo.tester.internal.utils.MethodUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.stream.Collectors;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
-import pl.pojo.tester.internal.utils.FieldUtils;
-import pl.pojo.tester.internal.utils.MethodUtils;
 
-/**
- * SetterTester tests classes if the implementation of {@code setter} methods is good.
- *
- * @author Piotr Joński
- * @since 0.1.0
- */
 public class SetterTester extends AbstractTester {
 
-    /**
-     * {@inheritDoc}
-     */
     public SetterTester() {
         super();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public SetterTester(final AbstractFieldValueChanger abstractFieldValueChanger) {
         super(abstractFieldValueChanger);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    public void test(final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair, final ClassAndFieldPredicatePair... classAndFieldPredicatePairs) {
+    public void test(final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair,
+                     final ClassAndFieldPredicatePair... classAndFieldPredicatePairs) {
         final Class testedClass = baseClassAndFieldPredicatePair.getClazz();
-        final List<Field> fields = FieldUtils.getFields(testedClass, baseClassAndFieldPredicatePair.getFieldsPredicate());
+        final List<Field> fields = FieldUtils.getFields(testedClass,
+                                                        baseClassAndFieldPredicatePair.getFieldsPredicate());
         final List<SetterAndFieldPair> setterAndFieldPairs = findSetterAndGetterPairsForFields(testedClass, fields);
         final Object instance = objectGenerator.createNewInstance(testedClass);
 
@@ -62,7 +52,8 @@ public class SetterTester extends AbstractTester {
     }
 
 
-    private List<SetterAndFieldPair> findSetterAndGetterPairsForFields(final Class<?> testedClass, final List<Field> fields) {
+    private List<SetterAndFieldPair> findSetterAndGetterPairsForFields(final Class<?> testedClass,
+                                                                       final List<Field> fields) {
         return fields.stream()
                      .map(fieldName -> findSetterAndGetterPairForField(testedClass, fieldName))
                      .collect(Collectors.toList());

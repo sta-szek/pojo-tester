@@ -1,16 +1,15 @@
 package pl.pojo.tester.api.assertion;
 
+import pl.pojo.tester.api.ConstructorParameters;
+import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
+import pl.pojo.tester.internal.instantiator.ClassLoader;
+import pl.pojo.tester.internal.tester.AbstractTester;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-import pl.pojo.tester.api.AbstractTester;
-import pl.pojo.tester.api.ConstructorParameters;
-import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
-import pl.pojo.tester.internal.instantiator.ClassLoader;
 
 import static pl.pojo.tester.internal.preconditions.ParameterPreconditions.checkNotBlank;
 import static pl.pojo.tester.internal.preconditions.ParameterPreconditions.checkNotNull;
@@ -24,7 +23,6 @@ import static pl.pojo.tester.internal.preconditions.ParameterPreconditions.check
  * @author Piotr Joński
  * @since 0.1.0
  */
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class AbstractAssetion {
 
     private static final Set<AbstractTester> DEFAULT_TESTERS;
@@ -110,7 +108,8 @@ public abstract class AbstractAssetion {
     }
 
     /**
-     * Indicates, that class should be constructed using given constructor parameters. Constructor will be selected based on constructor paramter's types.
+     * Indicates, that class should be constructed using given constructor parameters. Constructor will be selected
+     * based on constructor paramter's types.
      *
      * @param qualifiedClassName        class to instantiate
      * @param constructorParameters     constructor paramters
@@ -120,15 +119,19 @@ public abstract class AbstractAssetion {
      *
      * @see ConstructorParameters
      */
-    public AbstractAssetion create(final String qualifiedClassName, final Object[] constructorParameters, final Class<?>[] constructorParameterTypes) {
+    public AbstractAssetion create(final String qualifiedClassName,
+                                   final Object[] constructorParameters,
+                                   final Class<?>[] constructorParameterTypes) {
         checkNotBlank("qualifiedClassName", qualifiedClassName);
 
-        final ConstructorParameters constructorParameter = new ConstructorParameters(constructorParameters, constructorParameterTypes);
+        final ConstructorParameters constructorParameter = new ConstructorParameters(constructorParameters,
+                                                                                     constructorParameterTypes);
         return create(qualifiedClassName, constructorParameter);
     }
 
     /**
-     * Indicates, that class should be constructed using given constructor parameters. Constructor will be selected based on constructor paramter's types.
+     * Indicates, that class should be constructed using given constructor parameters. Constructor will be selected
+     * based on constructor paramter's types.
      *
      * @param qualifiedClassName    class to instantiate
      * @param constructorParameters constructor paramters
@@ -147,7 +150,8 @@ public abstract class AbstractAssetion {
     }
 
     /**
-     * Indicates, that class should be constructed using given constructor parameters. Constructor will be selected based on constructor paramter's types.
+     * Indicates, that class should be constructed using given constructor parameters. Constructor will be selected
+     * based on constructor paramter's types.
      *
      * @param clazz                     class to instantiate
      * @param constructorParameters     constructor paramters
@@ -157,16 +161,20 @@ public abstract class AbstractAssetion {
      *
      * @see ConstructorParameters
      */
-    public AbstractAssetion create(final Class<?> clazz, final Object[] constructorParameters, final Class<?>[] constructorParameterTypes) {
+    public AbstractAssetion create(final Class<?> clazz,
+                                   final Object[] constructorParameters,
+                                   final Class<?>[] constructorParameterTypes) {
         checkNotNull("clazz", clazz);
 
-        final ConstructorParameters constructorParameter = new ConstructorParameters(constructorParameters, constructorParameterTypes);
+        final ConstructorParameters constructorParameter = new ConstructorParameters(constructorParameters,
+                                                                                     constructorParameterTypes);
         return create(clazz, constructorParameter);
     }
 
 
     /**
-     * Indicates, that class should be constructed using given constructor parameters. Constructor will be selected based on constructor paramter's types.
+     * Indicates, that class should be constructed using given constructor parameters. Constructor will be selected
+     * based on constructor paramter's types.
      *
      * @param clazz                 class to instantiate
      * @param constructorParameters constructor paramters

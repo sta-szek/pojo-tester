@@ -1,16 +1,18 @@
-package pl.pojo.tester.api;
+package pl.pojo.tester.internal.tester;
 
 import classesForTest.fields.TestEnum1;
-import java.util.ArrayList;
-import java.util.Random;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
+import pl.pojo.tester.api.FieldPredicate;
 import pl.pojo.tester.internal.assertion.AssertionError;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -37,7 +39,8 @@ public class EqualsTesterTest {
         // given
         final EqualsTester equalsTester = new EqualsTester();
         final Class<?> clazz = BadPojoEqualsDifferentObjectSameType.class;
-        final ArrayList<String> excludedFields = newArrayList("notIncludedToEqual_byteField", "notIncludedToEqual_shortType");
+        final ArrayList<String> excludedFields = newArrayList("notIncludedToEqual_byteField",
+                                                              "notIncludedToEqual_shortType");
 
         // when
         final Throwable result = catchThrowable(() -> equalsTester.test(clazz, FieldPredicate.exclude(excludedFields)));
@@ -102,7 +105,9 @@ public class EqualsTesterTest {
     @Test
     public void Should_Fail_Multiple_Classes() {
         // given
-        final Class[] classesToTest = {BadPojoEqualsNull.class, BadPojoEqualsDifferentType.class, BadPojoEqualsItself.class};
+        final Class[] classesToTest = {BadPojoEqualsNull.class,
+                                       BadPojoEqualsDifferentType.class,
+                                       BadPojoEqualsItself.class};
         final EqualsTester equalsTester = new EqualsTester();
 
         // when

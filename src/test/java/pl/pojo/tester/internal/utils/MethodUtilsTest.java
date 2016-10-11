@@ -1,8 +1,5 @@
 package pl.pojo.tester.internal.utils;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.util.stream.Stream;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.ToString;
@@ -11,8 +8,10 @@ import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
-import pl.pojo.tester.api.GetterNotFoundException;
-import pl.pojo.tester.api.SetterNotFoundException;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.stream.Stream;
 
 import static helpers.TestHelper.getDefaultDisplayName;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -37,7 +36,8 @@ public class MethodUtilsTest {
                          fieldD,
                          fieldF,
                          fieldG)
-                     .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Throw_Exception_When_Setter_Was_Not_Found(value)));
+                     .map(value -> dynamicTest(getDefaultDisplayName(value),
+                                               Should_Throw_Exception_When_Setter_Was_Not_Found(value)));
     }
 
     public Executable Should_Throw_Exception_When_Setter_Was_Not_Found(final Field field) {
@@ -65,7 +65,8 @@ public class MethodUtilsTest {
                          fieldE,
                          fieldF,
                          fieldG)
-                     .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Throw_Exception_When_Getter_Was_Not_Found(value)));
+                     .map(value -> dynamicTest(getDefaultDisplayName(value),
+                                               Should_Throw_Exception_When_Getter_Was_Not_Found(value)));
     }
 
     public Executable Should_Throw_Exception_When_Getter_Was_Not_Found(final Field field) {
@@ -92,8 +93,10 @@ public class MethodUtilsTest {
         final Field field10 = field(Getters.class, "name");
         final Field field11 = field(Getters.class, "otherName");
 
-        final Field field12 = field(PojoWithNonStandardBooleanFieldNames_Standard_Generated_Setters_And_Getters.class, "isActive");
-        final Field field13 = field(PojoWithNonStandardBooleanFieldNames_Lombok_Generated_Setters_And_Getters.class, "isActive");
+        final Field field12 = field(PojoWithNonStandardBooleanFieldNames_Standard_Generated_Setters_And_Getters.class,
+                                    "isActive");
+        final Field field13 = field(PojoWithNonStandardBooleanFieldNames_Lombok_Generated_Setters_And_Getters.class,
+                                    "isActive");
 
         return Stream.of(new GetterTestCase(field1, Getters.class.getMethod("isGetter1")),
                          new GetterTestCase(field2, Getters.class.getMethod("hasGetter2")),
@@ -108,9 +111,12 @@ public class MethodUtilsTest {
                          new GetterTestCase(field11, Getters.class.getMethod("getOtherName")),
 
                          new GetterTestCase(field12,
-                                            PojoWithNonStandardBooleanFieldNames_Standard_Generated_Setters_And_Getters.class.getMethod("isActive")),
+                                            PojoWithNonStandardBooleanFieldNames_Standard_Generated_Setters_And_Getters.class.getMethod(
+                                                    "isActive")),
                          new GetterTestCase(field13,
-                                            PojoWithNonStandardBooleanFieldNames_Lombok_Generated_Setters_And_Getters.class.getMethod("isActive"))
+                                            PojoWithNonStandardBooleanFieldNames_Lombok_Generated_Setters_And_Getters
+                                                    .class.getMethod(
+                                                    "isActive"))
         )
                      .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Return_Expected_Getter(value)));
     }
@@ -136,8 +142,10 @@ public class MethodUtilsTest {
         final Field field7 = field(Setters.class, "name");
         final Field field8 = field(Setters.class, "otherName");
 
-        final Field field9 = field(PojoWithNonStandardBooleanFieldNames_Standard_Generated_Setters_And_Getters.class, "isActive");
-        final Field field10 = field(PojoWithNonStandardBooleanFieldNames_Lombok_Generated_Setters_And_Getters.class, "isActive");
+        final Field field9 = field(PojoWithNonStandardBooleanFieldNames_Standard_Generated_Setters_And_Getters.class,
+                                   "isActive");
+        final Field field10 = field(PojoWithNonStandardBooleanFieldNames_Lombok_Generated_Setters_And_Getters.class,
+                                    "isActive");
 
         return Stream.of(new SetterTestCase(field1, Setters.class.getMethod("setSetter1", int.class)),
                          new SetterTestCase(field2, Setters.class.getMethod("setSetter2", Integer.class)),
@@ -149,11 +157,14 @@ public class MethodUtilsTest {
                          new SetterTestCase(field8, Setters.class.getMethod("setOtherName", String.class)),
 
                          new SetterTestCase(field9,
-                                            PojoWithNonStandardBooleanFieldNames_Standard_Generated_Setters_And_Getters.class.getMethod("setActive",
-                                                                                                                                        boolean.class)),
+                                            PojoWithNonStandardBooleanFieldNames_Standard_Generated_Setters_And_Getters.class.getMethod(
+                                                    "setActive",
+                                                    boolean.class)),
                          new SetterTestCase(field10,
-                                            PojoWithNonStandardBooleanFieldNames_Lombok_Generated_Setters_And_Getters.class.getMethod("setActive",
-                                                                                                                                      boolean.class))
+                                            PojoWithNonStandardBooleanFieldNames_Lombok_Generated_Setters_And_Getters
+                                                    .class.getMethod(
+                                                    "setActive",
+                                                    boolean.class))
         )
                      .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Return_Expected_Setter(value)));
     }
