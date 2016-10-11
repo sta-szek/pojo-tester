@@ -7,7 +7,6 @@ import lombok.Data;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import pl.pojo.tester.api.ClassAndFieldPredicatePair;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
@@ -20,7 +19,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
-import static org.powermock.reflect.Whitebox.getInternalState;
 
 @RunWith(JUnitPlatform.class)
 public class AbstractTesterTest {
@@ -28,7 +26,7 @@ public class AbstractTesterTest {
     @Test
     public void Should_Call_Test_With_Expected_Predicate() {
         // given
-        final AbstractTester abstractTester = mock(AbstractTester.class, Mockito.CALLS_REAL_METHODS);
+        final AbstractTester abstractTester = spy(AbstractTester.class);
         final Class<A> clazz = A.class;
 
         // when
@@ -41,7 +39,7 @@ public class AbstractTesterTest {
     @Test
     public void Should_Call_Test_With_Expected_Class_And_Field_Predicate_Pair() {
         // given
-        final AbstractTester abstractTester = mock(AbstractTester.class, Mockito.CALLS_REAL_METHODS);
+        final AbstractTester abstractTester = spy(AbstractTester.class);
         final Class<A> clazz = A.class;
         final Predicate<String> predicate = string -> string.equals("a");
 
@@ -55,7 +53,7 @@ public class AbstractTesterTest {
     @Test
     public void Should_Call_Test_With_Expected_Class_And_Field_Predicate_Pairs() {
         // given
-        final AbstractTester abstractTester = mock(AbstractTester.class, Mockito.CALLS_REAL_METHODS);
+        final AbstractTester abstractTester = spy(AbstractTester.class);
         final Class<A> clazz = A.class;
 
         final ClassAndFieldPredicatePair expectedParameter = new ClassAndFieldPredicatePair(clazz);
@@ -70,7 +68,7 @@ public class AbstractTesterTest {
     @Test
     public void Should_Call_Test_With_Expected_Class_And_Field_Predicate_Pairs_Two_Times() {
         // given
-        final AbstractTester abstractTester = mock(AbstractTester.class, Mockito.CALLS_REAL_METHODS);
+        final AbstractTester abstractTester = spy(AbstractTester.class);
 
         final Class<A> aClazz = A.class;
         final Class<B> bClazz = B.class;
@@ -94,11 +92,11 @@ public class AbstractTesterTest {
         // given
         final AbstractTester abstractTester = new AbstractTesterImplementation();
         final AbstractFieldValueChanger fieldValuesChanger = DefaultFieldValueChanger.INSTANCE;
-        final ObjectGenerator beforeChange = getInternalState(abstractTester, "objectGenerator");
+        final ObjectGenerator beforeChange = abstractTester.objectGenerator;
 
         // when
         abstractTester.setFieldValuesChanger(fieldValuesChanger);
-        final ObjectGenerator afterChange = getInternalState(abstractTester, "objectGenerator");
+        final ObjectGenerator afterChange = abstractTester.objectGenerator;
 
         // then
         assertThat(beforeChange).isNotEqualTo(afterChange);
@@ -108,11 +106,11 @@ public class AbstractTesterTest {
     public void Should_Create_New_Object_Generator_When_User_Defined_Class_And_Constructor() {
         // given
         final AbstractTester abstractTester = new AbstractTesterImplementation();
-        final ObjectGenerator beforeChange = getInternalState(abstractTester, "objectGenerator");
+        final ObjectGenerator beforeChange = abstractTester.objectGenerator;
 
         // when
         abstractTester.setUserDefinedConstructors(new HashMap<>());
-        final ObjectGenerator afterChange = getInternalState(abstractTester, "objectGenerator");
+        final ObjectGenerator afterChange = abstractTester.objectGenerator;
 
         // then
         assertThat(beforeChange).isNotEqualTo(afterChange);
@@ -222,7 +220,7 @@ public class AbstractTesterTest {
         public AbstractTesterImplementation() {
         }
 
-        public AbstractTesterImplementation(final AbstractFieldValueChanger o) {
+        AbstractTesterImplementation(final AbstractFieldValueChanger o) {
             super(o);
         }
 

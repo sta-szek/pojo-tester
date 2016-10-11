@@ -72,16 +72,16 @@ public abstract class AbstractTester {
     }
 
     @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
+    public boolean equals(final Object otherObject) {
+        if (this == otherObject) {
             return true;
         }
 
-        if (o == null || getClass() != o.getClass()) {
+        if (otherObject == null || getClass() != otherObject.getClass()) {
             return false;
         }
 
-        final AbstractTester that = (AbstractTester) o;
+        final AbstractTester that = (AbstractTester) otherObject;
 
         return new EqualsBuilder().append(objectGenerator, that.objectGenerator)
                                   .append(testAssertions, that.testAssertions)

@@ -77,8 +77,8 @@ public final class MethodUtils {
         final int fieldNameLength = fieldName.length();
         final String upperCaseFirstLetterFieldName = upperCaseFirstLetter(fieldName);
 
-        if ((parameterType.equals(boolean.class) || parameterType.equals(Boolean.class)) &&
-            fieldName.startsWith("is")) {
+        if ((parameterType.equals(boolean.class) || parameterType.equals(Boolean.class))
+            && fieldName.startsWith("is")) {
             final String fieldNameWithoutPrefix = fieldName.substring(2);
             return methodName.startsWith("set") && methodName.endsWith(fieldNameWithoutPrefix);
 
