@@ -1,4 +1,4 @@
-package pl.pojo.tester.api;
+package pl.pojo.tester.internal.tester;
 
 import classesForTest.fields.TestEnum1;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -7,9 +7,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
+import pl.pojo.tester.api.FieldPredicate;
 import pl.pojo.tester.internal.assertion.AssertionError;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
-import pl.pojo.tester.internal.tester.EqualsTester;
 
 import java.util.ArrayList;
 import java.util.Random;

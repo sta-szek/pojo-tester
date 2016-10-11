@@ -1,4 +1,4 @@
-package pl.pojo.tester.api;
+package pl.pojo.tester.internal.tester;
 
 import helpers.ClassAndFieldPredicatePairArgumentMatcher;
 import helpers.RecursivelyEqualArgumentMatcher;
@@ -8,10 +8,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import pl.pojo.tester.api.ClassAndFieldPredicatePair;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
 import pl.pojo.tester.internal.instantiator.ObjectGenerator;
-import pl.pojo.tester.internal.tester.AbstractTester;
 
 import java.util.HashMap;
 import java.util.function.Predicate;

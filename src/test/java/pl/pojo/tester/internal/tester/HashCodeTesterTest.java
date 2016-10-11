@@ -1,4 +1,4 @@
-package pl.pojo.tester.api;
+package pl.pojo.tester.internal.tester;
 
 import classesForTest.fields.TestEnum1;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -9,7 +9,6 @@ import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 import pl.pojo.tester.internal.assertion.hashcode.HashCodeAssertionError;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
-import pl.pojo.tester.internal.tester.HashCodeTester;
 
 import java.util.List;
 import java.util.Random;
