@@ -1,0 +1,10 @@
+.idea
+build
+.gradle
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
+
+# Work around https://youtrack.jetbrains.com/issue/IDEA-116898
+gradle/wrapper/gradle-wrapper.properties
+docs/gitbook/gitbook-plugin-livereload/
