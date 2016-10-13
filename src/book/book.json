@@ -10,7 +10,6 @@
     "sitemap",
     "disqus",
     "nocache",
-    "git-author",
     "back-to-top-button",
     "advanced-emoji",
     "prettify-html",
@@ -18,12 +17,6 @@
     "github"
   ],
   "pluginsConfig": {
-    "git-author": {
-      "position": "bottom",
-      "modifyTpl": "Last modified by {user} {timeStamp}",
-      "createTpl": "Created by {user} {timeStamp}",
-      "timeStampFormat": "YYYY-MM-DD HH:mm:ss"
-    },
     "ga": {
       "token": "UA-84695813-1"
     },

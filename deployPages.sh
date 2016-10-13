@@ -21,7 +21,8 @@ echo "1/4 GENERATE JAVADOCS"
 ./gradlew javadoc >/dev/null
 
 echo "2/4 GENERATE GITBOOK"
-gitbook build ./src/book/ ./build/website/
+gitbook install ./src/book/ >/dev/null
+gitbook build ./src/book/ ./build/website/ >/dev/null
 
 echo "3/4 CLONE POJO-TESTER REPOSITORY"
 cd ./build/website/
