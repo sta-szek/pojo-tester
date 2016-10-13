@@ -30,10 +30,10 @@ git config user.name "Piotr Joński"
 git config user.email "yoyo@wp.eu"
 
 git remote add origin ${POJO_TESTER_REPO}
-git fetch upstream --no-tags --quiet
-git reset upstream/gh-pages --quiet
+git fetch origin --no-tags --quiet
+git reset origin/gh-pages --quiet
 
 echo "4/4 PUBLISH PAGES"
-git add -A . >/dev/null 2>/dev/null
-git commit -m "rebuild pages at ${rev}" >/dev/null 2>/dev/null
-git push --quiet upstream HEAD:gh-pages
+git add -A . >/dev/null
+git commit -m "rebuild pages at ${rev}" >/dev/null
+git push --quiet origin HEAD:gh-pages
