@@ -15,3 +15,5 @@ notifications:
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+  - npm install gitbook-cli
+  - bash deployPages.sh
