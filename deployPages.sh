@@ -8,11 +8,6 @@ TRAVIS_PULL_REQUEST="false"
 TRAVIS_BRANCH="master"
 POJO_TESTER_REPO="https://sta-szek:$TRAVIS_DEPLOY_GH_PAGES_TOKEN@github.com/sta-szek/pojo-tester.git"
 
-# Save some useful information
-REPO=`git config remote.origin.url`
-SSH_REPO=${REPO/https:\/\/github.com\//git@github.com:}
-SHA=`git rev-parse --verify HEAD`
-
 if [ "$TRAVIS_PULL_REQUEST" != "false" -o "$TRAVIS_BRANCH" != "$SOURCE_BRANCH" ]
 then
   echo "This commit was made against the $TRAVIS_BRANCH and not the $SOURCE_BRANCH! No deploy!"
@@ -22,14 +17,14 @@ fi
 echo "1/4 CLONE POJO-TESTER REPOSITORY"
 rev=$(git rev-parse --short HEAD)
 
-git clone ${REPO} repo
+git clone ${POJO_TESTER_REPO} repo
 cd repo
 git checkout ${TARGET_BRANCH} || git checkout --orphan ${TARGET_BRANCH}
 git config user.name "Piotr Joński"
 git config user.email "yoyo@wp.eu"
+#git remote rm origin
+#git remote add origin ${POJO_TESTER_REPO}
 cd ..
-
-# Clean out existing contents
 rm -rf repo/**/* || exit 0
 
 echo "2/4 GENERATE JAVADOCS"
