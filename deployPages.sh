@@ -7,7 +7,7 @@ TARGET_BRANCH="gh-pages"
 TRAVIS_PULL_REQUEST="false"
 TRAVIS_BRANCH="master"
 TRAVIS_DEPLOY_GH_PAGES_TOKEN="a5a0e3c450438bdfaa012b312995fd494ef73128"
-POJO_TESTER_REPO="https://$TRAVIS_DEPLOY_GH_PAGES_TOKEN@github.com/sta-szek/pojo-tester.git"
+POJO_TESTER_REPO="https://sta-szek:$TRAVIS_DEPLOY_GH_PAGES_TOKEN@github.com/sta-szek/pojo-tester.git"
 
 if [ "$TRAVIS_PULL_REQUEST" != "false" -o "$TRAVIS_BRANCH" != "$SOURCE_BRANCH" ]
 then
