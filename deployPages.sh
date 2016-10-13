@@ -20,8 +20,6 @@ rev=$(git rev-parse --short HEAD)
 git clone ${POJO_TESTER_REPO} repo
 cd repo
 git checkout ${TARGET_BRANCH} || git checkout --orphan ${TARGET_BRANCH}
-git remote rm origin
-git remote add origin ${POJO_TESTER_REPO}
 cd ..
 rm -rf repo/**/* || exit 0
 
