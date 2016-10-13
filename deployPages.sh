@@ -22,8 +22,8 @@ cd repo
 git checkout ${TARGET_BRANCH} || git checkout --orphan ${TARGET_BRANCH}
 git config user.name "Piotr Joński"
 git config user.email "yoyo@wp.eu"
-#git remote rm origin
-#git remote add origin ${POJO_TESTER_REPO}
+git remote rm origin
+git remote add origin ${POJO_TESTER_REPO}
 cd ..
 rm -rf repo/**/* || exit 0
 
