@@ -20,8 +20,6 @@ rev=$(git rev-parse --short HEAD)
 git clone ${POJO_TESTER_REPO} repo
 cd repo
 git checkout ${TARGET_BRANCH} || git checkout --orphan ${TARGET_BRANCH}
-git config user.name "Piotr Joński"
-git config user.email "yoyo@wp.eu"
 git remote rm origin
 git remote add origin ${POJO_TESTER_REPO}
 cd ..
@@ -36,6 +34,8 @@ gitbook build ./src/book/ ./repo >/dev/null
 
 echo "4/4 PUBLISH PAGES"
 cd repo
+git config user.name "Piotr Joński"
+git config user.email "yoyo@wp.eu"
 git add -A . >/dev/null
 git commit -m "rebuild pages at ${rev}" >/dev/null
 git push --quiet origin HEAD:gh-pages
