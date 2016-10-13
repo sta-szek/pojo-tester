@@ -6,12 +6,11 @@ SOURCE_BRANCH="master"
 TARGET_BRANCH="gh-pages"
 TRAVIS_PULL_REQUEST="false"
 TRAVIS_BRANCH="master"
-TRAVIS_DEPLOY_GH_PAGES_TOKEN="a5a0e3c450438bdfaa012b312995fd494ef73128"
 POJO_TESTER_REPO="https://sta-szek:$TRAVIS_DEPLOY_GH_PAGES_TOKEN@github.com/sta-szek/pojo-tester.git"
 
 if [ "$TRAVIS_PULL_REQUEST" != "false" -o "$TRAVIS_BRANCH" != "$SOURCE_BRANCH" ]
 then
-  echo "This commit was made against the $TRAVIS_BRANCH and not the master! No deploy!"
+  echo "This commit was made against the $TRAVIS_BRANCH and not the $SOURCE_BRANCH! No deploy!"
   exit 0
 fi
 
@@ -30,7 +29,7 @@ git init --quiet
 git config user.name "Piotr Joński"
 git config user.email "yoyo@wp.eu"
 
-git remote add upstream ${POJO_TESTER_REPO}
+git remote add origin ${POJO_TESTER_REPO}
 git fetch upstream --no-tags --quiet
 git reset upstream/gh-pages --quiet
 
