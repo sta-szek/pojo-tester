@@ -16,7 +16,7 @@ then
 fi
 
 echo "1/4 CLONE POJO-TESTER REPOSITORY"
-echo ${TRAVIS_DEPLOY_GH_PAGES_TOKEN}
+echo ${POJO_TESTER_REPO}
 rev=$(git rev-parse --short HEAD)
 
 mkdir repo
