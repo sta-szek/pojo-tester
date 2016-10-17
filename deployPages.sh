@@ -2,13 +2,14 @@
 
 set -o errexit -o nounset
 
-SOURCE_BRANCH="master"
-TARGET_BRANCH="gh-pages"
 TRAVIS_PULL_REQUEST="false"
 TRAVIS_BRANCH="master"
+
+SOURCE_BRANCH="master"
+TARGET_BRANCH="gh-pages"
 POJO_TESTER_REPO="https://@github.com/sta-szek/pojo-tester.git"
 
-if [ "$TRAVIS_PULL_REQUEST" != "false" -o "$TRAVIS_BRANCH" != "$SOURCE_BRANCH" ]
+if [ "$TRAVIS_PULL_REQUEST" == "false" -a "$TRAVIS_BRANCH" == "$SOURCE_BRANCH" ]
 then
   echo "This commit was made against the $TRAVIS_BRANCH and not the $SOURCE_BRANCH! No deploy!"
   exit 0
@@ -36,4 +37,4 @@ git config user.name "Piotr Joński"
 git config user.email "yoyo@wp.eu"
 git add -A . >/dev/null
 git commit -m "rebuild pages at ${rev}" >/dev/null
-git push --quiet origin HEAD:gh-pages
+git push
