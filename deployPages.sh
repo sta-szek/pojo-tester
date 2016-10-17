@@ -9,7 +9,7 @@ POJO_TESTER_REPO="https://$TRAVIS_DEPLOY_GH_PAGES_TOKEN:x-oauth-basic@github.com
 echo "TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST"
 echo "TRAVIS_BRANCH=$TRAVIS_BRANCH"
 
-if [[ "$TRAVIS_PULL_REQUEST" == "true" ]]
+if [[ "$TRAVIS_PULL_REQUEST" != "false" ]]
 then
   echo "This is a pull request. No deploy!"
   exit 0
