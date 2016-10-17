@@ -17,6 +17,7 @@ fi
 
 echo "1/4 CLONE POJO-TESTER REPOSITORY"
 echo ${POJO_TESTER_REPO}
+curl -u ${TRAVIS_DEPLOY_GH_PAGES_TOKEN}:x-oauth-basic https://api.github.com/user
 rev=$(git rev-parse --short HEAD)
 
 mkdir repo
@@ -46,6 +47,7 @@ git config user.name
 git config user.email
 git branch
 git status -s
+git remote -v
 git add -A . >/dev/null
 git commit -m "Rebuild pojo-tester pages at ${rev}" >/dev/null
 pwd
