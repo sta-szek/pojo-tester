@@ -2,10 +2,9 @@
 
 set -o errexit -o nounset
 
-TRAVIS_BRANCH="master"
-
 SOURCE_BRANCH="master"
 TARGET_BRANCH="gh-pages"
+
 POJO_TESTER_REPO="https://$TRAVIS_DEPLOY_GH_PAGES_TOKEN:x-oauth-basic@github.com/sta-szek/pojo-tester.git"
 
 if [ "$TRAVIS_PULL_REQUEST" == "true" ]
@@ -19,18 +18,20 @@ then
   echo "This commit was made against the $TRAVIS_BRANCH and not the $SOURCE_BRANCH! No deploy!"
   exit 0
 fi
+REV=$(git rev-parse --short HEAD)
+
+echo "1/4 INSTALL GITBOOK-CLI"
+npm install gitbook-cli
 
 
-rev=$(git rev-parse --short HEAD)
-
-echo "1/3 GENERATE JAVADOCS"
+echo "2/4 GENERATE JAVADOCS"
 ./gradlew javadoc >/dev/null
 
-echo "2/3 GENERATE GITBOOK"
+echo "3/4 GENERATE GITBOOK"
 gitbook install ./src/book/ >/dev/null
 gitbook build ./src/book/ ./repo
 
-echo "3/3 PUBLISH PAGES"
+echo "4/4 PUBLISH PAGES"
 cd repo
 git init >/dev/null
 git config user.name "Piotr Joński"
@@ -40,5 +41,5 @@ git fetch -q -n origin
 git reset -q origin/gh-pages
 
 git add -A .
-git commit -m "Rebuild pojo-tester pages at ${rev}" >/dev/null
+git commit -m "Rebuild pojo-tester pages at ${REV}" >/dev/null
 git push origin HEAD:gh-pages
