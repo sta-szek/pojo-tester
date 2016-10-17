@@ -39,6 +39,11 @@ echo "4/4 PUBLISH PAGES"
 cd repo
 
 touch .
+git config user.name "Piotr Joński"
+git config user.email "yoyo@wp.eu"
+git config user.name
+git config user.email
+git branch
 git add -A . >/dev/null
 git commit -m "Rebuild pojo-tester pages at ${rev}" >/dev/null
 pwd
