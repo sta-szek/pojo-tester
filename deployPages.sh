@@ -36,9 +36,13 @@ echo "2/4 GENERATE JAVADOCS"
 echo "3/4 GENERATE GITBOOK"
 gitbook install ./src/book/ >/dev/null
 gitbook build ./src/book/ ./repo
+git status -s
+git ls -al
 
 echo "4/4 PUBLISH PAGES"
 cd repo
+git status -s
+git ls -al
 
 touch .
 git config user.name "Piotr Joński"
