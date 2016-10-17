@@ -16,6 +16,7 @@ then
 fi
 
 echo "1/4 CLONE POJO-TESTER REPOSITORY"
+echo ${TRAVIS_DEPLOY_GH_PAGES_TOKEN}
 rev=$(git rev-parse --short HEAD)
 
 mkdir repo
@@ -48,4 +49,4 @@ git add -A . >/dev/null
 git commit -m "Rebuild pojo-tester pages at ${rev}" >/dev/null
 pwd
 git status -s
-git push
+git push upstream HEAD:gh-pages
