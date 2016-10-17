@@ -44,8 +44,11 @@ cd repo
 git status -s
 ls -al
 
+git config user.name "Piotr Joński"
+git config user.email "yoyo@wp.eu"
+
 git remote -v
-git add -A
+git add -A .
 git commit -m "Rebuild pojo-tester pages at ${rev}" >/dev/null
 pwd
 git status -s
