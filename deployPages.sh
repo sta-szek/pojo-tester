@@ -18,14 +18,15 @@ fi
 echo "1/4 CLONE POJO-TESTER REPOSITORY"
 rev=$(git rev-parse --short HEAD)
 
-git clone ${POJO_TESTER_REPO} repo
+mkdir repo
 cd repo
-git checkout ${TARGET_BRANCH} || git checkout --orphan ${TARGET_BRANCH}
+git init
+git config user.name "Piotr Joński"
+git config user.email "yoyo@wp.eu"
 git remote add upstream ${POJO_TESTER_REPO}
 git fetch upstream
 git reset upstream/gh-pages
 cd ..
-rm -rf repo/**/* || exit 0
 
 echo "2/4 GENERATE JAVADOCS"
 ./gradlew javadoc >/dev/null
@@ -36,11 +37,10 @@ gitbook build ./src/book/ ./repo >/dev/null
 
 echo "4/4 PUBLISH PAGES"
 cd repo
-git config user.name "Piotr Joński"
-git config user.email "yoyo@wp.eu"
+
+touch .
 git add -A . >/dev/null
 git commit -m "Rebuild pojo-tester pages at ${rev}" >/dev/null
 pwd
 git status -s
-git log --graph
 git push
