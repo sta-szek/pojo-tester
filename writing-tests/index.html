@@ -1,0 +1,1030 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Writing Tests · POJO-TESTER User Guide</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-toggle-chapters/toggle.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-disqus/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-advanced-emoji/emoji-website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="./" />
+    
+    
+    <link rel="prev" href="../why-use/" />
+    
+
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.1.1" data-path="../">
+            
+                <a href="../#what-is-pojo-tester">
+            
+                    
+                    What is pojo-tester?
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.2" data-path="../">
+            
+                <a href="../#supported-java">
+            
+                    
+                    Supported Java versions
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.3" data-path="../">
+            
+                <a href="../#installation">
+            
+                    
+                    Installation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.1.4" data-path="../">
+            
+                <a href="../#javadoc">
+            
+                    
+                    JavaDoc documentation
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../why-use/">
+            
+                <a href="../why-use/">
+            
+                    
+                    Why Should I Use POJO-TESTER?
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../why-use/">
+            
+                <a href="../why-use/#productivity">
+            
+                    
+                    Be more productive
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../why-use/">
+            
+                <a href="../why-use/#improve-coverage">
+            
+                    
+                    Improve your coverage
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../why-use/">
+            
+                <a href="../why-use/#resistant-bugs">
+            
+                    
+                    Be resistant to bugs
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../why-use/">
+            
+                <a href="../why-use/#resistant-changes">
+            
+                    
+                    Be resistant to changes
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="../why-use/">
+            
+                <a href="../why-use/#avoid-boiler-plate-code">
+            
+                    
+                    Avoid boiler-plate tests
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.3" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Writing Tests
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="./">
+            
+                <a href="./#basic-test">
+            
+                    
+                    Basic pojo test
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="./">
+            
+                <a href="./#choosing-testers">
+            
+                    
+                    Choose kind of tests
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="./">
+            
+                <a href="./#choosing-fields">
+            
+                    
+                    Set fields for testing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="./">
+            
+                <a href="./#configure-fvc">
+            
+                    
+                    Configure field value changer
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="./">
+            
+                <a href="./#choose-constructor">
+            
+                    
+                    Create class using selected constructor
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="./">
+            
+                <a href="./#bulk-testing">
+            
+                    
+                    Bulk pojos testing
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../comparison/">
+            
+                <a href="../comparison/">
+            
+                    
+                    Comparison
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../comparison/">
+            
+                <a href="../comparison/#other-libs">
+            
+                    
+                    Other libraries
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../comparison/">
+            
+                <a href="../comparison/#precondtioions">
+            
+                    
+                    Tests preconditions
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../comparison/">
+            
+                <a href="../comparison/#kind-of-tests">
+            
+                    
+                    Kind of tests
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../comparison/">
+            
+                <a href="../comparison/#coverage-comparison">
+            
+                    
+                    Coverage comparison
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="../comparison/">
+            
+                <a href="../comparison/#conclusions">
+            
+                    
+                    Conclusions
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../contributors/">
+            
+                <a href="../contributors/">
+            
+                    
+                    Contributors
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../release-notes/">
+            
+                <a href="../release-notes/">
+            
+                    
+                    Release Notes
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../release-notes/">
+            
+                <a href="../release-notes/#release-050">
+            
+                    
+                    Release 0.5.0
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../release-notes/">
+            
+                <a href="../release-notes/#release-040">
+            
+                    
+                    Release 0.4.0
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.3" data-path="../release-notes/">
+            
+                <a href="../release-notes/#release-030">
+            
+                    
+                    Release 0.3.0
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.4" data-path="../release-notes/">
+            
+                <a href="../release-notes/#release-020">
+            
+                    
+                    Release 0.2.0
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.5" data-path="../release-notes/">
+            
+                <a href="../release-notes/#release-010">
+            
+                    
+                    Release 0.1.0
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Writing Tests</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="writing-tests"><a name="writing-tests" class="plugin-anchor" href="#writing-tests"><i class="fa fa-link" aria-hidden="true"></i></a>Writing tests</h1>
+<p>Writing <code>pojo-methods</code> tests was never so easy. Using <code>POJO-TESTER</code> you just have to declare what class or classes you want to test and pass it to magic <code>pojo-assertions</code>. That&apos;s all!</p>
+<h2 id="basic-test"><a name="basic-test" class="plugin-anchor" href="#basic-test"><i class="fa fa-link" aria-hidden="true"></i></a>Basic pojo test </h2>
+<h3 id="basic-tests-for-pojo-class"><a name="basic-tests-for-pojo-class" class="plugin-anchor" href="#basic-tests-for-pojo-class"><i class="fa fa-link" aria-hidden="true"></i></a>Basic tests for Pojo class</h3>
+<p>The simplest pojo test may look like this:</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> <span class="hljs-keyword">static</span> pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
+
+<span class="hljs-meta">@Test</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Should_Pass_All_Pojo_Tests</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-comment">// given</span>
+    <span class="hljs-keyword">final</span> Class&lt;?&gt; classUnderTest = Pojo.class;
+
+    <span class="hljs-comment">// when</span>
+
+    <span class="hljs-comment">// then</span>
+    assertPojoMethodsFor(classUnderTest).areWellImplemented();
+}
+</code></pre>
+<p>It will test a <code>Pojo</code> class against <code>equals</code>, <code>hashCode</code>, <code>toString</code>, <code>getters</code> and <code>setters</code> which is a default test.</p>
+<p>If your <code>pojo-methods</code> are well implemented the test will pass. Otherwise exception will be thrown.</p>
+<h3 id="testing-with-assertj-catchthrowable"><a name="testing-with-assertj-catchthrowable" class="plugin-anchor" href="#testing-with-assertj-catchthrowable"><i class="fa fa-link" aria-hidden="true"></i></a>Testing with AssertJ catchThrowable()</h3>
+<p>If you would rather have strict <code>given-when-then</code> convention, you can use <a href="http://joel-costigliola.github.io/assertj/" target="_blank">AssertJ</a> and test may look a little bit better.</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> <span class="hljs-keyword">static</span> pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
+
+<span class="hljs-meta">@Test</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Should_Pass_All_Pojo_Tests</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-comment">// given</span>
+    <span class="hljs-keyword">final</span> Class&lt;?&gt; classUnderTest = Pojo.class;
+
+    <span class="hljs-comment">// when</span>
+    <span class="hljs-keyword">final</span> Throwable result = Assertions.catchThrowable(() -&gt; assertPojoMethodsFor(classUnderTest).areWellImplemented());
+
+    <span class="hljs-comment">// then</span>
+    assertThat(result).isNull();
+}
+</code></pre>
+<p>But remember, with this solution you will not get precise exception message and you may not know why your <code>pojo-methods</code> are not well implemented.</p>
+<h3 id="testing-by-class-name"><a name="testing-by-class-name" class="plugin-anchor" href="#testing-by-class-name"><i class="fa fa-link" aria-hidden="true"></i></a>Testing by class name</h3>
+<p>If your class is not public, you cannot access it. Solution for this problem is testing classes via their names:</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> <span class="hljs-keyword">static</span> pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
+
+<span class="hljs-meta">@Test</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Should_Pass_All_Pojo_Tests_When_Testing_By_Name</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-comment">// given</span>
+    <span class="hljs-keyword">final</span> String qualifiedClassName = <span class="hljs-string">&quot;org.pojo.playground.Pojo&quot;</span>;
+
+    <span class="hljs-comment">// when</span>
+
+    <span class="hljs-comment">// then</span>
+    assertPojoMethodsFor(qualifiedClassName).areWellImplemented();
+}
+</code></pre>
+<p>When testing by class name you need to pass fully qualified class name.</p>
+<h3 id="testing-with-classandfieldpredicatepair"><a name="testing-with-classandfieldpredicatepair" class="plugin-anchor" href="#testing-with-classandfieldpredicatepair"><i class="fa fa-link" aria-hidden="true"></i></a>Testing with <code>ClassAndFieldPredicatePair</code></h3>
+<p>You can pair classes and fields that should be tested in a given class in <code>ClassAndFieldPredicatePair</code>. This objects is just a facilitation to you:</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> pl.pojo.tester.api.ClassAndFieldPredicatePair;
+<span class="hljs-keyword">import</span> <span class="hljs-keyword">static</span> pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
+
+<span class="hljs-meta">@Test</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Should_Pass_All_Pojo_Tests_Using_ClassAndFieldPredicatePair</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-comment">// given</span>
+    <span class="hljs-keyword">final</span> String qualifiedClassName = <span class="hljs-string">&quot;org.pojo.playground.Pojo&quot;</span>;
+    <span class="hljs-keyword">final</span> ClassAndFieldPredicatePair classAndFieldPredicatePair = <span class="hljs-keyword">new</span> ClassAndFieldPredicatePair(qualifiedClassName, FieldPredicate.include(<span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-string">&quot;b&quot;</span>));
+
+    <span class="hljs-comment">// when</span>
+
+    <span class="hljs-comment">// then</span>
+    assertPojoMethodsFor(classAndFieldPredicatePair).areWellImplemented();
+}
+</code></pre>
+<p>The code above tests <code>pojo-methods</code> in the <code>org.pojo.playground.Pojo</code> class only for fields <code>a</code> and <code>b</code>.</p>
+<h3 id="changing-nested-fields"><a name="changing-nested-fields" class="plugin-anchor" href="#changing-nested-fields"><i class="fa fa-link" aria-hidden="true"></i></a>Changing nested fields</h3>
+<p>By default <code>Assertions::assertPojoMethodsFor</code> performs tests on a given object with changed field values. It uses field value changers to do that (see <a href="#configure-fvc">fields values changer</a>). When it encounters a field that cannot be changed (e.g. <code>CustomPojo</code> type), it will create a new instance of that type and not perform any changes in this instance. If you want <code>POJO-TESTER</code> to recursively change values of such a field, you have to pass all classes with their field predicates.</p>
+<p>For classes:</p>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Pojo</span> </span>{
+    <span class="hljs-keyword">private</span> CustomPojo customPojo;
+}
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CustomPojo</span> </span>{
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> a;
+}
+</code></pre>
+<p>you have to define test as follows:</p>
+<pre><code class="lang-java"><span class="hljs-meta">@Test</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Should_Pass_All_Pojo_Tests_Changing_Fields_Recursively</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-comment">// given</span>
+    <span class="hljs-keyword">final</span> ClassAndFieldPredicatePair baseClass = <span class="hljs-keyword">new</span> ClassAndFieldPredicatePair(Pojo.class, <span class="hljs-string">&quot;customPojo&quot;</span>);
+    <span class="hljs-keyword">final</span> ClassAndFieldPredicatePair fieldClasses = <span class="hljs-keyword">new</span> ClassAndFieldPredicatePair(CustomPojo.class, <span class="hljs-string">&quot;a&quot;</span>);
+
+    <span class="hljs-comment">// when</span>
+
+    <span class="hljs-comment">// then</span>
+    assertPojoMethodsFor(baseClass, fieldClasses).areWellImplemented();
+}
+</code></pre>
+<p>Above test means:</p>
+<blockquote>
+<p>Dear <code>POJO-TESTER</code>, when you create different instances of class <code>Pojo</code>, include field <code>customPojo</code>, but have in mind that this <code>CustomPojo</code> has field <code>a</code>. You should generate two instances of <code>CustomPojo</code> - each with different value of the <code>a</code> field, because <code>Pojo::equals</code> method implementations contains <code>customPojo</code>.</p>
+</blockquote>
+<h2 id="choosing-testers"><a name="choosing-testers" class="plugin-anchor" href="#choosing-testers"><i class="fa fa-link" aria-hidden="true"></i></a>Choose kind of tests </h2>
+<p>There is no need for testing <code>pojo-methods</code> in a class that don&apos;t implemented them.</p>
+<p>You can choose which testers you want to run via <code>pl.pojo.tester.api.assertion.AbstractAssetion::testing</code> method.</p>
+<h3 id="running-testers"><a name="running-testers" class="plugin-anchor" href="#running-testers"><i class="fa fa-link" aria-hidden="true"></i></a>Running testers</h3>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> pl.pojo.tester.api.assertion.Method;
+<span class="hljs-keyword">import</span> <span class="hljs-keyword">static</span> pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
+
+<span class="hljs-meta">@Test</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Should_Pass_All_Pojo_Tests_Using_All_Testers</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-comment">// given</span>
+    <span class="hljs-keyword">final</span> Class&lt;?&gt; classUnderTest = Pojo.class;
+
+    <span class="hljs-comment">// when</span>
+
+    <span class="hljs-comment">// then</span>
+    assertPojoMethodsFor(classUnderTest).testing(Method.GETTER, Method.SETTER, Method.TO_STRING)
+                                        .testing(Method.EQUALS)
+                                        .testing(Method.HASH_CODE)
+                                        .testing(Method.CONSTRUCTOR)
+                                        .areWellImplemented();
+}
+</code></pre>
+<h2 id="choosing-fields"><a name="choosing-fields" class="plugin-anchor" href="#choosing-fields"><i class="fa fa-link" aria-hidden="true"></i></a>Set fields for testing </h2>
+<p>Next step is <code>excluding</code> or <code>including</code> fields which should be tested. By default all the fields are tested.</p>
+<p>You can include or exclude fields using <code>pl.pojo.tester.api.FieldPredicate</code> which creates Java 8 <code>Predicate</code> that accepts given field names.</p>
+<h3 id="include-all-fields-default-behavior"><a name="include-all-fields-default-behavior" class="plugin-anchor" href="#include-all-fields-default-behavior"><i class="fa fa-link" aria-hidden="true"></i></a>Include all fields (default behavior)</h3>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> <span class="hljs-keyword">static</span> pl.pojo.tester.api.FieldPredicate.includeAllFields;
+<span class="hljs-keyword">import</span> <span class="hljs-keyword">static</span> pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
+
+<span class="hljs-meta">@Test</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Should_Pass_All_Pojo_Tests_Including_All_Fields</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-comment">// given</span>
+    <span class="hljs-keyword">final</span> Class&lt;?&gt; classUnderTest = Pojo.class;
+
+    <span class="hljs-comment">// when</span>
+
+    <span class="hljs-comment">// then</span>
+    assertPojoMethodsFor(classUnderTest, includeAllFields(classUnderTest)).areWellImplemented();
+}
+</code></pre>
+<h3 id="include-specified-fields"><a name="include-specified-fields" class="plugin-anchor" href="#include-specified-fields"><i class="fa fa-link" aria-hidden="true"></i></a>Include specified fields</h3>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> <span class="hljs-keyword">static</span> pl.pojo.tester.api.FieldPredicate.include;
+<span class="hljs-keyword">import</span> <span class="hljs-keyword">static</span> pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
+
+<span class="hljs-meta">@Test</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Should_Pass_All_Pojo_Tests_Including_Specified_Fields</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-comment">// given</span>
+    <span class="hljs-keyword">final</span> Class&lt;?&gt; classUnderTest = Pojo.class;
+
+    <span class="hljs-comment">// when</span>
+
+    <span class="hljs-comment">// then</span>
+    assertPojoMethodsFor(classUnderTest, include(<span class="hljs-string">&quot;field1&quot;</span>, <span class="hljs-string">&quot;field2&quot;</span>)).areWellImplemented();
+}
+</code></pre>
+<h3 id="exclude-spcified-fields"><a name="exclude-spcified-fields" class="plugin-anchor" href="#exclude-spcified-fields"><i class="fa fa-link" aria-hidden="true"></i></a>Exclude spcified fields</h3>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> <span class="hljs-keyword">static</span> pl.pojo.tester.api.FieldPredicate.exclude;
+<span class="hljs-keyword">import</span> <span class="hljs-keyword">static</span> pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
+
+<span class="hljs-meta">@Test</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Should_Pass_All_Pojo_Tests_Excluding_Specified_Fields</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-comment">// given</span>
+    <span class="hljs-keyword">final</span> Class&lt;?&gt; classUnderTest = Pojo.class;
+
+    <span class="hljs-comment">// when</span>
+
+    <span class="hljs-comment">// then</span>
+    assertPojoMethodsFor(classUnderTest, exclude(<span class="hljs-string">&quot;field1&quot;</span>, <span class="hljs-string">&quot;field2&quot;</span>)).areWellImplemented();
+}
+</code></pre>
+<p><strong>Remember</strong>. Always <strong>prefer excluding over including</strong> as this will make your <code>pojo-tests</code> less prone to bugs. For example, if you add a new field, but forget to implement <code>equals</code> method, <code>POJO-TESTER</code> will catch that. But if you chose to use <code>including</code> predicate, then you probably also forgot to include that field in your tests.</p>
+<h2 id="configure-fvc"><a name="configure-fvc" class="plugin-anchor" href="#configure-fvc"><i class="fa fa-link" aria-hidden="true"></i></a>Configure field value changer </h2>
+<p><code>POJO-TESTERS</code> uses <code>fields values changers</code> to change field value e.g. when creating different instances.</p>
+<p>You can change default <code>fields values changer</code> via <code>pl.pojo.tester.api.assertion.AbstractAssetion::using</code> method as shown below.</p>
+<pre><code class="lang-java"><span class="hljs-meta">@Test</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Should_Pass_All_Pojo_Tests_Using_Custom_Fields_Values_Changer</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-comment">// given</span>
+    <span class="hljs-keyword">final</span> Class&lt;?&gt; classUnderTest = Pojo.class;
+    <span class="hljs-keyword">final</span> CustomFieldsValuesChanger customFieldsValuesChanger = <span class="hljs-keyword">new</span> CustomFieldsValuesChanger();
+
+    <span class="hljs-comment">// when</span>
+
+    <span class="hljs-comment">// then</span>
+    assertPojoMethodsFor(classUnderTest).using(customFieldsValuesChanger)
+                                        .areWellImplemented();
+}
+</code></pre>
+<h3 id="define-custom-fields-values-changer"><a name="define-custom-fields-values-changer" class="plugin-anchor" href="#define-custom-fields-values-changer"><i class="fa fa-link" aria-hidden="true"></i></a>Define custom fields values changer</h3>
+<p>To define your own <code>fields values changer</code> you have to extend <code>pl.pojo.tester.internal.field.AbstractFieldValueChanger</code> class.</p>
+<p><code>AbstractFieldValueChanger</code> defines three methods that you have to override:</p>
+<ul>
+<li><code>boolean canChange(final Class&lt;?&gt; type)</code> - this methods should perform compatibility checks e.g. if class is equal to your changer type <code>T</code>. If you decide that value cannot be changed, no further steps are taken. Methods <code>areDifferentValues</code> and <code>increaseValue</code> are not invoked.</li>
+<li><code>boolean areDifferentValues(T sourceValue, T targetValue)</code> - in this method you have to decide, whether values are different or not. If they are equal no changes will be made. Method <code>increaseValue</code> is not invoked.</li>
+<li><code>T increaseValue(T value, final Class&lt;?&gt; type)</code> - this method should change given <code>value</code> and return new one. <code>type</code> is given as little help, when your field type is e.g. interface and the value is its implementation.</li>
+</ul>
+<p>Custom fields values changer may look like this:</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> pl.pojo.tester.internal.field.AbstractFieldValueChanger;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CustomFieldsValuesChanger</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">AbstractFieldValueChanger</span>&lt;<span class="hljs-title">String</span>&gt; </span>{
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">areDifferentValues</span><span class="hljs-params">(<span class="hljs-keyword">final</span> String sourceValue, <span class="hljs-keyword">final</span> String targetValue)</span> </span>{
+        <span class="hljs-keyword">return</span> !sourceValue.equals(targetValue);
+    }
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">canChange</span><span class="hljs-params">(<span class="hljs-keyword">final</span> Class&lt;?&gt; type)</span> </span>{
+        <span class="hljs-keyword">return</span> type.equals(String.class);
+    }
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> String <span class="hljs-title">increaseValue</span><span class="hljs-params">(<span class="hljs-keyword">final</span> String value, <span class="hljs-keyword">final</span> Class&lt;?&gt; type)</span> </span>{
+        <span class="hljs-keyword">return</span> value + <span class="hljs-string">&quot;++increased&quot;</span>;
+    }
+}
+</code></pre>
+<h3 id="attaching-custom-fields-values-changer"><a name="attaching-custom-fields-values-changer" class="plugin-anchor" href="#attaching-custom-fields-values-changer"><i class="fa fa-link" aria-hidden="true"></i></a>Attaching custom fields values changer</h3>
+<p>Fields values changer uses <code>chain of responsibility</code> pattern which allows you to register new fields values changer to default one.</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> pl.pojo.tester.internal.field.AbstractFieldValueChanger;
+<span class="hljs-keyword">import</span> pl.pojo.tester.internal.field.DefaultFieldValueChanger;
+
+<span class="hljs-keyword">final</span> AbstractFieldValueChanger valueChanger = DefaultFieldValueChanger.INSTANCE.attachNext(customFieldsValuesChanger)
+                                                                                .attachNext(customFieldsValuesChanger)
+                                                                                .attachNext(customFieldsValuesChanger);
+</code></pre>
+<h3 id="default-fields-values-changer"><a name="default-fields-values-changer" class="plugin-anchor" href="#default-fields-values-changer"><i class="fa fa-link" aria-hidden="true"></i></a>Default fields values changer</h3>
+<p>Default fields values changer is a composition of listed changers:</p>
+<ul>
+<li><code>EnumValueChanger</code></li>
+<li><code>BooleanValueChanger</code></li>
+<li><code>ByteValueChanger</code></li>
+<li><code>CharacterValueChanger</code></li>
+<li><code>DoubleValueChanger</code></li>
+<li><code>IntegerValueChanger</code></li>
+<li><code>LongValueChanger</code></li>
+<li><code>ShortValueChanger</code></li>
+<li><code>StringValueChanger</code></li>
+<li><code>FloatValueChanger</code></li>
+<li><code>ArrayValueChanger</code></li>
+<li><code>StreamValueChanger</code></li>
+<li><code>ArrayListValueChanger</code></li>
+<li><code>DequeValueChanger</code></li>
+<li><code>HashSetValueChanger</code></li>
+<li><code>LinkedHashSetValueChanger</code></li>
+<li><code>LinkedListValueChanger</code></li>
+<li><code>ListValueChanger</code></li>
+<li><code>QueueValueChanger</code></li>
+<li><code>SetValueChanger</code></li>
+<li><code>SortedSetValueChanger</code></li>
+<li><code>StackValueChanger</code></li>
+<li><code>TreeSetValueChanger</code></li>
+<li><code>VectorValueChanger</code></li>
+<li><code>HashMapValueChanger</code></li>
+<li><code>HashtableValueChanger</code></li>
+<li><code>LinkedHashMapValueChanger</code></li>
+<li><code>MapValueChanger</code></li>
+<li><code>SortedMapValueChanger</code></li>
+<li><code>TreeMapValueChanger</code></li>
+<li><code>IteratorValueChanger</code></li>
+<li><code>IterableValueChanger</code></li>
+</ul>
+<h2 id="choose-constructor"><a name="choose-constructor" class="plugin-anchor" href="#choose-constructor"><i class="fa fa-link" aria-hidden="true"></i></a>Create class using selected constructor </h2>
+<p>Sometimes you want to choose which constructor is used to instantiate your class or what parameters are passed. Common example is when constructor validates parameters and throws exceptions.</p>
+<p>To indicate what constructor to choose, <code>POJO-TESTER</code> needs to know three things:</p>
+<ul>
+<li>a class, which constructor will be chosen</li>
+<li>constructor&apos;s parameters types</li>
+<li>constructor&apos;s parameters</li>
+</ul>
+<p>And again, defining this in <code>POJO-TESTER</code> is a piece of cake:</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> <span class="hljs-keyword">static</span> pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
+
+<span class="hljs-meta">@Test</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Should_Pass_All_Pojo_Tests</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-comment">// given</span>
+    <span class="hljs-keyword">final</span> String qualifiedClassName = <span class="hljs-string">&quot;org.pojo.playground.Pojo&quot;</span>;
+    <span class="hljs-keyword">final</span> Object[] constructorParameters = {<span class="hljs-number">1</span>, <span class="hljs-number">2.0</span>, <span class="hljs-keyword">new</span> Object()};
+    <span class="hljs-keyword">final</span> Class[] constructorParameterTypes = {<span class="hljs-keyword">int</span>.class, <span class="hljs-keyword">double</span>.class, Object.class};
+
+    <span class="hljs-comment">// when</span>
+
+    <span class="hljs-comment">// then</span>
+    assertPojoMethodsFor(qualifiedClassName).create(qualifiedClassName, constructorParameters, constructorParameterTypes)
+                                            .areWellImplemented();
+}
+</code></pre>
+<p>Here <code>POJO-TESTER</code> provides additional class, which groups constructor&apos;s parameters types and constructor parameters:</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> pl.pojo.tester.api.ConstructorParameters;
+<span class="hljs-keyword">import</span> <span class="hljs-keyword">static</span> pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
+
+<span class="hljs-meta">@Test</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Should_Pass_All_Pojo_Tests</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-comment">// given</span>
+    <span class="hljs-keyword">final</span> String qualifiedClassName = <span class="hljs-string">&quot;org.pojo.playground.Pojo&quot;</span>;
+    <span class="hljs-keyword">final</span> Object[] parameters = {<span class="hljs-number">1</span>, <span class="hljs-number">2.0</span>, <span class="hljs-keyword">new</span> Object()};
+    <span class="hljs-keyword">final</span> Class[] parameterTypes = {<span class="hljs-keyword">int</span>.class, <span class="hljs-keyword">double</span>.class, Object.class};
+    <span class="hljs-keyword">final</span> ConstructorParameters constructorParameters = <span class="hljs-keyword">new</span> ConstructorParameters(parameters, parameterTypes);
+
+    <span class="hljs-comment">// when</span>
+
+    <span class="hljs-comment">// then</span>
+    assertPojoMethodsFor(qualifiedClassName).create(qualifiedClassName, constructorParameters)
+                                            .areWellImplemented();
+}
+</code></pre>
+<h2 id="bulk-testing"><a name="bulk-testing" class="plugin-anchor" href="#bulk-testing"><i class="fa fa-link" aria-hidden="true"></i></a>Bulk pojos testing </h2>
+<p>Sometimes you want to test all pojos in one test, e.g. testing <code>toString</code> method. <code>POJO-TESTER</code> has feature for testing multiple classes. In order to do that, you have to use <code>Assertions::assertPojoMethodsForAll</code> instead of <code>Assertions::assertPojoMethodsFor</code> method:</p>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> <span class="hljs-keyword">static</span> pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsForAll;
+
+<span class="hljs-meta">@Test</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Should_Pass_All_Pojo_Tests_For_All_Classes</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-comment">// given</span>
+    <span class="hljs-keyword">final</span> Class&lt;Pojo&gt; classUnderTest = Pojo.class;
+
+    <span class="hljs-comment">// when</span>
+
+    <span class="hljs-comment">// then</span>
+    assertPojoMethodsForAll(classUnderTest, classUnderTest, classUnderTest, classUnderTest).areWellImplemented();
+}
+</code></pre>
+<p>Method <code>assertPojoMethodsForAll</code> works a little bit differently than <code>assertPojoMethodsFor</code>.
+This method test all classes. If it encounters field of type from given classes, it will create an instance of that class and change its value recursively.</p>
+<p>Imagine you are testing two classes, <code>A</code> and <code>B</code>. Class <code>A</code> has a field of type <code>B</code>. When you pass those classes to the <code>POJO-TESTER</code>, it will create instance of <code>B</code> class, change its value generating different objects, and finally will set all those objects into class <code>A</code>.</p>
+<div class="gitbook-share"></div>
+
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="../why-use/#avoid-boiler-plate-code" class="navigation navigation-prev " aria-label="Previous page: Avoid boiler-plate tests">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="./#basic-test" class="navigation navigation-next " aria-label="Next page: Basic pojo test">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Writing Tests","level":"1.3","depth":1,"next":{"title":"Basic pojo test","level":"1.3.1","depth":2,"anchor":"#basic-test","path":"writing-tests/README.md","ref":"writing-tests/README.md#basic-test","articles":[]},"previous":{"title":"Avoid boiler-plate tests","level":"1.2.5","depth":2,"anchor":"#avoid-boiler-plate-code","path":"why-use/README.md","ref":"why-use/README.md#avoid-boiler-plate-code","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors","toggle-chapters","sharing","editlink","share","sitemap","disqus","nocache","back-to-top-button","advanced-emoji","prettify-html","ga","github"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"nocache":{},"disqus":{"useIdentifier":false,"shortName":"pojo"},"github":{"url":"https://github.com/sta-szek/pojo-tester"},"editlink":{"label":"Edit This Page","multilingual":false,"base":"https://github.com/sta-szek/pojo-tester/edit/master/src/book"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sitemap":{"hostname":"http://pojo.pl/"},"back-to-top-button":{},"ga":{"configuration":"auto","token":"UA-84695813-1"},"advanced-emoji":{"embedEmojis":false},"sharing":{"all":["facebook","google","twitter","weibo","instapaper"],"facebook":true,"google":false,"instapaper":false,"twitter":true,"vk":false,"weibo":false},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{},"toggle-chapters":{},"prettify-html":{},"share":{}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"POJO-TESTER User Guide","gitbook":"*","description":"POJO-TESTER is java testing library, which makes your pojo methods tests much easier and more bulletproof!"},"file":{"path":"writing-tests/README.md","mtime":"2016-10-17T18:03:14.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2016-10-17T18:06:24.736Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-toggle-chapters/toggle.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-editlink/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-share/plugin.js"></script>
+        
+    
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/URI.js/1.16.1/URI.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-disqus/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-ga/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
