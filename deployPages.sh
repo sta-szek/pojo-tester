@@ -7,9 +7,9 @@ TRAVIS_BRANCH="master"
 
 SOURCE_BRANCH="master"
 TARGET_BRANCH="gh-pages"
-POJO_TESTER_REPO="https://@github.com/sta-szek/pojo-tester.git"
+POJO_TESTER_REPO="https://$TRAVIS_DEPLOY_GH_PAGES_TOKEN@github.com/sta-szek/pojo-tester.git"
 
-if [ "$TRAVIS_PULL_REQUEST" == "false" -a "$TRAVIS_BRANCH" == "$SOURCE_BRANCH" ]
+if [ "$TRAVIS_PULL_REQUEST" != "false" -o "$TRAVIS_BRANCH" != "$SOURCE_BRANCH" ]
 then
   echo "This commit was made against the $TRAVIS_BRANCH and not the $SOURCE_BRANCH! No deploy!"
   exit 0
