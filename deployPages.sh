@@ -18,29 +18,22 @@ fi
 
 rev=$(git rev-parse --short HEAD)
 
-echo "1/4 GENERATE JAVADOCS"
+echo "1/3 GENERATE JAVADOCS"
 ./gradlew javadoc >/dev/null
 
-echo "2/4 GENERATE GITBOOK"
+echo "2/3 GENERATE GITBOOK"
 gitbook install ./src/book/ >/dev/null
 gitbook build ./src/book/ ./repo
 
-echo "3/4 PUBLISH PAGES"
+echo "3/3 PUBLISH PAGES"
 cd repo
-git init
+git init >/dev/null
 git config user.name "Piotr Joński"
 git config user.email "yoyo@wp.eu"
 git remote add origin ${POJO_TESTER_REPO}
-git fetch origin
-git reset origin/gh-pages
-
-git remote -v
-git status -s
-ls -al
+git fetch -q -n origin
+git reset -q origin/gh-pages
 
 git add -A .
-git status -s
 git commit -m "Rebuild pojo-tester pages at ${rev}" >/dev/null
-pwd
-git status -s
 git push ${POJO_TESTER_REPO} HEAD:gh-pages
