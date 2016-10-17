@@ -2,14 +2,19 @@
 
 set -o errexit -o nounset
 
-TRAVIS_PULL_REQUEST="false"
 TRAVIS_BRANCH="master"
 
 SOURCE_BRANCH="master"
 TARGET_BRANCH="gh-pages"
 POJO_TESTER_REPO="https://$TRAVIS_DEPLOY_GH_PAGES_TOKEN:x-oauth-basic@github.com/sta-szek/pojo-tester.git"
 
-if [ "$TRAVIS_PULL_REQUEST" != "false" -o "$TRAVIS_BRANCH" != "$SOURCE_BRANCH" ]
+if [ "$TRAVIS_PULL_REQUEST" == "true" ]
+then
+  echo "This is a pull request. No deploy!"
+  exit 0
+fi
+
+if [ "$TRAVIS_BRANCH" != "$SOURCE_BRANCH" ]
 then
   echo "This commit was made against the $TRAVIS_BRANCH and not the $SOURCE_BRANCH! No deploy!"
   exit 0
@@ -36,4 +41,4 @@ git reset -q origin/gh-pages
 
 git add -A .
 git commit -m "Rebuild pojo-tester pages at ${rev}" >/dev/null
-git push ${POJO_TESTER_REPO} HEAD:gh-pages
+git push origin HEAD:gh-pages
