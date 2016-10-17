@@ -25,7 +25,6 @@ REV=$(git rev-parse --short HEAD)
 echo "1/4 INSTALL GITBOOK-CLI"
 npm install gitbook-cli
 
-
 echo "2/4 GENERATE JAVADOCS"
 ./gradlew javadoc >/dev/null
 
