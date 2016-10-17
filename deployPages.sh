@@ -24,7 +24,6 @@ cd repo
 git init
 git config user.name "Piotr Joński"
 git config user.email "yoyo@wp.eu"
-git remote rm origin
 git remote add origin ${POJO_TESTER_REPO}
 git fetch origin
 git reset origin/gh-pages
@@ -46,6 +45,7 @@ git config user.email "yoyo@wp.eu"
 git config user.name
 git config user.email
 git branch
+git status -s
 git add -A . >/dev/null
 git commit -m "Rebuild pojo-tester pages at ${rev}" >/dev/null
 pwd
