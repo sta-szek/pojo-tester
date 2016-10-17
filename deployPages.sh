@@ -7,8 +7,7 @@ TRAVIS_BRANCH="master"
 
 SOURCE_BRANCH="master"
 TARGET_BRANCH="gh-pages"
-#POJO_TESTER_REPO="https://$TRAVIS_DEPLOY_GH_PAGES_TOKEN:x-oauth-basic@github.com/sta-szek/pojo-tester.git"
-POJO_TESTER_REPO="git@github.com:sta-szek/pojo-tester.git"
+POJO_TESTER_REPO="https://$TRAVIS_DEPLOY_GH_PAGES_TOKEN:x-oauth-basic@github.com/sta-szek/pojo-tester.git"
 
 if [ "$TRAVIS_PULL_REQUEST" != "false" -o "$TRAVIS_BRANCH" != "$SOURCE_BRANCH" ]
 then
@@ -53,4 +52,4 @@ git add -A . >/dev/null
 git commit -m "Rebuild pojo-tester pages at ${rev}" >/dev/null
 pwd
 git status -s
-git push origin HEAD:gh-pages
+git push ${POJO_TESTER_REPO} HEAD:gh-pages
