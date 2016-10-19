@@ -27,7 +27,11 @@ public class EqualAssertions {
         final boolean result1 = objectUnderAssert.equals(otherObject);
         final boolean result2 = otherObject.equals(objectUnderAssert);
         final boolean result = result1 == result2;
-        checkResult(result, new SymmetricEqualsAssertionError(classUnderTest, objectUnderAssert, otherObject, result1, result2));
+        checkResult(result, new SymmetricEqualsAssertionError(classUnderTest,
+                                                              objectUnderAssert,
+                                                              otherObject,
+                                                              result1,
+                                                              result2));
     }
 
     public void isTransitive(final Object b, final Object c) {
@@ -37,7 +41,13 @@ public class EqualAssertions {
         final boolean partialResult1 = result1 == result2;
         final boolean partialResult2 = result2 == result3;
         final boolean result = partialResult1 && partialResult2;
-        checkResult(result, new TransitiveEqualsAssertionError(classUnderTest, objectUnderAssert, b, c, result1, result2, result3));
+        checkResult(result, new TransitiveEqualsAssertionError(classUnderTest,
+                                                               objectUnderAssert,
+                                                               b,
+                                                               c,
+                                                               result1,
+                                                               result2,
+                                                               result3));
     }
 
     public void isNotEqualToNull() {
@@ -53,6 +63,11 @@ public class EqualAssertions {
     public void isNotEqualTo(final Object objectToCompare) {
         final boolean result = !objectUnderAssert.equals(objectToCompare);
         checkResult(result, new NotEqualEqualsAssertionError(classUnderTest, objectUnderAssert, objectToCompare));
+    }
+
+    public void isEqualTo(final Object objectToCompare) {
+        final boolean result = objectUnderAssert.equals(objectToCompare);
+        checkResult(result, new EqualEqualsAssertionError(classUnderTest, objectUnderAssert, objectToCompare));
     }
 
     private void checkResult(final boolean pass, final EqualsAssertionError errorToThrow) {

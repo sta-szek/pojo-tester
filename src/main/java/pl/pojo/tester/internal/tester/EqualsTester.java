@@ -5,6 +5,7 @@ import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public class EqualsTester extends AbstractTester {
 
@@ -29,6 +30,7 @@ public class EqualsTester extends AbstractTester {
         shouldNotEqualNull(instance);
         shouldNotEqualDifferentType(instance);
         shouldNotEqualWithGivenFields(baseClassAndFieldPredicatePair, classAndFieldPredicatePairs);
+        shouldEqualWithInvertedGivenFields(baseClassAndFieldPredicatePair, classAndFieldPredicatePairs);
     }
 
     private void shouldEqualSameInstance(final Object object) {
@@ -76,6 +78,26 @@ public class EqualsTester extends AbstractTester {
     private Consumer<Object> assertIsNotEqualTo(final Object object) {
         return eachDifferentObject -> testAssertions.assertThatEqualsMethodFor(object)
                                                     .isNotEqualTo(eachDifferentObject);
+    }
+
+    private void shouldEqualWithInvertedGivenFields(final ClassAndFieldPredicatePair base,
+                                                    final ClassAndFieldPredicatePair... nested) {
+        final ClassAndFieldPredicatePair baseWithInvertedFields = invertIncludedFields(base);
+        final List<Object> differentObjects = objectGenerator.generateDifferentObjects(baseWithInvertedFields, nested);
+        final Object firstObject = differentObjects.remove(0);
+        differentObjects.forEach(assertIsEqualTo(firstObject));
+    }
+
+    private ClassAndFieldPredicatePair invertIncludedFields(final ClassAndFieldPredicatePair base) {
+        final Class<?> clazz = base.getClazz();
+        final Predicate<String> excludedFields = base.getFieldsPredicate()
+                                                     .negate();
+        return new ClassAndFieldPredicatePair(clazz, excludedFields);
+    }
+
+    private Consumer<Object> assertIsEqualTo(final Object object) {
+        return eachDifferentObject -> testAssertions.assertThatEqualsMethodFor(object)
+                                                    .isEqualTo(eachDifferentObject);
     }
 
 }

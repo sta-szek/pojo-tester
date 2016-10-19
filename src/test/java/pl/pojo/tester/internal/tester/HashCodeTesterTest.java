@@ -7,11 +7,13 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
+import pl.pojo.tester.api.FieldPredicate;
 import pl.pojo.tester.internal.assertion.hashcode.HashCodeAssertionError;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
 
 import java.util.List;
 import java.util.Random;
+import java.util.function.Predicate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -99,6 +101,20 @@ public class HashCodeTesterTest {
 
         // when
         final Throwable result = catchThrowable(() -> hashCodeTester.testAll(classesToTest));
+
+        // then
+        assertThat(result).isInstanceOf(HashCodeAssertionError.class);
+    }
+
+    @Test
+    public void Should_Fail_When_HashCode_Implementation_Depends_On_Excluded_Field() {
+        // given
+        final HashCodeTester hashCodeTester = new HashCodeTester();
+        final Class<?> classToTest = GoodPojo_Equals_HashCode_ToString.class;
+        final Predicate<String> includedFields = FieldPredicate.include("byteField");
+
+        // when
+        final Throwable result = catchThrowable(() -> hashCodeTester.test(classToTest, includedFields));
 
         // then
         assertThat(result).isInstanceOf(HashCodeAssertionError.class);

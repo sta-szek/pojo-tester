@@ -27,6 +27,7 @@ npm install gitbook-cli
 
 echo "2/4 GENERATE JAVADOCS"
 ./gradlew javadoc >/dev/null
+mv ./build/docs/javadoc ./src/book/javadoc
 
 echo "3/4 GENERATE GITBOOK"
 gitbook install ./src/book/ >/dev/null
