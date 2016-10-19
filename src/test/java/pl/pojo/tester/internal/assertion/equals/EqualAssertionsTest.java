@@ -2,13 +2,14 @@ package pl.pojo.tester.internal.assertion.equals;
 
 
 import classesForTest.fields.TestEnum1;
-import java.util.Random;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
+
+import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -75,7 +76,8 @@ public class EqualAssertionsTest {
         final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
 
         // when
-        final Throwable result = catchThrowable(() -> equalAssertions.isTransitive(objectUnderAssert, objectUnderAssert));
+        final Throwable result = catchThrowable(() -> equalAssertions.isTransitive(objectUnderAssert,
+                                                                                   objectUnderAssert));
 
         // then
         assertThat(result).isInstanceOf(TransitiveEqualsAssertionError.class);
@@ -88,7 +90,8 @@ public class EqualAssertionsTest {
         final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
 
         // when
-        final Throwable result = catchThrowable(() -> equalAssertions.isTransitive(objectUnderAssert, objectUnderAssert));
+        final Throwable result = catchThrowable(() -> equalAssertions.isTransitive(objectUnderAssert,
+                                                                                   objectUnderAssert));
 
         // then
         assertThat(result).isInstanceOf(TransitiveEqualsAssertionError.class);
@@ -133,6 +136,19 @@ public class EqualAssertionsTest {
 
         // then
         assertThat(result).isInstanceOf(NotEqualEqualsAssertionError.class);
+    }
+
+    @Test
+    public void Should_Throw_Exception_When_Equals_Method_Return_False_Compared_To_Equal_Object() {
+        // given
+        final BadPojoEquals_NotConsistent objectUnderAssert = new BadPojoEquals_NotConsistent(false, false);
+        final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
+
+        // when
+        final Throwable result = catchThrowable(() -> equalAssertions.isEqualTo(objectUnderAssert));
+
+        // then
+        assertThat(result).isInstanceOf(EqualEqualsAssertionError.class);
     }
 
     @Test
@@ -181,7 +197,8 @@ public class EqualAssertionsTest {
         final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
 
         // when
-        final Throwable result = catchThrowable(() -> equalAssertions.isTransitive(objectUnderAssert, objectUnderAssert));
+        final Throwable result = catchThrowable(() -> equalAssertions.isTransitive(objectUnderAssert,
+                                                                                   objectUnderAssert));
 
         // then
         assertThat(result).isNull();
@@ -223,6 +240,19 @@ public class EqualAssertionsTest {
 
         // when
         final Throwable result = catchThrowable(() -> equalAssertions.isNotEqualTo(otherObject));
+
+        // then
+        assertThat(result).isNull();
+    }
+
+    @Test
+    public void Should_Not_Throw_Exception_When_Equals_Method_Return_True_Compared_To_Equal_Object() {
+        // given
+        final BadPojoEquals_NotConsistent objectUnderAssert = new BadPojoEquals_NotConsistent(true, false);
+        final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
+
+        // when
+        final Throwable result = catchThrowable(() -> equalAssertions.isEqualTo(objectUnderAssert));
 
         // then
         assertThat(result).isNull();
