@@ -1,13 +1,14 @@
 package pl.pojo.tester.api.assertion;
 
-import java.util.List;
 import pl.pojo.tester.api.ClassAndFieldPredicatePair;
 
-class MultiClassAssetion extends AbstractAssetion {
+import java.util.List;
+
+class MultiClassAssertion extends AbstractAssertion {
 
     private final List<ClassAndFieldPredicatePair> classAndFieldPredicatePairs;
 
-    MultiClassAssetion(final List<ClassAndFieldPredicatePair> classAndFieldPredicatePairs) {
+    MultiClassAssertion(final List<ClassAndFieldPredicatePair> classAndFieldPredicatePairs) {
         this.classAndFieldPredicatePairs = classAndFieldPredicatePairs;
     }
 

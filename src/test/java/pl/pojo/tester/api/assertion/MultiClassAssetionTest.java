@@ -21,7 +21,7 @@ public class MultiClassAssetionTest {
     public void Should_Test_Against_Each_Tester() {
         // given
         final ClassAndFieldPredicatePair classAndFieldPredicatePair = new ClassAndFieldPredicatePair(A.class);
-        final MultiClassAssetion multiClassAssetion = new MultiClassAssetion(Lists.newArrayList(
+        final MultiClassAssertion multiClassAssetion = new MultiClassAssertion(Lists.newArrayList(
                 classAndFieldPredicatePair));
         final EqualsTester equalsTester1 = mock(EqualsTester.class);
         final EqualsTester equalsTester2 = mock(EqualsTester.class);

@@ -19,8 +19,8 @@ public class SingleClassAssetionTest {
         // given
         final ClassAndFieldPredicatePair classAndFieldPredicatePair = new ClassAndFieldPredicatePair(A.class);
         final ClassAndFieldPredicatePair[] classAndFieldPredicatePairs = {classAndFieldPredicatePair};
-        final SingleClassAssetion singleClassAssetion = new SingleClassAssetion(classAndFieldPredicatePair,
-                                                                                classAndFieldPredicatePairs);
+        final SingleClassAssertion singleClassAssetion = new SingleClassAssertion(classAndFieldPredicatePair,
+                                                                                  classAndFieldPredicatePairs);
         final EqualsTester equalsTester1 = mock(EqualsTester.class);
         final EqualsTester equalsTester2 = mock(EqualsTester.class);
         setInternalState(singleClassAssetion, "testers", Sets.newHashSet(equalsTester1, equalsTester2));

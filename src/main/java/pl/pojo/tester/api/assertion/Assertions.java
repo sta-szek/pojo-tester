@@ -34,11 +34,11 @@ public final class Assertions {
      *
      * @return assertion for given class
      *
-     * @see AbstractAssetion
-     * @see MultiClassAssetion
-     * @see SingleClassAssetion
+     * @see AbstractAssertion
+     * @see MultiClassAssertion
+     * @see SingleClassAssertion
      */
-    public static AbstractAssetion assertPojoMethodsFor(final String qualifiedClassName) {
+    public static AbstractAssertion assertPojoMethodsFor(final String qualifiedClassName) {
         checkNotBlank("qualifiedClassName", qualifiedClassName);
 
         final Class<?> clazz = ClassLoader.loadClass(qualifiedClassName);
@@ -52,11 +52,11 @@ public final class Assertions {
      *
      * @return assertion for given class
      *
-     * @see AbstractAssetion
-     * @see MultiClassAssetion
-     * @see SingleClassAssetion
+     * @see AbstractAssertion
+     * @see MultiClassAssertion
+     * @see SingleClassAssertion
      */
-    public static AbstractAssetion assertPojoMethodsFor(final Class<?> clazz) {
+    public static AbstractAssertion assertPojoMethodsFor(final Class<?> clazz) {
         checkNotNull("clazz", clazz);
 
         final Predicate<String> predicateAcceptingAllFields = FieldPredicate.includeAllFields(clazz);
@@ -71,12 +71,12 @@ public final class Assertions {
      *
      * @return assertion for given class
      *
-     * @see AbstractAssetion
-     * @see MultiClassAssetion
-     * @see SingleClassAssetion
+     * @see AbstractAssertion
+     * @see MultiClassAssertion
+     * @see SingleClassAssertion
      */
-    public static AbstractAssetion assertPojoMethodsFor(final String qualifiedClassName,
-                                                        final Predicate<String> fieldPredicate) {
+    public static AbstractAssertion assertPojoMethodsFor(final String qualifiedClassName,
+                                                         final Predicate<String> fieldPredicate) {
         checkNotBlank("qualifiedClassName", qualifiedClassName);
         checkNotNull("fieldPredicate", fieldPredicate);
 
@@ -92,11 +92,11 @@ public final class Assertions {
      *
      * @return assertion for given class
      *
-     * @see AbstractAssetion
-     * @see MultiClassAssetion
-     * @see SingleClassAssetion
+     * @see AbstractAssertion
+     * @see MultiClassAssertion
+     * @see SingleClassAssertion
      */
-    public static AbstractAssetion assertPojoMethodsFor(final Class<?> clazz, final Predicate<String> fieldPredicate) {
+    public static AbstractAssertion assertPojoMethodsFor(final Class<?> clazz, final Predicate<String> fieldPredicate) {
         checkNotNull("clazz", clazz);
         checkNotNull("fieldPredicate", fieldPredicate);
 
@@ -113,15 +113,16 @@ public final class Assertions {
      *
      * @return assertion for given base class
      *
-     * @see AbstractAssetion
-     * @see MultiClassAssetion
-     * @see SingleClassAssetion
+     * @see AbstractAssertion
+     * @see MultiClassAssertion
+     * @see SingleClassAssertion
      */
-    public static AbstractAssetion assertPojoMethodsFor(final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair,
-                                                        final ClassAndFieldPredicatePair...
+    public static AbstractAssertion assertPojoMethodsFor(final ClassAndFieldPredicatePair
+                                                                 baseClassAndFieldPredicatePair,
+                                                         final ClassAndFieldPredicatePair...
                                                                 classAndFieldPredicatePairs) {
         checkNotNull("baseClassAndFieldPredicatePair", baseClassAndFieldPredicatePair);
-        return new SingleClassAssetion(baseClassAndFieldPredicatePair, classAndFieldPredicatePairs);
+        return new SingleClassAssertion(baseClassAndFieldPredicatePair, classAndFieldPredicatePairs);
     }
 
     /**
@@ -131,11 +132,11 @@ public final class Assertions {
      *
      * @return assertion for all classes
      *
-     * @see AbstractAssetion
-     * @see MultiClassAssetion
-     * @see SingleClassAssetion
+     * @see AbstractAssertion
+     * @see MultiClassAssertion
+     * @see SingleClassAssertion
      */
-    public static AbstractAssetion assertPojoMethodsForAll(final String... qualifiedClassNames) {
+    public static AbstractAssertion assertPojoMethodsForAll(final String... qualifiedClassNames) {
         checkNotBlank("qualifiedClassNames", qualifiedClassNames);
 
         final Class<?>[] classesAndFieldPredicatesPairs = Arrays.stream(qualifiedClassNames)
@@ -153,7 +154,7 @@ public final class Assertions {
      *
      * @see PackageFilter
      */
-    public static AbstractAssetion assertPojoMethodsForAll(final PackageFilter packageFilter) {
+    public static AbstractAssertion assertPojoMethodsForAll(final PackageFilter packageFilter) {
         checkNotNull("packageFilter", packageFilter);
         return assertPojoMethodsForAll(packageFilter.getClasses());
     }
@@ -165,11 +166,11 @@ public final class Assertions {
      *
      * @return assertion for all classes
      *
-     * @see AbstractAssetion
-     * @see MultiClassAssetion
-     * @see SingleClassAssetion
+     * @see AbstractAssertion
+     * @see MultiClassAssertion
+     * @see SingleClassAssertion
      */
-    public static AbstractAssetion assertPojoMethodsForAll(final Class... classes) {
+    public static AbstractAssertion assertPojoMethodsForAll(final Class... classes) {
         checkNotNull("classes", classes);
 
         final ClassAndFieldPredicatePair[] classesAndFieldPredicatesPairs = Arrays.stream(classes)
@@ -185,17 +186,17 @@ public final class Assertions {
      *
      * @return assertion for all classes
      *
-     * @see AbstractAssetion
-     * @see MultiClassAssetion
-     * @see SingleClassAssetion
+     * @see AbstractAssertion
+     * @see MultiClassAssertion
+     * @see SingleClassAssertion
      */
-    public static AbstractAssetion assertPojoMethodsForAll(final ClassAndFieldPredicatePair...
+    public static AbstractAssertion assertPojoMethodsForAll(final ClassAndFieldPredicatePair...
                                                                    classesAndFieldPredicatesPairs) {
         checkNotNull("classesAndFieldPredicatesPairs", classesAndFieldPredicatesPairs);
 
         final List<ClassAndFieldPredicatePair> classAndFieldPredicatePairs = Arrays.asList(
                 classesAndFieldPredicatesPairs);
-        return new MultiClassAssetion(classAndFieldPredicatePairs);
+        return new MultiClassAssertion(classAndFieldPredicatePairs);
     }
 
 }

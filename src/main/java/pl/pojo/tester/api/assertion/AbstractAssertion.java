@@ -23,7 +23,7 @@ import static pl.pojo.tester.internal.preconditions.ParameterPreconditions.check
  * @author Piotr Joński
  * @since 0.1.0
  */
-public abstract class AbstractAssetion {
+public abstract class AbstractAssertion {
 
     private static final Set<AbstractTester> DEFAULT_TESTERS;
 
@@ -47,7 +47,7 @@ public abstract class AbstractAssetion {
      *
      * @see AbstractFieldValueChanger
      */
-    public AbstractAssetion using(final AbstractFieldValueChanger abstractFieldValueChanger) {
+    public AbstractAssertion using(final AbstractFieldValueChanger abstractFieldValueChanger) {
         checkNotNull("abstractFieldValueChanger", abstractFieldValueChanger);
 
         this.abstractFieldValueChanger = abstractFieldValueChanger;
@@ -63,7 +63,7 @@ public abstract class AbstractAssetion {
      *
      * @see Method
      */
-    public AbstractAssetion testing(final Method... methods) {
+    public AbstractAssertion testing(final Method... methods) {
         checkNotNull("methods", methods);
 
         Arrays.asList(methods)
@@ -80,7 +80,7 @@ public abstract class AbstractAssetion {
      *
      * @see Method
      */
-    public AbstractAssetion testing(final Method method) {
+    public AbstractAssertion testing(final Method method) {
         checkNotNull("method", method);
 
         final AbstractTester tester = method.getTester();
@@ -119,9 +119,9 @@ public abstract class AbstractAssetion {
      *
      * @see ConstructorParameters
      */
-    public AbstractAssetion create(final String qualifiedClassName,
-                                   final Object[] constructorParameters,
-                                   final Class<?>[] constructorParameterTypes) {
+    public AbstractAssertion create(final String qualifiedClassName,
+                                    final Object[] constructorParameters,
+                                    final Class<?>[] constructorParameterTypes) {
         checkNotBlank("qualifiedClassName", qualifiedClassName);
 
         final ConstructorParameters constructorParameter = new ConstructorParameters(constructorParameters,
@@ -140,7 +140,8 @@ public abstract class AbstractAssetion {
      *
      * @see ConstructorParameters
      */
-    public AbstractAssetion create(final String qualifiedClassName, final ConstructorParameters constructorParameters) {
+    public AbstractAssertion create(final String qualifiedClassName,
+                                    final ConstructorParameters constructorParameters) {
         checkNotBlank("qualifiedClassName", qualifiedClassName);
         checkNotNull("constructorParameters", constructorParameters);
 
@@ -161,9 +162,9 @@ public abstract class AbstractAssetion {
      *
      * @see ConstructorParameters
      */
-    public AbstractAssetion create(final Class<?> clazz,
-                                   final Object[] constructorParameters,
-                                   final Class<?>[] constructorParameterTypes) {
+    public AbstractAssertion create(final Class<?> clazz,
+                                    final Object[] constructorParameters,
+                                    final Class<?>[] constructorParameterTypes) {
         checkNotNull("clazz", clazz);
 
         final ConstructorParameters constructorParameter = new ConstructorParameters(constructorParameters,
@@ -183,7 +184,7 @@ public abstract class AbstractAssetion {
      *
      * @see ConstructorParameters
      */
-    public AbstractAssetion create(final Class<?> clazz, final ConstructorParameters constructorParameters) {
+    public AbstractAssertion create(final Class<?> clazz, final ConstructorParameters constructorParameters) {
         checkNotNull("clazz", clazz);
         checkNotNull("constructorParameters", constructorParameters);
 

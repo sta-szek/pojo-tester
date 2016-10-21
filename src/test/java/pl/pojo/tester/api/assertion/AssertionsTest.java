@@ -31,7 +31,7 @@ public class AssertionsTest {
                 fieldName);
 
         // when
-        final SingleClassAssetion result = (SingleClassAssetion) Assertions.assertPojoMethodsFor(expectedClass);
+        final SingleClassAssertion result = (SingleClassAssertion) Assertions.assertPojoMethodsFor(expectedClass);
         final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair = getInternalState(result,
                                                                                            "baseClassAndFieldPredicatePair");
         final ClassAndFieldPredicatePair[] classAndFieldPredicatePairs = getInternalState(result,
@@ -53,7 +53,7 @@ public class AssertionsTest {
                 fieldName);
 
         // when
-        final SingleClassAssetion result = (SingleClassAssetion) Assertions.assertPojoMethodsFor(expectedClassName);
+        final SingleClassAssertion result = (SingleClassAssertion) Assertions.assertPojoMethodsFor(expectedClassName);
         final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair = getInternalState(result,
                                                                                            "baseClassAndFieldPredicatePair");
         final ClassAndFieldPredicatePair[] classAndFieldPredicatePairs = getInternalState(result,
@@ -76,8 +76,8 @@ public class AssertionsTest {
                 fieldName);
 
         // when
-        final SingleClassAssetion result = (SingleClassAssetion) Assertions.assertPojoMethodsFor(expectedClassName,
-                                                                                                 predicate);
+        final SingleClassAssertion result = (SingleClassAssertion) Assertions.assertPojoMethodsFor(expectedClassName,
+                                                                                                   predicate);
         final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair = getInternalState(result,
                                                                                            "baseClassAndFieldPredicatePair");
         final ClassAndFieldPredicatePair[] classAndFieldPredicatePairs = getInternalState(result,
@@ -99,8 +99,8 @@ public class AssertionsTest {
                 fieldName);
 
         // when
-        final SingleClassAssetion result = (SingleClassAssetion) Assertions.assertPojoMethodsFor(expectedClass,
-                                                                                                 predicate);
+        final SingleClassAssertion result = (SingleClassAssertion) Assertions.assertPojoMethodsFor(expectedClass,
+                                                                                                   predicate);
         final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair = getInternalState(result,
                                                                                            "baseClassAndFieldPredicatePair");
         final ClassAndFieldPredicatePair[] classAndFieldPredicatePairs = getInternalState(result,
@@ -118,7 +118,7 @@ public class AssertionsTest {
         final ClassAndFieldPredicatePair expectedClassAndFieldPredicate = new ClassAndFieldPredicatePair(expectedClass);
 
         // when
-        final SingleClassAssetion result = (SingleClassAssetion) Assertions.assertPojoMethodsFor(
+        final SingleClassAssertion result = (SingleClassAssertion) Assertions.assertPojoMethodsFor(
                 expectedClassAndFieldPredicate,
                 expectedClassAndFieldPredicate);
         final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair = getInternalState(result,
@@ -140,7 +140,7 @@ public class AssertionsTest {
 
 
         // when
-        final MultiClassAssetion result = (MultiClassAssetion) Assertions.assertPojoMethodsForAll(packageFilter);
+        final MultiClassAssertion result = (MultiClassAssertion) Assertions.assertPojoMethodsForAll(packageFilter);
         final List<ClassAndFieldPredicatePair> classAndFieldPredicatePairs = getInternalState(result,
                                                                                               "classAndFieldPredicatePairs");
 
@@ -158,8 +158,8 @@ public class AssertionsTest {
 
 
         // when
-        final MultiClassAssetion result = (MultiClassAssetion) Assertions.assertPojoMethodsForAll(expectedClass1,
-                                                                                                  expectedClass2);
+        final MultiClassAssertion result = (MultiClassAssertion) Assertions.assertPojoMethodsForAll(expectedClass1,
+                                                                                                    expectedClass2);
         final List<ClassAndFieldPredicatePair> classAndFieldPredicatePairs = getInternalState(result,
                                                                                               "classAndFieldPredicatePairs");
 
@@ -177,8 +177,8 @@ public class AssertionsTest {
 
 
         // when
-        final MultiClassAssetion result = (MultiClassAssetion) Assertions.assertPojoMethodsForAll(expectedClass1Name,
-                                                                                                  expectedClass2Name);
+        final MultiClassAssertion result = (MultiClassAssertion) Assertions.assertPojoMethodsForAll(expectedClass1Name,
+                                                                                                    expectedClass2Name);
         final List<ClassAndFieldPredicatePair> classAndFieldPredicatePairs = getInternalState(result,
                                                                                               "classAndFieldPredicatePairs");
 
@@ -202,7 +202,9 @@ public class AssertionsTest {
 
 
         // when
-        final MultiClassAssetion result = (MultiClassAssetion) Assertions.assertPojoMethodsForAll(pair1, pair2, pair2);
+        final MultiClassAssertion result = (MultiClassAssertion) Assertions.assertPojoMethodsForAll(pair1,
+                                                                                                    pair2,
+                                                                                                    pair2);
         final List<ClassAndFieldPredicatePair> classAndFieldPredicatePairs = getInternalState(result,
                                                                                               "classAndFieldPredicatePairs");
 
