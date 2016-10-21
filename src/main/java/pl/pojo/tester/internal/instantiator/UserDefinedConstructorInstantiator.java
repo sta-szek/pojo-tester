@@ -39,22 +39,15 @@ class UserDefinedConstructorInstantiator extends ObjectInstantiator {
             Object[] arguments = constructorParameters.getConstructorParameters();
 
             if (isInnerClass()) {
-                constructorParametersTypes = putEnclosingClassAsFirstParameterType(clazz.getEnclosingClass(),
-                                                                                   constructorParametersTypes);
+                constructorParametersTypes = putEnclosingClassAsFirstParameterType(clazz.getEnclosingClass(), constructorParametersTypes);
                 final Object enclosingClassInstance = instantiateEnclosingClass();
-                arguments = putEnclosingClassInstanceAsFirstParameter(enclosingClassInstance,
-                                                                      arguments);
+                arguments = putEnclosingClassInstanceAsFirstParameter(enclosingClassInstance, arguments);
             }
 
-            final Constructor<?> constructor = clazz.getDeclaredConstructor(
-                    constructorParametersTypes);
+            final Constructor<?> constructor = clazz.getDeclaredConstructor(constructorParametersTypes);
             constructor.setAccessible(true);
             return constructor.newInstance(arguments);
-        } catch (final NoSuchMethodException
-                | InstantiationException
-                | InvocationTargetException
-                | IllegalAccessException
-                | IllegalArgumentException e) {
+        } catch (final NoSuchMethodException | InstantiationException | InvocationTargetException | IllegalAccessException | IllegalArgumentException e) {
             return null;
         }
     }

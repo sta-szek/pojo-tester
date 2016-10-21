@@ -170,8 +170,7 @@ public class ObjectGenerator {
 
     private Map<Class<?>, Predicate<String>> convertToMap(final ClassAndFieldPredicatePair[] classAndFieldPredicatePairs) {
         return Stream.of(classAndFieldPredicatePairs)
-                     .collect(Collectors.toMap(ClassAndFieldPredicatePair::getClazz,
-                                               ClassAndFieldPredicatePair::getFieldsPredicate));
+                     .collect(Collectors.toMap(ClassAndFieldPredicatePair::getClazz, ClassAndFieldPredicatePair::getFieldsPredicate));
     }
 
     private Object makeThemEqual(final Object object, final Object newInstance) {

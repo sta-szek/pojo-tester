@@ -122,16 +122,14 @@ public class AbstractAssertionTest {
         final Class<String> expectedClass = String.class;
         final Object[] expectedArguments = {'c', 'h', 'a', 'r'};
         final Class[] expectedTypes = {char.class, char.class, char.class, char.class};
-        final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments,
-                                                                                              expectedTypes);
+        final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments, expectedTypes);
         abstractAssertion.create(expectedClass, expectedConstructorParameters);
 
         // when
         abstractAssertion.areWellImplemented();
 
         // then
-        verify(equalsTester, times(1)).setUserDefinedConstructors(argThat(new MultiValuedMapMatcher(expectedClass,
-                                                                                                    expectedConstructorParameters)));
+        verify(equalsTester, times(1)).setUserDefinedConstructors(argThat(new MultiValuedMapMatcher(expectedClass, expectedConstructorParameters)));
     }
 
     @Test
@@ -143,8 +141,7 @@ public class AbstractAssertionTest {
         final Class<String> expectedClass = String.class;
         final Object[] expectedArguments = {'c', 'h', 'a', 'r'};
         final Class[] expectedTypes = {char.class, char.class, char.class, char.class};
-        final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments,
-                                                                                              expectedTypes);
+        final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments, expectedTypes);
         abstractAssertion.create(expectedClass, expectedArguments, expectedTypes);
 
         // when
@@ -163,16 +160,14 @@ public class AbstractAssertionTest {
         final Class<?> expectedClass = String.class;
         final Object[] expectedArguments = {'c', 'h', 'a', 'r'};
         final Class[] expectedTypes = {char.class, char.class, char.class, char.class};
-        final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments,
-                                                                                              expectedTypes);
+        final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments, expectedTypes);
         abstractAssertion.create("java.lang.String", expectedConstructorParameters);
 
         // when
         abstractAssertion.areWellImplemented();
 
         // then
-        verify(equalsTester, times(1)).setUserDefinedConstructors(argThat(new MultiValuedMapMatcher(expectedClass,
-                                                                                                    expectedConstructorParameters)));
+        verify(equalsTester, times(1)).setUserDefinedConstructors(argThat(new MultiValuedMapMatcher(expectedClass, expectedConstructorParameters)));
     }
 
     @Test
@@ -183,8 +178,7 @@ public class AbstractAssertionTest {
         setInternalState(abstractAssertion, "testers", Sets.newHashSet(equalsTester));
         final Object[] expectedArguments = {'c', 'h', 'a', 'r'};
         final Class[] expectedTypes = {char.class, char.class, char.class, char.class};
-        final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments,
-                                                                                              expectedTypes);
+        final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments, expectedTypes);
         final String expectedClassName = "java.lang.String";
         abstractAssertion.create(expectedClassName, expectedArguments, expectedTypes);
 

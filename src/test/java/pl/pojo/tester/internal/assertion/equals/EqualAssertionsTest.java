@@ -76,8 +76,7 @@ public class EqualAssertionsTest {
         final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
 
         // when
-        final Throwable result = catchThrowable(() -> equalAssertions.isTransitive(objectUnderAssert,
-                                                                                   objectUnderAssert));
+        final Throwable result = catchThrowable(() -> equalAssertions.isTransitive(objectUnderAssert, objectUnderAssert));
 
         // then
         assertThat(result).isInstanceOf(TransitiveEqualsAssertionError.class);
@@ -90,8 +89,7 @@ public class EqualAssertionsTest {
         final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
 
         // when
-        final Throwable result = catchThrowable(() -> equalAssertions.isTransitive(objectUnderAssert,
-                                                                                   objectUnderAssert));
+        final Throwable result = catchThrowable(() -> equalAssertions.isTransitive(objectUnderAssert, objectUnderAssert));
 
         // then
         assertThat(result).isInstanceOf(TransitiveEqualsAssertionError.class);
@@ -197,8 +195,7 @@ public class EqualAssertionsTest {
         final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
 
         // when
-        final Throwable result = catchThrowable(() -> equalAssertions.isTransitive(objectUnderAssert,
-                                                                                   objectUnderAssert));
+        final Throwable result = catchThrowable(() -> equalAssertions.isTransitive(objectUnderAssert, objectUnderAssert));
 
         // then
         assertThat(result).isNull();

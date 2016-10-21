@@ -60,8 +60,7 @@ public final class Instantiable {
     }
 
     private static boolean userDefinedConstructorParametersFor(final Class<?> clazz,
-                                                               final MultiValuedMap<Class<?>, ConstructorParameters>
-                                                                       constructorParameters) {
+                                                               final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
         return constructorParameters.containsKey(clazz);
     }
 
