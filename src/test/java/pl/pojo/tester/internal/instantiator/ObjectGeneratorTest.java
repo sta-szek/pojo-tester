@@ -126,37 +126,30 @@ public class ObjectGeneratorTest {
     public Stream<DynamicTest> Should_Generate_Different_Objects_Recursively() throws IllegalAccessException {
         final RecursivelyDifferentObjectTestCase case1 = new RecursivelyDifferentObjectTestCase(18,
                                                                                                 pair(D.class),
-                                                                                                new ClassAndFieldPredicatePair[]{
-                                                                                                        pair(E.class),
-                                                                                                        pair(F.class)});
+                                                                                                new ClassAndFieldPredicatePair[]{pair(E.class), pair(F.class)});
 
         final RecursivelyDifferentObjectTestCase case2 = new RecursivelyDifferentObjectTestCase(6,
                                                                                                 pair(G.class),
-                                                                                                new ClassAndFieldPredicatePair[]{
-                                                                                                        pair(F.class)});
+                                                                                                new ClassAndFieldPredicatePair[]{pair(F.class)});
 
         final RecursivelyDifferentObjectTestCase case3 = new RecursivelyDifferentObjectTestCase(945,
                                                                                                 pair(H.class),
-                                                                                                new ClassAndFieldPredicatePair[]{
-                                                                                                        pair(A.class),
-                                                                                                        pair(B.class),
-                                                                                                        pair(F.class),
-                                                                                                        pair(G.class)});
+                                                                                                new ClassAndFieldPredicatePair[]{pair(A.class),
+                                                                                                                                 pair(B.class),
+                                                                                                                                 pair(F.class),
+                                                                                                                                 pair(G.class)});
 
         return Stream.of(case1, case2, case3)
-                     .map(value -> dynamicTest(getDefaultDisplayName(value),
-                                               Should_Generate_Different_Objects_Recursively(value)));
+                     .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Generate_Different_Objects_Recursively(value)));
     }
 
     public Executable Should_Generate_Different_Objects_Recursively(final RecursivelyDifferentObjectTestCase testCase) {
         return () -> {
             // given
-            final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger,
-                                                                        constructorParameters);
+            final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger, constructorParameters);
 
             // when
-            final List<Object> result = objectGenerator.generateDifferentObjects(testCase.baseClass,
-                                                                                 testCase.otherClasses);
+            final List<Object> result = objectGenerator.generateDifferentObjects(testCase.baseClass, testCase.otherClasses);
 
             // then
             assertThat(result).hasSize(testCase.expectedSize)

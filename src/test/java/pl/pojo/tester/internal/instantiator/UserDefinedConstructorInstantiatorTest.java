@@ -76,8 +76,7 @@ public class UserDefinedConstructorInstantiatorTest {
     public Stream<DynamicTest> Should_Throw_Exception_When_Cannot_Instantiate_Class() {
         return Stream.of(One_Arg_Constructor_Throws_NPE.class,
                          No_Args_Constructor_Throws_NPE.class)
-                     .map(value -> dynamicTest(getDefaultDisplayName(value.getName()),
-                                               Should_Throw_Exception_When_Cannot_Instantiate_Class(value)));
+                     .map(value -> dynamicTest(getDefaultDisplayName(value.getName()), Should_Throw_Exception_When_Cannot_Instantiate_Class(value)));
     }
 
     public Executable Should_Throw_Exception_When_Cannot_Instantiate_Class(final Class<?> classToInstantiate) {

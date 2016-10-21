@@ -44,8 +44,7 @@ public abstract class AbstractTester {
         test(classAndFieldPredicatePair);
     }
 
-    public abstract void test(final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair,
-                              final ClassAndFieldPredicatePair... classAndFieldPredicatePairs);
+    public abstract void test(final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair, final ClassAndFieldPredicatePair... classAndFieldPredicatePairs);
 
     public void testAll(final Class... classes) {
         final ClassAndFieldPredicatePair[] classesAndFieldPredicatesPairs = Arrays.stream(classes)
@@ -66,8 +65,7 @@ public abstract class AbstractTester {
         objectGenerator = new ObjectGenerator(fieldValuesChanger, constructorParameters);
     }
 
-    public void setUserDefinedConstructors(final MultiValuedMap<Class<?>, ConstructorParameters>
-                                                   constructorParameters) {
+    public void setUserDefinedConstructors(final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
         this.constructorParameters = constructorParameters;
         objectGenerator = new ObjectGenerator(fieldValuesChanger, constructorParameters);
     }

@@ -13,8 +13,7 @@ class BestConstructorInstantiator extends ObjectInstantiator {
 
     private final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters;
 
-    BestConstructorInstantiator(final Class<?> clazz,
-                                final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
+    BestConstructorInstantiator(final Class<?> clazz, final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
         super(clazz);
         this.constructorParameters = constructorParameters;
     }

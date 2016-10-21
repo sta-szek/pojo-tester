@@ -34,8 +34,7 @@ public abstract class AbstractAssertion {
               .forEach(DEFAULT_TESTERS::add);
     }
 
-    private final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters = new
-            ArrayListValuedHashMap<>();
+    private final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters = new ArrayListValuedHashMap<>();
     Set<AbstractTester> testers = new HashSet<>();
     private AbstractFieldValueChanger abstractFieldValueChanger;
 
@@ -121,9 +120,7 @@ public abstract class AbstractAssertion {
      *
      * @see ConstructorParameters
      */
-    public AbstractAssertion create(final String qualifiedClassName,
-                                    final Object[] constructorParameters,
-                                    final Class<?>[] constructorParameterTypes) {
+    public AbstractAssertion create(final String qualifiedClassName, final Object[] constructorParameters, final Class<?>[] constructorParameterTypes) {
         checkNotBlank("qualifiedClassName", qualifiedClassName);
 
         final ConstructorParameters constructorParameter = new ConstructorParameters(constructorParameters,
@@ -142,8 +139,7 @@ public abstract class AbstractAssertion {
      *
      * @see ConstructorParameters
      */
-    public AbstractAssertion create(final String qualifiedClassName,
-                                    final ConstructorParameters constructorParameters) {
+    public AbstractAssertion create(final String qualifiedClassName, final ConstructorParameters constructorParameters) {
         checkNotBlank("qualifiedClassName", qualifiedClassName);
         checkNotNull("constructorParameters", constructorParameters);
 
@@ -164,9 +160,7 @@ public abstract class AbstractAssertion {
      *
      * @see ConstructorParameters
      */
-    public AbstractAssertion create(final Class<?> clazz,
-                                    final Object[] constructorParameters,
-                                    final Class<?>[] constructorParameterTypes) {
+    public AbstractAssertion create(final Class<?> clazz, final Object[] constructorParameters, final Class<?>[] constructorParameterTypes) {
         checkNotNull("clazz", clazz);
 
         final ConstructorParameters constructorParameter = new ConstructorParameters(constructorParameters,

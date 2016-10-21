@@ -75,8 +75,7 @@ public final class Assertions {
      * @see MultiClassAssertion
      * @see SingleClassAssertion
      */
-    public static AbstractAssertion assertPojoMethodsFor(final String qualifiedClassName,
-                                                         final Predicate<String> fieldPredicate) {
+    public static AbstractAssertion assertPojoMethodsFor(final String qualifiedClassName, final Predicate<String> fieldPredicate) {
         checkNotBlank("qualifiedClassName", qualifiedClassName);
         checkNotNull("fieldPredicate", fieldPredicate);
 
@@ -117,10 +116,8 @@ public final class Assertions {
      * @see MultiClassAssertion
      * @see SingleClassAssertion
      */
-    public static AbstractAssertion assertPojoMethodsFor(final ClassAndFieldPredicatePair
-                                                                 baseClassAndFieldPredicatePair,
-                                                         final ClassAndFieldPredicatePair...
-                                                                 classAndFieldPredicatePairs) {
+    public static AbstractAssertion assertPojoMethodsFor(final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair,
+                                                         final ClassAndFieldPredicatePair... classAndFieldPredicatePairs) {
         checkNotNull("baseClassAndFieldPredicatePair", baseClassAndFieldPredicatePair);
         return new SingleClassAssertion(baseClassAndFieldPredicatePair, classAndFieldPredicatePairs);
     }
@@ -190,8 +187,7 @@ public final class Assertions {
      * @see MultiClassAssertion
      * @see SingleClassAssertion
      */
-    public static AbstractAssertion assertPojoMethodsForAll(final ClassAndFieldPredicatePair...
-                                                                    classesAndFieldPredicatesPairs) {
+    public static AbstractAssertion assertPojoMethodsForAll(final ClassAndFieldPredicatePair... classesAndFieldPredicatesPairs) {
         checkNotNull("classesAndFieldPredicatesPairs", classesAndFieldPredicatesPairs);
 
         final List<ClassAndFieldPredicatePair> classAndFieldPredicatePairs = Arrays.asList(

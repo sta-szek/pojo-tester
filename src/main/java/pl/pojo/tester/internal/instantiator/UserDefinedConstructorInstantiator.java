@@ -14,8 +14,7 @@ class UserDefinedConstructorInstantiator extends ObjectInstantiator {
 
     private final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters;
 
-    UserDefinedConstructorInstantiator(final Class<?> clazz,
-                                       final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
+    UserDefinedConstructorInstantiator(final Class<?> clazz, final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
         super(clazz);
         this.constructorParameters = constructorParameters;
     }
@@ -31,9 +30,7 @@ class UserDefinedConstructorInstantiator extends ObjectInstantiator {
     }
 
     private ObjectInstantiationException createObjectInstantiationException() {
-        return new ObjectInstantiationException(clazz,
-                                                "Could not instantiate object by any user defined constructor " +
-                                                "types and parameters.");
+        return new ObjectInstantiationException(clazz, "Could not instantiate object by any user defined constructor types and parameters.");
     }
 
     private Object createObjectUsingConstructorParameters(final ConstructorParameters constructorParameters) {
@@ -69,14 +66,12 @@ class UserDefinedConstructorInstantiator extends ObjectInstantiator {
                            .instantiate();
     }
 
-    private Object[] putEnclosingClassInstanceAsFirstParameter(final Object enclosingClassInstance,
-                                                               final Object[] arguments) {
+    private Object[] putEnclosingClassInstanceAsFirstParameter(final Object enclosingClassInstance, final Object[] arguments) {
         return Stream.concat(Stream.of(enclosingClassInstance), Arrays.stream(arguments))
                      .toArray(Object[]::new);
     }
 
-    private Class[] putEnclosingClassAsFirstParameterType(final Class<?> enclosingClass,
-                                                          final Class<?>[] constructorParametersTypes) {
+    private Class[] putEnclosingClassAsFirstParameterType(final Class<?> enclosingClass, final Class<?>[] constructorParametersTypes) {
         return Stream.concat(Stream.of(enclosingClass), Arrays.stream(constructorParametersTypes))
                      .toArray(Class[]::new);
     }

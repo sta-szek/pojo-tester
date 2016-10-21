@@ -98,4 +98,31 @@ public class ConstructorParametersTest {
         assertThat(result1).isEqualTo(result2);
     }
 
+    @Test
+    public void Should_Return_True_If_Contains_Matching_Parameter_Types() {
+        // given
+        final Class[] expectedToContain = {String.class};
+        final ConstructorParameters constructorParameters = new ConstructorParameters(new Object[0], expectedToContain);
+
+        // when
+        final boolean result = constructorParameters.matches(expectedToContain);
+
+        // then
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    public void Should_Return_False_If_Does_Not_Contain_Matching_Parameter_Types() {
+        // given
+        final Class[] constructorParametersTypes = {String.class};
+        final Class[] expectedNotToContain = {Object.class};
+        final ConstructorParameters constructorParameters = new ConstructorParameters(new Object[0], constructorParametersTypes);
+
+        // when
+        final boolean result = constructorParameters.matches(expectedNotToContain);
+
+        // then
+        assertThat(result).isFalse();
+    }
+
 }
