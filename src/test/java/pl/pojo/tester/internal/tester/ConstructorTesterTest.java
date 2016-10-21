@@ -1,6 +1,8 @@
 package pl.pojo.tester.internal.tester;
 
 import classesForTest.ClassWithSyntheticConstructor;
+import org.apache.commons.collections4.MultiValuedMap;
+import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
@@ -13,11 +15,10 @@ import pl.pojo.tester.internal.instantiator.ClassLoader;
 import pl.pojo.tester.internal.instantiator.Instantiable;
 import pl.pojo.tester.internal.preconditions.ParameterPreconditions;
 
-import java.util.HashMap;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 
 @RunWith(JUnitPlatform.class)
 public class ConstructorTesterTest {
@@ -61,9 +62,8 @@ public class ConstructorTesterTest {
 
         final ConstructorParameters parameters = new ConstructorParameters(new Object[]{"string"},
                                                                            new Class[]{String.class});
-        final HashMap<Class<?>, ConstructorParameters> constructorParameters = mock(HashMap.class);
-        when(constructorParameters.get(ClassWithSyntheticConstructor.class)).thenReturn(parameters);
-        when(constructorParameters.containsKey(ClassWithSyntheticConstructor.class)).thenReturn(true);
+        final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters = spy(new ArrayListValuedHashMap<>());
+        constructorParameters.put(ClassWithSyntheticConstructor.class, parameters);
 
         final ConstructorTester constructorTester = new ConstructorTester();
         constructorTester.setUserDefinedConstructors(constructorParameters);

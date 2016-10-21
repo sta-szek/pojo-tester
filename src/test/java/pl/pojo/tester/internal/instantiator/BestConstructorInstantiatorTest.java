@@ -3,13 +3,13 @@ package pl.pojo.tester.internal.instantiator;
 import classesForTest.ClassContainingStaticClasses;
 import classesForTest.Constructor_Stream;
 import classesForTest.Constructor_Thread;
+import classesForTest.Constructors_First_Throws_Exception;
 import classesForTest.PackageConstructor;
 import classesForTest.Person;
 import classesForTest.PrivateConstructor;
 import classesForTest.ProtectedConstructor;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Stream;
+import org.apache.commons.collections4.MultiValuedMap;
+import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
@@ -21,6 +21,8 @@ import pl.pojo.tester.api.FieldPredicate;
 import pl.pojo.tester.internal.utils.FieldUtils;
 import pl.pojo.tester.internal.utils.MethodUtils;
 
+import java.util.stream.Stream;
+
 import static helpers.TestHelper.getDefaultDisplayName;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -29,7 +31,8 @@ import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 @RunWith(JUnitPlatform.class)
 public class BestConstructorInstantiatorTest {
 
-    private final Map<Class<?>, ConstructorParameters> constructorParameters = new HashMap<>();
+    private final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters = new ArrayListValuedHashMap<>();
+
 
     @TestFactory
     public Stream<DynamicTest> Should_Instantiate_Non_Public_Classes() {
@@ -149,7 +152,20 @@ public class BestConstructorInstantiatorTest {
     @Test
     public void Should_Create_Object_Using_Private_Constructor() {
         // given
-        final Class<PrivateConstructor> classToInstantiate = PrivateConstructor.class;
+        final Class<?> classToInstantiate = PrivateConstructor.class;
+        final BestConstructorInstantiator instantiator = new BestConstructorInstantiator(classToInstantiate, constructorParameters);
+
+        // when
+        final Object result = instantiator.instantiate();
+
+        // then
+        assertThat(result).isInstanceOf(classToInstantiate);
+    }
+
+    @Test
+    public void Should_Create_Object_With_Second_Constructor_If_First_Threw_exception() {
+        // given
+        final Class<?> classToInstantiate = Constructors_First_Throws_Exception.class;
         final BestConstructorInstantiator instantiator = new BestConstructorInstantiator(classToInstantiate, constructorParameters);
 
         // when

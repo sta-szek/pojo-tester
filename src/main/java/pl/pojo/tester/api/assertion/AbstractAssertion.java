@@ -1,14 +1,14 @@
 package pl.pojo.tester.api.assertion;
 
+import org.apache.commons.collections4.MultiValuedMap;
+import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import pl.pojo.tester.api.ConstructorParameters;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 import pl.pojo.tester.internal.instantiator.ClassLoader;
 import pl.pojo.tester.internal.tester.AbstractTester;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import static pl.pojo.tester.internal.preconditions.ParameterPreconditions.checkNotBlank;
@@ -34,9 +34,11 @@ public abstract class AbstractAssertion {
               .forEach(DEFAULT_TESTERS::add);
     }
 
-    private final Map<Class<?>, ConstructorParameters> constructorParameters = new HashMap<>();
+    private final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters = new
+            ArrayListValuedHashMap<>();
     Set<AbstractTester> testers = new HashSet<>();
     private AbstractFieldValueChanger abstractFieldValueChanger;
+
 
     /**
      * Specifies what field values changer will be used for testing.

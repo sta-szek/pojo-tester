@@ -1,6 +1,7 @@
 package pl.pojo.tester.internal.instantiator;
 
 
+import org.apache.commons.collections4.MultiValuedMap;
 import pl.pojo.tester.api.ConstructorParameters;
 
 import java.lang.reflect.Constructor;
@@ -15,7 +16,7 @@ public final class Instantiable {
     private Instantiable() {}
 
     static ObjectInstantiator forClass(final Class<?> clazz,
-                                       final Map<Class<?>, ConstructorParameters> constructorParameters) {
+                                       final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
         if (userDefinedConstructorParametersFor(clazz, constructorParameters)) {
             return new UserDefinedConstructorInstantiator(clazz, constructorParameters);
         }
@@ -59,7 +60,7 @@ public final class Instantiable {
     }
 
     private static boolean userDefinedConstructorParametersFor(final Class<?> clazz,
-                                                               final Map<Class<?>, ConstructorParameters>
+                                                               final MultiValuedMap<Class<?>, ConstructorParameters>
                                                                        constructorParameters) {
         return constructorParameters.containsKey(clazz);
     }

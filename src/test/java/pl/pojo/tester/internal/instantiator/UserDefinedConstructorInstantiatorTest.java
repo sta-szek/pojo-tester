@@ -1,10 +1,9 @@
 package pl.pojo.tester.internal.instantiator;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Stream;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.apache.commons.collections4.MultiValuedMap;
+import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
@@ -12,6 +11,8 @@ import org.junit.jupiter.api.function.Executable;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 import pl.pojo.tester.api.ConstructorParameters;
+
+import java.util.stream.Stream;
 
 import static helpers.TestHelper.getDefaultDisplayName;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,7 +22,7 @@ import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 @RunWith(JUnitPlatform.class)
 public class UserDefinedConstructorInstantiatorTest {
 
-    private final Map<Class<?>, ConstructorParameters> constructorParameters = new HashMap<>();
+    private final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters = new ArrayListValuedHashMap<>();
 
     {
         constructorParameters.put(UserDefinedClass.class, new ConstructorParameters(new Object[]{1, 2}, new Class<?>[]{int.class, int.class}));
@@ -82,8 +83,7 @@ public class UserDefinedConstructorInstantiatorTest {
     public Executable Should_Throw_Exception_When_Cannot_Instantiate_Class(final Class<?> classToInstantiate) {
         return () -> {
             // given
-            final UserDefinedConstructorInstantiator instantiator = new UserDefinedConstructorInstantiator(classToInstantiate,
-                                                                                                           constructorParameters);
+            final UserDefinedConstructorInstantiator instantiator = new UserDefinedConstructorInstantiator(classToInstantiate, constructorParameters);
 
             // when
             final Throwable result = catchThrowable(instantiator::instantiate);

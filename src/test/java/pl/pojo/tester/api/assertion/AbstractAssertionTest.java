@@ -2,7 +2,7 @@ package pl.pojo.tester.api.assertion;
 
 import classesForTest.fields.TestEnum1;
 import com.google.common.collect.Sets;
-import helpers.MapMatcher;
+import helpers.MultiValuedMapMatcher;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -114,7 +114,7 @@ public class AbstractAssertionTest {
     }
 
     @Test
-    public void Should_Set_User_Defined_Class_And_Constructor_Paramters_To_Tester() {
+    public void Should_Set_User_Defined_Class_And_Constructor_Parameters_To_Tester() {
         // given
         final AbstractAssertion abstractAssertion = new AbstractAssertionImplementation();
         final EqualsTester equalsTester = mock(EqualsTester.class);
@@ -130,8 +130,8 @@ public class AbstractAssertionTest {
         abstractAssertion.areWellImplemented();
 
         // then
-        verify(equalsTester, times(1)).setUserDefinedConstructors(argThat(new MapMatcher(expectedClass,
-                                                                                         expectedConstructorParameters)));
+        verify(equalsTester, times(1)).setUserDefinedConstructors(argThat(new MultiValuedMapMatcher(expectedClass,
+                                                                                                    expectedConstructorParameters)));
     }
 
     @Test
@@ -155,7 +155,7 @@ public class AbstractAssertionTest {
     }
 
     @Test
-    public void Should_Set_User_Defined_Class_And_Constructor_Paramters_To_Tester_Using_Class_Name() {
+    public void Should_Set_User_Defined_Class_And_Constructor_Parameters_To_Tester_Using_Class_Name() {
         // given
         final AbstractAssertion abstractAssertion = new AbstractAssertionImplementation();
         final EqualsTester equalsTester = mock(EqualsTester.class);
@@ -171,8 +171,8 @@ public class AbstractAssertionTest {
         abstractAssertion.areWellImplemented();
 
         // then
-        verify(equalsTester, times(1)).setUserDefinedConstructors(argThat(new MapMatcher(expectedClass,
-                                                                                         expectedConstructorParameters)));
+        verify(equalsTester, times(1)).setUserDefinedConstructors(argThat(new MultiValuedMapMatcher(expectedClass,
+                                                                                                    expectedConstructorParameters)));
     }
 
     @Test

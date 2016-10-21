@@ -23,7 +23,6 @@ import java.util.Stack;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Vector;
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 class CollectionInstantiator extends ObjectInstantiator {
@@ -67,7 +66,7 @@ class CollectionInstantiator extends ObjectInstantiator {
                                .filter(this::clazzCanBeAssigned)
                                .map(Map.Entry::getValue)
                                .findFirst()
-                               .orElseThrow(createObjectInstantiationExceptionSupplier());
+                               .orElseThrow(this::createObjectInstantiationException);
     }
 
     private boolean clazzCanBeAssigned(final Map.Entry<Class<?>, Object> entry) {
@@ -75,10 +74,10 @@ class CollectionInstantiator extends ObjectInstantiator {
                     .isAssignableFrom(clazz);
     }
 
-    private Supplier<ObjectInstantiationException> createObjectInstantiationExceptionSupplier() {
-        return () -> new ObjectInstantiationException(clazz,
-                                                      "There is no declared object for that class. "
-                                                      + "Please report an issue at "
-                                                      + "https://github.com/sta-szek/pojo-tester");
+    private ObjectInstantiationException createObjectInstantiationException() {
+        return new ObjectInstantiationException(clazz, "There is no declared object for that class. Please report an issue at " +
+                                                       "https://github.com/sta-szek/pojo-tester");
+
     }
+
 }

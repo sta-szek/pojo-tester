@@ -1,42 +1,67 @@
 package pl.pojo.tester.internal.instantiator;
 
+import org.apache.commons.collections4.MultiValuedMap;
+import pl.pojo.tester.api.ConstructorParameters;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
-import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Stream;
-import pl.pojo.tester.api.ConstructorParameters;
 
 class UserDefinedConstructorInstantiator extends ObjectInstantiator {
 
-    private final Map<Class<?>, ConstructorParameters> constructorParameters;
+    private final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters;
 
-    UserDefinedConstructorInstantiator(final Class<?> clazz, final Map<Class<?>, ConstructorParameters> constructorParameters) {
+    UserDefinedConstructorInstantiator(final Class<?> clazz,
+                                       final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
         super(clazz);
         this.constructorParameters = constructorParameters;
     }
 
     @Override
     public Object instantiate() {
+        return constructorParameters.get(clazz)
+                                    .stream()
+                                    .map(this::createObjectUsingConstructorParameters)
+                                    .filter(Objects::nonNull)
+                                    .findAny()
+                                    .orElseThrow(this::createObjectInstantiationException);
+    }
+
+    private ObjectInstantiationException createObjectInstantiationException() {
+        return new ObjectInstantiationException(clazz,
+                                                "Could not instantiate object by any user defined constructor " +
+                                                "types and parameters.");
+    }
+
+    private Object createObjectUsingConstructorParameters(final ConstructorParameters constructorParameters) {
         try {
-            final ConstructorParameters constructorParameters = this.constructorParameters.get(clazz);
             Class<?>[] constructorParametersTypes = constructorParameters.getConstructorParametersTypes();
             Object[] arguments = constructorParameters.getConstructorParameters();
 
             if (isInnerClass()) {
-                constructorParametersTypes = putEnclosingClassAsFirstParameterType(clazz.getEnclosingClass(), constructorParametersTypes);
+                constructorParametersTypes = putEnclosingClassAsFirstParameterType(clazz.getEnclosingClass(),
+                                                                                   constructorParametersTypes);
                 final Object enclosingClassInstance = instantiateEnclosingClass();
-                arguments = putEnclosingClassInstanceAsFirstParameter(enclosingClassInstance, arguments);
+                arguments = putEnclosingClassInstanceAsFirstParameter(enclosingClassInstance,
+                                                                      arguments);
             }
 
-            final Constructor<?> constructor = clazz.getDeclaredConstructor(constructorParametersTypes);
+            final Constructor<?> constructor = clazz.getDeclaredConstructor(
+                    constructorParametersTypes);
             constructor.setAccessible(true);
             return constructor.newInstance(arguments);
-        } catch (final NoSuchMethodException | InstantiationException | InvocationTargetException | IllegalAccessException | IllegalArgumentException e) {
-            throw new ObjectInstantiationException(clazz, e.getMessage(), e);
+        } catch (final NoSuchMethodException
+                | InstantiationException
+                | InvocationTargetException
+                | IllegalAccessException
+                | IllegalArgumentException e) {
+            return null;
         }
     }
+
 
     private Object instantiateEnclosingClass() {
         final Class<?> enclosingClass = clazz.getEnclosingClass();
@@ -44,13 +69,14 @@ class UserDefinedConstructorInstantiator extends ObjectInstantiator {
                            .instantiate();
     }
 
-    private Object[] putEnclosingClassInstanceAsFirstParameter(final Object enclosingClassInstance, final Object[] arguments) {
+    private Object[] putEnclosingClassInstanceAsFirstParameter(final Object enclosingClassInstance,
+                                                               final Object[] arguments) {
         return Stream.concat(Stream.of(enclosingClassInstance), Arrays.stream(arguments))
                      .toArray(Object[]::new);
     }
 
-
-    private Class[] putEnclosingClassAsFirstParameterType(final Class<?> enclosingClass, final Class<?>[] constructorParametersTypes) {
+    private Class[] putEnclosingClassAsFirstParameterType(final Class<?> enclosingClass,
+                                                          final Class<?>[] constructorParametersTypes) {
         return Stream.concat(Stream.of(enclosingClass), Arrays.stream(constructorParametersTypes))
                      .toArray(Class[]::new);
     }

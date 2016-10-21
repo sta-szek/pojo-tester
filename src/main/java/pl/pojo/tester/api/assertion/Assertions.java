@@ -120,7 +120,7 @@ public final class Assertions {
     public static AbstractAssertion assertPojoMethodsFor(final ClassAndFieldPredicatePair
                                                                  baseClassAndFieldPredicatePair,
                                                          final ClassAndFieldPredicatePair...
-                                                                classAndFieldPredicatePairs) {
+                                                                 classAndFieldPredicatePairs) {
         checkNotNull("baseClassAndFieldPredicatePair", baseClassAndFieldPredicatePair);
         return new SingleClassAssertion(baseClassAndFieldPredicatePair, classAndFieldPredicatePairs);
     }
@@ -191,7 +191,7 @@ public final class Assertions {
      * @see SingleClassAssertion
      */
     public static AbstractAssertion assertPojoMethodsForAll(final ClassAndFieldPredicatePair...
-                                                                   classesAndFieldPredicatesPairs) {
+                                                                    classesAndFieldPredicatesPairs) {
         checkNotNull("classesAndFieldPredicatesPairs", classesAndFieldPredicatesPairs);
 
         final List<ClassAndFieldPredicatePair> classAndFieldPredicatePairs = Arrays.asList(
