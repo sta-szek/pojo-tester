@@ -17,8 +17,7 @@ import pl.pojo.tester.internal.preconditions.ParameterPreconditions;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @RunWith(JUnitPlatform.class)
 public class ConstructorTesterTest {
@@ -74,6 +73,45 @@ public class ConstructorTesterTest {
         // then
         assertThat(result).isNull();
         verify(constructorParameters).get(ClassWithSyntheticConstructor.class);
+    }
+
+    @Test
+    public void Should_Create_Constructor_Parameters_When_Parameters_Are_Not_Provided() {
+        // given
+        final Class[] classesToTest = {ClassWithSyntheticConstructor.class};
+
+        final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters = spy(new ArrayListValuedHashMap<>());
+
+        final ConstructorTester constructorTester = new ConstructorTester();
+        constructorTester.setUserDefinedConstructors(constructorParameters);
+
+        // when
+        final Throwable result = catchThrowable(() -> constructorTester.testAll(classesToTest));
+
+        // then
+        assertThat(result).isNull();
+        verify(constructorParameters, never()).get(ClassWithSyntheticConstructor.class);
+    }
+
+    @Test
+    public void Should_Create_Constructor_Parameters_When_Could_Not_Find_Matching_Constructor_Parameters_Types() {
+        // given
+        final Class[] classesToTest = {ClassWithSyntheticConstructor.class};
+
+        final ConstructorParameters parameters = spy(new ConstructorParameters(new Object[]{"to", "many", "parameters"},
+                                                                               new Class[]{String.class, String.class, String.class}));
+        final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters = spy(new ArrayListValuedHashMap<>());
+        constructorParameters.put(ClassWithSyntheticConstructor.class, parameters);
+
+        final ConstructorTester constructorTester = new ConstructorTester();
+        constructorTester.setUserDefinedConstructors(constructorParameters);
+
+        // when
+        final Throwable result = catchThrowable(() -> constructorTester.testAll(classesToTest));
+
+        // then
+        assertThat(result).isNull();
+        verify(parameters, never()).getConstructorParameters();
     }
 
     private static class Pojo {

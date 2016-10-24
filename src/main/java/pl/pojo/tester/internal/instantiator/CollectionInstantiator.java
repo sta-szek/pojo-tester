@@ -75,8 +75,8 @@ class CollectionInstantiator extends ObjectInstantiator {
     }
 
     private ObjectInstantiationException createObjectInstantiationException() {
-        return new ObjectInstantiationException(clazz, "There is no declared object for that class. Please report an issue at " +
-                                                       "https://github.com/sta-szek/pojo-tester");
+        return new ObjectInstantiationException(clazz, "There is no declared object for that class. Please report an issue at "
+                                                       + "https://github.com/sta-szek/pojo-tester");
 
     }
 

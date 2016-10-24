@@ -9,6 +9,7 @@ class MultiClassAssertion extends AbstractAssertion {
     private final List<ClassAndFieldPredicatePair> classAndFieldPredicatePairs;
 
     MultiClassAssertion(final List<ClassAndFieldPredicatePair> classAndFieldPredicatePairs) {
+        super();
         this.classAndFieldPredicatePairs = classAndFieldPredicatePairs;
     }
 

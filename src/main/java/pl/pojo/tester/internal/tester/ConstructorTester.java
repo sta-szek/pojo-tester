@@ -27,8 +27,7 @@ public class ConstructorTester extends AbstractTester {
     }
 
     @Override
-    public void test(final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair,
-                     final ClassAndFieldPredicatePair... classAndFieldPredicatePairs) {
+    public void test(final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair, final ClassAndFieldPredicatePair... classAndFieldPredicatePairs) {
         final Class<?> testedClass = baseClassAndFieldPredicatePair.getClazz();
         final List<Constructor<?>> declaredConstructors = getNotSyntheticConstructorFromClass(testedClass);
 
@@ -47,12 +46,12 @@ public class ConstructorTester extends AbstractTester {
 
     private void tryInstantiate(final Constructor<?> constructor) {
         final Object[] parameters;
-        final Predicate<ConstructorParameters> typesMatches = ctr -> ctr.matches(constructor.getParameterTypes());
+        final Predicate<ConstructorParameters> matchingConstructorParameterTypes = ctr -> ctr.matches(constructor.getParameterTypes());
 
         if (constructorParametersAreProvided(constructor)) {
             final Collection<ConstructorParameters> constructorParameters = getConstructorParameters(constructor);
             parameters = constructorParameters.stream()
-                                              .filter(typesMatches)
+                                              .filter(matchingConstructorParameterTypes)
                                               .map(ConstructorParameters::getConstructorParameters)
                                               .findFirst()
                                               .orElseGet(() -> logAndTryToCreateOwnParameters(constructor));
@@ -65,7 +64,7 @@ public class ConstructorTester extends AbstractTester {
     }
 
     private Object[] logAndTryToCreateOwnParameters(final Constructor<?> constructor) {
-        LOGGER.warn(String.format("Class '%s' could not be created by constructor '%s' and any user defined parameters",
+        LOGGER.warn(String.format("Class '%s' could not be created by constructor '%s' and any user defined parameters.",
                                   constructor.getDeclaringClass(),
                                   constructor));
         return createConstructorParameters(constructor);
