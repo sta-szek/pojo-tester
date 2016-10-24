@@ -1,6 +1,12 @@
 package pl.pojo.tester.internal.instantiator;
 
 
+import org.apache.commons.collections4.MultiValuedMap;
+import pl.pojo.tester.api.ClassAndFieldPredicatePair;
+import pl.pojo.tester.api.ConstructorParameters;
+import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
+import pl.pojo.tester.internal.utils.FieldUtils;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,17 +18,14 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-import pl.pojo.tester.api.ClassAndFieldPredicatePair;
-import pl.pojo.tester.api.ConstructorParameters;
-import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
-import pl.pojo.tester.internal.utils.FieldUtils;
 
 public class ObjectGenerator {
 
     private final AbstractFieldValueChanger abstractFieldValueChanger;
-    private final Map<Class<?>, ConstructorParameters> constructorParameters;
+    private final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters;
 
-    public ObjectGenerator(final AbstractFieldValueChanger abstractFieldValueChanger, final Map<Class<?>, ConstructorParameters> constructorParameters) {
+    public ObjectGenerator(final AbstractFieldValueChanger abstractFieldValueChanger,
+                           final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
         this.abstractFieldValueChanger = abstractFieldValueChanger;
         this.constructorParameters = constructorParameters;
     }
@@ -162,8 +165,7 @@ public class ObjectGenerator {
     private Map<Class<?>, List<Field>> convertToClassAndFieldsToChange(final Map<Class<?>, Predicate<String>> classAndFieldPredicatePairMap) {
         return classAndFieldPredicatePairMap.entrySet()
                                             .stream()
-                                            .collect(Collectors.toMap(Map.Entry::getKey,
-                                                                      entry -> FieldUtils.getFields(entry.getKey(), entry.getValue())));
+                                            .collect(Collectors.toMap(Map.Entry::getKey, entry -> FieldUtils.getFields(entry.getKey(), entry.getValue())));
     }
 
     private Map<Class<?>, Predicate<String>> convertToMap(final ClassAndFieldPredicatePair[] classAndFieldPredicatePairs) {

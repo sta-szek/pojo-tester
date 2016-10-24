@@ -1,17 +1,19 @@
 package pl.pojo.tester.internal.instantiator;
 
 
+import org.apache.commons.collections4.MultiValuedMap;
+import pl.pojo.tester.api.ConstructorParameters;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
-import java.util.Map;
-import pl.pojo.tester.api.ConstructorParameters;
+import java.util.Objects;
 
 class BestConstructorInstantiator extends ObjectInstantiator {
 
-    private final Map<Class<?>, ConstructorParameters> constructorParameters;
+    private final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters;
 
-    BestConstructorInstantiator(final Class<?> clazz, final Map<Class<?>, ConstructorParameters> constructorParameters) {
+    BestConstructorInstantiator(final Class<?> clazz, final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
         super(clazz);
         this.constructorParameters = constructorParameters;
     }
@@ -25,9 +27,13 @@ class BestConstructorInstantiator extends ObjectInstantiator {
         final Constructor<?>[] constructors = clazz.getDeclaredConstructors();
         return Arrays.stream(constructors)
                      .map(this::createObjectFromConstructor)
-                     .filter(object -> object != null)
+                     .filter(Objects::nonNull)
                      .findAny()
-                     .orElseThrow(() -> new ObjectInstantiationException(clazz, "Class could not be created by any constructor."));
+                     .orElseThrow(this::createObjectInstantiationException);
+    }
+
+    private ObjectInstantiationException createObjectInstantiationException() {
+        return new ObjectInstantiationException(clazz, "Class could not be created by any constructor.");
     }
 
     private Object createObjectFromConstructor(final Constructor<?> constructor) {

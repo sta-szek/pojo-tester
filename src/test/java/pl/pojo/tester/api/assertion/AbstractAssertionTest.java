@@ -2,7 +2,7 @@ package pl.pojo.tester.api.assertion;
 
 import classesForTest.fields.TestEnum1;
 import com.google.common.collect.Sets;
-import helpers.MapMatcher;
+import helpers.MultiValuedMapMatcher;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -25,17 +25,17 @@ import static org.powermock.reflect.Whitebox.getInternalState;
 import static org.powermock.reflect.Whitebox.setInternalState;
 
 @RunWith(JUnitPlatform.class)
-public class AbstractAssetionTest {
+public class AbstractAssertionTest {
 
     @Test
     public void Should_Set_Field_Value_Changer() {
         // given
-        final AbstractAssetion abstractAssetion = new AbstractAssetionImplementation();
+        final AbstractAssertion abstractAssertion = new AbstractAssertionImplementation();
         final AbstractFieldValueChanger expectedFieldsValuesChanger = DefaultFieldValueChanger.INSTANCE;
 
         // when
-        abstractAssetion.using(expectedFieldsValuesChanger);
-        final AbstractFieldValueChanger result = getInternalState(abstractAssetion, "abstractFieldValueChanger");
+        abstractAssertion.using(expectedFieldsValuesChanger);
+        final AbstractFieldValueChanger result = getInternalState(abstractAssertion, "abstractFieldValueChanger");
 
         // then
         assertThat(result).isEqualTo(expectedFieldsValuesChanger);
@@ -44,30 +44,30 @@ public class AbstractAssetionTest {
     @Test
     public void Should_Add_Equals_Tester() {
         // given
-        final AbstractAssetion abstractAssetion = new AbstractAssetionImplementation();
+        final AbstractAssertion abstractAssertion = new AbstractAssertionImplementation();
         final EqualsTester expectedTester = new EqualsTester();
 
         // when
-        abstractAssetion.testing(Method.EQUALS);
+        abstractAssertion.testing(Method.EQUALS);
 
         // then
-        assertThat(abstractAssetion.testers).usingRecursiveFieldByFieldElementComparator()
-                                            .containsExactly(expectedTester);
+        assertThat(abstractAssertion.testers).usingRecursiveFieldByFieldElementComparator()
+                                             .containsExactly(expectedTester);
     }
 
     @Test
     public void Should_Add_Equals_And_Hash_Code_Testers() {
         // given
-        final AbstractAssetion abstractAssetion = new AbstractAssetionImplementation();
+        final AbstractAssertion abstractAssertion = new AbstractAssertionImplementation();
         final EqualsTester expectedTester1 = new EqualsTester();
         final HashCodeTester expectedTester2 = new HashCodeTester();
 
         // when
-        abstractAssetion.testing(Method.EQUALS, Method.HASH_CODE);
+        abstractAssertion.testing(Method.EQUALS, Method.HASH_CODE);
 
         // then
-        assertThat(abstractAssetion.testers).usingRecursiveFieldByFieldElementComparator()
-                                            .containsExactly(expectedTester1, expectedTester2);
+        assertThat(abstractAssertion.testers).usingRecursiveFieldByFieldElementComparator()
+                                             .containsExactly(expectedTester1, expectedTester2);
     }
 
     @Test
@@ -100,102 +100,96 @@ public class AbstractAssetionTest {
     @Test
     public void Should_Set_Field_Value_Changer_To_Testers() {
         // given
-        final AbstractAssetion abstractAssetion = new AbstractAssetionImplementation();
+        final AbstractAssertion abstractAssertion = new AbstractAssertionImplementation();
         final AbstractFieldValueChanger expectedFieldsValuesChanger = DefaultFieldValueChanger.INSTANCE;
         final EqualsTester equalsTester = mock(EqualsTester.class);
-        setInternalState(abstractAssetion, "testers", Sets.newHashSet(equalsTester));
-        abstractAssetion.using(expectedFieldsValuesChanger);
+        setInternalState(abstractAssertion, "testers", Sets.newHashSet(equalsTester));
+        abstractAssertion.using(expectedFieldsValuesChanger);
 
         // when
-        abstractAssetion.areWellImplemented();
+        abstractAssertion.areWellImplemented();
 
         // then
         verify(equalsTester, times(1)).setFieldValuesChanger(expectedFieldsValuesChanger);
     }
 
     @Test
-    public void Should_Set_User_Defined_Class_And_Constructor_Paramters_To_Tester() {
+    public void Should_Set_User_Defined_Class_And_Constructor_Parameters_To_Tester() {
         // given
-        final AbstractAssetion abstractAssetion = new AbstractAssetionImplementation();
+        final AbstractAssertion abstractAssertion = new AbstractAssertionImplementation();
         final EqualsTester equalsTester = mock(EqualsTester.class);
-        setInternalState(abstractAssetion, "testers", Sets.newHashSet(equalsTester));
+        setInternalState(abstractAssertion, "testers", Sets.newHashSet(equalsTester));
         final Class<String> expectedClass = String.class;
         final Object[] expectedArguments = {'c', 'h', 'a', 'r'};
         final Class[] expectedTypes = {char.class, char.class, char.class, char.class};
-        final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments,
-                                                                                              expectedTypes);
-        abstractAssetion.create(expectedClass, expectedConstructorParameters);
+        final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments, expectedTypes);
+        abstractAssertion.create(expectedClass, expectedConstructorParameters);
 
         // when
-        abstractAssetion.areWellImplemented();
+        abstractAssertion.areWellImplemented();
 
         // then
-        verify(equalsTester, times(1)).setUserDefinedConstructors(argThat(new MapMatcher(expectedClass,
-                                                                                         expectedConstructorParameters)));
+        verify(equalsTester, times(1)).setUserDefinedConstructors(argThat(new MultiValuedMapMatcher(expectedClass, expectedConstructorParameters)));
     }
 
     @Test
     public void Should_Call_Next_Create_Method() {
         // given
-        final AbstractAssetion abstractAssetion = spy(new AbstractAssetionImplementation());
+        final AbstractAssertion abstractAssertion = spy(new AbstractAssertionImplementation());
         final EqualsTester equalsTester = mock(EqualsTester.class);
-        setInternalState(abstractAssetion, "testers", Sets.newHashSet(equalsTester));
+        setInternalState(abstractAssertion, "testers", Sets.newHashSet(equalsTester));
         final Class<String> expectedClass = String.class;
         final Object[] expectedArguments = {'c', 'h', 'a', 'r'};
         final Class[] expectedTypes = {char.class, char.class, char.class, char.class};
-        final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments,
-                                                                                              expectedTypes);
-        abstractAssetion.create(expectedClass, expectedArguments, expectedTypes);
+        final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments, expectedTypes);
+        abstractAssertion.create(expectedClass, expectedArguments, expectedTypes);
 
         // when
-        abstractAssetion.areWellImplemented();
+        abstractAssertion.areWellImplemented();
 
         // then
-        verify(abstractAssetion).create(eq(expectedClass), eq(expectedConstructorParameters));
+        verify(abstractAssertion).create(eq(expectedClass), eq(expectedConstructorParameters));
     }
 
     @Test
-    public void Should_Set_User_Defined_Class_And_Constructor_Paramters_To_Tester_Using_Class_Name() {
+    public void Should_Set_User_Defined_Class_And_Constructor_Parameters_To_Tester_Using_Class_Name() {
         // given
-        final AbstractAssetion abstractAssetion = new AbstractAssetionImplementation();
+        final AbstractAssertion abstractAssertion = new AbstractAssertionImplementation();
         final EqualsTester equalsTester = mock(EqualsTester.class);
-        setInternalState(abstractAssetion, "testers", Sets.newHashSet(equalsTester));
+        setInternalState(abstractAssertion, "testers", Sets.newHashSet(equalsTester));
         final Class<?> expectedClass = String.class;
         final Object[] expectedArguments = {'c', 'h', 'a', 'r'};
         final Class[] expectedTypes = {char.class, char.class, char.class, char.class};
-        final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments,
-                                                                                              expectedTypes);
-        abstractAssetion.create("java.lang.String", expectedConstructorParameters);
+        final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments, expectedTypes);
+        abstractAssertion.create("java.lang.String", expectedConstructorParameters);
 
         // when
-        abstractAssetion.areWellImplemented();
+        abstractAssertion.areWellImplemented();
 
         // then
-        verify(equalsTester, times(1)).setUserDefinedConstructors(argThat(new MapMatcher(expectedClass,
-                                                                                         expectedConstructorParameters)));
+        verify(equalsTester, times(1)).setUserDefinedConstructors(argThat(new MultiValuedMapMatcher(expectedClass, expectedConstructorParameters)));
     }
 
     @Test
     public void Should_Call_Next_Create_Method_Using_Class_Name() {
         // given
-        final AbstractAssetion abstractAssetion = spy(new AbstractAssetionImplementation());
+        final AbstractAssertion abstractAssertion = spy(new AbstractAssertionImplementation());
         final EqualsTester equalsTester = mock(EqualsTester.class);
-        setInternalState(abstractAssetion, "testers", Sets.newHashSet(equalsTester));
+        setInternalState(abstractAssertion, "testers", Sets.newHashSet(equalsTester));
         final Object[] expectedArguments = {'c', 'h', 'a', 'r'};
         final Class[] expectedTypes = {char.class, char.class, char.class, char.class};
-        final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments,
-                                                                                              expectedTypes);
+        final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments, expectedTypes);
         final String expectedClassName = "java.lang.String";
-        abstractAssetion.create(expectedClassName, expectedArguments, expectedTypes);
+        abstractAssertion.create(expectedClassName, expectedArguments, expectedTypes);
 
         // when
-        abstractAssetion.areWellImplemented();
+        abstractAssertion.areWellImplemented();
 
         // then
-        verify(abstractAssetion).create(eq(expectedClassName), eq(expectedConstructorParameters));
+        verify(abstractAssertion).create(eq(expectedClassName), eq(expectedConstructorParameters));
     }
 
-    private class AbstractAssetionImplementation extends AbstractAssetion {
+    private class AbstractAssertionImplementation extends AbstractAssertion {
 
         @Override
         protected void testImplementation() {

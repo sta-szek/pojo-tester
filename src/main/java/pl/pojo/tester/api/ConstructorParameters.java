@@ -4,6 +4,8 @@ import lombok.Getter;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import java.util.Arrays;
+
 /**
  * Defines constructor parameters and constructor parameter's types.
  * <p>
@@ -23,8 +25,8 @@ public class ConstructorParameters {
     /**
      * Instantaites {@code ConstructorParameters} with given constructor parameters and constructor parameter's types.
      *
-     * @param constructorParameters      constructor paramters
-     * @param constructorParametersTypes constructor paramter's types
+     * @param constructorParameters      constructor parameters
+     * @param constructorParametersTypes constructor parameter's types
      */
     public ConstructorParameters(final Object[] constructorParameters, final Class<?>[] constructorParametersTypes) {
         this.constructorParameters = constructorParameters;
@@ -59,5 +61,9 @@ public class ConstructorParameters {
         return new HashCodeBuilder().append(constructorParameters)
                                     .append(constructorParametersTypes)
                                     .toHashCode();
+    }
+
+    public boolean matches(final Class<?>[] parameterTypes) {
+        return Arrays.equals(constructorParametersTypes, parameterTypes);
     }
 }

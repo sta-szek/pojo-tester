@@ -1,6 +1,8 @@
 package pl.pojo.tester.internal.tester;
 
 import classesForTest.ClassWithSyntheticConstructor;
+import org.apache.commons.collections4.MultiValuedMap;
+import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
@@ -12,8 +14,6 @@ import pl.pojo.tester.internal.field.collections.CollectionsFieldValueChanger;
 import pl.pojo.tester.internal.instantiator.ClassLoader;
 import pl.pojo.tester.internal.instantiator.Instantiable;
 import pl.pojo.tester.internal.preconditions.ParameterPreconditions;
-
-import java.util.HashMap;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -61,9 +61,8 @@ public class ConstructorTesterTest {
 
         final ConstructorParameters parameters = new ConstructorParameters(new Object[]{"string"},
                                                                            new Class[]{String.class});
-        final HashMap<Class<?>, ConstructorParameters> constructorParameters = mock(HashMap.class);
-        when(constructorParameters.get(ClassWithSyntheticConstructor.class)).thenReturn(parameters);
-        when(constructorParameters.containsKey(ClassWithSyntheticConstructor.class)).thenReturn(true);
+        final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters = spy(new ArrayListValuedHashMap<>());
+        constructorParameters.put(ClassWithSyntheticConstructor.class, parameters);
 
         final ConstructorTester constructorTester = new ConstructorTester();
         constructorTester.setUserDefinedConstructors(constructorParameters);
@@ -74,6 +73,45 @@ public class ConstructorTesterTest {
         // then
         assertThat(result).isNull();
         verify(constructorParameters).get(ClassWithSyntheticConstructor.class);
+    }
+
+    @Test
+    public void Should_Create_Constructor_Parameters_When_Parameters_Are_Not_Provided() {
+        // given
+        final Class[] classesToTest = {ClassWithSyntheticConstructor.class};
+
+        final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters = spy(new ArrayListValuedHashMap<>());
+
+        final ConstructorTester constructorTester = new ConstructorTester();
+        constructorTester.setUserDefinedConstructors(constructorParameters);
+
+        // when
+        final Throwable result = catchThrowable(() -> constructorTester.testAll(classesToTest));
+
+        // then
+        assertThat(result).isNull();
+        verify(constructorParameters, never()).get(ClassWithSyntheticConstructor.class);
+    }
+
+    @Test
+    public void Should_Create_Constructor_Parameters_When_Could_Not_Find_Matching_Constructor_Parameters_Types() {
+        // given
+        final Class[] classesToTest = {ClassWithSyntheticConstructor.class};
+
+        final ConstructorParameters parameters = spy(new ConstructorParameters(new Object[]{"to", "many", "parameters"},
+                                                                               new Class[]{String.class, String.class, String.class}));
+        final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters = spy(new ArrayListValuedHashMap<>());
+        constructorParameters.put(ClassWithSyntheticConstructor.class, parameters);
+
+        final ConstructorTester constructorTester = new ConstructorTester();
+        constructorTester.setUserDefinedConstructors(constructorParameters);
+
+        // when
+        final Throwable result = catchThrowable(() -> constructorTester.testAll(classesToTest));
+
+        // then
+        assertThat(result).isNull();
+        verify(parameters, never()).getConstructorParameters();
     }
 
     private static class Pojo {

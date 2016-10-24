@@ -6,6 +6,8 @@ import classesForTest.Constructor_Stream;
 import classesForTest.Constructor_Thread;
 import classesForTest.EmptyEnum;
 import lombok.AllArgsConstructor;
+import org.apache.commons.collections4.MultiValuedMap;
+import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
@@ -45,7 +47,8 @@ import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 @RunWith(JUnitPlatform.class)
 public class InstantiableTest {
-    private static final Map<Class<?>, ConstructorParameters> CLASS_AND_CONSTRUCTOR_PARAMETERS = new HashMap<>();
+
+    private static final MultiValuedMap<Class<?>, ConstructorParameters> CLASS_AND_CONSTRUCTOR_PARAMETERS = new ArrayListValuedHashMap<>();
 
     @BeforeAll
     private static void beforeAll() {

@@ -7,13 +7,10 @@ import classesForTest.ObjectContainingStream;
 import classesForTest.fields.TestEnum1;
 import classesForTest.fields.collections.collection.Collections;
 import classesForTest.fields.collections.map.Maps;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.stream.Stream;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.apache.commons.collections4.MultiValuedMap;
+import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -28,6 +25,10 @@ import pl.pojo.tester.api.ConstructorParameters;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
 
+import java.util.List;
+import java.util.Random;
+import java.util.stream.Stream;
+
 import static helpers.TestHelper.getDefaultDisplayName;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
@@ -36,13 +37,15 @@ import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 public class ObjectGeneratorTest {
 
     private final AbstractFieldValueChanger abstractFieldValueChanger = DefaultFieldValueChanger.INSTANCE;
-    private final Map<Class<?>, ConstructorParameters> constructorParameters = new HashMap<>();
+    private final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters = new
+            ArrayListValuedHashMap<>();
 
     @Test
     public void Should_Generate_Different_Objects_For_Class_Containing_Boolean_Type() {
         // given
         final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger, constructorParameters);
-        final ClassAndFieldPredicatePair classAndFieldPredicatePair = new ClassAndFieldPredicatePair(ClassWithBooleanField.class);
+        final ClassAndFieldPredicatePair classAndFieldPredicatePair = new ClassAndFieldPredicatePair(
+                ClassWithBooleanField.class);
 
         // when
         final List<Object> result = objectGenerator.generateDifferentObjects(classAndFieldPredicatePair);
@@ -77,7 +80,8 @@ public class ObjectGeneratorTest {
     public Executable Should_Create_Same_Instance(final Object objectToCreateSameInstance) {
         return () -> {
             // given
-            final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger, constructorParameters);
+            final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger,
+                                                                        constructorParameters);
 
             // when
             final Object result = objectGenerator.generateSameInstance(objectToCreateSameInstance);
@@ -105,7 +109,8 @@ public class ObjectGeneratorTest {
     public Executable Should_Generate_Different_Objects(final DifferentObjectTestCase testCase) {
         return () -> {
             // given
-            final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger, constructorParameters);
+            final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger,
+                                                                        constructorParameters);
             final ClassAndFieldPredicatePair classAndFieldPredicatePair = new ClassAndFieldPredicatePair(testCase.clazz);
 
             // when

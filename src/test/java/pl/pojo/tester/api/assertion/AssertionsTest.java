@@ -26,16 +26,12 @@ public class AssertionsTest {
         // given
         final Class<A> expectedClass = A.class;
         final String fieldName = "a";
-        final ClassAndFieldPredicatePairCondition conditionToMatch = new ClassAndFieldPredicatePairCondition(
-                expectedClass,
-                fieldName);
+        final ClassAndFieldPredicatePairCondition conditionToMatch = new ClassAndFieldPredicatePairCondition(expectedClass, fieldName);
 
         // when
-        final SingleClassAssetion result = (SingleClassAssetion) Assertions.assertPojoMethodsFor(expectedClass);
-        final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair = getInternalState(result,
-                                                                                           "baseClassAndFieldPredicatePair");
-        final ClassAndFieldPredicatePair[] classAndFieldPredicatePairs = getInternalState(result,
-                                                                                          "classAndFieldPredicatePairs");
+        final SingleClassAssertion result = (SingleClassAssertion) Assertions.assertPojoMethodsFor(expectedClass);
+        final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair = getInternalState(result, "baseClassAndFieldPredicatePair");
+        final ClassAndFieldPredicatePair[] classAndFieldPredicatePairs = getInternalState(result, "classAndFieldPredicatePairs");
 
         // then
         assertThat(baseClassAndFieldPredicatePair).is(conditionToMatch);
@@ -48,16 +44,12 @@ public class AssertionsTest {
         final Class<A> expectedClass = A.class;
         final String fieldName = "a";
         final String expectedClassName = expectedClass.getName();
-        final ClassNameAndFieldPredicatePairCondition conditionToMatch = new ClassNameAndFieldPredicatePairCondition(
-                expectedClassName,
-                fieldName);
+        final ClassNameAndFieldPredicatePairCondition conditionToMatch = new ClassNameAndFieldPredicatePairCondition(expectedClassName, fieldName);
 
         // when
-        final SingleClassAssetion result = (SingleClassAssetion) Assertions.assertPojoMethodsFor(expectedClassName);
-        final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair = getInternalState(result,
-                                                                                           "baseClassAndFieldPredicatePair");
-        final ClassAndFieldPredicatePair[] classAndFieldPredicatePairs = getInternalState(result,
-                                                                                          "classAndFieldPredicatePairs");
+        final SingleClassAssertion result = (SingleClassAssertion) Assertions.assertPojoMethodsFor(expectedClassName);
+        final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair = getInternalState(result, "baseClassAndFieldPredicatePair");
+        final ClassAndFieldPredicatePair[] classAndFieldPredicatePairs = getInternalState(result, "classAndFieldPredicatePairs");
 
         // then
         assertThat(baseClassAndFieldPredicatePair).is(conditionToMatch);
@@ -71,17 +63,12 @@ public class AssertionsTest {
         final String fieldName = "a";
         final Predicate<String> predicate = name -> name.equals(fieldName);
         final String expectedClassName = expectedClass.getName();
-        final ClassNameAndFieldPredicatePairCondition conditionToMatch = new ClassNameAndFieldPredicatePairCondition(
-                expectedClassName,
-                fieldName);
+        final ClassNameAndFieldPredicatePairCondition conditionToMatch = new ClassNameAndFieldPredicatePairCondition(expectedClassName, fieldName);
 
         // when
-        final SingleClassAssetion result = (SingleClassAssetion) Assertions.assertPojoMethodsFor(expectedClassName,
-                                                                                                 predicate);
-        final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair = getInternalState(result,
-                                                                                           "baseClassAndFieldPredicatePair");
-        final ClassAndFieldPredicatePair[] classAndFieldPredicatePairs = getInternalState(result,
-                                                                                          "classAndFieldPredicatePairs");
+        final SingleClassAssertion result = (SingleClassAssertion) Assertions.assertPojoMethodsFor(expectedClassName, predicate);
+        final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair = getInternalState(result, "baseClassAndFieldPredicatePair");
+        final ClassAndFieldPredicatePair[] classAndFieldPredicatePairs = getInternalState(result, "classAndFieldPredicatePairs");
 
         // then
         assertThat(baseClassAndFieldPredicatePair).is(conditionToMatch);
@@ -94,17 +81,12 @@ public class AssertionsTest {
         final Class<A> expectedClass = A.class;
         final String fieldName = "a";
         final Predicate<String> predicate = name -> name.equals(fieldName);
-        final ClassAndFieldPredicatePairCondition conditionToMatch = new ClassAndFieldPredicatePairCondition(
-                expectedClass,
-                fieldName);
+        final ClassAndFieldPredicatePairCondition conditionToMatch = new ClassAndFieldPredicatePairCondition(expectedClass, fieldName);
 
         // when
-        final SingleClassAssetion result = (SingleClassAssetion) Assertions.assertPojoMethodsFor(expectedClass,
-                                                                                                 predicate);
-        final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair = getInternalState(result,
-                                                                                           "baseClassAndFieldPredicatePair");
-        final ClassAndFieldPredicatePair[] classAndFieldPredicatePairs = getInternalState(result,
-                                                                                          "classAndFieldPredicatePairs");
+        final SingleClassAssertion result = (SingleClassAssertion) Assertions.assertPojoMethodsFor(expectedClass, predicate);
+        final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair = getInternalState(result, "baseClassAndFieldPredicatePair");
+        final ClassAndFieldPredicatePair[] classAndFieldPredicatePairs = getInternalState(result, "classAndFieldPredicatePairs");
 
         // then
         assertThat(baseClassAndFieldPredicatePair).is(conditionToMatch);
@@ -118,13 +100,10 @@ public class AssertionsTest {
         final ClassAndFieldPredicatePair expectedClassAndFieldPredicate = new ClassAndFieldPredicatePair(expectedClass);
 
         // when
-        final SingleClassAssetion result = (SingleClassAssetion) Assertions.assertPojoMethodsFor(
-                expectedClassAndFieldPredicate,
-                expectedClassAndFieldPredicate);
-        final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair = getInternalState(result,
-                                                                                           "baseClassAndFieldPredicatePair");
-        final ClassAndFieldPredicatePair[] classAndFieldPredicatePairs = getInternalState(result,
-                                                                                          "classAndFieldPredicatePairs");
+        final SingleClassAssertion result = (SingleClassAssertion) Assertions.assertPojoMethodsFor(expectedClassAndFieldPredicate,
+                                                                                                   expectedClassAndFieldPredicate);
+        final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair = getInternalState(result, "baseClassAndFieldPredicatePair");
+        final ClassAndFieldPredicatePair[] classAndFieldPredicatePairs = getInternalState(result, "classAndFieldPredicatePairs");
 
         // then
         assertThat(baseClassAndFieldPredicatePair).isEqualTo(expectedClassAndFieldPredicate);
@@ -140,9 +119,8 @@ public class AssertionsTest {
 
 
         // when
-        final MultiClassAssetion result = (MultiClassAssetion) Assertions.assertPojoMethodsForAll(packageFilter);
-        final List<ClassAndFieldPredicatePair> classAndFieldPredicatePairs = getInternalState(result,
-                                                                                              "classAndFieldPredicatePairs");
+        final MultiClassAssertion result = (MultiClassAssertion) Assertions.assertPojoMethodsForAll(packageFilter);
+        final List<ClassAndFieldPredicatePair> classAndFieldPredicatePairs = getInternalState(result, "classAndFieldPredicatePairs");
 
         // then
         assertThat(classAndFieldPredicatePairs).hasSize(2);
@@ -158,10 +136,8 @@ public class AssertionsTest {
 
 
         // when
-        final MultiClassAssetion result = (MultiClassAssetion) Assertions.assertPojoMethodsForAll(expectedClass1,
-                                                                                                  expectedClass2);
-        final List<ClassAndFieldPredicatePair> classAndFieldPredicatePairs = getInternalState(result,
-                                                                                              "classAndFieldPredicatePairs");
+        final MultiClassAssertion result = (MultiClassAssertion) Assertions.assertPojoMethodsForAll(expectedClass1, expectedClass2);
+        final List<ClassAndFieldPredicatePair> classAndFieldPredicatePairs = getInternalState(result, "classAndFieldPredicatePairs");
 
         // then
         assertThat(classAndFieldPredicatePairs).hasSize(2);
@@ -177,19 +153,13 @@ public class AssertionsTest {
 
 
         // when
-        final MultiClassAssetion result = (MultiClassAssetion) Assertions.assertPojoMethodsForAll(expectedClass1Name,
-                                                                                                  expectedClass2Name);
-        final List<ClassAndFieldPredicatePair> classAndFieldPredicatePairs = getInternalState(result,
-                                                                                              "classAndFieldPredicatePairs");
+        final MultiClassAssertion result = (MultiClassAssertion) Assertions.assertPojoMethodsForAll(expectedClass1Name, expectedClass2Name);
+        final List<ClassAndFieldPredicatePair> classAndFieldPredicatePairs = getInternalState(result, "classAndFieldPredicatePairs");
 
         // then
         assertThat(classAndFieldPredicatePairs).hasSize(2);
-        assertThat(classAndFieldPredicatePairs.get(0)).is(new ClassNameAndFieldPredicatePairCondition
-                                                                  (expectedClass1Name,
-                                                                   "a"));
-        assertThat(classAndFieldPredicatePairs.get(1)).is(new ClassNameAndFieldPredicatePairCondition
-                                                                  (expectedClass2Name,
-                                                                   "b"));
+        assertThat(classAndFieldPredicatePairs.get(0)).is(new ClassNameAndFieldPredicatePairCondition(expectedClass1Name, "a"));
+        assertThat(classAndFieldPredicatePairs.get(1)).is(new ClassNameAndFieldPredicatePairCondition(expectedClass2Name, "b"));
     }
 
     @Test
@@ -202,9 +172,8 @@ public class AssertionsTest {
 
 
         // when
-        final MultiClassAssetion result = (MultiClassAssetion) Assertions.assertPojoMethodsForAll(pair1, pair2, pair2);
-        final List<ClassAndFieldPredicatePair> classAndFieldPredicatePairs = getInternalState(result,
-                                                                                              "classAndFieldPredicatePairs");
+        final MultiClassAssertion result = (MultiClassAssertion) Assertions.assertPojoMethodsForAll(pair1, pair2, pair2);
+        final List<ClassAndFieldPredicatePair> classAndFieldPredicatePairs = getInternalState(result, "classAndFieldPredicatePairs");
 
         // then
         assertThat(classAndFieldPredicatePairs).hasSize(3);
@@ -227,9 +196,7 @@ public class AssertionsTest {
         final ClassAndFieldPredicatePairArgumentMatcher classAndFieldPredicatePairArgumentMatcher;
 
         ClassAndFieldPredicatePairCondition(final Class<?> expectedClass, final String stringToMatchPredicate) {
-            this.classAndFieldPredicatePairArgumentMatcher = new ClassAndFieldPredicatePairArgumentMatcher
-                    (expectedClass,
-                     stringToMatchPredicate);
+            this.classAndFieldPredicatePairArgumentMatcher = new ClassAndFieldPredicatePairArgumentMatcher(expectedClass, stringToMatchPredicate);
         }
 
         @Override
@@ -242,9 +209,7 @@ public class AssertionsTest {
         final ClassNameAndFieldPredicatePairArgumentMatcher classAndFieldPredicatePairArgumentMatcher;
 
         ClassNameAndFieldPredicatePairCondition(final String expectedClass, final String stringToMatchPredicate) {
-            this.classAndFieldPredicatePairArgumentMatcher = new ClassNameAndFieldPredicatePairArgumentMatcher(
-                    expectedClass,
-                    stringToMatchPredicate);
+            this.classAndFieldPredicatePairArgumentMatcher = new ClassNameAndFieldPredicatePairArgumentMatcher(expectedClass, stringToMatchPredicate);
         }
 
         @Override

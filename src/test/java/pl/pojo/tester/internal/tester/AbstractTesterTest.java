@@ -4,6 +4,7 @@ import helpers.ClassAndFieldPredicatePairArgumentMatcher;
 import helpers.RecursivelyEqualArgumentMatcher;
 import helpers.StringPredicateArgumentMatcher;
 import lombok.Data;
+import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
@@ -12,7 +13,6 @@ import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
 import pl.pojo.tester.internal.instantiator.ObjectGenerator;
 
-import java.util.HashMap;
 import java.util.function.Predicate;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -109,7 +109,8 @@ public class AbstractTesterTest {
         final ObjectGenerator beforeChange = abstractTester.objectGenerator;
 
         // when
-        abstractTester.setUserDefinedConstructors(new HashMap<>());
+        abstractTester.setUserDefinedConstructors(new ArrayListValuedHashMap<>());
+
         final ObjectGenerator afterChange = abstractTester.objectGenerator;
 
         // then

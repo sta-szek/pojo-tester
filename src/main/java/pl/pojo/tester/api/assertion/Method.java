@@ -1,6 +1,5 @@
 package pl.pojo.tester.api.assertion;
 
-import lombok.Getter;
 import pl.pojo.tester.internal.tester.AbstractTester;
 import pl.pojo.tester.internal.tester.ConstructorTester;
 import pl.pojo.tester.internal.tester.EqualsTester;
@@ -17,7 +16,6 @@ import pl.pojo.tester.internal.tester.ToStringTester;
  * @author Piotr Joński
  * @since 0.1.0
  */
-@Getter
 public enum Method {
     EQUALS(new EqualsTester()),
     HASH_CODE(new HashCodeTester()),
@@ -30,5 +28,9 @@ public enum Method {
 
     Method(final AbstractTester tester) {
         this.tester = tester;
+    }
+
+    public AbstractTester getTester() {
+        return tester;
     }
 }

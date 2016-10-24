@@ -1,5 +1,7 @@
 package pl.pojo.tester.internal.tester;
 
+import org.apache.commons.collections4.MultiValuedMap;
+import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import pl.pojo.tester.api.ClassAndFieldPredicatePair;
@@ -11,9 +13,7 @@ import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
 import pl.pojo.tester.internal.instantiator.ObjectGenerator;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Predicate;
 
 
@@ -21,7 +21,7 @@ public abstract class AbstractTester {
 
     ObjectGenerator objectGenerator;
     TestAssertions testAssertions = new TestAssertions();
-    private Map<Class<?>, ConstructorParameters> constructorParameters = new HashMap<>();
+    private MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters = new ArrayListValuedHashMap<>();
     private AbstractFieldValueChanger fieldValuesChanger = DefaultFieldValueChanger.INSTANCE;
 
 
@@ -44,8 +44,7 @@ public abstract class AbstractTester {
         test(classAndFieldPredicatePair);
     }
 
-    public abstract void test(final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair,
-                              final ClassAndFieldPredicatePair... classAndFieldPredicatePairs);
+    public abstract void test(final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair, final ClassAndFieldPredicatePair... classAndFieldPredicatePairs);
 
     public void testAll(final Class... classes) {
         final ClassAndFieldPredicatePair[] classesAndFieldPredicatesPairs = Arrays.stream(classes)
@@ -66,7 +65,7 @@ public abstract class AbstractTester {
         objectGenerator = new ObjectGenerator(fieldValuesChanger, constructorParameters);
     }
 
-    public void setUserDefinedConstructors(final Map<Class<?>, ConstructorParameters> constructorParameters) {
+    public void setUserDefinedConstructors(final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
         this.constructorParameters = constructorParameters;
         objectGenerator = new ObjectGenerator(fieldValuesChanger, constructorParameters);
     }
@@ -99,7 +98,7 @@ public abstract class AbstractTester {
                                     .toHashCode();
     }
 
-    protected Map<Class<?>, ConstructorParameters> getConstructorParameters() {
+    protected MultiValuedMap<Class<?>, ConstructorParameters> getConstructorParameters() {
         return constructorParameters;
     }
 }
