@@ -26,6 +26,7 @@
   * [Conclusions](comparison/README.md#conclusions)
 * [Contributors](contributors/README.md)
 * [Release Notes](release-notes/README.md)
+  * [Release 0.6.0](release-notes/README.md#release-060)
   * [Release 0.5.0](release-notes/README.md#release-050)
   * [Release 0.4.0](release-notes/README.md#release-040)
   * [Release 0.3.0](release-notes/README.md#release-030)
