@@ -2,9 +2,18 @@
 
 Download latest version [ ![Download](https://api.bintray.com/packages/sta-szek/maven/pojo-tester/images/download.svg) ](https://bintray.com/sta-szek/maven/pojo-tester/_latestVersion)
 
-## Release version 0.5.0 {#release-050}
+## Release version 0.6.0 {#release-060}
 
 First `POJO-TESTER` open source release.
+
+### Features
+* Tests will fail if `equals` or `hashCode` implementation depends on excluded fields ([#121](https://github.com/sta-szek/pojo-tester/issues/121))
+
+
+
+
+
+## Release version 0.5.0 {#release-050}
 
 ### Features
 * `POJO-TESTER` can test constructors ([#113](https://github.com/sta-szek/pojo-tester/issues/113))
