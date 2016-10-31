@@ -10,21 +10,21 @@ class PrimitiveInstantiator extends ObjectInstantiator {
 
     static {
         PREPARED_OBJECTS.put("java.lang.Boolean", Boolean.FALSE);
-        PREPARED_OBJECTS.put("java.lang.Byte", Byte.MAX_VALUE);
-        PREPARED_OBJECTS.put("java.lang.Character", Character.MAX_VALUE);
-        PREPARED_OBJECTS.put("java.lang.Double", Double.MAX_VALUE);
-        PREPARED_OBJECTS.put("java.lang.Float", Float.MAX_VALUE);
-        PREPARED_OBJECTS.put("java.lang.Integer", Integer.MAX_VALUE);
-        PREPARED_OBJECTS.put("java.lang.Long", Long.MAX_VALUE);
-        PREPARED_OBJECTS.put("java.lang.Short", Short.MAX_VALUE);
-        PREPARED_OBJECTS.put("boolean", Boolean.FALSE);
-        PREPARED_OBJECTS.put("byte", Byte.MAX_VALUE);
-        PREPARED_OBJECTS.put("char", Character.MAX_VALUE);
-        PREPARED_OBJECTS.put("double", Double.MAX_VALUE);
-        PREPARED_OBJECTS.put("float", Float.MAX_VALUE);
-        PREPARED_OBJECTS.put("int", Integer.MAX_VALUE);
-        PREPARED_OBJECTS.put("long", Long.MAX_VALUE);
-        PREPARED_OBJECTS.put("short", Short.MAX_VALUE);
+        PREPARED_OBJECTS.put("java.lang.Byte", (byte) 1);
+        PREPARED_OBJECTS.put("java.lang.Character", 'a');
+        PREPARED_OBJECTS.put("java.lang.Double", 2.5D);
+        PREPARED_OBJECTS.put("java.lang.Float", 3.5F);
+        PREPARED_OBJECTS.put("java.lang.Integer", 4);
+        PREPARED_OBJECTS.put("java.lang.Long", 5L);
+        PREPARED_OBJECTS.put("java.lang.Short", (short) 6);
+        PREPARED_OBJECTS.put("boolean", Boolean.TRUE);
+        PREPARED_OBJECTS.put("byte", (byte) -1);
+        PREPARED_OBJECTS.put("char", 'b');
+        PREPARED_OBJECTS.put("double", -2.5D);
+        PREPARED_OBJECTS.put("float", -3.5F);
+        PREPARED_OBJECTS.put("int", -4);
+        PREPARED_OBJECTS.put("long", -5L);
+        PREPARED_OBJECTS.put("short", (short) -6);
     }
 
     PrimitiveInstantiator(final Class<?> clazz) {
