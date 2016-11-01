@@ -14,7 +14,8 @@
     "advanced-emoji",
     "prettify-html",
     "ga",
-    "github"
+    "github",
+    "githubcontributors"
   ],
   "pluginsConfig": {
     "ga": {
@@ -33,6 +34,10 @@
     },
     "disqus": {
       "shortName": "pojo"
+    },
+    "githubcontributors": {
+      "githubOwner": "sta-szek",
+      "githubRepository": "pojo-tester"
     }
   }
 }
