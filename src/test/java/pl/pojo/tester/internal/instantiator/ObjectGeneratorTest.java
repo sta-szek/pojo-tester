@@ -103,8 +103,22 @@ public class ObjectGeneratorTest {
                          new DifferentObjectTestCase(Collections.class, 4096),
                          new DifferentObjectTestCase(Maps.class, 64),
                          new DifferentObjectTestCase(GoodPojo_Equals_HashCode_ToString.class, 1024),
-                         new DifferentObjectTestCase(Arrays.class, 65536)
-        )
+                         new DifferentObjectTestCase(Arrays_Primitive_Boolean.class, 2),
+                         new DifferentObjectTestCase(Arrays_Primitive_Byte.class, 2),
+                         new DifferentObjectTestCase(Arrays_Primitive_Char.class, 2),
+                         new DifferentObjectTestCase(Arrays_Primitive_Double.class, 2),
+                         new DifferentObjectTestCase(Arrays_Primitive_Float.class, 2),
+                         new DifferentObjectTestCase(Arrays_Primitive_Int.class, 2),
+                         new DifferentObjectTestCase(Arrays_Primitive_Long.class, 2),
+                         new DifferentObjectTestCase(Arrays_Primitive_Short.class, 2),
+                         new DifferentObjectTestCase(Arrays_Wrapped_Boolean.class, 2),
+                         new DifferentObjectTestCase(Arrays_Wrapped_Byte.class, 2),
+                         new DifferentObjectTestCase(Arrays_Wrapped_Character.class, 2),
+                         new DifferentObjectTestCase(Arrays_Wrapped_Double.class, 2),
+                         new DifferentObjectTestCase(Arrays_Wrapped_Float.class, 2),
+                         new DifferentObjectTestCase(Arrays_Wrapped_Integer.class, 2),
+                         new DifferentObjectTestCase(Arrays_Wrapped_Long.class, 2),
+                         new DifferentObjectTestCase(Arrays_Wrapped_Short.class, 2))
                      .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Generate_Different_Objects(value)));
     }
 
@@ -179,24 +193,82 @@ public class ObjectGeneratorTest {
     }
 
     @Data
-    @AllArgsConstructor
-    class Arrays {
+    class Arrays_Primitive_Boolean {
         private final boolean[] a = new boolean[]{};
-        private final byte[] b = new byte[]{};
-        private final char[] c = new char[]{};
-        private final double[] d = new double[]{};
-        private final float[] e = new float[]{};
-        private final int[] f = new int[]{};
-        private final long[] g = new long[]{};
-        private final short[] h = new short[]{};
+    }
 
+    @Data
+    class Arrays_Primitive_Byte {
+        private final byte[] b = new byte[]{};
+    }
+
+    @Data
+    class Arrays_Primitive_Char {
+        private final char[] c = new char[]{};
+    }
+
+    @Data
+    class Arrays_Primitive_Double {
+        private final double[] d = new double[]{};
+    }
+
+    @Data
+    class Arrays_Primitive_Float {
+        private final float[] e = new float[]{};
+    }
+
+    @Data
+    class Arrays_Primitive_Int {
+        private final int[] f = new int[]{};
+    }
+
+    @Data
+    class Arrays_Primitive_Long {
+        private final long[] g = new long[]{};
+    }
+
+    @Data
+    class Arrays_Primitive_Short {
+        private final short[] h = new short[]{};
+    }
+
+    @Data
+    class Arrays_Wrapped_Boolean {
         private final Boolean[] i = new Boolean[]{};
+    }
+
+    @Data
+    class Arrays_Wrapped_Byte {
         private final Byte[] j = new Byte[]{};
+    }
+
+    @Data
+    class Arrays_Wrapped_Character {
         private final Character[] k = new Character[]{};
+    }
+
+    @Data
+    class Arrays_Wrapped_Double {
         private final Double[] l = new Double[]{};
+    }
+
+    @Data
+    class Arrays_Wrapped_Float {
         private final Float[] m = new Float[]{};
+    }
+
+    @Data
+    class Arrays_Wrapped_Integer {
         private final Integer[] n = new Integer[]{};
+    }
+
+    @Data
+    class Arrays_Wrapped_Long {
         private final Long[] o = new Long[]{};
+    }
+
+    @Data
+    class Arrays_Wrapped_Short {
         private final Short[] p = new Short[]{};
     }
 
