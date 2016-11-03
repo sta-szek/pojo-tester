@@ -16,7 +16,7 @@ class SingleClassAssertion extends AbstractAssertion {
     }
 
     @Override
-    protected void testImplementation() {
+    protected void runAssertions() {
         testers.forEach(tester -> tester.test(baseClassAndFieldPredicatePair, classAndFieldPredicatePairs));
     }
 }

@@ -75,7 +75,7 @@ public class ObjectGenerator {
 
                 if (nestedFieldsToChangeInFieldType == null || permutationFieldType.equals(baseClass)) {
                     Object newFieldTypeInstance = createNewInstance(permutationFieldType);
-                    if (newFieldTypeInstance.equals(FieldUtils.getValue(baseObject, permutationField))) {
+                    if (Objects.deepEquals(newFieldTypeInstance, FieldUtils.getValue(baseObject, permutationField))) {
                         newFieldTypeInstance = abstractFieldValueChanger.increaseValue(newFieldTypeInstance);
                     }
 
@@ -109,13 +109,6 @@ public class ObjectGenerator {
         return result;
     }
 
-    private Object generateInstanceWithDifferentFieldValues(final Object baseObject, final List<Field> fieldsToChange) {
-        final Object objectToChange = generateSameInstance(baseObject);
-        abstractFieldValueChanger.changeFieldsValues(baseObject, objectToChange, fieldsToChange);
-
-        return objectToChange;
-    }
-
     private List<Object> generateDifferentObjects(final Class<?> clazz, final List<Field> fieldsToChange) {
         final List<Object> differentObjects;
         final List<List<Field>> permutationOfFields = FieldUtils.permutations(fieldsToChange);
@@ -126,6 +119,13 @@ public class ObjectGenerator {
                                               .collect(Collectors.toList());
         differentObjects.add(0, fieldObject);
         return differentObjects;
+    }
+
+    private Object generateInstanceWithDifferentFieldValues(final Object baseObject, final List<Field> fieldsToChange) {
+        final Object objectToChange = generateSameInstance(baseObject);
+        abstractFieldValueChanger.changeFieldsValues(baseObject, objectToChange, fieldsToChange);
+
+        return objectToChange;
     }
 
     private List<Object> createCopiesAndFillThem(final List<Object> baseObjects, final Map.Entry<Field, List<Object>> nestedObjectsToSet) {

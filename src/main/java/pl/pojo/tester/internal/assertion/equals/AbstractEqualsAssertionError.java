@@ -3,10 +3,10 @@ package pl.pojo.tester.internal.assertion.equals;
 
 import pl.pojo.tester.internal.assertion.AssertionError;
 
-public abstract class EqualsAssertionError extends AssertionError {
+public abstract class AbstractEqualsAssertionError extends AssertionError {
 
 
-    EqualsAssertionError(final Class<?> testedCass) {
+    AbstractEqualsAssertionError(final Class<?> testedCass) {
         super(testedCass);
     }
 

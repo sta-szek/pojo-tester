@@ -105,7 +105,7 @@ public abstract class AbstractAssertion {
 
         testers.forEach(tester -> tester.setUserDefinedConstructors(constructorParameters));
 
-        testImplementation();
+        runAssertions();
     }
 
     /**
@@ -188,6 +188,6 @@ public abstract class AbstractAssertion {
         return this;
     }
 
-    protected abstract void testImplementation();
+    protected abstract void runAssertions();
 
 }

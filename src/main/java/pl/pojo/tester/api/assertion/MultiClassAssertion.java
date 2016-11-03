@@ -14,7 +14,7 @@ class MultiClassAssertion extends AbstractAssertion {
     }
 
     @Override
-    protected void testImplementation() {
+    protected void runAssertions() {
         final ClassAndFieldPredicatePair[] classes = classAndFieldPredicatePairs.toArray(new ClassAndFieldPredicatePair[classAndFieldPredicatePairs.size()]);
         testers.forEach(tester -> tester.testAll(classes));
     }

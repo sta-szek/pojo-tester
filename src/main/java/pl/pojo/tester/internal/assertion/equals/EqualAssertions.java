@@ -70,7 +70,7 @@ public class EqualAssertions {
         checkResult(result, new EqualEqualsAssertionError(classUnderTest, objectUnderAssert, objectToCompare));
     }
 
-    private void checkResult(final boolean pass, final EqualsAssertionError errorToThrow) {
+    private void checkResult(final boolean pass, final AbstractEqualsAssertionError errorToThrow) {
         if (!pass) {
             throw errorToThrow;
         }

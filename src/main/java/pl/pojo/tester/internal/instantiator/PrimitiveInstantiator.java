@@ -4,7 +4,7 @@ package pl.pojo.tester.internal.instantiator;
 import java.util.HashMap;
 import java.util.Map;
 
-class PrimitiveInstantiator extends ObjectInstantiator {
+class PrimitiveInstantiator extends AbstractObjectInstantiator {
 
     private static final Map<String, Object> PREPARED_OBJECTS = new HashMap<>();
 

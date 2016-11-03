@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 import pl.pojo.tester.api.FieldPredicate;
-import pl.pojo.tester.internal.assertion.equals.EqualsAssertionError;
+import pl.pojo.tester.internal.assertion.equals.AbstractEqualsAssertionError;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
 
 import java.util.ArrayList;
@@ -74,7 +74,7 @@ public class EqualsTesterTest {
         final Throwable result = catchThrowable(() -> equalsTester.testAll(classesToTest));
 
         // then
-        assertThat(result).isInstanceOf(EqualsAssertionError.class);
+        assertThat(result).isInstanceOf(AbstractEqualsAssertionError.class);
     }
 
     @Test
@@ -87,7 +87,7 @@ public class EqualsTesterTest {
         final Throwable result = catchThrowable(() -> equalsTester.testAll(classesToTest));
 
         // then
-        assertThat(result).isInstanceOf(EqualsAssertionError.class);
+        assertThat(result).isInstanceOf(AbstractEqualsAssertionError.class);
     }
 
     @Test
@@ -100,7 +100,7 @@ public class EqualsTesterTest {
         final Throwable result = catchThrowable(() -> equalsTester.testAll(classesToTest));
 
         // then
-        assertThat(result).isInstanceOf(EqualsAssertionError.class);
+        assertThat(result).isInstanceOf(AbstractEqualsAssertionError.class);
     }
 
     @Test
@@ -115,7 +115,7 @@ public class EqualsTesterTest {
         final Throwable result = catchThrowable(() -> equalsTester.testAll(classesToTest));
 
         // then
-        assertThat(result).isInstanceOf(EqualsAssertionError.class);
+        assertThat(result).isInstanceOf(AbstractEqualsAssertionError.class);
     }
 
     @Test
@@ -128,7 +128,7 @@ public class EqualsTesterTest {
         final Throwable result = catchThrowable(() -> equalsTester.testAll(classesToTest));
 
         // then
-        assertThat(result).isInstanceOf(EqualsAssertionError.class);
+        assertThat(result).isInstanceOf(AbstractEqualsAssertionError.class);
     }
 
     @Test
@@ -142,7 +142,7 @@ public class EqualsTesterTest {
         final Throwable result = catchThrowable(() -> equalsTester.test(classToTest, includedFields));
 
         // then
-        assertThat(result).isInstanceOf(EqualsAssertionError.class);
+        assertThat(result).isInstanceOf(AbstractEqualsAssertionError.class);
     }
 
     private class GoodPojo_Equals_HashCode_ToString {

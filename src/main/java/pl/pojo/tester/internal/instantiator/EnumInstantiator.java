@@ -3,7 +3,7 @@ package pl.pojo.tester.internal.instantiator;
 
 import java.util.Random;
 
-class EnumInstantiator extends ObjectInstantiator {
+class EnumInstantiator extends AbstractObjectInstantiator {
 
     EnumInstantiator(final Class<?> clazz) {
         super(clazz);

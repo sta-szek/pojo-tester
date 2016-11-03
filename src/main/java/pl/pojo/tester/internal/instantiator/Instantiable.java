@@ -15,8 +15,8 @@ public final class Instantiable {
 
     private Instantiable() {}
 
-    static ObjectInstantiator forClass(final Class<?> clazz,
-                                       final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
+    static AbstractObjectInstantiator forClass(final Class<?> clazz,
+                                               final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
         if (userDefinedConstructorParametersFor(clazz, constructorParameters)) {
             return new UserDefinedConstructorInstantiator(clazz, constructorParameters);
         }

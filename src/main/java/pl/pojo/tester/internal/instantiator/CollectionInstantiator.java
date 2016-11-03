@@ -25,7 +25,7 @@ import java.util.TreeSet;
 import java.util.Vector;
 import java.util.stream.Stream;
 
-class CollectionInstantiator extends ObjectInstantiator {
+class CollectionInstantiator extends AbstractObjectInstantiator {
     private static final Map<Class<?>, Object> PREPARED_OBJECTS = new LinkedHashMap<>();
 
     static {

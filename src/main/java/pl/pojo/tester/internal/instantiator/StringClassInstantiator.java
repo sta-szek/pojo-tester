@@ -1,6 +1,6 @@
 package pl.pojo.tester.internal.instantiator;
 
-class StringClassInstantiator extends ObjectInstantiator {
+class StringClassInstantiator extends AbstractObjectInstantiator {
 
     StringClassInstantiator() {
         super(String.class);

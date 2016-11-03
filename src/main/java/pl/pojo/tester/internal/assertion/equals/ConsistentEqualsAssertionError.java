@@ -1,7 +1,7 @@
 package pl.pojo.tester.internal.assertion.equals;
 
 
-class ConsistentEqualsAssertionError extends EqualsAssertionError {
+class ConsistentEqualsAssertionError extends AbstractEqualsAssertionError {
 
     private static final String CONSTRAINT_CONSISTENT = "The equals method should be consistent when comparing same objects multiple "
                                                         + "times.\n"

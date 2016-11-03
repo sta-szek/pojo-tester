@@ -7,8 +7,8 @@ class SortedSetValueChanger extends AbstractCollectionFieldValueChanger<SortedSe
 
     @Override
     protected SortedSet<?> increaseValue(final SortedSet<?> value, final Class<?> type) {
-        return value != null
-               ? null
-               : new TreeSet<>();
+        return value == null
+               ? new TreeSet<>()
+               : null;
     }
 }

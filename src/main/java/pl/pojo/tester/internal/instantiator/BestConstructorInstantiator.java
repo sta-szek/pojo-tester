@@ -9,7 +9,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.Objects;
 
-class BestConstructorInstantiator extends ObjectInstantiator {
+class BestConstructorInstantiator extends AbstractObjectInstantiator {
 
     private final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters;
 
@@ -44,7 +44,7 @@ class BestConstructorInstantiator extends ObjectInstantiator {
             final Class<?>[] parameterTypes = constructor.getParameterTypes();
             try {
                 final Object[] parameters = Arrays.stream(parameterTypes)
-                                                  .map(this::instantiate)
+                                                  .map(this::instantiateParameter)
                                                   .toArray();
                 return constructor.newInstance(parameters);
             } catch (final InstantiationException
@@ -60,7 +60,7 @@ class BestConstructorInstantiator extends ObjectInstantiator {
         }
     }
 
-    private Object instantiate(final Class<?> clazz) {
+    private Object instantiateParameter(final Class<?> clazz) {
         return Instantiable.forClass(clazz, constructorParameters)
                            .instantiate();
     }

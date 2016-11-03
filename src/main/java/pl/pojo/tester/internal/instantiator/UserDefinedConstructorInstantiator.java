@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-class UserDefinedConstructorInstantiator extends ObjectInstantiator {
+class UserDefinedConstructorInstantiator extends AbstractObjectInstantiator {
 
     private final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters;
 

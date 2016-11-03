@@ -1,7 +1,7 @@
 package pl.pojo.tester.internal.assertion.equals;
 
 
-class OtherTypeEqualsAssertionError extends EqualsAssertionError {
+class OtherTypeEqualsAssertionError extends AbstractEqualsAssertionError {
 
     private static final String CONSTRAINT_OTHER_TYPE = "The equals method should return false if object is comparing to object with "
                                                         + "different type.\n"
