@@ -75,7 +75,7 @@ public class ObjectGenerator {
 
                 if (nestedFieldsToChangeInFieldType == null || permutationFieldType.equals(baseClass)) {
                     Object newFieldTypeInstance = createNewInstance(permutationFieldType);
-                    if (newFieldTypeInstance.equals(FieldUtils.getValue(baseObject, permutationField))) {
+                    if (Objects.deepEquals(newFieldTypeInstance, FieldUtils.getValue(baseObject, permutationField))) {
                         newFieldTypeInstance = abstractFieldValueChanger.increaseValue(newFieldTypeInstance);
                     }
 

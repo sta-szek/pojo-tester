@@ -102,7 +102,9 @@ public class ObjectGeneratorTest {
                          new DifferentObjectTestCase(ObjectContainingStream.class, 2),
                          new DifferentObjectTestCase(Collections.class, 4096),
                          new DifferentObjectTestCase(Maps.class, 64),
-                         new DifferentObjectTestCase(GoodPojo_Equals_HashCode_ToString.class, 1024))
+                         new DifferentObjectTestCase(GoodPojo_Equals_HashCode_ToString.class, 1024),
+                         new DifferentObjectTestCase(Arrays.class, 65536)
+        )
                      .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Generate_Different_Objects(value)));
     }
 
@@ -174,6 +176,28 @@ public class ObjectGeneratorTest {
 
     private ClassAndFieldPredicatePair pair(final Class<?> clazz) {
         return new ClassAndFieldPredicatePair(clazz);
+    }
+
+    @Data
+    @AllArgsConstructor
+    class Arrays {
+        private final boolean[] a = new boolean[]{};
+        private final byte[] b = new byte[]{};
+        private final char[] c = new char[]{};
+        private final double[] d = new double[]{};
+        private final float[] e = new float[]{};
+        private final int[] f = new int[]{};
+        private final long[] g = new long[]{};
+        private final short[] h = new short[]{};
+
+        private final Boolean[] i = new Boolean[]{};
+        private final Byte[] j = new Byte[]{};
+        private final Character[] k = new Character[]{};
+        private final Double[] l = new Double[]{};
+        private final Float[] m = new Float[]{};
+        private final Integer[] n = new Integer[]{};
+        private final Long[] o = new Long[]{};
+        private final Short[] p = new Short[]{};
     }
 
     @Data
