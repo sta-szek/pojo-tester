@@ -26,7 +26,7 @@ public class SingleClassAssetionTest {
         setInternalState(singleClassAssetion, "testers", Sets.newHashSet(equalsTester1, equalsTester2));
 
         // when
-        singleClassAssetion.testImplementation();
+        singleClassAssetion.runAssertions();
 
         // then
         verify(equalsTester1, only()).test(classAndFieldPredicatePair, classAndFieldPredicatePairs);

@@ -3,7 +3,7 @@ package pl.pojo.tester.internal.assertion;
 
 public abstract class AssertionError extends RuntimeException {
 
-    protected Class<?> testedCass;
+    protected final Class<?> testedCass;
 
     public AssertionError(final Class<?> testedCass) {
         this.testedCass = testedCass;

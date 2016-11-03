@@ -192,7 +192,7 @@ public class AbstractAssertionTest {
     private class AbstractAssertionImplementation extends AbstractAssertion {
 
         @Override
-        protected void testImplementation() {
+        protected void runAssertions() {
             // not needed for tests
         }
     }

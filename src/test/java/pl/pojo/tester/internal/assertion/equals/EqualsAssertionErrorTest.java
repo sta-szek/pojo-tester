@@ -13,7 +13,7 @@ public class EqualsAssertionErrorTest {
     public void Should_Return_Expected_Error_Prefix() {
         // given
         final String expectedMessage = "Class java.lang.String has bad 'equals' method implementation.";
-        final EqualsAssertionError error = new MockOfEqualsAssertionError(String.class);
+        final AbstractEqualsAssertionError error = new MockOfEqualsAssertionError(String.class);
 
         // when
         final String result = error.getErrorPrefix();
@@ -22,7 +22,7 @@ public class EqualsAssertionErrorTest {
         assertThat(result).isEqualTo(expectedMessage);
     }
 
-    class MockOfEqualsAssertionError extends EqualsAssertionError {
+    class MockOfEqualsAssertionError extends AbstractEqualsAssertionError {
 
         MockOfEqualsAssertionError(final Class<?> testedCass) {
             super(testedCass);

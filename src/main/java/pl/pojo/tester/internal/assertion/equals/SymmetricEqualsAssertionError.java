@@ -1,7 +1,7 @@
 package pl.pojo.tester.internal.assertion.equals;
 
 
-class SymmetricEqualsAssertionError extends EqualsAssertionError {
+class SymmetricEqualsAssertionError extends AbstractEqualsAssertionError {
 
     private static final String CONSTRAINT_SYMMETRIC = "The equals method should return true for both a.equals(b) and b.equals(a).\n"
                                                        + "Current implementation returns:\n"

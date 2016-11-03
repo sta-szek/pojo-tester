@@ -1,7 +1,7 @@
 package pl.pojo.tester.internal.assertion.equals;
 
 
-class ReflexiveEqualsAssertionError extends EqualsAssertionError {
+class ReflexiveEqualsAssertionError extends AbstractEqualsAssertionError {
 
     private static final String CONSTRAINT_REFLEXIVE = "The equals method should return true if object is comparing to itself.\n"
                                                        + "Current implementation returns false.\n"

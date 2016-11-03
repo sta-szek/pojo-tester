@@ -10,6 +10,8 @@ Build status is provided by [![Build Status](https://travis-ci.org/sta-szek/pojo
 
 Current coverage is [![codecov](https://codecov.io/gh/sta-szek/pojo-tester/branch/master/graph/badge.svg)](https://codecov.io/gh/sta-szek/pojo-tester)
 
+Project quality [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f20e4ae366964fe4864179d26ed392c4)](https://www.codacy.com/app/sta-szek/pojo-tester?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=sta-szek/pojo-tester&amp;utm_campaign=Badge_Grade)
+
 Download latest version [![Download](https://api.bintray.com/packages/sta-szek/maven/pojo-tester/images/download.svg) ](https://bintray.com/sta-szek/maven/pojo-tester/_latestVersion)
 
 Get automatic notifications about new `POJO-TESTER` versions

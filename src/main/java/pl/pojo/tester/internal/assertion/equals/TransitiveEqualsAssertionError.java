@@ -1,7 +1,7 @@
 package pl.pojo.tester.internal.assertion.equals;
 
 
-class TransitiveEqualsAssertionError extends EqualsAssertionError {
+class TransitiveEqualsAssertionError extends AbstractEqualsAssertionError {
 
     private static final String CONSTRAINT_TRANSITIVE = "The equals method should return true in all cases: a.equals(b), b.equals(c) and "
                                                         + "a.equals(c).\n"

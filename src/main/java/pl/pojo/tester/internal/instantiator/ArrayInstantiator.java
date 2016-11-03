@@ -2,7 +2,7 @@ package pl.pojo.tester.internal.instantiator;
 
 import java.lang.reflect.Array;
 
-class ArrayInstantiator extends ObjectInstantiator {
+class ArrayInstantiator extends AbstractObjectInstantiator {
 
     private static final int DEFAULT_ARRAY_LENGTH = 0;
 

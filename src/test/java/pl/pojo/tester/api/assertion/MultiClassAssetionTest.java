@@ -28,7 +28,7 @@ public class MultiClassAssetionTest {
         setInternalState(multiClassAssetion, "testers", Sets.newHashSet(equalsTester1, equalsTester2));
 
         // when
-        multiClassAssetion.testImplementation();
+        multiClassAssetion.runAssertions();
 
         // then
         verify(equalsTester1, only()).testAll(argThat(new ClassAndFieldPredicatePairArgumentMatcher(A.class, "a")));

@@ -4,7 +4,7 @@ package pl.pojo.tester.internal.instantiator;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-class DefaultConstructorInstantiator extends ObjectInstantiator {
+class DefaultConstructorInstantiator extends AbstractObjectInstantiator {
 
     DefaultConstructorInstantiator(final Class<?> clazz) {
         super(clazz);
