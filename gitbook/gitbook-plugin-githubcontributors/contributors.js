@@ -32,9 +32,9 @@ require(['gitbook'], function (gitbook) {
         var settings = {
             "async": true,
             "crossDomain": true,
-            "url": "https://api.github.com/repos/sta-szek/pojo-tester/stats/contributors",
+            "url": "https://api.github.com/repos/" + githubOwner + "/" + githubRepository + "/stats/contributors",
             "method": "GET"
-        }
+        };
 
         $.ajax(settings).done(function (response) {
             resetContributorsContent(contributorsSection);
@@ -45,13 +45,13 @@ require(['gitbook'], function (gitbook) {
                 $(users).append(userContent);
             });
             $(users).children().sort(function (a, b) {
-                return a.children[0].dataset.weight > b.children[0].dataset.weight;
+                return parseInt(b.children[0].dataset.weight) - parseInt(a.children[0].dataset.weight);
             }).appendTo(contributorsSection);
         });
 
         listenForThemeChanges();
 
-    }
+    };
 
     var createUserContent = function (githubContribution) {
         var additions = 0;
@@ -61,24 +61,24 @@ require(['gitbook'], function (gitbook) {
             deletions += this.d;
         });
         return $("<div class='contributor'></div>").css('background-color', backgroundColor)
-            .append("<div class='contributor-avatar' data-weight=" + additions + "><img src='" + githubContribution.author.avatar_url + "'/></div>")
+            .append("<div class='contributor-avatar' data-weight='" + additions + "'><img src='" + githubContribution.author.avatar_url + "'/></div>")
             .append("<div class='contributor-data'><a href='" + githubContribution.author.html_url + "'>" + githubContribution.author.login + "</a><div class='contributor-additions'> " + format(additions) + " ++</div><div class='contributor-deletions'>" + format(deletions) + " --</div></div>");
-    }
+    };
 
     var resetContributorsContent = function (contributorsSection) {
         $(contributorsSection).html("");
-    }
+    };
 
     var showSpinner = function (contributorsSection) {
         $(contributorsSection).html(spinner);
-    }
+    };
 
     var format = function (number) {
         var fixed = number.toFixed(1).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
         return fixed.substring(0, fixed.length - 2);
-    }
+    };
 
-    gitbook.events.bind("page.change", function (event) {
+    gitbook.events.bind("page.change", function () {
         var contributorsSection = $("#GitHubContributors");
         if (contributorsSection.length != 0) {
             backgroundColor = $($('.book-summary')[0]).css('backgroundColor');
