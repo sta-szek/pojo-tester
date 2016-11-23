@@ -9,7 +9,7 @@ import java.io.IOException;
  * @author Piotr Joński
  * @since 0.5.0
  */
-public class PacakgeFilterException extends RuntimeException {
+public class PackageFilterException extends RuntimeException {
 
     /**
      * Instantiates exception.
@@ -17,7 +17,7 @@ public class PacakgeFilterException extends RuntimeException {
      * @param packageName package name or file of package
      * @param cause       cause, which raised this exception
      */
-    public PacakgeFilterException(final String packageName, final IOException cause) {
+    public PackageFilterException(final String packageName, final IOException cause) {
         super(createMessage(packageName), cause);
     }
 

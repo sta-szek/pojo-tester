@@ -55,19 +55,20 @@ public final class MethodUtils {
         final Class<?> returnType = method.getReturnType();
         final String methodName = method.getName();
         final int fieldNameLength = fieldName.length();
-        final String upperCaseFirstLetterfieldName = upperCaseFirstLetter(fieldName);
+        final String upperCaseFirstLetterFieldName = upperCaseFirstLetter(fieldName);
 
         if (returnType.equals(boolean.class) || returnType.equals(Boolean.class)) {
             return (methodName.startsWith("is") && methodName.equals(fieldName))
-                   || ((methodName.endsWith(upperCaseFirstLetterfieldName))
+                   || ((methodName.endsWith(upperCaseFirstLetterFieldName))
                        && ((methodName.startsWith("is") && (methodName.length() == (fieldNameLength + 2)))
                            || (methodName.startsWith("has") && (methodName.length() == (fieldNameLength + 3)))
                            || (methodName.startsWith("get") && (methodName.length() == (fieldNameLength + 3)))
                            || (methodName.startsWith("have") && (methodName.length() == (fieldNameLength + 4)))
                            || (methodName.startsWith("contains") && (methodName.length() == (fieldNameLength + 8)))));
         } else {
-            return methodName.startsWith("get") && methodName.length() == fieldNameLength + 3 && methodName.endsWith(
-                    upperCaseFirstLetterfieldName);
+            return methodName.startsWith("get")
+                   && methodName.length() == fieldNameLength + 3
+                   && methodName.endsWith(upperCaseFirstLetterFieldName);
         }
     }
 
@@ -83,8 +84,9 @@ public final class MethodUtils {
             return methodName.startsWith("set") && methodName.endsWith(fieldNameWithoutPrefix);
 
         } else {
-            return methodName.startsWith("set") && methodName.length() == fieldNameLength + 3 && methodName.endsWith(
-                    upperCaseFirstLetterFieldName);
+            return methodName.startsWith("set")
+                   && methodName.length() == fieldNameLength + 3
+                   && methodName.endsWith(upperCaseFirstLetterFieldName);
         }
     }
 

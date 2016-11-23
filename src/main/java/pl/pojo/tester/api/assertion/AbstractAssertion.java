@@ -110,10 +110,10 @@ public abstract class AbstractAssertion {
 
     /**
      * Indicates, that class should be constructed using given constructor parameters. Constructor will be selected
-     * based on constructor paramter's types.
+     * based on constructor parameter's types.
      *
      * @param qualifiedClassName        class to instantiate
-     * @param constructorParameters     constructor paramters
+     * @param constructorParameters     constructor parameters
      * @param constructorParameterTypes constructor parameter's types
      *
      * @return itself
@@ -130,10 +130,10 @@ public abstract class AbstractAssertion {
 
     /**
      * Indicates, that class should be constructed using given constructor parameters. Constructor will be selected
-     * based on constructor paramter's types.
+     * based on constructor parameter's types.
      *
      * @param qualifiedClassName    class to instantiate
-     * @param constructorParameters constructor paramters
+     * @param constructorParameters constructor parameters
      *
      * @return itself
      *
@@ -150,10 +150,10 @@ public abstract class AbstractAssertion {
 
     /**
      * Indicates, that class should be constructed using given constructor parameters. Constructor will be selected
-     * based on constructor paramter's types.
+     * based on constructor parameter's types.
      *
      * @param clazz                     class to instantiate
-     * @param constructorParameters     constructor paramters
+     * @param constructorParameters     constructor parameters
      * @param constructorParameterTypes constructor parameter's types
      *
      * @return itself
@@ -171,10 +171,10 @@ public abstract class AbstractAssertion {
 
     /**
      * Indicates, that class should be constructed using given constructor parameters. Constructor will be selected
-     * based on constructor paramter's types.
+     * based on constructor parameter's types.
      *
      * @param clazz                 class to instantiate
-     * @param constructorParameters constructor paramters
+     * @param constructorParameters constructor parameters
      *
      * @return itself
      *

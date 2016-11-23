@@ -51,6 +51,6 @@ public class DefaultPackageFilterTest {
                                                                           .getClasses());
 
         // then
-        assertThat(result).isInstanceOf(PacakgeFilterException.class);
+        assertThat(result).isInstanceOf(PackageFilterException.class);
     }
 }

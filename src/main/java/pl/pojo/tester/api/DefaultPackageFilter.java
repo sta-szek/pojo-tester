@@ -77,7 +77,7 @@ public final class DefaultPackageFilter implements PackageFilter {
                         .map(ClassLoader::loadClass)
                         .toArray(Class[]::new);
         } catch (final IOException e) {
-            throw new PacakgeFilterException(packageFile.toString(), e);
+            throw new PackageFilterException(packageFile.toString(), e);
         }
     }
 
@@ -103,7 +103,7 @@ public final class DefaultPackageFilter implements PackageFilter {
                                   .getContextClassLoader()
                                   .getResource(packagePath);
         if (fileUrl == null) {
-            throw new PacakgeFilterException(packagePath, null);
+            throw new PackageFilterException(packagePath, null);
         }
         return new File(fileUrl.getFile());
     }
