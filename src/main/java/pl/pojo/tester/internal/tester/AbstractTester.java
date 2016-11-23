@@ -19,28 +19,19 @@ import java.util.function.Predicate;
 
 public abstract class AbstractTester {
 
-     new
+    final TestAssertions testAssertions = new TestAssertions();
+    ObjectGenerator objectGenerator;
+    private MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters = new ArrayListValuedHashMap<>();
+    private AbstractFieldValueChanger fieldValuesChanger = DefaultFieldValueChanger.INSTANCE;
 
-    final TestAsserti
 
-    estAsserti
-ObjectGenerator obje dMap<
-    public AbstractTe
-    t eneCl ss ator;ons =    private Multi
-    ConstructorParamet rs<?>, constructorPar m>     private AbstractFieldValueChanger fieldValuesChanger = DefaultFieldValueChanger.INSTANCE; ters = new ArrayListValuedHashMap<
-
-    r()
-{
+    public AbstractTester() {
         this(DefaultFieldValueChanger.INSTANCE);
     }
 
-
     public AbstractTester(final AbstractFieldValueChanger abstractFieldValueChanger) {
-        objectGenerator = new ObjectGenerator(abstractFieldValueChanger, constructorParamet rs);
+        objectGenerator = new ObjectGenerator(abstractFieldValueChanger, constructorParameters);
     }
-
-TestAsserti
-    ;
 
     public void test(final Class<?> clazz) {
         final Predicate<String> predicateAcceptingAllFields = FieldPredicate.includeAllFields(clazz);
