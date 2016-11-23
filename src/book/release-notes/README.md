@@ -2,6 +2,20 @@
 
 Download latest version [ ![Download](https://api.bintray.com/packages/sta-szek/maven/pojo-tester/images/download.svg) ](https://bintray.com/sta-szek/maven/pojo-tester/_latestVersion)
 
+## Release version 0.7.0 {#release-070}
+
+First `POJO-TESTER` open source release.
+
+### Features
+* Support for inheritance fields ([#143](https://github.com/sta-szek/pojo-tester/issues/143))
+
+### Bugfixes
+* Better equality check ([#146](https://github.com/sta-szek/pojo-tester/issues/146))
+
+
+
+
+
 ## Release version 0.6.0 {#release-060}
 
 First `POJO-TESTER` open source release.
