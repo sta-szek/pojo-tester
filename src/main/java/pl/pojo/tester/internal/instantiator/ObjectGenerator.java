@@ -174,12 +174,21 @@ public class ObjectGenerator {
     }
 
     private Object makeThemEqual(final Object object, final Object newInstance) {
-        final List<Field> allFields = FieldUtils.getAllFields(object.getClass());
+        final List<Field> allFields = getAllFields(object);
         for (final Field field : allFields) {
             final Object value = FieldUtils.getValue(object, field);
             FieldUtils.setValue(newInstance, field, value);
         }
         return newInstance;
+    }
+
+    private List<Field> getAllFields(final Object object) {
+        Class<?> parent = object.getClass();
+        final List<Field> allFields = new ArrayList<>();
+        do {
+            allFields.addAll(FieldUtils.getAllFields(parent));
+        } while ((parent = parent.getSuperclass()) != null);
+        return allFields;
     }
 
 }

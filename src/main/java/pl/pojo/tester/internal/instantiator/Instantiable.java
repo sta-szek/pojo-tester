@@ -91,9 +91,7 @@ public final class Instantiable {
         final Constructor<?>[] constructors = clazz.getConstructors();
         return !qualifiesForProxy(clazz) && Arrays.stream(constructors)
                                                   .filter(Instantiable::isNoArgs)
-                                                  .filter(Instantiable::isPublic)
-                                                  .findAny()
-                                                  .isPresent();
+                                                  .anyMatch(Instantiable::isPublic);
     }
 
     private static boolean isPublic(final Constructor<?> constructor) {

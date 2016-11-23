@@ -23,7 +23,7 @@ public class ConstructorParameters {
     private final Class<?>[] constructorParametersTypes;
 
     /**
-     * Instantaites {@code ConstructorParameters} with given constructor parameters and constructor parameter's types.
+     * Instantiates {@code ConstructorParameters} with given constructor parameters and constructor parameter's types.
      *
      * @param constructorParameters      constructor parameters
      * @param constructorParametersTypes constructor parameter's types

@@ -19,8 +19,8 @@ import java.util.function.Predicate;
 
 public abstract class AbstractTester {
 
+    final TestAssertions testAssertions = new TestAssertions();
     ObjectGenerator objectGenerator;
-    TestAssertions testAssertions = new TestAssertions();
     private MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters = new ArrayListValuedHashMap<>();
     private AbstractFieldValueChanger fieldValuesChanger = DefaultFieldValueChanger.INSTANCE;
 
