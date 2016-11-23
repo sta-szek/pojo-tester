@@ -9,6 +9,10 @@ import classesForTest.fields.collections.collection.Collections;
 import classesForTest.fields.collections.map.Maps;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -27,6 +31,7 @@ import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
 
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 import static helpers.TestHelper.getDefaultDisplayName;
@@ -73,7 +78,8 @@ public class ObjectGeneratorTest {
         return Stream.of(new GoodPojo_Equals_HashCode_ToString(),
                          new ObjectContainingArray(),
                          new Collections(),
-                         new Maps())
+                         new Maps(),
+                         new SecondChild())
                      .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Create_Same_Instance(value)));
     }
 
@@ -502,5 +508,31 @@ public class ObjectGeneratorTest {
         }
     }
 
+    @Data
+    private class Parent {
+        private final UUID parentUUID;
+
+        private Parent() {this.parentUUID = UUID.randomUUID();}
+    }
+
+    @Getter
+    @Setter
+    @ToString(callSuper = true)
+    @EqualsAndHashCode(callSuper = true)
+    private class FirstChild extends Parent {
+        private final UUID childUUID;
+
+        private FirstChild() {this.childUUID = UUID.randomUUID();}
+    }
+
+    @Getter
+    @Setter
+    @ToString(callSuper = true)
+    @EqualsAndHashCode(callSuper = true)
+    private class SecondChild extends FirstChild {
+        private final UUID secondChild;
+
+        private SecondChild() {this.secondChild = UUID.randomUUID();}
+    }
 
 }
