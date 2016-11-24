@@ -37,7 +37,7 @@ repositories {
 }
 
 dependencies {
-    testCompile 'pl.pojo:pojo-tester:0.6.0'
+    testCompile 'pl.pojo:pojo-tester:${latest-version}'
 }
 ```
 
@@ -53,7 +53,7 @@ dependencies {
 <dependency>
   <groupId>pl.pojo</groupId>
   <artifactId>pojo-tester</artifactId>
-  <version>0.6.0</version>
+  <version>${latest-version}</version>
   <type>pom</type>
 </dependency>
 ```
