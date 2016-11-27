@@ -37,7 +37,8 @@
     },
     "githubcontributors": {
       "githubOwner": "sta-szek",
-      "githubRepository": "pojo-tester"
+      "githubRepository": "pojo-tester",
+      "contributorWidth": "380px"
     }
   }
 }
