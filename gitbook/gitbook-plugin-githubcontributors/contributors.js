@@ -2,6 +2,7 @@ require(['gitbook'], function (gitbook) {
 
     var githubOwner = "";
     var backgroundColor = $(".book-summary").css("background-color");
+    var contributorWidth = "";
 
     var githubRepository = "";
     var spinner = "<div class='spinner'><div class='bounce1'></div><div class='bounce2'></div><div class='bounce3'></div></div>";
@@ -60,7 +61,7 @@ require(['gitbook'], function (gitbook) {
             additions += this.a;
             deletions += this.d;
         });
-        return $("<div class='contributor'></div>").css('background-color', backgroundColor)
+        return $("<div></div>").css('background-color', backgroundColor).css('width', contributorWidth).css('display', 'inline-block')
             .append("<div class='contributor-avatar' data-weight='" + additions + "'><img src='" + githubContribution.author.avatar_url + "'/></div>")
             .append("<div class='contributor-data'><a href='" + githubContribution.author.html_url + "'>" + githubContribution.author.login + "</a><div class='contributor-additions'> " + format(additions) + " ++</div><div class='contributor-deletions'>" + format(deletions) + " --</div></div>");
     };
@@ -90,6 +91,7 @@ require(['gitbook'], function (gitbook) {
     gitbook.events.bind('start', function (e, config) {
         githubOwner = config.githubcontributors.githubOwner;
         githubRepository = config.githubcontributors.githubRepository;
+        contributorWidth = config.githubcontributors.contributorWidth;
     });
 
 });

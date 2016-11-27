@@ -46,13 +46,11 @@
 }
 
 .contributor-avatar {
-    width: 100px;
-    height: 100px;
     display: inline-block;
+    width: 40%;
 }
 
 .contributor {
-    width: 300px;
     display: inline-block;
     margin-right: 5px;
     margin-bottom: 5px
@@ -60,7 +58,8 @@
 
 .contributor-data {
     display: inline-block;
-    margin-left: 10px;
+    width: 57%;
+    margin-left: 3%;
 }
 
 .contributor-additions {
@@ -71,6 +70,3 @@
     color: #bd2c00;
 }
 
-.contributors {
-    width: 610px;
-}
