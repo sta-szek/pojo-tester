@@ -61,7 +61,11 @@ require(['gitbook'], function (gitbook) {
             additions += this.a;
             deletions += this.d;
         });
-        return $("<div></div>").css('background-color', backgroundColor).css('width', contributorWidth).css('display', 'inline-block')
+        return $("<div></div>")
+            .css('background-color', backgroundColor)
+            .css('width', contributorWidth)
+            .css('display', 'inline-block')
+            .css('margin', '0px 10px 10px 0px')
             .append("<div class='contributor-avatar' data-weight='" + additions + "'><img src='" + githubContribution.author.avatar_url + "'/></div>")
             .append("<div class='contributor-data'><a href='" + githubContribution.author.html_url + "'>" + githubContribution.author.login + "</a><div class='contributor-additions'> " + format(additions) + " ++</div><div class='contributor-deletions'>" + format(deletions) + " --</div></div>");
     };
