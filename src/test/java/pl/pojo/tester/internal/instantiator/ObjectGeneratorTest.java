@@ -54,7 +54,7 @@ public class ObjectGeneratorTest {
 
         // then
         assertThat(result).hasSize(2)
-                          .doesNotHaveDuplicates();
+                .doesNotHaveDuplicates();
     }
 
     @Test
@@ -69,7 +69,7 @@ public class ObjectGeneratorTest {
 
         // then
         assertThat(result).hasSize(16)
-                          .doesNotHaveDuplicates();
+                .doesNotHaveDuplicates();
     }
 
     @Test
@@ -87,19 +87,18 @@ public class ObjectGeneratorTest {
 
     @TestFactory
     public Stream<DynamicTest> Should_Create_Same_Instance() {
-        return Stream.of(new GoodPojo_Equals_HashCode_ToString(),
-                new ObjectContainingArray(),
-                new Collections(),
-                new Maps(),
-                new SecondChild())
-                     .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Create_Same_Instance(value)));
+        return Stream.of(new GoodPojo_Equals_HashCode_ToString(), new ObjectContainingArray(),
+                         new Collections(),
+                         new Maps(),
+                         new SecondChild())
+                .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Create_Same_Instance(value)));
     }
 
     public Executable Should_Create_Same_Instance(final Object objectToCreateSameInstance) {
         return () -> {
             // given
             final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger,
-                    constructorParameters);
+                                                                        constructorParameters);
 
             // when
             final Object result = objectGenerator.generateSameInstance(objectToCreateSameInstance);
@@ -112,39 +111,39 @@ public class ObjectGeneratorTest {
     @TestFactory
     public Stream<DynamicTest> Should_Generate_Different_Objects() {
         return Stream.of(new DifferentObjectTestCase(A.class, 4),
-                new DifferentObjectTestCase(B.class, 8),
-                new DifferentObjectTestCase(C.class, 16),
-                new DifferentObjectTestCase(ObjectContainingArray.class, 2),
-                new DifferentObjectTestCase(ObjectContainingIterable.class, 2),
-                new DifferentObjectTestCase(ObjectContainingIterator.class, 2),
-                new DifferentObjectTestCase(ObjectContainingStream.class, 2),
-                new DifferentObjectTestCase(Collections.class, 4096),
-                new DifferentObjectTestCase(Maps.class, 64),
-                new DifferentObjectTestCase(GoodPojo_Equals_HashCode_ToString.class, 1024),
-                new DifferentObjectTestCase(Arrays_Primitive_Boolean.class, 2),
-                new DifferentObjectTestCase(Arrays_Primitive_Byte.class, 2),
-                new DifferentObjectTestCase(Arrays_Primitive_Char.class, 2),
-                new DifferentObjectTestCase(Arrays_Primitive_Double.class, 2),
-                new DifferentObjectTestCase(Arrays_Primitive_Float.class, 2),
-                new DifferentObjectTestCase(Arrays_Primitive_Int.class, 2),
-                new DifferentObjectTestCase(Arrays_Primitive_Long.class, 2),
-                new DifferentObjectTestCase(Arrays_Primitive_Short.class, 2),
-                new DifferentObjectTestCase(Arrays_Wrapped_Boolean.class, 2),
-                new DifferentObjectTestCase(Arrays_Wrapped_Byte.class, 2),
-                new DifferentObjectTestCase(Arrays_Wrapped_Character.class, 2),
-                new DifferentObjectTestCase(Arrays_Wrapped_Double.class, 2),
-                new DifferentObjectTestCase(Arrays_Wrapped_Float.class, 2),
-                new DifferentObjectTestCase(Arrays_Wrapped_Integer.class, 2),
-                new DifferentObjectTestCase(Arrays_Wrapped_Long.class, 2),
-                new DifferentObjectTestCase(Arrays_Wrapped_Short.class, 2))
-                     .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Generate_Different_Objects(value)));
+                         new DifferentObjectTestCase(B.class, 8),
+                         new DifferentObjectTestCase(C.class, 16),
+                         new DifferentObjectTestCase(ObjectContainingArray.class, 2),
+                         new DifferentObjectTestCase(ObjectContainingIterable.class, 2),
+                         new DifferentObjectTestCase(ObjectContainingIterator.class, 2),
+                         new DifferentObjectTestCase(ObjectContainingStream.class, 2),
+                         new DifferentObjectTestCase(Collections.class, 4096),
+                         new DifferentObjectTestCase(Maps.class, 64),
+                         new DifferentObjectTestCase(GoodPojo_Equals_HashCode_ToString.class, 1024),
+                         new DifferentObjectTestCase(Arrays_Primitive_Boolean.class, 2),
+                         new DifferentObjectTestCase(Arrays_Primitive_Byte.class, 2),
+                         new DifferentObjectTestCase(Arrays_Primitive_Char.class, 2),
+                         new DifferentObjectTestCase(Arrays_Primitive_Double.class, 2),
+                         new DifferentObjectTestCase(Arrays_Primitive_Float.class, 2),
+                         new DifferentObjectTestCase(Arrays_Primitive_Int.class, 2),
+                         new DifferentObjectTestCase(Arrays_Primitive_Long.class, 2),
+                         new DifferentObjectTestCase(Arrays_Primitive_Short.class, 2),
+                         new DifferentObjectTestCase(Arrays_Wrapped_Boolean.class, 2),
+                         new DifferentObjectTestCase(Arrays_Wrapped_Byte.class, 2),
+                         new DifferentObjectTestCase(Arrays_Wrapped_Character.class, 2),
+                         new DifferentObjectTestCase(Arrays_Wrapped_Double.class, 2),
+                         new DifferentObjectTestCase(Arrays_Wrapped_Float.class, 2),
+                         new DifferentObjectTestCase(Arrays_Wrapped_Integer.class, 2),
+                         new DifferentObjectTestCase(Arrays_Wrapped_Long.class, 2),
+                         new DifferentObjectTestCase(Arrays_Wrapped_Short.class, 2))
+                .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Generate_Different_Objects(value)));
     }
 
     public Executable Should_Generate_Different_Objects(final DifferentObjectTestCase testCase) {
         return () -> {
             // given
             final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger,
-                    constructorParameters);
+                                                                        constructorParameters);
             final ClassAndFieldPredicatePair classAndFieldPredicatePair = new ClassAndFieldPredicatePair(testCase.clazz);
 
             // when
@@ -152,42 +151,46 @@ public class ObjectGeneratorTest {
 
             // then
             assertThat(result).hasSize(testCase.expectedSize)
-                              .doesNotHaveDuplicates();
+                    .doesNotHaveDuplicates();
         };
     }
 
     @TestFactory
     public Stream<DynamicTest> Should_Generate_Different_Objects_Recursively() throws IllegalAccessException {
+        ClassAndFieldPredicatePair[] pair1 = {pair(E.class), pair(F.class)};
+        ClassAndFieldPredicatePair[] pair2 = {pair(F.class)};
+        ClassAndFieldPredicatePair[] pair3 = {pair(A.class), pair(B.class), pair(F.class), pair(G.class)};
+
         final RecursivelyDifferentObjectTestCase case1 = new RecursivelyDifferentObjectTestCase(18,
-                pair(D.class),
-                new ClassAndFieldPredicatePair[]{pair(E.class), pair(F.class)});
+                                                                                                pair(D.class),
+                                                                                                pair1);
 
         final RecursivelyDifferentObjectTestCase case2 = new RecursivelyDifferentObjectTestCase(6,
-                pair(G.class),
-                new ClassAndFieldPredicatePair[]{pair(F.class)});
+                                                                                                pair(G.class),
+                                                                                                pair2);
 
         final RecursivelyDifferentObjectTestCase case3 = new RecursivelyDifferentObjectTestCase(945,
-                pair(H.class),
-                new ClassAndFieldPredicatePair[]{pair(A.class),
-                        pair(B.class),
-                        pair(F.class),
-                        pair(G.class)});
+                                                                                                pair(H.class),
+                                                                                                pair3);
 
         return Stream.of(case1, case2, case3)
-                     .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Generate_Different_Objects_Recursively(value)));
+                .map(value -> dynamicTest(getDefaultDisplayName(value),
+                                          Should_Generate_Different_Objects_Recursively(value)));
     }
 
     public Executable Should_Generate_Different_Objects_Recursively(final RecursivelyDifferentObjectTestCase testCase) {
         return () -> {
             // given
-            final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger, constructorParameters);
+            final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger,
+                                                                        constructorParameters);
 
             // when
-            final List<Object> result = objectGenerator.generateDifferentObjects(testCase.baseClass, testCase.otherClasses);
+            final List<Object> result = objectGenerator.generateDifferentObjects(testCase.baseClass,
+                                                                                 testCase.otherClasses);
 
             // then
             assertThat(result).hasSize(testCase.expectedSize)
-                              .doesNotHaveDuplicates();
+                    .doesNotHaveDuplicates();
         };
     }
 
@@ -203,7 +206,7 @@ public class ObjectGeneratorTest {
 
         // then
         assertThat(result).hasSize(expectedSize)
-                          .doesNotHaveDuplicates();
+                .doesNotHaveDuplicates();
     }
 
     private ClassAndFieldPredicatePair pair(final Class<?> clazz) {
@@ -387,16 +390,16 @@ public class ObjectGeneratorTest {
         @Override
         public String toString() {
             return new ToStringBuilder(this).append("random", random)
-                                            .append("byteField", byteField)
-                                            .append("shortType", shortType)
-                                            .append("intType", intType)
-                                            .append("longType", longType)
-                                            .append("doubleType", doubleType)
-                                            .append("booleanType", booleanType)
-                                            .append("floatType", floatType)
-                                            .append("charType", charType)
-                                            .append("testEnum1", testEnum1)
-                                            .toString();
+                    .append("byteField", byteField)
+                    .append("shortType", shortType)
+                    .append("intType", intType)
+                    .append("longType", longType)
+                    .append("doubleType", doubleType)
+                    .append("booleanType", booleanType)
+                    .append("floatType", floatType)
+                    .append("charType", charType)
+                    .append("testEnum1", testEnum1)
+                    .toString();
         }
 
         @Override
@@ -412,31 +415,31 @@ public class ObjectGeneratorTest {
             final GoodPojo_Equals_HashCode_ToString that = (GoodPojo_Equals_HashCode_ToString) o;
 
             return new EqualsBuilder().append(random, that.random)
-                                      .append(byteField, that.byteField)
-                                      .append(shortType, that.shortType)
-                                      .append(intType, that.intType)
-                                      .append(longType, that.longType)
-                                      .append(doubleType, that.doubleType)
-                                      .append(booleanType, that.booleanType)
-                                      .append(floatType, that.floatType)
-                                      .append(charType, that.charType)
-                                      .append(testEnum1, that.testEnum1)
-                                      .isEquals();
+                    .append(byteField, that.byteField)
+                    .append(shortType, that.shortType)
+                    .append(intType, that.intType)
+                    .append(longType, that.longType)
+                    .append(doubleType, that.doubleType)
+                    .append(booleanType, that.booleanType)
+                    .append(floatType, that.floatType)
+                    .append(charType, that.charType)
+                    .append(testEnum1, that.testEnum1)
+                    .isEquals();
         }
 
         @Override
         public int hashCode() {
             return new HashCodeBuilder().append(random)
-                                        .append(byteField)
-                                        .append(shortType)
-                                        .append(intType)
-                                        .append(longType)
-                                        .append(doubleType)
-                                        .append(booleanType)
-                                        .append(floatType)
-                                        .append(charType)
-                                        .append(testEnum1)
-                                        .toHashCode();
+                    .append(byteField)
+                    .append(shortType)
+                    .append(intType)
+                    .append(longType)
+                    .append(doubleType)
+                    .append(booleanType)
+                    .append(floatType)
+                    .append(charType)
+                    .append(testEnum1)
+                    .toHashCode();
         }
 
         public long getRandom() {
