@@ -14,7 +14,7 @@ import java.util.Random;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
-@RunWith(JUnitPlatform.class)
+
 public class EqualAssertionsTest {
 
     @Test

@@ -8,7 +8,7 @@ buildscript {
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
     }
     dependencies {
-        classpath("info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.1.9")
+        classpath("info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.1.10")
         classpath("org.junit.platform:junit-platform-gradle-plugin:1.0.0-SNAPSHOT") { changing = true }
     }
 }
@@ -20,9 +20,9 @@ plugins {
 ext {
     JUNIT_JUPITER_VERSION = "5.0.0-SNAPSHOT"
     JUNIT_PLATFORM_VERSION = "1.0.0-SNAPSHOT"
-    MOCKITO_VERSION = "2.1.0-RC.1"
+    MOCKITO_VERSION = "2.3.4"
     POWER_MOCK_UTILS_VERSION = "1.6.5"
-    ASSERTJ_CORE_VERSION = "3.5.2"
+    ASSERTJ_CORE_VERSION = "3.6.1"
 }
 
 apply plugin: 'java'
@@ -52,7 +52,7 @@ dependencies {
     compile("org.apache.commons:commons-collections4:4.1")
     compile("com.google.collections:google-collections:1.0")
     compile("com.googlecode.combinatoricslib:combinatoricslib:2.1")
-    compile("org.projectlombok:lombok:1.16.10")
+    compile("org.projectlombok:lombok:1.16.12")
     compile("org.javassist:javassist:3.20.0-GA")
 
 
@@ -65,7 +65,7 @@ dependencies {
 }
 
 jacoco {
-    toolVersion = "0.7.7.201606060606"
+    toolVersion = "0.7.8"
     reportsDir = file("$buildDir/reports")
 }
 
@@ -87,7 +87,7 @@ pitest {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '3.0'
+    gradleVersion = '3.2.1'
 }
 
 publishing {

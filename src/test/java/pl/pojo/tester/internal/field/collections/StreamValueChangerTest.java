@@ -17,7 +17,7 @@ import static org.assertj.core.util.Lists.newArrayList;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 import static org.powermock.reflect.Whitebox.getInternalState;
 
-@RunWith(JUnitPlatform.class)
+
 public class StreamValueChangerTest {
 
     private final StreamValueChanger valueChanger = new StreamValueChanger();

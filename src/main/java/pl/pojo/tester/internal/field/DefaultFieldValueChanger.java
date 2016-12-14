@@ -10,7 +10,8 @@ public final class DefaultFieldValueChanger {
     public static final AbstractFieldValueChanger INSTANCE = new EnumValueChanger()
             .attachNext(AbstractPrimitiveValueChanger.INSTANCE)
             .attachNext(CollectionsFieldValueChanger.INSTANCE)
-            .attachNext(new StringValueChanger());
+            .attachNext(new StringValueChanger())
+            .attachNext(new UUIDValueChanger());
 
     private DefaultFieldValueChanger() {
     }

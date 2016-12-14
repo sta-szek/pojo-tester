@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 import static org.powermock.reflect.Whitebox.getInternalState;
 
-@RunWith(JUnitPlatform.class)
+
 public class BooleanValueChangerTest {
 
     private final AbstractFieldValueChanger<Boolean> valueChanger = new BooleanValueChanger();

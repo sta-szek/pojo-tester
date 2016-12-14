@@ -9,7 +9,7 @@ import java.lang.reflect.Constructor;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
-@RunWith(JUnitPlatform.class)
+
 public class ConstructorAssertionsTest {
 
     @Test

@@ -1,6 +1,8 @@
 package classesForTest.fields;
 
 
+import java.util.UUID;
+
 public class AllFiledTypes {
     private final int finalIntType = 0;
     private byte byteType;
@@ -12,6 +14,11 @@ public class AllFiledTypes {
     private char characterType;
     private float floatType;
     private String stringType;
+    private UUID uuid;
+
+    public AllFiledTypes(UUID uuid) {
+        this.uuid = uuid;
+    }
 
     public AllFiledTypes(final String stringType) {
         this.stringType = stringType;

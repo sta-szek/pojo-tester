@@ -14,7 +14,7 @@ import java.lang.reflect.Constructor;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(JUnitPlatform.class)
+
 public class TestAssertionsTest {
 
     @Test

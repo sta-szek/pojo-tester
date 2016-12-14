@@ -24,7 +24,7 @@ import static org.mockito.Mockito.*;
 import static org.powermock.reflect.Whitebox.getInternalState;
 import static org.powermock.reflect.Whitebox.setInternalState;
 
-@RunWith(JUnitPlatform.class)
+
 public class AbstractAssertionTest {
 
     @Test

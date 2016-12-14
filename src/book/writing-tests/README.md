@@ -269,6 +269,7 @@ final AbstractFieldValueChanger valueChanger = DefaultFieldValueChanger.INSTANCE
 
 ### Default fields values changer
 Default fields values changer is a composition of listed changers:
+* `UUIDValueChanger`
 * `EnumValueChanger`
 * `BooleanValueChanger`
 * `ByteValueChanger`

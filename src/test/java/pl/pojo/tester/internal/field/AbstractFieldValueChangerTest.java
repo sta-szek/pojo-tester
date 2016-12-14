@@ -16,7 +16,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.powermock.reflect.Whitebox.getInternalState;
 
-@RunWith(JUnitPlatform.class)
+
 public class AbstractFieldValueChangerTest {
 
     @Test
