@@ -1,9 +1,6 @@
 package pl.pojo.tester.internal.instantiator;
 
-import classesForTest.ObjectContainingArray;
-import classesForTest.ObjectContainingIterable;
-import classesForTest.ObjectContainingIterator;
-import classesForTest.ObjectContainingStream;
+import classesForTest.*;
 import classesForTest.fields.TestEnum1;
 import classesForTest.fields.collections.collection.Collections;
 import classesForTest.fields.collections.map.Maps;
@@ -61,6 +58,21 @@ public class ObjectGeneratorTest {
     }
 
     @Test
+    public void Should_Generate_Different_Objects_For_Class_With_Private_Enum() {
+        // given
+        final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger, constructorParameters);
+        final ClassAndFieldPredicatePair classAndFieldPredicatePair = new ClassAndFieldPredicatePair(
+                ClassContainingPrivateEnum.class);
+
+        // when
+        final List<Object> result = objectGenerator.generateDifferentObjects(classAndFieldPredicatePair);
+
+        // then
+        assertThat(result).hasSize(16)
+                          .doesNotHaveDuplicates();
+    }
+
+    @Test
     public void Should_Create_Any_Instance() {
         // given
         final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger, constructorParameters);
@@ -76,10 +88,10 @@ public class ObjectGeneratorTest {
     @TestFactory
     public Stream<DynamicTest> Should_Create_Same_Instance() {
         return Stream.of(new GoodPojo_Equals_HashCode_ToString(),
-                         new ObjectContainingArray(),
-                         new Collections(),
-                         new Maps(),
-                         new SecondChild())
+                new ObjectContainingArray(),
+                new Collections(),
+                new Maps(),
+                new SecondChild())
                      .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Create_Same_Instance(value)));
     }
 
@@ -87,7 +99,7 @@ public class ObjectGeneratorTest {
         return () -> {
             // given
             final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger,
-                                                                        constructorParameters);
+                    constructorParameters);
 
             // when
             final Object result = objectGenerator.generateSameInstance(objectToCreateSameInstance);
@@ -100,31 +112,31 @@ public class ObjectGeneratorTest {
     @TestFactory
     public Stream<DynamicTest> Should_Generate_Different_Objects() {
         return Stream.of(new DifferentObjectTestCase(A.class, 4),
-                         new DifferentObjectTestCase(B.class, 8),
-                         new DifferentObjectTestCase(C.class, 16),
-                         new DifferentObjectTestCase(ObjectContainingArray.class, 2),
-                         new DifferentObjectTestCase(ObjectContainingIterable.class, 2),
-                         new DifferentObjectTestCase(ObjectContainingIterator.class, 2),
-                         new DifferentObjectTestCase(ObjectContainingStream.class, 2),
-                         new DifferentObjectTestCase(Collections.class, 4096),
-                         new DifferentObjectTestCase(Maps.class, 64),
-                         new DifferentObjectTestCase(GoodPojo_Equals_HashCode_ToString.class, 1024),
-                         new DifferentObjectTestCase(Arrays_Primitive_Boolean.class, 2),
-                         new DifferentObjectTestCase(Arrays_Primitive_Byte.class, 2),
-                         new DifferentObjectTestCase(Arrays_Primitive_Char.class, 2),
-                         new DifferentObjectTestCase(Arrays_Primitive_Double.class, 2),
-                         new DifferentObjectTestCase(Arrays_Primitive_Float.class, 2),
-                         new DifferentObjectTestCase(Arrays_Primitive_Int.class, 2),
-                         new DifferentObjectTestCase(Arrays_Primitive_Long.class, 2),
-                         new DifferentObjectTestCase(Arrays_Primitive_Short.class, 2),
-                         new DifferentObjectTestCase(Arrays_Wrapped_Boolean.class, 2),
-                         new DifferentObjectTestCase(Arrays_Wrapped_Byte.class, 2),
-                         new DifferentObjectTestCase(Arrays_Wrapped_Character.class, 2),
-                         new DifferentObjectTestCase(Arrays_Wrapped_Double.class, 2),
-                         new DifferentObjectTestCase(Arrays_Wrapped_Float.class, 2),
-                         new DifferentObjectTestCase(Arrays_Wrapped_Integer.class, 2),
-                         new DifferentObjectTestCase(Arrays_Wrapped_Long.class, 2),
-                         new DifferentObjectTestCase(Arrays_Wrapped_Short.class, 2))
+                new DifferentObjectTestCase(B.class, 8),
+                new DifferentObjectTestCase(C.class, 16),
+                new DifferentObjectTestCase(ObjectContainingArray.class, 2),
+                new DifferentObjectTestCase(ObjectContainingIterable.class, 2),
+                new DifferentObjectTestCase(ObjectContainingIterator.class, 2),
+                new DifferentObjectTestCase(ObjectContainingStream.class, 2),
+                new DifferentObjectTestCase(Collections.class, 4096),
+                new DifferentObjectTestCase(Maps.class, 64),
+                new DifferentObjectTestCase(GoodPojo_Equals_HashCode_ToString.class, 1024),
+                new DifferentObjectTestCase(Arrays_Primitive_Boolean.class, 2),
+                new DifferentObjectTestCase(Arrays_Primitive_Byte.class, 2),
+                new DifferentObjectTestCase(Arrays_Primitive_Char.class, 2),
+                new DifferentObjectTestCase(Arrays_Primitive_Double.class, 2),
+                new DifferentObjectTestCase(Arrays_Primitive_Float.class, 2),
+                new DifferentObjectTestCase(Arrays_Primitive_Int.class, 2),
+                new DifferentObjectTestCase(Arrays_Primitive_Long.class, 2),
+                new DifferentObjectTestCase(Arrays_Primitive_Short.class, 2),
+                new DifferentObjectTestCase(Arrays_Wrapped_Boolean.class, 2),
+                new DifferentObjectTestCase(Arrays_Wrapped_Byte.class, 2),
+                new DifferentObjectTestCase(Arrays_Wrapped_Character.class, 2),
+                new DifferentObjectTestCase(Arrays_Wrapped_Double.class, 2),
+                new DifferentObjectTestCase(Arrays_Wrapped_Float.class, 2),
+                new DifferentObjectTestCase(Arrays_Wrapped_Integer.class, 2),
+                new DifferentObjectTestCase(Arrays_Wrapped_Long.class, 2),
+                new DifferentObjectTestCase(Arrays_Wrapped_Short.class, 2))
                      .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Generate_Different_Objects(value)));
     }
 
@@ -132,7 +144,7 @@ public class ObjectGeneratorTest {
         return () -> {
             // given
             final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger,
-                                                                        constructorParameters);
+                    constructorParameters);
             final ClassAndFieldPredicatePair classAndFieldPredicatePair = new ClassAndFieldPredicatePair(testCase.clazz);
 
             // when
@@ -147,19 +159,19 @@ public class ObjectGeneratorTest {
     @TestFactory
     public Stream<DynamicTest> Should_Generate_Different_Objects_Recursively() throws IllegalAccessException {
         final RecursivelyDifferentObjectTestCase case1 = new RecursivelyDifferentObjectTestCase(18,
-                                                                                                pair(D.class),
-                                                                                                new ClassAndFieldPredicatePair[]{pair(E.class), pair(F.class)});
+                pair(D.class),
+                new ClassAndFieldPredicatePair[]{pair(E.class), pair(F.class)});
 
         final RecursivelyDifferentObjectTestCase case2 = new RecursivelyDifferentObjectTestCase(6,
-                                                                                                pair(G.class),
-                                                                                                new ClassAndFieldPredicatePair[]{pair(F.class)});
+                pair(G.class),
+                new ClassAndFieldPredicatePair[]{pair(F.class)});
 
         final RecursivelyDifferentObjectTestCase case3 = new RecursivelyDifferentObjectTestCase(945,
-                                                                                                pair(H.class),
-                                                                                                new ClassAndFieldPredicatePair[]{pair(A.class),
-                                                                                                                                 pair(B.class),
-                                                                                                                                 pair(F.class),
-                                                                                                                                 pair(G.class)});
+                pair(H.class),
+                new ClassAndFieldPredicatePair[]{pair(A.class),
+                        pair(B.class),
+                        pair(F.class),
+                        pair(G.class)});
 
         return Stream.of(case1, case2, case3)
                      .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Generate_Different_Objects_Recursively(value)));
@@ -512,7 +524,9 @@ public class ObjectGeneratorTest {
     private class Parent {
         private final UUID parentUUID;
 
-        private Parent() {this.parentUUID = UUID.randomUUID();}
+        private Parent() {
+            this.parentUUID = UUID.randomUUID();
+        }
     }
 
     @Getter
@@ -522,7 +536,9 @@ public class ObjectGeneratorTest {
     private class FirstChild extends Parent {
         private final UUID childUUID;
 
-        private FirstChild() {this.childUUID = UUID.randomUUID();}
+        private FirstChild() {
+            this.childUUID = UUID.randomUUID();
+        }
     }
 
     @Getter
@@ -532,7 +548,9 @@ public class ObjectGeneratorTest {
     private class SecondChild extends FirstChild {
         private final UUID secondChild;
 
-        private SecondChild() {this.secondChild = UUID.randomUUID();}
+        private SecondChild() {
+            this.secondChild = UUID.randomUUID();
+        }
     }
 
 }

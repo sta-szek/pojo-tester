@@ -63,7 +63,7 @@ public class ObjectGenerator {
         result.add(baseObject);
 
         for (final List<Field> eachBaseObjectFieldsPermutation : baseObjectFieldsPermutations) {
-            final Object baseObjectCopy = createNewInstance(baseClass);
+            final Object baseObjectCopy = generateSameInstance(baseObject);
 
             final Map<Field, List<Object>> nestedObjectsThatAreWaitingForSetInBaseObjectCopy = new HashMap<>();
             List<Object> partialResult = new ArrayList<>();
@@ -75,7 +75,7 @@ public class ObjectGenerator {
 
                 if (nestedFieldsToChangeInFieldType == null || permutationFieldType.equals(baseClass)) {
                     Object newFieldTypeInstance = createNewInstance(permutationFieldType);
-                    if (Objects.deepEquals(newFieldTypeInstance, FieldUtils.getValue(baseObject, permutationField))) {
+                    if (Objects.deepEquals(newFieldTypeInstance, FieldUtils.getValue(baseObjectCopy, permutationField))) {
                         newFieldTypeInstance = abstractFieldValueChanger.increaseValue(newFieldTypeInstance);
                     }
 
