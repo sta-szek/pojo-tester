@@ -2,6 +2,16 @@
 
 Download latest version [ ![Download](https://api.bintray.com/packages/sta-szek/maven/pojo-tester/images/download.svg) ](https://bintray.com/sta-szek/maven/pojo-tester/_latestVersion)
 
+
+## Release version 0.7.0 {#release-071}
+
+### Bugfixes
+* New UUIDValueChanger, bugfix with objects generating ([#149](https://github.com/sta-szek/pojo-tester/issues/149))
+
+
+
+
+
 ## Release version 0.7.0 {#release-070}
 
 ### Features
