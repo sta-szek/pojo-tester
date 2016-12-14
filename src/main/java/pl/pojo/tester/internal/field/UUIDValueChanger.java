@@ -5,7 +5,7 @@ import java.util.UUID;
 class UUIDValueChanger extends AbstractFieldValueChanger<UUID> {
 
     @Override
-    public boolean areDifferentValues(UUID sourceValue, UUID targetValue) {
+    public boolean areDifferentValues(final UUID sourceValue, final UUID targetValue) {
         if (sourceValue == targetValue) {
             return false;
         }
@@ -16,12 +16,12 @@ class UUIDValueChanger extends AbstractFieldValueChanger<UUID> {
     }
 
     @Override
-    protected boolean canChange(Class type) {
+    protected boolean canChange(final Class type) {
         return type.equals(UUID.class);
     }
 
     @Override
-    protected UUID increaseValue(UUID value, Class type) {
+    protected UUID increaseValue(final UUID value, final Class type) {
         UUID random;
         do {
             random = UUID.randomUUID();
