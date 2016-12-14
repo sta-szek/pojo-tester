@@ -14,7 +14,7 @@ import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.*;
 import static org.powermock.reflect.Whitebox.setInternalState;
 
-@RunWith(JUnitPlatform.class)
+
 public class MultiClassAssetionTest {
 
     @Test

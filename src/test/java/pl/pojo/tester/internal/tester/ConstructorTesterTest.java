@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.Mockito.*;
 
-@RunWith(JUnitPlatform.class)
+
 public class ConstructorTesterTest {
 
     @Test

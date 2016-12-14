@@ -20,7 +20,7 @@ import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
-@RunWith(JUnitPlatform.class)
+
 public class AbstractTesterTest {
 
     @Test

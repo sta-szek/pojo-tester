@@ -16,7 +16,7 @@ import static helpers.TestHelper.getDefaultDisplayName;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
-@RunWith(JUnitPlatform.class)
+
 public class IterableValueChangerTest {
 
     @TestFactory

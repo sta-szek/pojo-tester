@@ -45,7 +45,7 @@ import static helpers.TestHelper.getDefaultDisplayName;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
-@RunWith(JUnitPlatform.class)
+
 public class InstantiableTest {
 
     private static final MultiValuedMap<Class<?>, ConstructorParameters> CLASS_AND_CONSTRUCTOR_PARAMETERS = new ArrayListValuedHashMap<>();

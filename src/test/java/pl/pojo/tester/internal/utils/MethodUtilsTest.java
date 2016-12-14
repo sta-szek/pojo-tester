@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
-@RunWith(JUnitPlatform.class)
+
 public class MethodUtilsTest {
 
     @TestFactory

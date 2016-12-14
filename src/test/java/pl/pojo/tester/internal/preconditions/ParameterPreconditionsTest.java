@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 import static pl.pojo.tester.internal.preconditions.ParameterPreconditions.checkNotBlank;
 import static pl.pojo.tester.internal.preconditions.ParameterPreconditions.checkNotNull;
 
-@RunWith(JUnitPlatform.class)
+
 public class ParameterPreconditionsTest {
 
     @Test

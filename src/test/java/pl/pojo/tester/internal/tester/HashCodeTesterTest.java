@@ -21,7 +21,7 @@ import static org.assertj.core.util.Lists.newArrayList;
 import static pl.pojo.tester.api.FieldPredicate.exclude;
 import static pl.pojo.tester.api.FieldPredicate.include;
 
-@RunWith(JUnitPlatform.class)
+
 public class HashCodeTesterTest {
 
     @Test

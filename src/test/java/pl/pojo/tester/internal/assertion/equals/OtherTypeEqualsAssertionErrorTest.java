@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(JUnitPlatform.class)
+
 public class OtherTypeEqualsAssertionErrorTest {
 
     @Test

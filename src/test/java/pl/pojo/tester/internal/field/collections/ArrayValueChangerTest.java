@@ -16,7 +16,7 @@ import static org.assertj.core.util.Lists.newArrayList;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 import static org.powermock.reflect.Whitebox.getInternalState;
 
-@RunWith(JUnitPlatform.class)
+
 public class ArrayValueChangerTest {
 
     private final ArrayValueChanger valueChanger = new ArrayValueChanger();
