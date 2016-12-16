@@ -6,9 +6,9 @@ node{
     sh "./gradlew assemble"
   }
   stage("build"){
-    sh "./gradlew builx -x check"
+    sh "./gradlew build -x check"
   }
-  stage("build"){
+  stage("test"){
     sh "./gradlew check"
   }
 }
