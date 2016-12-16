@@ -2,7 +2,7 @@ node{
   stage("checkout"){
     checkout scm
   }
-  stage("asseble"){
+  stage("assmeble"){
     sh "./gradlew assemble"
   }
   stage("build"){
