@@ -111,24 +111,23 @@ public class AssertionsTest {
         assertThat(classAndFieldPredicatePairs).containsExactly(expectedClassAndFieldPredicate);
     }
 
-    @Test
-    @Ignore
-    public void Should_Create_Expected_Multi_Class_Assertion_Using_Package() {
-        // given
-        final Class<?> expectedClass1 = D.class;
-        final Class<?> expectedClass2 = E.class;
-        final DefaultPackageFilter packageFilter = DefaultPackageFilter.forPackage("classesForTest.packageFilter.next");
-
-
-        // when
-        final MultiClassAssertion result = (MultiClassAssertion) Assertions.assertPojoMethodsForAll(packageFilter);
-        final List<ClassAndFieldPredicatePair> classAndFieldPredicatePairs = getInternalState(result, "classAndFieldPredicatePairs");
-
-        // then
-        assertThat(classAndFieldPredicatePairs).hasSize(2);
-        assertThat(classAndFieldPredicatePairs.get(0)).is(new ClassAndFieldPredicatePairCondition(expectedClass1, "d"));
-        assertThat(classAndFieldPredicatePairs.get(1)).is(new ClassAndFieldPredicatePairCondition(expectedClass2, "e"));
-    }
+//    @Test
+//    public void Should_Create_Expected_Multi_Class_Assertion_Using_Package() {
+//        // given
+//        final Class<?> expectedClass1 = D.class;
+//        final Class<?> expectedClass2 = E.class;
+//        final DefaultPackageFilter packageFilter = DefaultPackageFilter.forPackage("classesForTest.packageFilter.next");
+//
+//
+//        // when
+//        final MultiClassAssertion result = (MultiClassAssertion) Assertions.assertPojoMethodsForAll(packageFilter);
+//        final List<ClassAndFieldPredicatePair> classAndFieldPredicatePairs = getInternalState(result, "classAndFieldPredicatePairs");
+//
+//        // then
+//        assertThat(classAndFieldPredicatePairs).hasSize(2);
+//        assertThat(classAndFieldPredicatePairs.get(0)).is(new ClassAndFieldPredicatePairCondition(expectedClass1, "d"));
+//        assertThat(classAndFieldPredicatePairs.get(1)).is(new ClassAndFieldPredicatePairCondition(expectedClass2, "e"));
+//    }
 
     @Test
     public void Should_Create_Expected_Multi_Class_Assertion_Using_Classes() {
