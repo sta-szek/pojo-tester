@@ -124,8 +124,8 @@ public class AssertionsTest {
 
         // then
         assertThat(classAndFieldPredicatePairs).hasSize(2);
-        assertThat(classAndFieldPredicatePairs.get(0)).is(new ClassAndFieldPredicatePairCondition(expectedClass1, "d"));
-        assertThat(classAndFieldPredicatePairs.get(1)).is(new ClassAndFieldPredicatePairCondition(expectedClass2, "e"));
+        assertThat(classAndFieldPredicatePairs.get(0)).has(new ClassAndFieldPredicatePairCondition(expectedClass1, "d"));
+        assertThat(classAndFieldPredicatePairs.get(1)).has(new ClassAndFieldPredicatePairCondition(expectedClass2, "e"));
     }
 
     @Test
