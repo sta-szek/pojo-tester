@@ -2,7 +2,7 @@ node{
   stage("checkout"){
    checkout scm
   }
-  stage("la all"){
+  stage("ls all"){
      sh "ls -al"
     }
   stage("assmeble"){
