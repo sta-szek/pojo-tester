@@ -4,6 +4,7 @@ node{
   }
   stage("ls all"){
      sh "ls -al"
+
     }
   stage("assmeble"){
     sh "./gradlew assemble"
