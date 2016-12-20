@@ -115,19 +115,14 @@ public class AssertionsTest {
         // given
         final Class<A> expectedClass = A.class;
         final ClassAndFieldPredicatePair expectedClassAndFieldPredicate = new ClassAndFieldPredicatePair(expectedClass);
+        SingleClassAssertion expectedResult = new SingleClassAssertion(expectedClassAndFieldPredicate,
+                                                                       new ClassAndFieldPredicatePair[]{expectedClassAndFieldPredicate});
 
         // when
-        final SingleClassAssertion result = (SingleClassAssertion) Assertions.assertPojoMethodsFor(
-                expectedClassAndFieldPredicate,
-                expectedClassAndFieldPredicate);
-        final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair = getInternalState(result,
-                                                                                           "baseClassAndFieldPredicatePair");
-        final ClassAndFieldPredicatePair[] classAndFieldPredicatePairs = getInternalState(result,
-                                                                                          "classAndFieldPredicatePairs");
-
+        final AbstractAssertion result = Assertions.assertPojoMethodsFor(expectedClassAndFieldPredicate,
+                                                                         expectedClassAndFieldPredicate);
         // then
-        assertThat(baseClassAndFieldPredicatePair).isEqualTo(expectedClassAndFieldPredicate);
-        assertThat(classAndFieldPredicatePairs).containsExactly(expectedClassAndFieldPredicate);
+        assertThat(result).isEqualToComparingFieldByFieldRecursively(expectedResult);
     }
 
     @Test
