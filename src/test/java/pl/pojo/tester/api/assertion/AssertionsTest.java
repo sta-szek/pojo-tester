@@ -152,8 +152,7 @@ public class AssertionsTest {
         final Class<B> expectedClass2 = B.class;
 
         // when
-        final MultiClassAssertion result = (MultiClassAssertion) Assertions.assertPojoMethodsForAll(expectedClass1,
-                                                                                                    expectedClass2);
+        final AbstractAssertion result = Assertions.assertPojoMethodsForAll(expectedClass1, expectedClass2);
         List<ClassAndFieldPredicatePair> pairs = getInternalState(result, "classAndFieldPredicatePairs");
 
         // then
@@ -169,8 +168,7 @@ public class AssertionsTest {
         final String expectedClass2Name = B.class.getName();
 
         // when
-        final MultiClassAssertion result = (MultiClassAssertion) Assertions.assertPojoMethodsForAll(expectedClass1Name,
-                                                                                                    expectedClass2Name);
+        final AbstractAssertion result = Assertions.assertPojoMethodsForAll(expectedClass1Name, expectedClass2Name);
         List<ClassAndFieldPredicatePair> pairs = getInternalState(result, "classAndFieldPredicatePairs");
 
         // then
@@ -188,9 +186,7 @@ public class AssertionsTest {
         final ClassAndFieldPredicatePair pair2 = new ClassAndFieldPredicatePair(expectedClass2);
 
         // when
-        final MultiClassAssertion result = (MultiClassAssertion) Assertions.assertPojoMethodsForAll(pair1,
-                                                                                                    pair2,
-                                                                                                    pair2);
+        final AbstractAssertion result = Assertions.assertPojoMethodsForAll(pair1, pair2, pair2);
         List<ClassAndFieldPredicatePair> pairs = getInternalState(result, "classAndFieldPredicatePairs");
 
         // then
