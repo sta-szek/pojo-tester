@@ -135,12 +135,12 @@ public class AssertionsTest {
         // given
         final DefaultPackageFilter packageFilter = DefaultPackageFilter.forPackage("classesForTest.packageFilter.next");
         final List<ClassAndFieldPredicatePair> expectedClassAndFieldPredicatePairs = new LinkedList<>();
-        expectedClassAndFieldPredicatePairs.add(new ClassAndFieldPredicatePair(E.class));
         expectedClassAndFieldPredicatePairs.add(new ClassAndFieldPredicatePair(D.class));
+        expectedClassAndFieldPredicatePairs.add(new ClassAndFieldPredicatePair(E.class));
         final MultiClassAssertion expectedResult = new MultiClassAssertion(expectedClassAndFieldPredicatePairs);
 
         // when
-        final MultiClassAssertion result = (MultiClassAssertion) Assertions.assertPojoMethodsForAll(packageFilter);
+        final AbstractAssertion result = Assertions.assertPojoMethodsForAll(packageFilter);
 
         // then
         assertThat(result).isEqualToComparingFieldByFieldRecursively(expectedResult);
