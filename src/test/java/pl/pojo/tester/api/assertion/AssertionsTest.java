@@ -151,17 +151,15 @@ public class AssertionsTest {
         final Class<A> expectedClass1 = A.class;
         final Class<B> expectedClass2 = B.class;
 
-
         // when
         final MultiClassAssertion result = (MultiClassAssertion) Assertions.assertPojoMethodsForAll(expectedClass1,
                                                                                                     expectedClass2);
-        final List<ClassAndFieldPredicatePair> classAndFieldPredicatePairs = getInternalState(result,
-                                                                                              "classAndFieldPredicatePairs");
+        List<ClassAndFieldPredicatePair> pairs = getInternalState(result, "classAndFieldPredicatePairs");
 
         // then
-        assertThat(classAndFieldPredicatePairs).hasSize(2);
-        assertThat(classAndFieldPredicatePairs.get(0)).is(new ClassAndFieldPredicatePairCondition(expectedClass1, "a"));
-        assertThat(classAndFieldPredicatePairs.get(1)).is(new ClassAndFieldPredicatePairCondition(expectedClass2, "b"));
+        assertThat(pairs).usingRecursiveFieldByFieldElementComparator()
+                         .containsExactlyInAnyOrder(new ClassAndFieldPredicatePair(A.class),
+                                                    new ClassAndFieldPredicatePair(B.class));
     }
 
     @Test
@@ -170,19 +168,15 @@ public class AssertionsTest {
         final String expectedClass1Name = A.class.getName();
         final String expectedClass2Name = B.class.getName();
 
-
         // when
         final MultiClassAssertion result = (MultiClassAssertion) Assertions.assertPojoMethodsForAll(expectedClass1Name,
                                                                                                     expectedClass2Name);
-        final List<ClassAndFieldPredicatePair> classAndFieldPredicatePairs = getInternalState(result,
-                                                                                              "classAndFieldPredicatePairs");
+        List<ClassAndFieldPredicatePair> pairs = getInternalState(result, "classAndFieldPredicatePairs");
 
         // then
-        assertThat(classAndFieldPredicatePairs).hasSize(2);
-        assertThat(classAndFieldPredicatePairs.get(0)).is(new ClassNameAndFieldPredicatePairCondition(expectedClass1Name,
-                                                                                                      "a"));
-        assertThat(classAndFieldPredicatePairs.get(1)).is(new ClassNameAndFieldPredicatePairCondition(expectedClass2Name,
-                                                                                                      "b"));
+        assertThat(pairs).usingRecursiveFieldByFieldElementComparator()
+                         .containsExactlyInAnyOrder(new ClassAndFieldPredicatePair(A.class),
+                                                    new ClassAndFieldPredicatePair(B.class));
     }
 
     @Test
@@ -193,19 +187,17 @@ public class AssertionsTest {
         final ClassAndFieldPredicatePair pair1 = new ClassAndFieldPredicatePair(expectedClass1);
         final ClassAndFieldPredicatePair pair2 = new ClassAndFieldPredicatePair(expectedClass2);
 
-
         // when
         final MultiClassAssertion result = (MultiClassAssertion) Assertions.assertPojoMethodsForAll(pair1,
                                                                                                     pair2,
                                                                                                     pair2);
-        final List<ClassAndFieldPredicatePair> classAndFieldPredicatePairs = getInternalState(result,
-                                                                                              "classAndFieldPredicatePairs");
+        List<ClassAndFieldPredicatePair> pairs = getInternalState(result, "classAndFieldPredicatePairs");
 
         // then
-        assertThat(classAndFieldPredicatePairs).hasSize(3);
-        assertThat(classAndFieldPredicatePairs.get(0)).is(new ClassAndFieldPredicatePairCondition(expectedClass1, "a"));
-        assertThat(classAndFieldPredicatePairs.get(1)).is(new ClassAndFieldPredicatePairCondition(expectedClass2, "b"));
-        assertThat(classAndFieldPredicatePairs.get(2)).is(new ClassAndFieldPredicatePairCondition(expectedClass2, "b"));
+        assertThat(pairs).usingRecursiveFieldByFieldElementComparator()
+                         .containsExactlyInAnyOrder(new ClassAndFieldPredicatePair(A.class),
+                                                    new ClassAndFieldPredicatePair(B.class),
+                                                    new ClassAndFieldPredicatePair(B.class));
     }
 
     @Data
