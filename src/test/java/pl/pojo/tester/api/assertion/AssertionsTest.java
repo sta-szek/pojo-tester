@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import pl.pojo.tester.api.ClassAndFieldPredicatePair;
 import pl.pojo.tester.api.DefaultPackageFilter;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -136,10 +135,9 @@ public class AssertionsTest {
         // given
         final DefaultPackageFilter packageFilter = DefaultPackageFilter.forPackage("classesForTest.packageFilter.next");
         final List<ClassAndFieldPredicatePair> expectedClassAndFieldPredicatePairs = new LinkedList<>();
-        expectedClassAndFieldPredicatePairs.add(new ClassAndFieldPredicatePair(D.class));
         expectedClassAndFieldPredicatePairs.add(new ClassAndFieldPredicatePair(E.class));
+        expectedClassAndFieldPredicatePairs.add(new ClassAndFieldPredicatePair(D.class));
         final MultiClassAssertion expectedResult = new MultiClassAssertion(expectedClassAndFieldPredicatePairs);
-
 
         // when
         final MultiClassAssertion result = (MultiClassAssertion) Assertions.assertPojoMethodsForAll(packageFilter);
