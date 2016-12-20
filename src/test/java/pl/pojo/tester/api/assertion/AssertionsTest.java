@@ -134,16 +134,15 @@ public class AssertionsTest {
     public void Should_Create_Expected_Multi_Class_Assertion_Using_Package() {
         // given
         final DefaultPackageFilter packageFilter = DefaultPackageFilter.forPackage("classesForTest.packageFilter.next");
-        final List<ClassAndFieldPredicatePair> expectedClassAndFieldPredicatePairs = new LinkedList<>();
-        expectedClassAndFieldPredicatePairs.add(new ClassAndFieldPredicatePair(D.class));
-        expectedClassAndFieldPredicatePairs.add(new ClassAndFieldPredicatePair(E.class));
-        final MultiClassAssertion expectedResult = new MultiClassAssertion(expectedClassAndFieldPredicatePairs);
 
         // when
         final AbstractAssertion result = Assertions.assertPojoMethodsForAll(packageFilter);
+        List<ClassAndFieldPredicatePair> pairs = getInternalState(result, "classAndFieldPredicatePairs");
 
         // then
-        assertThat(result).isEqualToComparingFieldByFieldRecursively(expectedResult);
+        assertThat(pairs).usingRecursiveFieldByFieldElementComparator()
+                         .containsExactlyInAnyOrder(new ClassAndFieldPredicatePair(D.class),
+                                                    new ClassAndFieldPredicatePair(E.class));
     }
 
     @Test
