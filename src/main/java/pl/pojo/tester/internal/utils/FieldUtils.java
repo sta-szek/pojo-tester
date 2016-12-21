@@ -76,7 +76,7 @@ public final class FieldUtils {
         return Modifier.isFinal(fieldModifiers);
     }
 
-    static List<Field> getSpecifiedFields(final Class<?> clazz, final List<String> names) {
+    public static List<Field> getSpecifiedFields(final Class<?> clazz, final List<String> names) {
         return names.stream()
                     .map(name -> getField(clazz, name))
                     .collect(Collectors.toList());
