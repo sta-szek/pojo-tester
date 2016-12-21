@@ -6,6 +6,7 @@ public abstract class AssertionError extends RuntimeException {
     protected final Class<?> testedCass;
 
     public AssertionError(final Class<?> testedCass) {
+        super();
         this.testedCass = testedCass;
         setStackTrace(new StackTraceElement[]{});
     }

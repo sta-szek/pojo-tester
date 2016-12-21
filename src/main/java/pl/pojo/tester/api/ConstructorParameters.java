@@ -29,8 +29,8 @@ public class ConstructorParameters {
      * @param constructorParametersTypes constructor parameter's types
      */
     public ConstructorParameters(final Object[] constructorParameters, final Class<?>[] constructorParametersTypes) {
-        this.constructorParameters = constructorParameters;
-        this.constructorParametersTypes = constructorParametersTypes;
+        this.constructorParameters = Arrays.copyOf(constructorParameters, constructorParameters.length);
+        this.constructorParametersTypes = Arrays.copyOf(constructorParametersTypes, constructorParametersTypes.length);
     }
 
     /**
