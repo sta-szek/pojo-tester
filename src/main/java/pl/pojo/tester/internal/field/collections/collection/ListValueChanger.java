@@ -1,14 +1,16 @@
 package pl.pojo.tester.internal.field.collections.collection;
 
-import java.util.Collections;
+import com.google.common.collect.Lists;
+import org.apache.commons.collections4.CollectionUtils;
+
 import java.util.List;
 
 class ListValueChanger extends AbstractCollectionFieldValueChanger<List<?>> {
 
     @Override
     protected List<?> increaseValue(final List<?> value, final Class<?> type) {
-        return value != null
+        return CollectionUtils.isNotEmpty(value)
                ? null
-               : Collections.EMPTY_LIST;
+               : Lists.newArrayList(new Object());
     }
 }
