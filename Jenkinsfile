@@ -1,33 +1,45 @@
-//node {
-//    def BRANCH_TO_PUBLISH_PAGES = "master"
-//    stage("checkout") {
-//        checkout scm
-//    }
-//    stage("assmeble") {
-//        sh "./gradlew assemble testClasses"
-//    }
-//    stage("test") {
-//        sh "./gradlew check"
-//    }
-//    if (env.BRANCH_NAME == BRANCH_TO_PUBLISH_PAGES) {
-//        stage("deploy pages") {
-//
-//        }
-//    }
-//}
-
 pipeline {
     agent any
+    parameters {
+        booleanParam(defaultValue: false, description: 'Publish new release from this build?', name: 'release')
+        stringParam(defaultValue: "", description: 'New release version', name: 'releaseVersion')
+        stringParam(defaultValue: "-SNAPSHOT", description: 'New release development', name: 'newVersion')
+    }
     stages {
-        def BRANCH_TO_PUBLISH_PAGES = "master"
-        stage("checkout") {
-            checkout scm
+        stage("Build") {
+            steps {
+                sh "env"
+                sh "./gradlew assemble testClasses"
+            }
         }
-        stage("assmeble") {
-            sh "./gradlew assemble testClasses"
+        stage("Test") {
+            steps {
+                sh "./gradlew check"
+            }
         }
-        stage("test") {
-            sh "./gradlew check"
+
+        stage("Publish release") {
+            when {
+                env.BRANCH == "master" && env.RELEASE == "true" && env.RELEASE_VERSION != "" && env.NEW_VERSION != ""
+            }
+            steps {
+                sh "./gradlew release -Prelease.useAutomaticVersion=true -Prelease.releaseVersion=${releaseVersion} -Prelease.newVersion=${newVersion}"
+                sh "./gradlew bintrayUpload"
+                sh "./gradlew javadoc >/dev/null"
+                sh "rm -rf ./src/book/javadoc"
+                sh "mv ./build/docs/javadoc ./src/book/javadoc"
+                sh "gitbook install ./src/book/"
+                sh "gitbook build ./src/book/ ./repo"
+                sh "git --work-tree=repo/ --git-dir=repo/.git init"
+                sh "git --work-tree=repo/ --git-dir=repo/.git config user.name 'jenkins'"
+                sh "git --work-tree=repo/ --git-dir=repo/.git config user.email 'jenkins@ci.pojo.pl'"
+                sh "git --work-tree=repo/ --git-dir=repo/.git remote add origin git@github.com:sta-szek/pojo-tester.git"
+                sh "git --work-tree=repo/ --git-dir=repo/.git fetch -q -n origin"
+                sh "git --work-tree=repo/ --git-dir=repo/.git reset -q origin/gh-pages"
+                sh "git --work-tree=repo/ --git-dir=repo/.git add -A ."
+                sh "git --work-tree=repo/ --git-dir=repo/.git commit -m 'Rebuild pojo-tester pages by jenkins'"
+                sh "git --work-tree=repo/ --git-dir=repo/.git push origin HEAD:gh-pages"
+            }
         }
     }
 }

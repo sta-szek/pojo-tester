@@ -5,7 +5,7 @@ This is a documentation for writing `pojo-tests` using [pojo-tester](https://git
 
 If you have any questions, we can chat on [![Rocket.Chat](https://demo.rocket.chat/images/join-chat.svg)](http://chat.pojo.pl/channel/pojo-tester)
 
-Build status is provided by [![Build Status](https://travis-ci.org/sta-szek/pojo-tester.svg?branch=master)](https://travis-ci.org/sta-szek/pojo-tester)
+Build status is provided by [![Build Status](http://ci.pojo.pl/buildStatus/icon?job=pojo-tester/master)](http://ci.pojo.pl/job/pojo-tester/job/master/)
 
 Project quality [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f20e4ae366964fe4864179d26ed392c4)](https://www.codacy.com/app/sta-szek/pojo-tester?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=sta-szek/pojo-tester&amp;utm_campaign=Badge_Grade)
 
