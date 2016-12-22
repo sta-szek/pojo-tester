@@ -6,14 +6,7 @@ SOURCE_BRANCH="master"
 TARGET_BRANCH="gh-pages"
 
 POJO_TESTER_REPO="https://$TRAVIS_DEPLOY_GH_PAGES_TOKEN:x-oauth-basic@github.com/sta-szek/pojo-tester.git"
-echo "TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST"
 echo "TRAVIS_BRANCH=$TRAVIS_BRANCH"
-
-if [[ "$TRAVIS_PULL_REQUEST" != "false" ]]
-then
-  echo "This is a pull request. No deploy!"
-  exit 0
-fi
 
 if [[ "$TRAVIS_BRANCH" != "$SOURCE_BRANCH" ]]
 then
