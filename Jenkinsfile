@@ -20,7 +20,7 @@ pipeline {
 
         stage("Publish release") {
             when {
-                env.BRANCH == "master" && env.RELEASE == "true" && env.RELEASE_VERSION != "" && env.NEW_VERSION != ""
+                env.BRANCH_NAME == "master" && env.RELEASE == "true" && env.RELEASEVERSION != "" && env.NEWVERSION != ""
             }
             steps {
                 sh "./gradlew release -Prelease.useAutomaticVersion=true -Prelease.releaseVersion=${releaseVersion} -Prelease.newVersion=${newVersion}"
