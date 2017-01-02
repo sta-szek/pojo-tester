@@ -1,6 +1,7 @@
 import java.time.ZoneOffset
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import java.util.regex.Matcher
 
 buildscript {
     repositories {
@@ -15,6 +16,7 @@ buildscript {
 
 plugins {
     id "com.jfrog.bintray" version "1.7"
+    id 'net.researchgate.release' version '2.4.0'
 }
 
 ext {
@@ -126,6 +128,28 @@ bintray {
             released = new Date();
             vcsTag = rootProject.version
         }
+    }
+}
+
+release {
+    failOnCommitNeeded = false
+    failOnPublishNeeded = false
+    failOnSnapshotDependencies = false
+    failOnUnversionedFiles = false
+    failOnUpdateNeeded = true
+    revertOnFail = true
+    tagCommitMessage = '[Gradle Release Plugin] - creating tag: '
+    newVersionCommitMessage = '[Gradle Release Plugin] - new version commit: '
+    tagTemplate = '${version}'
+    versionPropertyFile = 'gradle.properties'
+    versionProperties = []
+    buildTasks = []
+
+    git {
+        requireBranch = 'master'
+        pushToRemote = 'origin'
+        pushToBranchPrefix = ''
+        commitVersionFileOnly = false
     }
 }
 
