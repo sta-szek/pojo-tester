@@ -43,9 +43,7 @@ class BestConstructorInstantiator extends AbstractObjectInstantiator {
         } else {
             final Class<?>[] parameterTypes = constructor.getParameterTypes();
             try {
-                final Object[] parameters = Arrays.stream(parameterTypes)
-                                                  .map(this::instantiateParameter)
-                                                  .toArray();
+                final Object[] parameters = Instantiable.instantiateClasses(parameterTypes, constructorParameters);
                 return constructor.newInstance(parameters);
             } catch (final InstantiationException
                     | IllegalAccessException
@@ -59,12 +57,7 @@ class BestConstructorInstantiator extends AbstractObjectInstantiator {
             }
         }
     }
-
-    private Object instantiateParameter(final Class<?> clazz) {
-        return Instantiable.forClass(clazz, constructorParameters)
-                           .instantiate();
-    }
-
+    
     private Object createObjectFromNoArgsConstructor(final Constructor<?> constructor) {
         try {
             return constructor.newInstance();

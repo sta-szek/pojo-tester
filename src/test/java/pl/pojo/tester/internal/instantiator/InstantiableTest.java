@@ -1,44 +1,19 @@
 package pl.pojo.tester.internal.instantiator;
 
-import classesForTest.ClassContainingStaticClasses;
-import classesForTest.Constructor_Field;
-import classesForTest.Constructor_Stream;
-import classesForTest.Constructor_Thread;
-import classesForTest.EmptyEnum;
+import classesForTest.*;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DynamicTest;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.function.Executable;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 import pl.pojo.tester.api.ConstructorParameters;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.NavigableMap;
-import java.util.NavigableSet;
-import java.util.Queue;
-import java.util.Set;
-import java.util.SortedMap;
-import java.util.SortedSet;
-import java.util.Stack;
-import java.util.TreeMap;
-import java.util.TreeSet;
-import java.util.Vector;
+import java.util.*;
 import java.util.stream.Stream;
 
 import static helpers.TestHelper.getDefaultDisplayName;
@@ -150,6 +125,18 @@ public class InstantiableTest {
         };
     }
 
+    @Test
+    public void Should_Instantiate_Two_Classes() {
+        // given
+        final Class[] classesToInstantiate = { A.class, B.class };
+
+        // when
+        final Object[] result = Instantiable.instantiateClasses(classesToInstantiate, new ArrayListValuedHashMap<>());
+
+        // then
+        assertThat(result).extracting(Object::getClass).containsExactlyInAnyOrder(classesToInstantiate);
+    }
+
     @AllArgsConstructor
     private class ClassInstantiator {
         private Class<?> clazz;
@@ -159,5 +146,17 @@ public class InstantiableTest {
 
     private class UserDefinedClass {
 
+    }
+
+    @Data
+    private class A {
+        int a;
+        B b;
+    }
+
+    @Data
+    private class B {
+        A a;
+        B b;
     }
 }

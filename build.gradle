@@ -41,7 +41,7 @@ repositories {
 }
 
 junitPlatform {
-    enableStandardTestTask true
+    enableStandardTestTask false
 }
 
 configurations.all {
