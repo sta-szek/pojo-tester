@@ -10,7 +10,7 @@ buildscript {
     }
     dependencies {
         classpath("info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.1.10")
-        classpath("org.junit.platform:junit-platform-gradle-plugin:1.0.0-M3") { changing = true }
+        classpath("org.junit.platform:junit-platform-gradle-plugin:1.0.0-SNAPSHOT") { changing = true }
     }
 }
 
@@ -20,8 +20,8 @@ plugins {
 }
 
 ext {
-    JUNIT_JUPITER_VERSION = "5.0.0-M3"
-    JUNIT_PLATFORM_VERSION = "1.0.0-M3"
+    JUNIT_JUPITER_VERSION = "5.0.0-SNAPSHOT"
+    JUNIT_PLATFORM_VERSION = "1.0.0-SNAPSHOT"
     MOCKITO_VERSION = "2.5.3"
     POWER_MOCK_UTILS_VERSION = "1.6.6"
     ASSERTJ_CORE_VERSION = "3.6.1"
@@ -41,7 +41,7 @@ repositories {
 }
 
 junitPlatform {
-    enableStandardTestTask false
+    enableStandardTestTask true
 }
 
 configurations.all {

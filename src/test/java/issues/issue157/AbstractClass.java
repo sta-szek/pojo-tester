@@ -1,12 +1,22 @@
 package issues.issue157;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 
-@Data
-@AllArgsConstructor
+@EqualsAndHashCode
+@Getter
+@ToString
 public abstract class AbstractClass {
 
-    private int a;
+    private String a;
+
+    public AbstractClass(final String a) {
+        this.a = a;
+    }
+
+    public void setA(final String a) {
+        this.a = a;
+    }
 }

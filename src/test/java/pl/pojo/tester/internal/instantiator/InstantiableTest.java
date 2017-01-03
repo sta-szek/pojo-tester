@@ -137,6 +137,34 @@ public class InstantiableTest {
         assertThat(result).extracting(Object::getClass).containsExactlyInAnyOrder(classesToInstantiate);
     }
 
+    @Test
+    public void Should_Return_User_Defined_Constructor_Instantiator_If_Class_Does_Not_Qualifies_For_Proxy_And() {
+        // given
+        final ArrayListValuedHashMap<Class<?>, ConstructorParameters> constructorParameters = new ArrayListValuedHashMap<>();
+        final Class<?> clazz = A.class;
+        constructorParameters.put(clazz, new ConstructorParameters(new Object[0], new Class[0]));
+
+        // when
+        final AbstractObjectInstantiator result = Instantiable.forClass(clazz, constructorParameters);
+
+        // then
+        assertThat(result).isInstanceOf(UserDefinedConstructorInstantiator.class);
+    }
+
+    @Test
+    public void Should_Return_Proxy_Instantiator_If_Class_Qualifies_For_Proxy_And_User_Defined_Constructor_Parameters() {
+        // given
+        final ArrayListValuedHashMap<Class<?>, ConstructorParameters> constructorParameters = new ArrayListValuedHashMap<>();
+        final Class<?> clazz = Abstract.class;
+        constructorParameters.put(clazz, new ConstructorParameters(new Object[0], new Class[0]));
+
+        // when
+        final AbstractObjectInstantiator result = Instantiable.forClass(clazz, constructorParameters);
+
+        // then
+        assertThat(result).isInstanceOf(ProxyInstantiator.class);
+    }
+
     @AllArgsConstructor
     private class ClassInstantiator {
         private Class<?> clazz;
@@ -156,6 +184,12 @@ public class InstantiableTest {
 
     @Data
     private class B {
+        A a;
+        B b;
+    }
+
+    @Data
+    private abstract class Abstract {
         A a;
         B b;
     }

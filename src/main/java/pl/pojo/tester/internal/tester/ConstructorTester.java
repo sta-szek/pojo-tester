@@ -1,6 +1,7 @@
 package pl.pojo.tester.internal.tester;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.pojo.tester.api.ClassAndFieldPredicatePair;
@@ -8,12 +9,14 @@ import pl.pojo.tester.api.ConstructorParameters;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class ConstructorTester extends AbstractTester {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ConstructorTester.class);
@@ -29,6 +32,11 @@ public class ConstructorTester extends AbstractTester {
     @Override
     public void test(final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair, final ClassAndFieldPredicatePair... classAndFieldPredicatePairs) {
         final Class<?> testedClass = baseClassAndFieldPredicatePair.getClazz();
+        if (isAbstract(testedClass)) {
+            log.info("Tried to test constructor in abstract ({}) class, annotation or interface.\n"
+                             + "Skipping due to nature of constructors in those classes", testedClass);
+            return;
+        }
         final List<Constructor<?>> declaredConstructors = getNotSyntheticConstructorFromClass(testedClass);
 
         declaredConstructors.forEach(this::tryInstantiate);
@@ -85,4 +93,7 @@ public class ConstructorTester extends AbstractTester {
                      .toArray();
     }
 
+    private boolean isAbstract(final Class<?> clazz) {
+        return clazz.isInterface() || clazz.isAnnotation() || Modifier.isAbstract(clazz.getModifiers());
+    }
 }

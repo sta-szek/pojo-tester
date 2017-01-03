@@ -2,38 +2,60 @@ package pl.pojo.tester.internal.instantiator;
 
 
 import javassist.util.proxy.ProxyFactory;
+import org.apache.commons.collections4.MultiValuedMap;
+import pl.pojo.tester.api.ConstructorParameters;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
-class ProxyInstantiator extends AbstractObjectInstantiator {
+
+class ProxyInstantiator extends MultiConstructorInstantiator {
 
     private final ProxyFactory proxyFactory = new ProxyFactory();
 
-    ProxyInstantiator(final Class<?> clazz) {
-        super(clazz);
+    ProxyInstantiator(final Class<?> clazz, final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
+        super(clazz, constructorParameters);
     }
 
     @Override
     public Object instantiate() {
-        if (clazz.isAnnotation() || clazz.isInterface()) {
-            return proxyByJava();
-        } else {
-            return proxyByJavassist();
+        Object result = instantiateUsingUserParameters();
+        if (result == null) {
+            if (clazz.isAnnotation() || clazz.isInterface()) {
+                result = proxyByJava();
+            } else {
+                proxyFactory.setSuperclass(clazz);
+                result = createFindingBestConstructor();
+            }
         }
+        return result;
     }
 
     private Object proxyByJava() {
-        return Proxy.newProxyInstance(clazz.getClassLoader(), new Class[]{clazz}, this::createInvocationHandler);
+        return Proxy.newProxyInstance(clazz.getClassLoader(), new Class[]{ clazz }, this::createInvocationHandler);
     }
 
-    private Object proxyByJavassist() {
+    @Override
+    protected Object createObjectFromArgsConstructor(final Class<?>[] parameterTypes, final Object[] parameters) throws Exception {
+        final Class proxyClass = proxyFactory.createClass();
+        final Constructor declaredConstructor = proxyClass.getDeclaredConstructor(parameterTypes);
+        declaredConstructor.setAccessible(true);
+        return declaredConstructor.newInstance(parameters);
+    }
+
+    @Override
+    protected Object createObjectFromNoArgsConstructor(final Constructor<?> constructor) {
         try {
-            proxyFactory.setSuperclass(clazz);
             return proxyFactory.create(new Class[0], new Class[0]);
-        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            throw new ObjectInstantiationException(clazz, e.getMessage(), e);
+        } catch (final InstantiationException
+                | IllegalAccessException
+                | InvocationTargetException
+                | NoSuchMethodException e) {
+            // ignore, we want to try all constructors
+            // if all constructors fail, it will be handled by caller
+            return null;
         }
     }
 
@@ -52,4 +74,11 @@ class ProxyInstantiator extends AbstractObjectInstantiator {
             }
         }
     }
+
+    @Override
+    protected ObjectInstantiationException createObjectInstantiationException() {
+        return new ObjectInstantiationException(clazz,
+                                                "Class could not be created by any constructor (using ProxyInstantiator).");
+    }
+
 }

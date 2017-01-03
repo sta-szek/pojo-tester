@@ -26,7 +26,7 @@ public final class Instantiable {
 
     static AbstractObjectInstantiator forClass(final Class<?> clazz,
                                                final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
-        if (userDefinedConstructorParametersFor(clazz, constructorParameters)) {
+        if (userDefinedConstructorParametersFor(clazz, constructorParameters) && !qualifiesForProxy(clazz)) {
             return new UserDefinedConstructorInstantiator(clazz, constructorParameters);
         }
 
@@ -55,7 +55,7 @@ public final class Instantiable {
         }
 
         if (qualifiesForProxy(clazz)) {
-            return new ProxyInstantiator(clazz);
+            return new ProxyInstantiator(clazz, constructorParameters);
         }
 
         return new BestConstructorInstantiator(clazz, constructorParameters);
