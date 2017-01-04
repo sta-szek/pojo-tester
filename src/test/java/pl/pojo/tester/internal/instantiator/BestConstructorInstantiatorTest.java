@@ -26,7 +26,6 @@ public class BestConstructorInstantiatorTest {
 
     private final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters = new ArrayListValuedHashMap<>();
 
-
     @TestFactory
     public Stream<DynamicTest> Should_Instantiate_Non_Public_Classes() {
         return Stream.of("classesForTest.UnpublicClass",

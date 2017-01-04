@@ -37,6 +37,10 @@ abstract class MultiConstructorInstantiator extends AbstractObjectInstantiator {
         return null;
     }
 
+    protected boolean userDefinedOwnParametersForThisClass(final Collection<ConstructorParameters> userConstructorParameters) {
+        return CollectionUtils.isNotEmpty(userConstructorParameters);
+    }
+
     protected Object tryToInstantiateUsing(final Collection<ConstructorParameters> userConstructorParameters) {
         for (final ConstructorParameters param : userConstructorParameters) {
             Class<?>[] parameterTypes = param.getConstructorParametersTypes();
@@ -55,15 +59,19 @@ abstract class MultiConstructorInstantiator extends AbstractObjectInstantiator {
         return null;
     }
 
+    protected Object createFindingBestConstructor() {
+        final Constructor<?>[] constructors = clazz.getDeclaredConstructors();
+        return Arrays.stream(constructors)
+                     .map(this::createObjectFromConstructor)
+                     .filter(Objects::nonNull)
+                     .findAny()
+                     .orElseThrow(this::createObjectInstantiationException);
+    }
+
     private Object instantiateEnclosingClass() {
         final Class<?> enclosingClass = clazz.getEnclosingClass();
         return Instantiable.forClass(enclosingClass, constructorParameters)
                            .instantiate();
-    }
-
-    private Object[] putEnclosingClassInstanceAsFirstParameter(final Object enclosingClassInstance, final Object[] arguments) {
-        return Stream.concat(Stream.of(enclosingClassInstance), Arrays.stream(arguments))
-                     .toArray(Object[]::new);
     }
 
     private Class[] putEnclosingClassAsFirstParameterType(final Class<?> enclosingClass, final Class<?>[] constructorParametersTypes) {
@@ -75,13 +83,9 @@ abstract class MultiConstructorInstantiator extends AbstractObjectInstantiator {
         return clazz.getEnclosingClass() != null && !Modifier.isStatic(clazz.getModifiers());
     }
 
-    protected Object createFindingBestConstructor() {
-        final Constructor<?>[] constructors = clazz.getDeclaredConstructors();
-        return Arrays.stream(constructors)
-                     .map(this::createObjectFromConstructor)
-                     .filter(Objects::nonNull)
-                     .findAny()
-                     .orElseThrow(this::createObjectInstantiationException);
+    private Object[] putEnclosingClassInstanceAsFirstParameter(final Object enclosingClassInstance, final Object[] arguments) {
+        return Stream.concat(Stream.of(enclosingClassInstance), Arrays.stream(arguments))
+                     .toArray(Object[]::new);
     }
 
     private Object createObjectFromConstructor(final Constructor<?> constructor) {
@@ -101,11 +105,7 @@ abstract class MultiConstructorInstantiator extends AbstractObjectInstantiator {
         }
     }
 
-    protected boolean userDefinedOwnParametersForThisClass(final Collection<ConstructorParameters> userConstructorParameters) {
-        return CollectionUtils.isNotEmpty(userConstructorParameters);
-    }
-
-    protected abstract Object createObjectFromArgsConstructor(final Class<?>[] constructor, Object[] parameters) throws Exception;
+    protected abstract Object createObjectFromArgsConstructor(final Class<?>[] parameterTypes, Object[] parameters) throws Exception;
 
     protected abstract Object createObjectFromNoArgsConstructor(final Constructor<?> constructor);
 

@@ -5,6 +5,7 @@ import classesForTest.Abstract;
 import classesForTest.Abstract_PrivateConstructor;
 import classesForTest.Annotation;
 import classesForTest.Interface;
+import lombok.Data;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.junit.jupiter.api.DynamicTest;
@@ -58,5 +59,50 @@ public class ProxyInstantiatorTest {
         assertThat(result.hashCode()).isZero();
     }
 
+    @TestFactory
+    public Stream<DynamicTest> Should_Create_Abstract_Class_Without_Default_Constructor() {
+        return Stream.of(A.class, B.class, C.class, D.class, E.class)
+                     .map(value -> dynamicTest(getDefaultDisplayName(value.getName()),
+                                               Should_Create_Abstract_Class_Without_Default_Constructor(value)));
+    }
+
+    public Executable Should_Create_Abstract_Class_Without_Default_Constructor(final Class<?> classToInstantiate) {
+        return () -> {
+            // given
+
+            final ProxyInstantiator instantiator = new ProxyInstantiator(classToInstantiate, constructorParameters);
+
+            // when
+            final Object result = instantiator.instantiate();
+
+            // then
+            assertThat(result).isInstanceOf(classToInstantiate);
+        };
+    }
+
+    @Data
+    static class A {
+        private final int a;
+    }
+
+    @Data
+    private static class B {
+        private final int a;
+    }
+
+    @Data
+    class C {
+        private final int a;
+    }
+
+    @Data
+    public class D {
+        private final int a;
+    }
+
+    @Data
+    private class E {
+        private final int a;
+    }
 
 }
