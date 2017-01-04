@@ -1,6 +1,19 @@
 #Writing tests
 Writing `pojo-methods` tests was never so easy. Using `POJO-TESTER` you just have to declare what class or classes you want to test and pass it to magic `pojo-assertions`. That's all!
 
+##### Features
+- Test `equals` and `hashCode` - all branches
+- Test `getters` and `setters`
+- Test `toString`
+- Test `constructor` - including private and non-default (with arguments)
+- Custom fields value changer
+- Custom class creator (using your constructor and parameters)
+- Test whole package at once
+- Include / exclude fields from testing
+
+##### Known limitations
+- Custom class creator (using your constructor and parameters) does not work with abstract classes
+
 
 ## Basic pojo test {#basic-test}
 
