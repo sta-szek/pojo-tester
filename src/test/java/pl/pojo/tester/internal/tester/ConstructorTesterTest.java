@@ -4,8 +4,6 @@ import classesForTest.ClassWithSyntheticConstructor;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 import pl.pojo.tester.api.ConstructorParameters;
 import pl.pojo.tester.api.assertion.Assertions;
 import pl.pojo.tester.internal.assertion.constructor.ConstructorAssertionError;
@@ -42,9 +40,22 @@ public class ConstructorTesterTest {
     }
 
     @Test
+    public void Should_Skip_Constructor_Tests_If_Class_Is_Abstract() {
+        // given
+        final Class[] classesToTest = { AbstractBadConstructorPojo.class };
+        final ConstructorTester constructorTester = new ConstructorTester();
+
+        // when
+        final Throwable result = catchThrowable(() -> constructorTester.testAll(classesToTest));
+
+        // then
+        assertThat(result).isNull();
+    }
+
+    @Test
     public void Should_Fail_Constructor_Tests() {
         // given
-        final Class[] classesToTest = {BadConstructorPojo.class};
+        final Class[] classesToTest = { BadConstructorPojo.class };
         final ConstructorTester constructorTester = new ConstructorTester();
 
         // when
@@ -127,6 +138,12 @@ public class ConstructorTesterTest {
 
     private static class BadConstructorPojo {
         public BadConstructorPojo() {
+            throw new RuntimeException("test");
+        }
+    }
+
+    private abstract static class AbstractBadConstructorPojo {
+        public AbstractBadConstructorPojo() {
             throw new RuntimeException("test");
         }
     }

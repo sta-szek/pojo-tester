@@ -13,11 +13,20 @@ import java.util.stream.Stream;
 
 public final class Instantiable {
 
-    private Instantiable() {}
+    private Instantiable() {
+    }
+
+    static Object[] instantiateClasses(final Class<?>[] classes,
+                                       final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
+        return Arrays.stream(classes)
+                     .map(clazz -> Instantiable.forClass(clazz, constructorParameters))
+                     .map(AbstractObjectInstantiator::instantiate)
+                     .toArray();
+    }
 
     static AbstractObjectInstantiator forClass(final Class<?> clazz,
                                                final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
-        if (userDefinedConstructorParametersFor(clazz, constructorParameters)) {
+        if (userDefinedConstructorParametersFor(clazz, constructorParameters) && !qualifiesForProxy(clazz)) {
             return new UserDefinedConstructorInstantiator(clazz, constructorParameters);
         }
 
@@ -46,7 +55,7 @@ public final class Instantiable {
         }
 
         if (qualifiesForProxy(clazz)) {
-            return new ProxyInstantiator(clazz);
+            return new ProxyInstantiator(clazz, constructorParameters);
         }
 
         return new BestConstructorInstantiator(clazz, constructorParameters);
@@ -54,9 +63,9 @@ public final class Instantiable {
 
     private static boolean isKindOfCollectionClass(final Class<?> clazz) {
         return Iterator.class.isAssignableFrom(clazz)
-               || Iterable.class.isAssignableFrom(clazz)
-               || Map.class.isAssignableFrom(clazz)
-               || Stream.class.isAssignableFrom(clazz);
+                || Iterable.class.isAssignableFrom(clazz)
+                || Map.class.isAssignableFrom(clazz)
+                || Stream.class.isAssignableFrom(clazz);
     }
 
     private static boolean userDefinedConstructorParametersFor(final Class<?> clazz,
@@ -78,13 +87,13 @@ public final class Instantiable {
 
     private static boolean isWrapper(final Class<?> clazz) {
         return clazz == Double.class
-               || clazz == Float.class
-               || clazz == Long.class
-               || clazz == Integer.class
-               || clazz == Short.class
-               || clazz == Character.class
-               || clazz == Byte.class
-               || clazz == Boolean.class;
+                || clazz == Float.class
+                || clazz == Long.class
+                || clazz == Integer.class
+                || clazz == Short.class
+                || clazz == Character.class
+                || clazz == Byte.class
+                || clazz == Boolean.class;
     }
 
     private static boolean canBeCreatedByDefaultConstructor(final Class<?> clazz) {

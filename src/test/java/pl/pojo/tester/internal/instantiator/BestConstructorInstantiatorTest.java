@@ -1,21 +1,14 @@
 package pl.pojo.tester.internal.instantiator;
 
-import classesForTest.ClassContainingStaticClasses;
-import classesForTest.Constructor_Stream;
-import classesForTest.Constructor_Thread;
-import classesForTest.Constructors_First_Throws_Exception;
-import classesForTest.PackageConstructor;
-import classesForTest.Person;
-import classesForTest.PrivateConstructor;
-import classesForTest.ProtectedConstructor;
+import classesForTest.*;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.function.Executable;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 import pl.pojo.tester.api.ConstructorParameters;
 import pl.pojo.tester.api.FieldPredicate;
 import pl.pojo.tester.internal.utils.FieldUtils;
@@ -32,7 +25,6 @@ import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 public class BestConstructorInstantiatorTest {
 
     private final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters = new ArrayListValuedHashMap<>();
-
 
     @TestFactory
     public Stream<DynamicTest> Should_Instantiate_Non_Public_Classes() {
@@ -175,12 +167,33 @@ public class BestConstructorInstantiatorTest {
         assertThat(result).isInstanceOf(classToInstantiate);
     }
 
+    @Test
+    public void Should_Create_Object_With_User_Defined_Constructor_Parameters() {
+        // given
+        final ArrayListValuedHashMap<Class<?>, ConstructorParameters> constructorParameters = new ArrayListValuedHashMap<>();
+        final ConstructorParameters parameters = new ConstructorParameters(new Object[]{ "expectedString" },
+                                                                           new Class[]{ Object.class });
+        constructorParameters.put(NoDefaultConstructor.class, parameters);
+        final BestConstructorInstantiator instantiator = new BestConstructorInstantiator(NoDefaultConstructor.class,
+                                                                                         constructorParameters);
+
+        final NoDefaultConstructor expectedResult = new NoDefaultConstructor("expectedString");
+
+        // when
+        final Object result = instantiator.instantiate();
+
+        // then
+        assertThat(result).isEqualTo(expectedResult);
+    }
+
     private class One_Arg_Constructor_Throws_NPE {
         public One_Arg_Constructor_Throws_NPE(final Object o) {
             throw new NullPointerException("test");
         }
     }
 
+    @ToString
+    @EqualsAndHashCode
     private class NoDefaultConstructor {
 
         private int a;
