@@ -11,7 +11,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
 
-class ProxyInstantiator extends MultiConstructorInstantiator {
+class ProxyInstantiator extends AbstractMultiConstructorInstantiator {
 
     private final ProxyFactory proxyFactory = new ProxyFactory();
 
@@ -38,11 +38,15 @@ class ProxyInstantiator extends MultiConstructorInstantiator {
     }
 
     @Override
-    protected Object createObjectFromArgsConstructor(final Class<?>[] parameterTypes, final Object[] parameters) throws Exception {
-        final Class proxyClass = proxyFactory.createClass();
-        final Constructor declaredConstructor = proxyClass.getDeclaredConstructor(parameterTypes);
-        declaredConstructor.setAccessible(true);
-        return declaredConstructor.newInstance(parameters);
+    protected Object createObjectFromArgsConstructor(final Class<?>[] parameterTypes, final Object[] parameters) throws ObjectInstantiationException {
+        try {
+            final Class proxyClass = proxyFactory.createClass();
+            final Constructor declaredConstructor = proxyClass.getDeclaredConstructor(parameterTypes);
+            declaredConstructor.setAccessible(true);
+            return declaredConstructor.newInstance(parameters);
+        } catch (final ReflectiveOperationException e) {
+            throw new ObjectInstantiationException(clazz, "Could not create object from args constructor", e);
+        }
     }
 
     @Override

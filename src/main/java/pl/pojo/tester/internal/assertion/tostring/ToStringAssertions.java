@@ -36,7 +36,7 @@ public class ToStringAssertions {
     }
 
 
-    private void checkResult(final boolean pass, final ToStringAssertionError errorToThrow) {
+    private void checkResult(final boolean pass, final AbstractToStringAssertionError errorToThrow) {
         if (!pass) {
             throw errorToThrow;
         }

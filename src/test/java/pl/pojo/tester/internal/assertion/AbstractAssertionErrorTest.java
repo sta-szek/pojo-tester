@@ -1,20 +1,18 @@
 package pl.pojo.tester.internal.assertion;
 
 import org.junit.jupiter.api.Test;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class AssertionErrorTest {
+public class AbstractAssertionErrorTest {
 
     @Test
     public void Should_Set_Stack_Trace_To_Empty_Array() {
         // given
         final Class<String> testedCass = String.class;
         final StackTraceElement[] expectedResult = new StackTraceElement[]{};
-        final AssertionError error = new MockOfAssertionError(testedCass);
+        final AbstractAssertionError error = new MockOfAssertionError(testedCass);
 
         // when
         final StackTraceElement[] result = error.getStackTrace();
@@ -32,7 +30,7 @@ public class AssertionErrorTest {
                                       + "\n"
                                       + "errorPrefix\n"
                                       + "detailedMessage";
-        final AssertionError error = new MockOfAssertionError(testedCass);
+        final AbstractAssertionError error = new MockOfAssertionError(testedCass);
 
         // when
         final String result = error.getMessage();
@@ -41,7 +39,7 @@ public class AssertionErrorTest {
         assertThat(result).isEqualTo(expectedResult);
     }
 
-    class MockOfAssertionError extends AssertionError {
+    class MockOfAssertionError extends AbstractAssertionError {
 
         MockOfAssertionError(final Class<?> testedCass) {
             super(testedCass);

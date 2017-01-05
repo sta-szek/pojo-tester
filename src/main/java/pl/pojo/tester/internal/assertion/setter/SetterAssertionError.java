@@ -2,9 +2,9 @@ package pl.pojo.tester.internal.assertion.setter;
 
 
 import java.lang.reflect.Field;
-import pl.pojo.tester.internal.assertion.AssertionError;
+import pl.pojo.tester.internal.assertion.AbstractAssertionError;
 
-class SetterAssertionError extends AssertionError {
+class SetterAssertionError extends AbstractAssertionError {
 
     private static final String CONSTRAINT_SETTER = "The setter method for field '%s' should set field value.\n"
                                                     + "Current implementation does not set the value.\n"

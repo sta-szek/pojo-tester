@@ -1,11 +1,11 @@
 package pl.pojo.tester.internal.assertion.tostring;
 
 
-import pl.pojo.tester.internal.assertion.AssertionError;
+import pl.pojo.tester.internal.assertion.AbstractAssertionError;
 
-abstract class ToStringAssertionError extends AssertionError {
+abstract class AbstractToStringAssertionError extends AbstractAssertionError {
 
-    ToStringAssertionError(final Class<?> testedCass) {
+    AbstractToStringAssertionError(final Class<?> testedCass) {
         super(testedCass);
     }
 

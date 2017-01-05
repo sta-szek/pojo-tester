@@ -1,13 +1,13 @@
 package pl.pojo.tester.internal.assertion.tostring;
 
 
-class ContainsToStringAssertionError extends ToStringAssertionError {
+class ContainsToStringAssertionError extends AbstractToStringAssertionError {
 
     private static final String CONSTRAINT_CONTAINS = "The toString method should contain:\n"
-                                                      + "%s\n"
-                                                      + "But does not.\n"
-                                                      + "Result of toString:\n"
-                                                      + "%s";
+            + "%s\n"
+            + "But does not.\n"
+            + "Result of toString:\n"
+            + "%s";
     private final String value;
     private final String toString;
 

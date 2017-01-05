@@ -7,8 +7,8 @@ class HashMapValueChanger extends AbstractMapFieldValueChanger<HashMap<?, ?>> {
 
     @Override
     protected HashMap<?, ?> increaseValue(final HashMap<?, ?> value, final Class<?> type) {
-        return value != null
-               ? null
-               : new HashMap<>();
+        return value == null
+               ? new HashMap<>()
+               : null;
     }
 }

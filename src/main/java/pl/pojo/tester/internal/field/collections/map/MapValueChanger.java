@@ -7,8 +7,8 @@ class MapValueChanger extends AbstractMapFieldValueChanger<Map<?, ?>> {
 
     @Override
     protected Map<?, ?> increaseValue(final Map<?, ?> value, final Class<?> type) {
-        return value != null
-               ? null
-               : Collections.EMPTY_MAP;
+        return value == null
+               ? Collections.EMPTY_MAP
+               : null;
     }
 }

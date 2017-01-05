@@ -5,10 +5,8 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 import pl.pojo.tester.api.FieldPredicate;
-import pl.pojo.tester.internal.assertion.hashcode.HashCodeAssertionError;
+import pl.pojo.tester.internal.assertion.hashcode.AbstractHashCodeAssertionError;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
 
 import java.util.List;
@@ -75,7 +73,7 @@ public class HashCodeTesterTest {
         final Throwable result = catchThrowable(() -> hashCodeTester.testAll(classesToTest));
 
         // then
-        assertThat(result).isInstanceOf(HashCodeAssertionError.class);
+        assertThat(result).isInstanceOf(AbstractHashCodeAssertionError.class);
     }
 
     @Test
@@ -90,7 +88,7 @@ public class HashCodeTesterTest {
         final Throwable result = catchThrowable(() -> hashCodeTester.testAll(classesToTest));
 
         // then
-        assertThat(result).isInstanceOf(HashCodeAssertionError.class);
+        assertThat(result).isInstanceOf(AbstractHashCodeAssertionError.class);
     }
 
     @Test
@@ -103,7 +101,7 @@ public class HashCodeTesterTest {
         final Throwable result = catchThrowable(() -> hashCodeTester.testAll(classesToTest));
 
         // then
-        assertThat(result).isInstanceOf(HashCodeAssertionError.class);
+        assertThat(result).isInstanceOf(AbstractHashCodeAssertionError.class);
     }
 
     @Test
@@ -117,7 +115,7 @@ public class HashCodeTesterTest {
         final Throwable result = catchThrowable(() -> hashCodeTester.test(classToTest, includedFields));
 
         // then
-        assertThat(result).isInstanceOf(HashCodeAssertionError.class);
+        assertThat(result).isInstanceOf(AbstractHashCodeAssertionError.class);
     }
 
     private static class BadPojoHashCodeDifferentObjectSameType {

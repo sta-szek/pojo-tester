@@ -1,20 +1,18 @@
 package pl.pojo.tester.internal.assertion.tostring;
 
 import org.junit.jupiter.api.Test;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class ToStringAssertionErrorTest {
+public class AbstractToStringAssertionErrorTest {
 
     @Test
     public void Should_Return_Expected_Error_Prefix() throws NoSuchFieldException {
         // given
         final String expectedMessage = "Class java.lang.String has bad 'toString' method implementation.";
         final Class<String> testedCass = String.class;
-        final ToStringAssertionError error = new MockOfToStringAssertionError(testedCass);
+        final AbstractToStringAssertionError error = new MockOfToStringAssertionError(testedCass);
 
         // when
         final String result = error.getErrorPrefix();
@@ -23,7 +21,7 @@ public class ToStringAssertionErrorTest {
         assertThat(result).isEqualTo(expectedMessage);
     }
 
-    class MockOfToStringAssertionError extends ToStringAssertionError {
+    class MockOfToStringAssertionError extends AbstractToStringAssertionError {
         MockOfToStringAssertionError(final Class<?> testedCass) {
             super(testedCass);
         }

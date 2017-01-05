@@ -1,18 +1,18 @@
 package pl.pojo.tester.internal.assertion.hashcode;
 
 
-public class NotEqualHashCodeAssertionError extends HashCodeAssertionError {
+public class NotEqualHashCodeAssertionError extends AbstractHashCodeAssertionError {
 
     private static final String CONSTRAINT_NOT_EQUAL = "The hashCode method should return different hash codes for non equal objects.\n"
-                                                       + "Current implementation returns same hash codes.\n"
-                                                       + "Object:\n"
-                                                       + "%s\n"
-                                                       + "and\n"
-                                                       + "%s\n"
-                                                       + "should have different hash codes:\n"
-                                                       + "%s\n"
-                                                       + "and\n"
-                                                       + "%s";
+            + "Current implementation returns same hash codes.\n"
+            + "Object:\n"
+            + "%s\n"
+            + "and\n"
+            + "%s\n"
+            + "should have different hash codes:\n"
+            + "%s\n"
+            + "and\n"
+            + "%s";
     private final Object testedObject;
     private final Object secondObject;
     private final int firstHashCode;

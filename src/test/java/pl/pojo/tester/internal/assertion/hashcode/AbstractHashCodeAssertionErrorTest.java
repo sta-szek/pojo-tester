@@ -1,20 +1,18 @@
 package pl.pojo.tester.internal.assertion.hashcode;
 
 import org.junit.jupiter.api.Test;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class HashCodeAssertionErrorTest {
+public class AbstractHashCodeAssertionErrorTest {
 
     @Test
     public void Should_Return_Expected_Error_Prefix() throws NoSuchFieldException {
         // given
         final String expectedMessage = "Class java.lang.String has bad 'hashCode' method implementation.";
         final Class<String> testedCass = String.class;
-        final HashCodeAssertionError error = new MockOfEqualsAssertionError(testedCass);
+        final AbstractHashCodeAssertionError error = new MockOfEqualsAssertionError(testedCass);
 
         // when
         final String result = error.getErrorPrefix();
@@ -23,7 +21,7 @@ public class HashCodeAssertionErrorTest {
         assertThat(result).isEqualTo(expectedMessage);
     }
 
-    class MockOfEqualsAssertionError extends HashCodeAssertionError {
+    class MockOfEqualsAssertionError extends AbstractHashCodeAssertionError {
         MockOfEqualsAssertionError(final Class<?> testedCass) {
             super(testedCass);
         }

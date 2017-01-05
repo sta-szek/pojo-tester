@@ -7,7 +7,7 @@ import pl.pojo.tester.api.ConstructorParameters;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-class BestConstructorInstantiator extends MultiConstructorInstantiator {
+class BestConstructorInstantiator extends AbstractMultiConstructorInstantiator {
 
 
     BestConstructorInstantiator(final Class<?> clazz, final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
@@ -30,10 +30,14 @@ class BestConstructorInstantiator extends MultiConstructorInstantiator {
     }
 
     @Override
-    protected Object createObjectFromArgsConstructor(final Class<?>[] parameterTypes, final Object[] parameters) throws Exception {
-        final Constructor<?> declaredConstructor = clazz.getDeclaredConstructor(parameterTypes);
-        declaredConstructor.setAccessible(true);
-        return declaredConstructor.newInstance(parameters);
+    protected Object createObjectFromArgsConstructor(final Class<?>[] parameterTypes, final Object[] parameters) throws ObjectInstantiationException {
+        try {
+            final Constructor<?> declaredConstructor = clazz.getDeclaredConstructor(parameterTypes);
+            declaredConstructor.setAccessible(true);
+            return declaredConstructor.newInstance(parameters);
+        } catch (final ReflectiveOperationException e) {
+            throw new ObjectInstantiationException(clazz, "Could not create object from args constructor", e);
+        }
     }
 
     @Override

@@ -15,11 +15,11 @@ import java.util.stream.Stream;
 
 
 @Slf4j
-abstract class MultiConstructorInstantiator extends AbstractObjectInstantiator {
+abstract class AbstractMultiConstructorInstantiator extends AbstractObjectInstantiator {
 
     protected final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters;
 
-    MultiConstructorInstantiator(final Class<?> clazz, final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
+    AbstractMultiConstructorInstantiator(final Class<?> clazz, final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
         super(clazz);
         this.constructorParameters = constructorParameters;
     }
@@ -52,7 +52,7 @@ abstract class MultiConstructorInstantiator extends AbstractObjectInstantiator {
                     parameters = putEnclosingClassInstanceAsFirstParameter(enclosingClassInstance, parameters);
                 }
                 return createObjectFromArgsConstructor(parameterTypes, parameters);
-            } catch (final Exception e) {
+            } catch (final ObjectInstantiationException e) {
                 // ignore, try all user defined constructor parameters and types
             }
         }
@@ -67,6 +67,12 @@ abstract class MultiConstructorInstantiator extends AbstractObjectInstantiator {
                      .findAny()
                      .orElseThrow(this::createObjectInstantiationException);
     }
+
+    protected abstract Object createObjectFromArgsConstructor(final Class<?>[] parameterTypes, Object[] parameters) throws ObjectInstantiationException;
+
+    protected abstract Object createObjectFromNoArgsConstructor(final Constructor<?> constructor);
+
+    protected abstract ObjectInstantiationException createObjectInstantiationException();
 
     private Object instantiateEnclosingClass() {
         final Class<?> enclosingClass = clazz.getEnclosingClass();
@@ -104,12 +110,6 @@ abstract class MultiConstructorInstantiator extends AbstractObjectInstantiator {
             }
         }
     }
-
-    protected abstract Object createObjectFromArgsConstructor(final Class<?>[] parameterTypes, Object[] parameters) throws Exception;
-
-    protected abstract Object createObjectFromNoArgsConstructor(final Constructor<?> constructor);
-
-    protected abstract ObjectInstantiationException createObjectInstantiationException();
 
     private void makeAccessible(final Constructor<?> constructor) {
         constructor.setAccessible(true);

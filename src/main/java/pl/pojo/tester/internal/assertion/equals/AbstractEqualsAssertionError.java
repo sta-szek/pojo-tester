@@ -1,9 +1,9 @@
 package pl.pojo.tester.internal.assertion.equals;
 
 
-import pl.pojo.tester.internal.assertion.AssertionError;
+import pl.pojo.tester.internal.assertion.AbstractAssertionError;
 
-public abstract class AbstractEqualsAssertionError extends AssertionError {
+public abstract class AbstractEqualsAssertionError extends AbstractAssertionError {
 
 
     AbstractEqualsAssertionError(final Class<?> testedCass) {

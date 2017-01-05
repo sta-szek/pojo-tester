@@ -1,11 +1,11 @@
 package pl.pojo.tester.internal.assertion;
 
 
-public abstract class AssertionError extends RuntimeException {
+public abstract class AbstractAssertionError extends RuntimeException {
 
     protected final Class<?> testedCass;
 
-    public AssertionError(final Class<?> testedCass) {
+    public AbstractAssertionError(final Class<?> testedCass) {
         super();
         this.testedCass = testedCass;
         setStackTrace(new StackTraceElement[]{});
