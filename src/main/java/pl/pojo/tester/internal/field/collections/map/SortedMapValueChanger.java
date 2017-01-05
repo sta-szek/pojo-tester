@@ -8,8 +8,8 @@ class SortedMapValueChanger extends AbstractMapFieldValueChanger<SortedMap<?, ?>
 
     @Override
     protected SortedMap<?, ?> increaseValue(final SortedMap<?, ?> value, final Class<?> type) {
-        return value != null
-               ? null
-               : new TreeMap<>();
+        return value == null
+               ? new TreeMap<>()
+               : null;
     }
 }

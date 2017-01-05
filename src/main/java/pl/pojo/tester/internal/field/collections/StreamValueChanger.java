@@ -1,8 +1,9 @@
 package pl.pojo.tester.internal.field.collections;
 
+import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
+
 import java.util.Arrays;
 import java.util.stream.Stream;
-import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 
 class StreamValueChanger extends AbstractFieldValueChanger<Stream<?>> {
 
@@ -27,9 +28,9 @@ class StreamValueChanger extends AbstractFieldValueChanger<Stream<?>> {
 
     @Override
     protected Stream<?> increaseValue(final Stream<?> value, final Class<?> type) {
-        return value != null
-               ? null
-               : Stream.empty();
+        return value == null
+               ? Stream.empty()
+               : null;
     }
 
 }

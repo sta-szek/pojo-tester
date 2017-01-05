@@ -1,12 +1,12 @@
 package pl.pojo.tester.internal.assertion.hashcode;
 
 
-import pl.pojo.tester.internal.assertion.AssertionError;
+import pl.pojo.tester.internal.assertion.AbstractAssertionError;
 
-public abstract class HashCodeAssertionError extends AssertionError {
+public abstract class AbstractHashCodeAssertionError extends AbstractAssertionError {
 
 
-    HashCodeAssertionError(final Class<?> testedCass) {
+    AbstractHashCodeAssertionError(final Class<?> testedCass) {
         super(testedCass);
     }
 

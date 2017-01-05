@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
 
-class MultiConstructorInstantiatorTest {
+class AbstractMultiConstructorInstantiatorTest {
 
     @Test
     public void Should_Create_Object_Using_User_Parameters() {
@@ -20,8 +20,8 @@ class MultiConstructorInstantiatorTest {
         final ArrayListValuedHashMap<Class<?>, ConstructorParameters> constructorParameters = new ArrayListValuedHashMap<>();
         final Class<?> clazz = A.class;
         constructorParameters.put(clazz, new ConstructorParameters(new Object[]{ 12345 }, new Class[]{ int.class }));
-        final MultiConstructorInstantiator instantiator = new MockMultiConstructorInstantiator(clazz,
-                                                                                               constructorParameters);
+        final AbstractMultiConstructorInstantiator instantiator = new MockMultiConstructorInstantiator(clazz,
+                                                                                                       constructorParameters);
         final A expectedResult = new A(12345);
 
         // when
@@ -36,8 +36,8 @@ class MultiConstructorInstantiatorTest {
         // given
         final ArrayListValuedHashMap<Class<?>, ConstructorParameters> constructorParameters = new ArrayListValuedHashMap<>();
         final Class<?> clazz = A.class;
-        final MultiConstructorInstantiator instantiator = new MockMultiConstructorInstantiator(clazz,
-                                                                                               constructorParameters);
+        final AbstractMultiConstructorInstantiator instantiator = new MockMultiConstructorInstantiator(clazz,
+                                                                                                       constructorParameters);
 
         // when
         final Object result = instantiator.instantiateUsingUserParameters();
@@ -51,8 +51,8 @@ class MultiConstructorInstantiatorTest {
         // given
         final ArrayListValuedHashMap<Class<?>, ConstructorParameters> constructorParameters = new ArrayListValuedHashMap<>();
         final Class<?> clazz = B.class;
-        final MultiConstructorInstantiator instantiator = new MockMultiConstructorInstantiator(clazz,
-                                                                                               constructorParameters);
+        final AbstractMultiConstructorInstantiator instantiator = new MockMultiConstructorInstantiator(clazz,
+                                                                                                       constructorParameters);
         final Throwable expectedResult = new ObjectInstantiationException(B.class, "msg", null);
 
         // when
@@ -62,7 +62,7 @@ class MultiConstructorInstantiatorTest {
         assertThat(result).isEqualToComparingFieldByField(expectedResult);
     }
 
-    class MockMultiConstructorInstantiator extends MultiConstructorInstantiator {
+    class MockMultiConstructorInstantiator extends AbstractMultiConstructorInstantiator {
         MockMultiConstructorInstantiator(final Class<?> clazz, final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
             super(clazz, constructorParameters);
         }
@@ -73,10 +73,14 @@ class MultiConstructorInstantiatorTest {
         }
 
         @Override
-        protected Object createObjectFromArgsConstructor(final Class<?>[] parameterTypes, final Object[] parameters) throws Exception {
-            final Constructor<?> declaredConstructor = clazz.getDeclaredConstructor(parameterTypes);
-            declaredConstructor.setAccessible(true);
-            return declaredConstructor.newInstance(parameters);
+        protected Object createObjectFromArgsConstructor(final Class<?>[] parameterTypes, final Object[] parameters) throws ObjectInstantiationException {
+            try {
+                final Constructor<?> declaredConstructor = clazz.getDeclaredConstructor(parameterTypes);
+                declaredConstructor.setAccessible(true);
+                return declaredConstructor.newInstance(parameters);
+            } catch (final Exception e) {
+                throw new ObjectInstantiationException(null, null);
+            }
         }
 
         @Override

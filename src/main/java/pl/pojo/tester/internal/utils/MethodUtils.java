@@ -59,12 +59,12 @@ public final class MethodUtils {
 
         if (returnType.equals(boolean.class) || returnType.equals(Boolean.class)) {
             return (methodName.startsWith("is") && methodName.equals(fieldName))
-                   || ((methodName.endsWith(upperCaseFirstLetterFieldName))
+                    || (methodName.endsWith(upperCaseFirstLetterFieldName)
                        && ((methodName.startsWith("is") && (methodName.length() == (fieldNameLength + 2)))
-                           || (methodName.startsWith("has") && (methodName.length() == (fieldNameLength + 3)))
-                           || (methodName.startsWith("get") && (methodName.length() == (fieldNameLength + 3)))
-                           || (methodName.startsWith("have") && (methodName.length() == (fieldNameLength + 4)))
-                           || (methodName.startsWith("contains") && (methodName.length() == (fieldNameLength + 8)))));
+                    || methodName.startsWith("has") && methodName.length() == fieldNameLength + 3
+                    || methodName.startsWith("get") && methodName.length() == fieldNameLength + 3
+                    || methodName.startsWith("have") && methodName.length() == fieldNameLength + 4
+                    || methodName.startsWith("contains") && methodName.length() == fieldNameLength + 8));
         } else {
             return methodName.startsWith("get")
                    && methodName.length() == fieldNameLength + 3

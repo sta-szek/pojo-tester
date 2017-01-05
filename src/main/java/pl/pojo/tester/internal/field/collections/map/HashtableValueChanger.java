@@ -7,8 +7,8 @@ class HashtableValueChanger extends AbstractMapFieldValueChanger<Hashtable<?, ?>
 
     @Override
     protected Hashtable<?, ?> increaseValue(final Hashtable<?, ?> value, final Class<?> type) {
-        return value != null
-               ? null
-               : new Hashtable<>();
+        return value == null
+               ? new Hashtable<>()
+               : null;
     }
 }

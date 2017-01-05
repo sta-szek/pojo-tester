@@ -1,9 +1,9 @@
 package pl.pojo.tester.internal.assertion.getter;
 
 import java.lang.reflect.Field;
-import pl.pojo.tester.internal.assertion.AssertionError;
+import pl.pojo.tester.internal.assertion.AbstractAssertionError;
 
-class GetterAssertionError extends AssertionError {
+class GetterAssertionError extends AbstractAssertionError {
 
     private static final String CONSTRAINT_GETTER = "The getter method for field '%s' should return field value.\n"
                                                     + "Current implementation returns different value.\n"

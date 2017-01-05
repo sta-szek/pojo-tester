@@ -1,18 +1,18 @@
 package pl.pojo.tester.internal.assertion.hashcode;
 
 
-class EqualHashCodeAssertionError extends HashCodeAssertionError {
+class EqualHashCodeAssertionError extends AbstractHashCodeAssertionError {
 
     private static final String CONSTRAINT_EQUAL = "The hashCode method should return same hash code for equal objects.\n"
-                                                   + "Current implementation returns different values.\n"
-                                                   + "Object:\n"
-                                                   + "%s\n"
-                                                   + "and\n"
-                                                   + "%s\n"
-                                                   + "have two different hash codes:\n"
-                                                   + "%s\n"
-                                                   + "and\n"
-                                                   + "%s";
+            + "Current implementation returns different values.\n"
+            + "Object:\n"
+            + "%s\n"
+            + "and\n"
+            + "%s\n"
+            + "have two different hash codes:\n"
+            + "%s\n"
+            + "and\n"
+            + "%s";
     private final Object testedObject;
     private final Object secondObject;
     private final int firstHashCode;

@@ -7,10 +7,8 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 import pl.pojo.tester.api.ConstructorParameters;
-import pl.pojo.tester.internal.assertion.AssertionError;
+import pl.pojo.tester.internal.assertion.AbstractAssertionError;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
 import pl.pojo.tester.internal.tester.EqualsTester;
@@ -94,7 +92,7 @@ public class AbstractAssertionTest {
                                                                 .areWellImplemented());
 
         // then
-        assertThat(result).isInstanceOf(AssertionError.class);
+        assertThat(result).isInstanceOf(AbstractAssertionError.class);
     }
 
     @Test

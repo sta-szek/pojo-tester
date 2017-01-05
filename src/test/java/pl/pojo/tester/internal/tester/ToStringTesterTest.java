@@ -5,10 +5,8 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 import pl.pojo.tester.api.FieldPredicate;
-import pl.pojo.tester.internal.assertion.AssertionError;
+import pl.pojo.tester.internal.assertion.AbstractAssertionError;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
 
 import java.util.List;
@@ -74,7 +72,7 @@ public class ToStringTesterTest {
         final Throwable result = catchThrowable(() -> toStringTester.testAll(classesToTest));
 
         // then
-        assertThat(result).isInstanceOf(AssertionError.class);
+        assertThat(result).isInstanceOf(AbstractAssertionError.class);
     }
 
     @Test
@@ -89,7 +87,7 @@ public class ToStringTesterTest {
                                                                           FieldPredicate.exclude(excludedFields)));
 
         // then
-        assertThat(result).isInstanceOf(AssertionError.class);
+        assertThat(result).isInstanceOf(AbstractAssertionError.class);
     }
 
     @Test
@@ -104,7 +102,7 @@ public class ToStringTesterTest {
                                                                           FieldPredicate.include(includedFields)));
 
         // then
-        assertThat(result).isInstanceOf(AssertionError.class);
+        assertThat(result).isInstanceOf(AbstractAssertionError.class);
     }
 
     private class GoodPojo_Equals_HashCode_ToString {

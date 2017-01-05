@@ -1,13 +1,13 @@
 package pl.pojo.tester.internal.assertion.constructor;
 
-import pl.pojo.tester.internal.assertion.AssertionError;
+import pl.pojo.tester.internal.assertion.AbstractAssertionError;
 
 import java.lang.reflect.Constructor;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
 
-public class ConstructorAssertionError extends AssertionError {
+public class ConstructorAssertionError extends AbstractAssertionError {
 
     private static final String INSTANTIATE_EXCEPTION = "Constructor:\n"
                                                         + "%s\n"

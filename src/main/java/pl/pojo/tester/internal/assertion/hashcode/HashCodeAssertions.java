@@ -22,18 +22,24 @@ public class HashCodeAssertions {
         final int result1 = objectUnderAssert.hashCode();
         final int result2 = otherObject.hashCode();
         final boolean result = result1 == result2;
-        checkResult(result, new EqualHashCodeAssertionError(classUnderTest, objectUnderAssert, otherObject, result1, result2));
+        checkResult(result,
+                    new EqualHashCodeAssertionError(classUnderTest, objectUnderAssert, otherObject, result1, result2));
     }
 
     public void returnsDifferentValueFor(final Object otherObject) {
         final int result1 = objectUnderAssert.hashCode();
         final int result2 = otherObject.hashCode();
         final boolean result = result1 == result2;
-        checkResult(!result, new NotEqualHashCodeAssertionError(classUnderTest, objectUnderAssert, otherObject, result1, result2));
+        checkResult(!result,
+                    new NotEqualHashCodeAssertionError(classUnderTest,
+                                                       objectUnderAssert,
+                                                       otherObject,
+                                                       result1,
+                                                       result2));
 
     }
 
-    private void checkResult(final boolean pass, final HashCodeAssertionError errorToThrow) {
+    private void checkResult(final boolean pass, final AbstractHashCodeAssertionError errorToThrow) {
         if (!pass) {
             throw errorToThrow;
         }
