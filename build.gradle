@@ -116,7 +116,6 @@ bintray {
     user = 'sta-szek'
     key = System.getenv('BINTRAY_API_KEY')
     publish = true
-    override = true 
     pkg {
         repo = 'maven'
         name = 'pojo-tester'
@@ -150,7 +149,7 @@ release {
     buildTasks = []
 
     git {
-        requireBranch = ''
+        requireBranch = 'master'
         pushToRemote = 'origin'
         pushToBranchPrefix = ''
         commitVersionFileOnly = false

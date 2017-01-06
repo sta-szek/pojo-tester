@@ -2,6 +2,7 @@ pipeline {
     environment {
         SONARQUBE_TOKEN = credentials('SONARQUBE_TOKEN')
         BINTRAY_API_KEY = credentials('BINTRAY_API_KEY')
+        GIT_ASKPASS = credentials('0eeac3bc-28c1-452e-b0dc-671f49c8ebf1')
     }
     agent any
     parameters {
@@ -13,6 +14,7 @@ pipeline {
         stage("Build") {
             steps {
                 sh "env"
+                sh "git config --global credential.helper cache"
                 sh "./gradlew assemble testClasses"
             }
         }
@@ -32,8 +34,18 @@ pipeline {
                 env.BRANCH_NAME == "master" && env.RELEASE == "true" && env.RELEASEVERSION != "" && env.NEWVERSION != ""
             }
             steps {
-                sh "./gradlew release -Prelease.useAutomaticVersion=true -Prelease.releaseVersion=${releaseVersion} -Prelease.newVersion=${newVersion}"
-                sh "./gradlew bintrayUpload"
+                sh "git checkout -f master"
+                sh "git config --global push.default simple"
+                sh "git remote remove origin"
+                sh "git remote add origin https://${env.GIT_ASKPASS}@github.com/sta-szek/pojo-tester.git"
+                sh "sed -i 's|version=.*|version=${env.RELEASEVERSION}|g' gradle.properties"
+                sh "git tag ${env.RELEASEVERSION}"
+                sh "./gradlew clean build bintrayUpload -x check"
+                sh "sed -i 's|version=.*|version=${env.NEWVERSION}|g' gradle.properties"
+                sh "git add gradle.properties"
+                sh "git commit -m 'Next development version ${env.NEWVERSION}'"
+                sh "git push --set-upstream origin master --follow-tags"
+
                 sh "./gradlew javadoc >/dev/null"
                 sh "rm -rf ./src/book/javadoc"
                 sh "mv ./build/docs/javadoc ./src/book/javadoc"
