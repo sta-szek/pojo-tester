@@ -44,7 +44,8 @@ pipeline {
                 sh "sed -i 's|version=.*|version=${env.NEWVERSION}|g' gradle.properties"
                 sh "git add gradle.properties"
                 sh "git commit -m 'Next development version ${env.NEWVERSION}'"
-                sh "git push --set-upstream origin master --follow-tags"
+                sh "git push --follow-tags"
+                sh "git push --set-upstream origin master"
 
                 sh "./gradlew javadoc >/dev/null"
                 sh "rm -rf ./src/book/javadoc"
