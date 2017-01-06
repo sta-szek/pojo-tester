@@ -1,4 +1,7 @@
 pipeline {
+    environment {
+        SONARQUBE_TOKEN = credentials('SONARQUBE_TOKEN')
+    }
     agent any
     parameters {
         booleanParam(defaultValue: false, description: 'Publish new release from this build?', name: 'release')
@@ -15,6 +18,12 @@ pipeline {
         stage("Test") {
             steps {
                 sh "./gradlew check"
+            }
+        }
+        stage("QA") {
+            steps {
+                echo $SONARQUBE_TOKEN
+                sh "./gradlew sonarqube -Dsonar.host.url=https://sonarqube.com -Dsonar.login=${SONARQUBE_TOKEN}"
             }
         }
 
