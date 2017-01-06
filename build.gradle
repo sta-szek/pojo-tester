@@ -150,7 +150,7 @@ release {
     buildTasks = []
 
     git {
-        requireBranch = 'master'
+        requireBranch = ''
         pushToRemote = 'origin'
         pushToBranchPrefix = ''
         commitVersionFileOnly = false
