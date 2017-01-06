@@ -43,9 +43,9 @@ abstract class AbstractMultiConstructorInstantiator extends AbstractObjectInstan
 
     protected Object tryToInstantiateUsing(final Collection<ConstructorParameters> userConstructorParameters) {
         for (final ConstructorParameters param : userConstructorParameters) {
-            Class<?>[] parameterTypes = param.getConstructorParametersTypes();
+            Class<?>[] parameterTypes = param.getParametersTypes();
             try {
-                Object[] parameters = param.getConstructorParameters();
+                Object[] parameters = param.getParameters();
                 if (isInnerClass()) {
                     parameterTypes = putEnclosingClassAsFirstParameterType(clazz.getEnclosingClass(), parameterTypes);
                     final Object enclosingClassInstance = instantiateEnclosingClass();
@@ -68,7 +68,7 @@ abstract class AbstractMultiConstructorInstantiator extends AbstractObjectInstan
                      .orElseThrow(this::createObjectInstantiationException);
     }
 
-    protected abstract Object createObjectFromArgsConstructor(final Class<?>[] parameterTypes, Object[] parameters) throws ObjectInstantiationException;
+    protected abstract Object createObjectFromArgsConstructor(final Class<?>[] parameterTypes, Object[] parameters);
 
     protected abstract Object createObjectFromNoArgsConstructor(final Constructor<?> constructor);
 

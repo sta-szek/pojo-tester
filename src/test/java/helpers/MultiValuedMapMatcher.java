@@ -24,9 +24,11 @@ public class MultiValuedMapMatcher implements ArgumentMatcher<MultiValuedMap<Cla
         }
         return argument.get(expectedClass)
                        .stream()
-                       .map(actualArgument -> Arrays.equals(actualArgument.getConstructorParameters(), expectedArguments.getConstructorParameters())
-                                              &&
-                                              Arrays.equals(actualArgument.getConstructorParametersTypes(), expectedArguments.getConstructorParametersTypes()))
+                       .map(actualArgument -> Arrays.equals(actualArgument.getParameters(),
+                                                            expectedArguments.getParameters())
+                               &&
+                               Arrays.equals(actualArgument.getParametersTypes(),
+                                             expectedArguments.getParametersTypes()))
                        .findAny()
                        .isPresent();
     }

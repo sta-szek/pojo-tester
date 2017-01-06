@@ -30,7 +30,7 @@ class BestConstructorInstantiator extends AbstractMultiConstructorInstantiator {
     }
 
     @Override
-    protected Object createObjectFromArgsConstructor(final Class<?>[] parameterTypes, final Object[] parameters) throws ObjectInstantiationException {
+    protected Object createObjectFromArgsConstructor(final Class<?>[] parameterTypes, final Object[] parameters) {
         try {
             final Constructor<?> declaredConstructor = clazz.getDeclaredConstructor(parameterTypes);
             declaredConstructor.setAccessible(true);

@@ -2,8 +2,6 @@ package pl.pojo.tester.internal.tester;
 
 
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import pl.pojo.tester.api.ClassAndFieldPredicatePair;
 import pl.pojo.tester.api.ConstructorParameters;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
@@ -18,8 +16,6 @@ import java.util.stream.Collectors;
 
 @Slf4j
 public class ConstructorTester extends AbstractTester {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ConstructorTester.class);
 
     public ConstructorTester() {
         super();
@@ -60,7 +56,7 @@ public class ConstructorTester extends AbstractTester {
             final Collection<ConstructorParameters> constructorParameters = getConstructorParameters(constructor);
             parameters = constructorParameters.stream()
                                               .filter(matchingConstructorParameterTypes)
-                                              .map(ConstructorParameters::getConstructorParameters)
+                                              .map(ConstructorParameters::getParameters)
                                               .findFirst()
                                               .orElseGet(() -> logAndTryToCreateOwnParameters(constructor));
         } else {
@@ -72,9 +68,9 @@ public class ConstructorTester extends AbstractTester {
     }
 
     private Object[] logAndTryToCreateOwnParameters(final Constructor<?> constructor) {
-        LOGGER.warn(String.format("Class '%s' could not be created by constructor '%s' and any user defined parameters.",
-                                  constructor.getDeclaringClass(),
-                                  constructor));
+        log.warn("Class '{}' could not be created by constructor '{}' and any user defined parameters.",
+                 constructor.getDeclaringClass(),
+                 constructor);
         return createConstructorParameters(constructor);
     }
 

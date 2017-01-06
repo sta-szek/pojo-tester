@@ -4,13 +4,11 @@ package pl.pojo.tester.internal.tester;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import pl.pojo.tester.api.ClassAndFieldPredicatePair;
-import pl.pojo.tester.internal.GetOrSetValueException;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 import pl.pojo.tester.internal.utils.FieldUtils;
 import pl.pojo.tester.internal.utils.MethodUtils;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,13 +40,8 @@ public class SetterTester extends AbstractTester {
         final Field field = eachPair.getField();
         final Class<?> fieldType = field.getType();
         final Object newValue = objectGenerator.createNewInstance(fieldType);
-
-        try {
-            testAssertions.assertThatSetMethodFor(instance)
-                          .willSetValueOnField(setter, field, newValue);
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            throw new GetOrSetValueException(field.getName(), instance.getClass(), e);
-        }
+        testAssertions.assertThatSetMethodFor(instance)
+                      .willSetValueOnField(setter, field, newValue);
     }
 
 

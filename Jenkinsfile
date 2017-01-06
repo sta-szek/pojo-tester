@@ -1,4 +1,8 @@
 pipeline {
+    environment {
+        SONARQUBE_TOKEN = credentials('SONARQUBE_TOKEN')
+        BINTRAY_API_KEY = credentials('BINTRAY_API_KEY')
+    }
     agent any
     parameters {
         booleanParam(defaultValue: false, description: 'Publish new release from this build?', name: 'release')
@@ -15,6 +19,11 @@ pipeline {
         stage("Test") {
             steps {
                 sh "./gradlew check"
+            }
+        }
+        stage("QA") {
+            steps {
+                sh "./gradlew sonarqube -Dsonar.host.url=https://sonarqube.com -Dsonar.login=${env.SONARQUBE_TOKEN}"
             }
         }
 
