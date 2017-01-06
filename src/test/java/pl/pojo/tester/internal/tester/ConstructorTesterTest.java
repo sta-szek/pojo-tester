@@ -122,7 +122,7 @@ public class ConstructorTesterTest {
 
         // then
         assertThat(result).isNull();
-        verify(parameters, never()).getConstructorParameters();
+        verify(parameters, never()).getParameters();
     }
 
     private static class Pojo {

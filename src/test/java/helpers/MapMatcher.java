@@ -1,9 +1,10 @@
 package helpers;
 
-import java.util.Arrays;
-import java.util.Map;
 import org.mockito.ArgumentMatcher;
 import pl.pojo.tester.api.ConstructorParameters;
+
+import java.util.Arrays;
+import java.util.Map;
 
 public class MapMatcher implements ArgumentMatcher<Map<Class<?>, ConstructorParameters>> {
 
@@ -22,7 +23,7 @@ public class MapMatcher implements ArgumentMatcher<Map<Class<?>, ConstructorPara
             return false;
         }
         final ConstructorParameters actualArguments = argument.get(expectedClass);
-        return Arrays.equals(actualArguments.getConstructorParameters(), expectedArguments.getConstructorParameters()) &&
-               Arrays.equals(actualArguments.getConstructorParametersTypes(), expectedArguments.getConstructorParametersTypes());
+        return Arrays.equals(actualArguments.getParameters(), expectedArguments.getParameters()) &&
+                Arrays.equals(actualArguments.getParametersTypes(), expectedArguments.getParametersTypes());
     }
 }

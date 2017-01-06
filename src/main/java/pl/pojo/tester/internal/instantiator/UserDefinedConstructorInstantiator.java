@@ -35,8 +35,8 @@ class UserDefinedConstructorInstantiator extends AbstractObjectInstantiator {
 
     private Object createObjectUsingConstructorParameters(final ConstructorParameters constructorParameters) {
         try {
-            Class<?>[] constructorParametersTypes = constructorParameters.getConstructorParametersTypes();
-            Object[] arguments = constructorParameters.getConstructorParameters();
+            Class<?>[] constructorParametersTypes = constructorParameters.getParametersTypes();
+            Object[] arguments = constructorParameters.getParameters();
 
             if (isInnerClass()) {
                 constructorParametersTypes = putEnclosingClassAsFirstParameterType(clazz.getEnclosingClass(), constructorParametersTypes);

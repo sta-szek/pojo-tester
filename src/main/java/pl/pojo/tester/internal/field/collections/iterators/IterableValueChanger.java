@@ -26,7 +26,7 @@ class IterableValueChanger extends AbstractIteratorsFieldValueChanger<Iterable<?
     @Override
     protected Iterable<?> increaseValue(final Iterable<?> value, final Class<?> type) {
         return value == null
-               ? Collections.EMPTY_LIST
+               ? Collections.emptyList()
                : null;
     }
 }

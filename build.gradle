@@ -26,6 +26,7 @@ ext {
     MOCKITO_VERSION = "2.5.3"
     POWER_MOCK_UTILS_VERSION = "1.6.6"
     ASSERTJ_CORE_VERSION = "3.6.1"
+    JACOCO_VERSION = "0.7.8"
 }
 
 apply plugin: 'java'
@@ -68,7 +69,7 @@ dependencies {
 }
 
 jacoco {
-    toolVersion = "0.7.8"
+    toolVersion = JACOCO_VERSION
     reportsDir = file("$buildDir/reports")
 }
 
@@ -156,10 +157,9 @@ release {
     }
 }
 
-sonarqube {
-    properties {
-        property "sonar.exclusions", "**/*Generated.java"
-    }
+javadoc {
+    source = sourceSets.main.allJava
+    classpath = configurations.compile
 }
 
 jar {
@@ -179,11 +179,6 @@ def createManifestAttributes() {
     attributes
 }
 
-javadoc {
-    source = sourceSets.main.allJava
-    classpath = configurations.compile
-}
-
 static def gitUser() {
     def username = ""
     def useremail = ""
@@ -200,4 +195,3 @@ static def gitUser() {
 
 check.dependsOn jacocoTestReport
 build.dependsOn publishToMavenLocal
-

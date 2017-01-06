@@ -4,13 +4,11 @@ package pl.pojo.tester.internal.tester;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import pl.pojo.tester.api.ClassAndFieldPredicatePair;
-import pl.pojo.tester.internal.GetOrSetValueException;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 import pl.pojo.tester.internal.utils.FieldUtils;
 import pl.pojo.tester.internal.utils.MethodUtils;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,12 +38,8 @@ public class GetterTester extends AbstractTester {
     private void testGetter(final GetterAndFieldPair eachPair, final Object instance) {
         final Method getter = eachPair.getGetter();
         final Field field = eachPair.getField();
-        try {
-            testAssertions.assertThatGetMethodFor(instance)
-                          .willGetValueFromField(getter, field);
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            throw new GetOrSetValueException(field.getName(), instance.getClass(), e);
-        }
+        testAssertions.assertThatGetMethodFor(instance)
+                      .willGetValueFromField(getter, field);
     }
 
     private List<GetterAndFieldPair> findGettersForFields(final Class<?> testedClass, final List<Field> fields) {

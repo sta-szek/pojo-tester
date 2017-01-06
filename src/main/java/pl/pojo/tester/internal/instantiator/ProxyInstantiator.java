@@ -38,7 +38,7 @@ class ProxyInstantiator extends AbstractMultiConstructorInstantiator {
     }
 
     @Override
-    protected Object createObjectFromArgsConstructor(final Class<?>[] parameterTypes, final Object[] parameters) throws ObjectInstantiationException {
+    protected Object createObjectFromArgsConstructor(final Class<?>[] parameterTypes, final Object[] parameters) {
         try {
             final Class proxyClass = proxyFactory.createClass();
             final Constructor declaredConstructor = proxyClass.getDeclaredConstructor(parameterTypes);

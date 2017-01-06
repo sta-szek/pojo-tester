@@ -1,6 +1,7 @@
 pipeline {
     environment {
         SONARQUBE_TOKEN = credentials('SONARQUBE_TOKEN')
+        BINTRAY_API_KEY = credentials('BINTRAY_API_KEY')
     }
     agent any
     parameters {
@@ -22,8 +23,7 @@ pipeline {
         }
         stage("QA") {
             steps {
-                echo $SONARQUBE_TOKEN
-                sh "./gradlew sonarqube -Dsonar.host.url=https://sonarqube.com -Dsonar.login=${SONARQUBE_TOKEN}"
+                sh "./gradlew sonarqube -Dsonar.host.url=https://sonarqube.com -Dsonar.login=${env.SONARQUBE_TOKEN}"
             }
         }
 

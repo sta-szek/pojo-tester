@@ -19,18 +19,18 @@ import java.util.Arrays;
 @Getter
 public class ConstructorParameters {
 
-    private final Object[] constructorParameters;
-    private final Class<?>[] constructorParametersTypes;
+    private final Object[] parameters;
+    private final Class<?>[] parametersTypes;
 
     /**
      * Instantiates {@code ConstructorParameters} with given constructor parameters and constructor parameter's types.
      *
-     * @param constructorParameters      constructor parameters
-     * @param constructorParametersTypes constructor parameter's types
+     * @param parameters      constructor parameters
+     * @param parametersTypes constructor parameter's types
      */
-    public ConstructorParameters(final Object[] constructorParameters, final Class<?>[] constructorParametersTypes) {
-        this.constructorParameters = Arrays.copyOf(constructorParameters, constructorParameters.length);
-        this.constructorParametersTypes = Arrays.copyOf(constructorParametersTypes, constructorParametersTypes.length);
+    public ConstructorParameters(final Object[] parameters, final Class<?>[] parametersTypes) {
+        this.parameters = Arrays.copyOf(parameters, parameters.length);
+        this.parametersTypes = Arrays.copyOf(parametersTypes, parametersTypes.length);
     }
 
     /**
@@ -48,8 +48,8 @@ public class ConstructorParameters {
 
         final ConstructorParameters that = (ConstructorParameters) o;
 
-        return new EqualsBuilder().append(constructorParameters, that.constructorParameters)
-                                  .append(constructorParametersTypes, that.constructorParametersTypes)
+        return new EqualsBuilder().append(parameters, that.parameters)
+                                  .append(parametersTypes, that.parametersTypes)
                                   .isEquals();
     }
 
@@ -58,12 +58,12 @@ public class ConstructorParameters {
      */
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(constructorParameters)
-                                    .append(constructorParametersTypes)
+        return new HashCodeBuilder().append(parameters)
+                                    .append(parametersTypes)
                                     .toHashCode();
     }
 
     public boolean matches(final Class<?>[] parameterTypes) {
-        return Arrays.equals(constructorParametersTypes, parameterTypes);
+        return Arrays.equals(parametersTypes, parameterTypes);
     }
 }
