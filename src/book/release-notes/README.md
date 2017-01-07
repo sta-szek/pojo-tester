@@ -2,15 +2,26 @@
 
 Download latest version [ ![Download](https://api.bintray.com/packages/sta-szek/maven/pojo-tester/images/download.svg) ](https://bintray.com/sta-szek/maven/pojo-tester/_latestVersion)
 
+## Release version 0.7.2 {#release-072}
 
-## Release version 0.7.0 {#release-071}
+### Features
+* Abstract classes can be created without default constructors ([#157](https://github.com/sta-szek/pojo-tester/issues/157))
+
+### Bugfixes
+* Collections field value changers create non empty collection ([#153](https://github.com/sta-szek/pojo-tester/issues/153))
+
+### Others
+* [Sonar analysis for pojo-tester project](https://sonarqube.com/dashboard?id=pl.pojo%3Apojo-tester) ([#152](https://github.com/sta-szek/pojo-tester/issues/152)) 
+* CI changed from Travis to [Jenkins](http://ci.pojo.pl/job/pojo-tester) ([#156](https://github.com/sta-szek/pojo-tester/issues/156)) 
+
+---
+
+## Release version 0.7.1 {#release-071}
 
 ### Bugfixes
 * New UUIDValueChanger, bugfix with objects generating ([#149](https://github.com/sta-szek/pojo-tester/issues/149))
 
-
-
-
+---
 
 ## Release version 0.7.0 {#release-070}
 
@@ -20,18 +31,14 @@ Download latest version [ ![Download](https://api.bintray.com/packages/sta-szek/
 ### Bugfixes
 * Better equality check ([#146](https://github.com/sta-szek/pojo-tester/issues/146))
 
-
-
-
+---
 
 ## Release version 0.6.0 {#release-060}
 
 ### Features
 * Tests will fail if `equals` or `hashCode` implementation depends on excluded fields ([#121](https://github.com/sta-szek/pojo-tester/issues/121))
 
-
-
-
+---
 
 ## Release version 0.5.0 {#release-050}
 
@@ -43,9 +50,7 @@ Download latest version [ ![Download](https://api.bintray.com/packages/sta-szek/
 ### Bugfixes
 * `POJO-TESTER` fails on synthetic constructors ([#126](https://github.com/sta-szek/pojo-tester/issues/126)) 
 
-
-
-
+---
 
 ## Release version 0.4.0 {#release-040}
 
@@ -55,9 +60,7 @@ First `POJO-TESTER` open source release.
 * Javadocs
 * `POJO-TESTER` creates collections objects instead of mocking them ([#112](https://github.com/sta-szek/pojo-tester/issues/112))
 
-
-
-
+---
 
 ## Release version 0.3.0 {#release-030}
 
@@ -69,9 +72,7 @@ First `POJO-TESTER` open source release.
 ### Bugfixes
 * Wrong proxy implementation ([#88](https://github.com/sta-szek/pojo-tester/issues/88)) 
 
-
-
-
+---
 
 ## Release version 0.2.0 {#release-020}
 
@@ -85,9 +86,7 @@ First `POJO-TESTER` open source release.
 * Accessing not public classes, setters and getters in those classes ([#75](https://github.com/sta-szek/pojo-tester/issues/75), [#78](https://github.com/sta-szek/pojo-tester/issues/78))
 * Tests test same objects, which cause assertion exception ([#85](https://github.com/sta-szek/pojo-tester/issues/85))
 
-
-
-
+---
 
 ## Release version 0.1.0 {#release-010}
 
