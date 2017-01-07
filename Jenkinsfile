@@ -71,10 +71,10 @@ pipeline {
                 sh "git push --set-upstream origin master"
             }
         }
-        post {
-            always {
-                deleteDir()
-            }
+    }
+    post {
+        always {
+            deleteDir()
         }
     }
 }
