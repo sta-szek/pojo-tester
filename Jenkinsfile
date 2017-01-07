@@ -27,12 +27,13 @@ pipeline {
                 sh "./gradlew sonarqube -Dsonar.host.url=https://sonarqube.com -Dsonar.login=${env.SONARQUBE_TOKEN}"
             }
         }
-
         stage("Deploy pages") {
             when {
                 timeout(time: 1, unit: 'MINUTES') {
                     input 'Deploy pages?'
+                    return true
                 }
+                return false
             }
             steps {
                 sh "./gradlew javadoc >/dev/null"
@@ -51,7 +52,6 @@ pipeline {
                 sh "git --work-tree=repo/ --git-dir=repo/.git push origin HEAD:gh-pages"
             }
         }
-
         stage("Publish release to bintray") {
             when {
                 env.BRANCH_NAME == "master" && env.RELEASE == "true" && env.RELEASEVERSION != "" && env.NEWVERSION != ""
@@ -69,6 +69,11 @@ pipeline {
                 sh "git commit -m 'Next development version ${env.NEWVERSION}'"
                 sh "git push --set-upstream origin ${env.RELEASEVERSION}"
                 sh "git push --set-upstream origin master"
+            }
+        }
+        post {
+            always {
+                deleteDir()
             }
         }
     }
