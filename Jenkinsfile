@@ -13,7 +13,6 @@ pipeline {
     stages {
         stage("Build") {
             steps {
-                sh "env"
                 sh "git config --global credential.helper cache"
                 sh "./gradlew assemble testClasses"
             }
@@ -29,7 +28,31 @@ pipeline {
             }
         }
 
-        stage("Publish release") {
+        stage("Deploy pages") {
+            when {
+                timeout(time: 1, unit: 'MINUTES') {
+                    input 'Deploy pages?'
+                }
+            }
+            steps {
+                sh "./gradlew javadoc >/dev/null"
+                sh "rm -rf ./src/book/javadoc"
+                sh "mv ./build/docs/javadoc ./src/book/javadoc"
+                sh "gitbook install ./src/book/"
+                sh "gitbook build ./src/book/ ./repo"
+                sh "git --work-tree=repo/ --git-dir=repo/.git init"
+                sh "git --work-tree=repo/ --git-dir=repo/.git config user.name 'jenkins'"
+                sh "git --work-tree=repo/ --git-dir=repo/.git config user.email 'jenkins@ci.pojo.pl'"
+                sh "git --work-tree=repo/ --git-dir=repo/.git remote add origin git@github.com:sta-szek/pojo-tester.git"
+                sh "git --work-tree=repo/ --git-dir=repo/.git fetch -q -n origin"
+                sh "git --work-tree=repo/ --git-dir=repo/.git reset -q origin/gh-pages"
+                sh "git --work-tree=repo/ --git-dir=repo/.git add -A ."
+                sh "git --work-tree=repo/ --git-dir=repo/.git commit -m 'Rebuild pojo-tester pages by jenkins'"
+                sh "git --work-tree=repo/ --git-dir=repo/.git push origin HEAD:gh-pages"
+            }
+        }
+
+        stage("Publish release to bintray") {
             when {
                 env.BRANCH_NAME == "master" && env.RELEASE == "true" && env.RELEASEVERSION != "" && env.NEWVERSION != ""
             }
@@ -46,21 +69,6 @@ pipeline {
                 sh "git commit -m 'Next development version ${env.NEWVERSION}'"
                 sh "git push --set-upstream origin ${env.RELEASEVERSION}"
                 sh "git push --set-upstream origin master"
-
-                sh "./gradlew javadoc >/dev/null"
-                sh "rm -rf ./src/book/javadoc"
-                sh "mv ./build/docs/javadoc ./src/book/javadoc"
-                sh "gitbook install ./src/book/"
-                sh "gitbook build ./src/book/ ./repo"
-                sh "git --work-tree=repo/ --git-dir=repo/.git init"
-                sh "git --work-tree=repo/ --git-dir=repo/.git config user.name 'jenkins'"
-                sh "git --work-tree=repo/ --git-dir=repo/.git config user.email 'jenkins@ci.pojo.pl'"
-                sh "git --work-tree=repo/ --git-dir=repo/.git remote add origin git@github.com:sta-szek/pojo-tester.git"
-                sh "git --work-tree=repo/ --git-dir=repo/.git fetch -q -n origin"
-                sh "git --work-tree=repo/ --git-dir=repo/.git reset -q origin/gh-pages"
-                sh "git --work-tree=repo/ --git-dir=repo/.git add -A ."
-                sh "git --work-tree=repo/ --git-dir=repo/.git commit -m 'Rebuild pojo-tester pages by jenkins'"
-                sh "git --work-tree=repo/ --git-dir=repo/.git push origin HEAD:gh-pages"
             }
         }
     }
