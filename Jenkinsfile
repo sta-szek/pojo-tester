@@ -29,11 +29,16 @@ pipeline {
         }
         stage("Deploy pages") {
             when {
-                timeout(time: 1, unit: 'MINUTES') {
-                    input 'Deploy pages?'
-                    return true
+                boolean publish
+                try {
+                    timeout(time: 1, unit: 'MINUTES') {
+                        input 'Deploy pages?'
+                        publish = true
+                    }
+                } catch (final ignore) {
+                    publish = false
                 }
-                return false
+                publish
             }
             steps {
                 sh "./gradlew javadoc >/dev/null"
