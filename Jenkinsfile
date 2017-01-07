@@ -70,7 +70,7 @@ pipeline {
                 sh "git push --set-upstream origin ${env.RELEASEVERSION}"
                 sh "git push --set-upstream origin master"
             }
-        } J
+        }
     }
     post {
         always {
