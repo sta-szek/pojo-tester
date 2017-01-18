@@ -21,6 +21,8 @@ pipeline {
         stage("Test") {
             steps {
                 sh "./gradlew check"
+                junit keepLongStdio: true, testResults: 'build/test-results/junit-platform/TEST-junit-jupiter.xml'
+                publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, keepAll: false, reportDir: 'build/reports/tests/test/', reportFiles: 'index.html', reportName: 'HTML Report'])
             }
         }
         stage("QA") {
