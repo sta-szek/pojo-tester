@@ -6,6 +6,7 @@ pipeline {
     }
     agent any
     parameters {
+        booleanParam(defaultValue: false, description: 'Build and deploy gitbook pages?', name: 'deployPages')
         booleanParam(defaultValue: false, description: 'Publish new release from this build?', name: 'release')
         string(defaultValue: "", description: 'New release version', name: 'releaseVersion')
         string(defaultValue: "-SNAPSHOT", description: 'New release development', name: 'newVersion')
@@ -24,13 +25,16 @@ pipeline {
         }
         stage("QA") {
             steps {
-                sh "./gradlew sonarqube -Dsonar.host.url=https://sonarqube.com -Dsonar.login=${env.SONARQUBE_TOKEN}"
+                sh "./gradlew sonarqube -Dsonar.host.url=https://sonarqube.com -Dsonar.login=${env.SONARQUBE_TOKEN} | grep -v 'Class not found:'"
             }
         }
         stage("Deploy pages") {
             when {
                 expression {
                     boolean publish = false
+                    if (env.DEPLOYPAGES == "true") {
+                        return true
+                    }
                     try {
                         timeout(time: 1, unit: 'MINUTES') {
                             input 'Deploy pages?'
