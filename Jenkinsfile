@@ -45,7 +45,6 @@ pipeline {
                     } catch (final ignore) {
                         publish = false
                     }
-                    currentBuild.result = "SUCCESS"
                     return publish
                 }
             }
