@@ -146,14 +146,11 @@ public class ObjectGenerator {
         return result;
     }
 
-    private Boolean hasNestedFieldsToChange(final List<Field> fields, final Map<Class<?>, Predicate<String>> classes) {
+    private boolean hasNestedFieldsToChange(final List<Field> fields, final Map<Class<?>, Predicate<String>> classes) {
         return fields.parallelStream()
                      .map(Field::getType)
                      .map(classes::get)
-                     .filter(Objects::nonNull)
-                     .findAny()
-                     .map(anyValue -> true)
-                     .orElse(false);
+                     .anyMatch(Objects::nonNull);
     }
 
     private List<Object> createCopies(final Object baseObject, final int size) {
