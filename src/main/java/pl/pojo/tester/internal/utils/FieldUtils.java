@@ -22,6 +22,7 @@ public final class FieldUtils {
     public static List<Field> getAllFields(final Class<?> clazz) {
         return Arrays.stream(clazz.getDeclaredFields())
                      .filter(FieldUtils::isNotSynthetic)
+                     .filter(FieldUtils::isNotStatic)
                      .collect(Collectors.toList());
     }
 
@@ -102,6 +103,10 @@ public final class FieldUtils {
 
     private static boolean isNotSynthetic(final Field field) {
         return !field.isSynthetic();
+    }
+
+    private static boolean isNotStatic(final Field field) {
+        return !Modifier.isStatic(field.getModifiers());
     }
 
     private static boolean doesNotContain(final Field field, final List<String> excludedFields) {

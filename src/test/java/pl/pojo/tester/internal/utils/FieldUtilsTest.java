@@ -4,18 +4,18 @@ import classesForTest.fields.ClassWithAllAvailableFieldModifiers;
 import classesForTest.fields.Permutation1;
 import classesForTest.fields.Permutation2;
 import helpers.TestHelper;
-import java.lang.reflect.Field;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import lombok.AllArgsConstructor;
 import lombok.ToString;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.function.Executable;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static helpers.TestHelper.getDefaultDisplayName;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -34,8 +34,7 @@ public class FieldUtilsTest {
         final List<Field> result = FieldUtils.getAllFields(ClassWithAllAvailableFieldModifiers.class);
 
         // then
-        assertThat(result).hasSize(16)
-                          .containsExactlyElementsOf(expectedFields);
+        assertThat(result).containsExactlyElementsOf(expectedFields);
     }
 
     @Test
@@ -61,7 +60,7 @@ public class FieldUtilsTest {
         final List<Field> result = FieldUtils.getAllFieldsExcluding(ClassWithAllAvailableFieldModifiers.class, newArrayList(fieldName));
 
         // then
-        assertThat(result).hasSize(15);
+        assertThat(result).hasSize(7);
     }
 
     @Test
@@ -76,8 +75,7 @@ public class FieldUtilsTest {
         final List<String> result = FieldUtils.getAllFieldNames(ClassWithAllAvailableFieldModifiers.class);
 
         // then
-        assertThat(result).hasSize(16)
-                          .containsExactlyElementsOf(expectedFields);
+        assertThat(result).containsExactlyElementsOf(expectedFields);
     }
 
     @TestFactory
@@ -137,12 +135,30 @@ public class FieldUtilsTest {
         assertThat(result).isFalse();
     }
 
+    @Test
+    public void Should_Return_All_Fields_Except_Static() throws NoSuchFieldException {
+        // given
+        final List<Field> expectedResult = new ArrayList<>();
+        expectedResult.add(B.class.getDeclaredField("b"));
+
+        // when
+        final List<Field> result = FieldUtils.getAllFields(B.class);
+
+        // then
+        assertThat(result).isEqualTo(expectedResult);
+    }
+
     private Field fieldFromPermutation1Class(final String name) throws java.lang.NoSuchFieldException {
         return Permutation1.class.getDeclaredField(name);
     }
 
     private Field fieldFromPermutation2Class(final String name) throws java.lang.NoSuchFieldException {
         return Permutation2.class.getDeclaredField(name);
+    }
+
+    private static class B {
+        private static int a;
+        private int b;
     }
 
     @AllArgsConstructor
