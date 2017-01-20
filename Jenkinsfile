@@ -1,14 +1,15 @@
 pipeline {
     environment {
-        SONARQUBE_TOKEN = credentials('SONARQUBE_TOKEN')
-        BINTRAY_API_KEY = credentials('BINTRAY_API_KEY')
-        GIT_ASKPASS = credentials('0eeac3bc-28c1-452e-b0dc-671f49c8ebf1')
+        BINTRAY_API_KEY = credentials("BINTRAY_API_KEY")
+        SONARQUBE_TOKEN = credentials("SONARQUBE_TOKEN")
+        GIT_ASKPASS = credentials("GIT_ASKPASS")
     }
     agent any
     parameters {
+        booleanParam(defaultValue: false, description: 'Build and deploy gitbook pages?', name: 'deployPages')
         booleanParam(defaultValue: false, description: 'Publish new release from this build?', name: 'release')
-        stringParam(defaultValue: "", description: 'New release version', name: 'releaseVersion')
-        stringParam(defaultValue: "-SNAPSHOT", description: 'New release development', name: 'newVersion')
+        string(defaultValue: "", description: 'New release version', name: 'releaseVersion')
+        string(defaultValue: "-SNAPSHOT", description: 'New release development', name: 'newVersion')
     }
     stages {
         stage("Build") {
@@ -20,25 +21,31 @@ pipeline {
         stage("Test") {
             steps {
                 sh "./gradlew check"
+                junit keepLongStdio: true, testResults: 'build/test-results/junit-platform/TEST-junit-jupiter.xml'
             }
         }
         stage("QA") {
             steps {
-                sh "./gradlew sonarqube -Dsonar.host.url=https://sonarqube.com -Dsonar.login=${env.SONARQUBE_TOKEN}"
+                sh "./gradlew sonarqube -Dsonar.host.url=https://sonarqube.com -Dsonar.login=${env.SONARQUBE_TOKEN} | grep -v 'Class not found:'"
             }
         }
         stage("Deploy pages") {
             when {
-                boolean publish
-                try {
-                    timeout(time: 1, unit: 'MINUTES') {
-                        input 'Deploy pages?'
-                        publish = true
+                expression {
+                    boolean publish = false
+                    if (env.DEPLOYPAGES == "true") {
+                        return true
                     }
-                } catch (final ignore) {
-                    publish = false
+                    try {
+                        timeout(time: 1, unit: 'MINUTES') {
+                            input 'Deploy pages?'
+                            publish = true
+                        }
+                    } catch (final ignore) {
+                        publish = false
+                    }
+                    return publish
                 }
-                publish
             }
             steps {
                 sh "./gradlew javadoc >/dev/null"
@@ -59,7 +66,9 @@ pipeline {
         }
         stage("Publish release to bintray") {
             when {
-                env.BRANCH_NAME == "master" && env.RELEASE == "true" && env.RELEASEVERSION != "" && env.NEWVERSION != ""
+                expression {
+                    return env.BRANCH_NAME == "master" && env.RELEASE == "true" && env.RELEASEVERSION != "" && env.NEWVERSION != ""
+                }
             }
             steps {
                 sh "git checkout -f master"
@@ -83,3 +92,4 @@ pipeline {
         }
     }
 }
+
