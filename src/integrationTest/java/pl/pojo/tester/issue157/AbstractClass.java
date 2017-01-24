@@ -1,4 +1,4 @@
-package issues.issue157;
+package pl.pojo.tester.issue157;
 
 
 import lombok.EqualsAndHashCode;

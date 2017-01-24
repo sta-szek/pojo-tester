@@ -1,18 +1,21 @@
-package issues.issue153;
-
+package pl.pojo.tester.issue153;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class Person {
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.UUID;
 
-    private final String id;
-    private final PersonType type;
+public class Message {
 
-    public Person(final String id, final PersonType type) {
-        this.id = id;
-        this.type = type;
+    private final UUID id;
+    private final Set<Person> readers;
+
+    public Message() {
+        this.id = UUID.randomUUID();
+        this.readers = new LinkedHashSet<>();
     }
 
     @Override
@@ -25,24 +28,24 @@ public class Person {
             return false;
         }
 
-        final Person that = (Person) obj;
+        final Message that = (Message) obj;
 
         return new EqualsBuilder().append(id, that.id)
-                                  .append(type, that.type)
+                                  .append(readers, that.readers)
                                   .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder().append(id)
-                                    .append(type)
+                                    .append(readers)
                                     .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this).append("id", id)
-                                        .append("type", type)
+                                        .append("readers", readers)
                                         .toString();
     }
 }
