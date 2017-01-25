@@ -18,11 +18,6 @@ pipeline {
                 sh "git config --global credential.helper cache"
                 sh "./gradlew assemble testClasses integrationTestClasses"
             }
-            post {
-                success {
-                    rocketSend channel: "pojo-tester", message: "@all: *pojo-tester ${env.VER} released!* \n  https://bintray.com/sta-szek/maven/pojo-tester/_latestVersion \n"
-                }
-            }
         }
         stage("Unit Test") {
             steps {
@@ -96,7 +91,7 @@ pipeline {
             }
             post {
                 success {
-                    rocketSend channel: 'pojo', message: 'New pojo-tester release'
+                    rocketSend channel: "pojo-tester", message: "@all: *pojo-tester ${env.RELEASEVERSION} released!* \n  https://bintray.com/sta-szek/maven/pojo-tester/_latestVersion \n"
                 }
             }
         }
