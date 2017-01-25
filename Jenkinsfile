@@ -3,6 +3,7 @@ pipeline {
         BINTRAY_API_KEY = credentials("BINTRAY_API_KEY")
         SONARQUBE_TOKEN = credentials("SONARQUBE_TOKEN")
         GIT_ASKPASS = credentials("GIT_ASKPASS")
+        VER = "0.7.3"
     }
     agent any
     parameters {
@@ -16,6 +17,11 @@ pipeline {
             steps {
                 sh "git config --global credential.helper cache"
                 sh "./gradlew assemble testClasses integrationTestClasses"
+            }
+            post {
+                success {
+                    rocketSend channel: "pojo-tester", message: "@all: pojo-tester ${env.VER} released! \n  https://bintray.com/sta-szek/maven/pojo-tester/_latestVersion \n"
+                }
             }
         }
         stage("Unit Test") {
@@ -87,6 +93,11 @@ pipeline {
                 sh "git commit -m 'Next development version ${env.NEWVERSION}'"
                 sh "git push --set-upstream origin ${env.RELEASEVERSION}"
                 sh "git push --set-upstream origin master"
+            }
+            post {
+                success {
+                    rocketSend channel: 'pojo', message: 'New pojo-tester release'
+                }
             }
         }
     }
