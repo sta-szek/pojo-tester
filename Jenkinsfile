@@ -15,13 +15,17 @@ pipeline {
         stage("Build") {
             steps {
                 sh "git config --global credential.helper cache"
-                sh "./gradlew assemble testClasses"
+                sh "./gradlew assemble testClasses integrationTestClasses"
             }
         }
-        stage("Test") {
+        stage("Unit Test") {
             steps {
-                sh "./gradlew check"
-                junit keepLongStdio: true, testResults: 'build/test-results/junit-platform/TEST-junit-jupiter.xml'
+                sh "./gradlew test"
+            }
+        }
+        stage("Integration Test") {
+            steps {
+                sh "./gradlew integrationTest"
             }
         }
         stage("QA") {
