@@ -2,6 +2,15 @@
 
 Download latest version [ ![Download](https://api.bintray.com/packages/sta-szek/maven/pojo-tester/images/download.svg) ](https://bintray.com/sta-szek/maven/pojo-tester/_latestVersion)
 
+## Release version 0.7.3 {#release-073}
+
+### Others
+* Static fields are excluded from testing ([#170](https://github.com/sta-szek/pojo-tester/issues/170))
+* Jenkins will notify all about new pojo-tester version on [Rocket.Chat](http://chat.pojo.pl/channel/pojo-tester) ([#164](https://github.com/sta-szek/pojo-tester/issues/164)) 
+* Unit and integrations tests are now separated ([#160](https://github.com/sta-szek/pojo-tester/issues/160))
+
+---
+
 ## Release version 0.7.2 {#release-072}
 
 ### Features
