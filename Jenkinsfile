@@ -21,13 +21,11 @@ pipeline {
         stage("Unit Test") {
             steps {
                 sh "./gradlew test"
-                junit keepLongStdio: true, testResults: 'build/test-results/junit-platform/TEST-junit-jupiter.xml'
             }
         }
         stage("Integration Test") {
             steps {
                 sh "./gradlew integrationTest"
-                junit keepLongStdio: true, testResults: 'build/test-results/junit-platform/TEST-junit-jupiter.xml'
             }
         }
         stage("QA") {
