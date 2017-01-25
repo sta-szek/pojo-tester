@@ -20,7 +20,7 @@ pipeline {
             }
             post {
                 success {
-                    rocketSend channel: "pojo-tester", message: "@all: pojo-tester ${env.VER} released! \n  https://bintray.com/sta-szek/maven/pojo-tester/_latestVersion \n"
+                    rocketSend channel: "pojo-tester", message: "@all: *pojo-tester ${env.VER} released!* \n  https://bintray.com/sta-szek/maven/pojo-tester/_latestVersion \n"
                 }
             }
         }
