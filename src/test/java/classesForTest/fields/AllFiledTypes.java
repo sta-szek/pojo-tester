@@ -1,6 +1,8 @@
 package classesForTest.fields;
 
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.UUID;
 
 public class AllFiledTypes {
@@ -15,8 +17,10 @@ public class AllFiledTypes {
     private float floatType;
     private String stringType;
     private UUID uuid;
+    private BigDecimal bigDecimal;
+    private BigInteger bigInteger;
 
-    public AllFiledTypes(UUID uuid) {
+    public AllFiledTypes(final UUID uuid) {
         this.uuid = uuid;
     }
 
@@ -57,5 +61,13 @@ public class AllFiledTypes {
     }
 
     public AllFiledTypes() {
+    }
+
+    public AllFiledTypes(final BigDecimal bigDecimal) {
+        this.bigDecimal = bigDecimal;
+    }
+
+    public AllFiledTypes(final BigInteger bigInteger) {
+        this.bigInteger = bigInteger;
     }
 }

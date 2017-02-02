@@ -1,10 +1,9 @@
 package pl.pojo.tester.internal.field.primitive;
 
 
-import java.lang.reflect.Field;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
+
+import java.lang.reflect.Field;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

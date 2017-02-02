@@ -4,12 +4,7 @@ import classesForTest.*;
 import classesForTest.fields.TestEnum1;
 import classesForTest.fields.collections.collection.Collections;
 import classesForTest.fields.collections.map.Maps;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -19,8 +14,6 @@ import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.function.Executable;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 import pl.pojo.tester.api.ClassAndFieldPredicatePair;
 import pl.pojo.tester.api.ConstructorParameters;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
@@ -157,9 +150,9 @@ public class ObjectGeneratorTest {
 
     @TestFactory
     public Stream<DynamicTest> Should_Generate_Different_Objects_Recursively() throws IllegalAccessException {
-        ClassAndFieldPredicatePair[] pair1 = {pair(E.class), pair(F.class)};
-        ClassAndFieldPredicatePair[] pair2 = {pair(F.class)};
-        ClassAndFieldPredicatePair[] pair3 = {pair(A.class), pair(B.class), pair(F.class), pair(G.class)};
+        final ClassAndFieldPredicatePair[] pair1 = { pair(E.class), pair(F.class) };
+        final ClassAndFieldPredicatePair[] pair2 = { pair(F.class) };
+        final ClassAndFieldPredicatePair[] pair3 = { pair(A.class), pair(B.class), pair(F.class), pair(G.class) };
 
         final RecursivelyDifferentObjectTestCase case1 = new RecursivelyDifferentObjectTestCase(18,
                                                                                                 pair(D.class),

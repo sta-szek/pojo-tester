@@ -1,9 +1,8 @@
 package pl.pojo.tester.internal.field.collections.map;
 
-import java.util.HashMap;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
+
+import java.util.HashMap;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

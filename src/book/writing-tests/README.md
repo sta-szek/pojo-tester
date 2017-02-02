@@ -281,7 +281,7 @@ final AbstractFieldValueChanger valueChanger = DefaultFieldValueChanger.INSTANCE
 ```
 
 ### Default fields values changer
-Default fields values changer is a composition of listed changers:
+Default field value changer (`DefaultFieldValueChanger.INSTANCE`) is a composition of listed changers:
 * `UUIDValueChanger`
 * `EnumValueChanger`
 * `BooleanValueChanger`
@@ -315,6 +315,8 @@ Default fields values changer is a composition of listed changers:
 * `TreeMapValueChanger`
 * `IteratorValueChanger`
 * `IterableValueChanger`
+* `BigIntegerValueChanger`
+* `BigDecimalValueChanger`
 
 
 ## Create class using selected constructor {#choose-constructor}

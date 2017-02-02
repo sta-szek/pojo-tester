@@ -1,15 +1,14 @@
 package pl.pojo.tester.api;
 
-import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.function.Executable;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 import pl.pojo.tester.internal.utils.FieldUtils;
+
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 import static helpers.TestHelper.getDefaultDisplayName;
 import static org.assertj.core.api.Assertions.assertThat;

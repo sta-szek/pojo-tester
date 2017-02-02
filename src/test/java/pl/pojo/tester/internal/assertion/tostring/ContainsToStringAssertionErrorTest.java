@@ -1,8 +1,6 @@
 package pl.pojo.tester.internal.assertion.tostring;
 
 import org.junit.jupiter.api.Test;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

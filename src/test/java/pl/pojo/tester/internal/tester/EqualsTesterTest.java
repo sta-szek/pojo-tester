@@ -5,8 +5,6 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 import pl.pojo.tester.api.FieldPredicate;
 import pl.pojo.tester.internal.assertion.equals.AbstractEqualsAssertionError;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;

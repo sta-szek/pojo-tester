@@ -3,8 +3,6 @@ package pl.pojo.tester.api.assertion;
 import com.google.common.collect.Sets;
 import lombok.Data;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 import pl.pojo.tester.api.ClassAndFieldPredicatePair;
 import pl.pojo.tester.internal.tester.EqualsTester;
 

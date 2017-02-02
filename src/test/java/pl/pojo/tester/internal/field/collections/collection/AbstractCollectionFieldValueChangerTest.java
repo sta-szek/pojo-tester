@@ -2,20 +2,14 @@ package pl.pojo.tester.internal.field.collections.collection;
 
 
 import classesForTest.fields.collections.collection.Collections;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.TreeSet;
-import java.util.stream.Stream;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.function.Executable;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
+
+import java.lang.reflect.Field;
+import java.util.*;
+import java.util.stream.Stream;
 
 import static helpers.TestHelper.getDefaultDisplayName;
 import static org.assertj.core.api.Assertions.assertThat;
