@@ -5,15 +5,7 @@ import lombok.Data;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.function.Executable;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
-import pl.pojo.tester.internal.tester.AbstractTester;
-import pl.pojo.tester.internal.tester.ConstructorTester;
-import pl.pojo.tester.internal.tester.EqualsTester;
-import pl.pojo.tester.internal.tester.GetterTester;
-import pl.pojo.tester.internal.tester.HashCodeTester;
-import pl.pojo.tester.internal.tester.SetterTester;
-import pl.pojo.tester.internal.tester.ToStringTester;
+import pl.pojo.tester.internal.tester.*;
 
 import java.util.stream.Stream;
 

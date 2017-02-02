@@ -1,8 +1,6 @@
 package pl.pojo.tester.internal.assertion;
 
 import org.junit.jupiter.api.Test;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 import pl.pojo.tester.internal.assertion.constructor.ConstructorAssertions;
 import pl.pojo.tester.internal.assertion.equals.EqualAssertions;
 import pl.pojo.tester.internal.assertion.getter.GetterAssertions;

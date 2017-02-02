@@ -6,8 +6,6 @@ import classesForTest.packageFilter.C;
 import classesForTest.packageFilter.next.D;
 import classesForTest.packageFilter.next.E;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;

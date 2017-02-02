@@ -1,20 +1,14 @@
 package pl.pojo.tester.internal.field;
 
-import classesForTest.fields.AllFiledTypes;
-import classesForTest.fields.AllFiledTypes_Wrapped;
-import classesForTest.fields.EnumFields;
-import classesForTest.fields.EnumWithoutConstants;
-import classesForTest.fields.SingleEnum;
-import classesForTest.fields.TestEnum1;
-import java.lang.reflect.Field;
-import java.util.stream.Stream;
+import classesForTest.fields.*;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.function.Executable;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
+
+import java.lang.reflect.Field;
+import java.util.stream.Stream;
 
 import static helpers.TestHelper.getDefaultDisplayName;
 import static org.assertj.core.api.Assertions.assertThat;

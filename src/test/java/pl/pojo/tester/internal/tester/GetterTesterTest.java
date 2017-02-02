@@ -2,8 +2,6 @@ package pl.pojo.tester.internal.tester;
 
 import lombok.Getter;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 import pl.pojo.tester.api.FieldPredicate;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
 import pl.pojo.tester.internal.utils.GetterNotFoundException;
