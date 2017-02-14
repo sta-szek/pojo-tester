@@ -2,7 +2,7 @@ package pl.pojo.tester.internal.instantiator;
 
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
+import pl.pojo.tester.internal.utils.CollectionUtils;
 import org.apache.commons.collections4.MultiValuedMap;
 import pl.pojo.tester.api.ConstructorParameters;
 
