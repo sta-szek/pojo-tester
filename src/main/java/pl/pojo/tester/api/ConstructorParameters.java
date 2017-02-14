@@ -1,6 +1,5 @@
 package pl.pojo.tester.api;
 
-import lombok.Getter;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -16,7 +15,6 @@ import java.util.Arrays;
  * @author Piotr Joński
  * @since 0.1.0
  */
-@Getter
 public class ConstructorParameters {
 
     private final Object[] parameters;
@@ -65,5 +63,13 @@ public class ConstructorParameters {
 
     public boolean matches(final Class<?>[] parameterTypes) {
         return Arrays.equals(parametersTypes, parameterTypes);
+    }
+
+    public Class<?>[] getParametersTypes() {
+        return parametersTypes;
+    }
+
+    public Object[] getParameters() {
+        return parameters;
     }
 }

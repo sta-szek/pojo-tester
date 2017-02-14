@@ -1,10 +1,11 @@
 package pl.pojo.tester.internal.instantiator;
 
 
-import lombok.extern.slf4j.Slf4j;
-import pl.pojo.tester.internal.utils.CollectionUtils;
 import org.apache.commons.collections4.MultiValuedMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pl.pojo.tester.api.ConstructorParameters;
+import pl.pojo.tester.internal.utils.CollectionUtils;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
@@ -14,8 +15,9 @@ import java.util.Objects;
 import java.util.stream.Stream;
 
 
-@Slf4j
 abstract class AbstractMultiConstructorInstantiator extends AbstractObjectInstantiator {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractMultiConstructorInstantiator.class);
 
     protected final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters;
 
@@ -31,8 +33,8 @@ abstract class AbstractMultiConstructorInstantiator extends AbstractObjectInstan
             if (result != null) {
                 return result;
             }
-            log.warn("Could not instantiate class {} with user defined parameters. "
-                             + "Trying create instance finding best constructor", clazz);
+            LOGGER.warn("Could not instantiate class {} with user defined parameters. "
+                        + "Trying create instance finding best constructor", clazz);
         }
         return null;
     }

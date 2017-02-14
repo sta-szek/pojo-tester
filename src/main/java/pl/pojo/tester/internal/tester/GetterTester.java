@@ -1,8 +1,6 @@
 package pl.pojo.tester.internal.tester;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import pl.pojo.tester.api.ClassAndFieldPredicatePair;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 import pl.pojo.tester.internal.utils.FieldUtils;
@@ -53,10 +51,21 @@ public class GetterTester extends AbstractTester {
         return new GetterAndFieldPair(getter, field);
     }
 
-    @Getter
-    @AllArgsConstructor
     private class GetterAndFieldPair {
-        private Method getter;
-        private Field field;
+        private final Method getter;
+        private final Field field;
+
+        public GetterAndFieldPair(final Method getter, final Field field) {
+            this.getter = getter;
+            this.field = field;
+        }
+
+        public Method getGetter() {
+            return getter;
+        }
+
+        public Field getField() {
+            return field;
+        }
     }
 }

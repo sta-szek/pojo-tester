@@ -22,27 +22,19 @@ public final class FieldPredicate {
      * Creates {@link Predicate} that accepts all fields of specified class.
      *
      * @param clazz class, which fields will be accepted
-     *
      * @return {@link Predicate} that accepts all fields of given class
-     *
      * @see Predicate
      */
     public static Predicate<String> includeAllFields(final Class<?> clazz) {
         final List<String> allFieldNames = FieldUtils.getAllFieldNames(clazz);
-        Predicate<String> predicate = getAlwaysFalsePredicate();
-        for (final String filedName : allFieldNames) {
-            predicate = predicate.or(getEqualPredicate(filedName));
-        }
-        return predicate;
+        return include(allFieldNames);
     }
 
     /**
      * Creates {@link Predicate} that accepts given fields.
      *
      * @param includedFields fields, that will be included into predicate
-     *
      * @return {@link Predicate} that accepts given fields
-     *
      * @see Predicate
      */
     public static Predicate<String> include(final List<String> includedFields) {
@@ -57,9 +49,7 @@ public final class FieldPredicate {
      * Creates {@link Predicate} that accepts given fields.
      *
      * @param includedFields fields, that will be included into predicate
-     *
      * @return {@link Predicate} that accepts given fields
-     *
      * @see Predicate
      */
     public static Predicate<String> include(final String... includedFields) {
@@ -71,9 +61,7 @@ public final class FieldPredicate {
      * Creates {@link Predicate} that rejects given fields.
      *
      * @param excludedFields fields, that will be excluded from predicate
-     *
      * @return {@link Predicate} that rejects given fields
-     *
      * @see Predicate
      */
     public static Predicate<String> exclude(final List<String> excludedFields) {
@@ -88,9 +76,7 @@ public final class FieldPredicate {
      * Creates {@link Predicate} that rejects given fields.
      *
      * @param excludedFields fields, that will be excluded from predicate
-     *
      * @return {@link Predicate} that rejects given fields
-     *
      * @see Predicate
      */
     public static Predicate<String> exclude(final String... excludedFields) {
@@ -98,19 +84,21 @@ public final class FieldPredicate {
     }
 
     private static Predicate<String> getAlwaysFalsePredicate() {
-        return fieldName -> false;
+        return new NamedPredicate<>(fieldName -> false);
     }
 
     private static Predicate<String> getAlwaysTruePredicate() {
-        return fieldName -> true;
+        return new NamedPredicate<>(fieldName -> true);
     }
 
     private static Predicate<String> getNonEqualPredicate(final String filedName) {
-        return getEqualPredicate(filedName).negate();
+        final NamedPredicate<String> equalPredicate = getEqualPredicate(filedName);
+        return new NamedPredicate<>(equalPredicate.negate());
     }
 
-    private static Predicate<String> getEqualPredicate(final String filedName) {
-        return otherFieldName -> otherFieldName.equals(filedName);
+    private static NamedPredicate<String> getEqualPredicate(final String filedName) {
+        return new NamedPredicate<>(filedName, otherFieldName -> otherFieldName.equals(filedName));
     }
 
 }
+

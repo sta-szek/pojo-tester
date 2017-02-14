@@ -101,4 +101,9 @@ public abstract class AbstractTester {
     protected MultiValuedMap<Class<?>, ConstructorParameters> getConstructorParameters() {
         return constructorParameters;
     }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
 }

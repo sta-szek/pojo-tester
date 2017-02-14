@@ -81,13 +81,13 @@ junitPlatform {
 }
 
 dependencies {
-    compile("org.slf4j:slf4j-simple:1.7.22")
+    compile("org.slf4j:slf4j-log4j12:1.7.22")
     compile("org.apache.commons:commons-lang3:3.4")
     compile("org.apache.commons:commons-collections4:4.1")
     compile("com.googlecode.combinatoricslib:combinatoricslib:2.1")
-    compile("org.projectlombok:lombok:1.16.12")
     compile("org.javassist:javassist:3.20.0-GA")
 
+    testCompile("org.projectlombok:lombok:1.16.12")
     testCompile("org.junit.jupiter:junit-jupiter-api:${JUNIT_JUPITER_VERSION}") { changing = true }
     testRuntime("org.junit.jupiter:junit-jupiter-engine:${JUNIT_JUPITER_VERSION}") { changing = true }
     testCompile("org.junit.platform:junit-platform-runner:${JUNIT_PLATFORM_VERSION}") { changing = true }

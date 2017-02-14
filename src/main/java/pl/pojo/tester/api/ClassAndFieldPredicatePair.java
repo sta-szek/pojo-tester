@@ -1,8 +1,8 @@
 package pl.pojo.tester.api;
 
-import java.util.function.Predicate;
-import lombok.Getter;
 import pl.pojo.tester.internal.instantiator.ClassLoader;
+
+import java.util.function.Predicate;
 
 /**
  * This class is an encapsulation for {@code class} that will be tested and fields to test.
@@ -10,7 +10,6 @@ import pl.pojo.tester.internal.instantiator.ClassLoader;
  * @author Piotr Joński
  * @since 0.1.0
  */
-@Getter
 public class ClassAndFieldPredicatePair {
     private final Class<?> clazz;
     private final Predicate<String> fieldsPredicate;
@@ -55,5 +54,13 @@ public class ClassAndFieldPredicatePair {
      */
     public ClassAndFieldPredicatePair(final String qualifiedClassName) {
         this(ClassLoader.loadClass(qualifiedClassName));
+    }
+
+    public Class<?> getClazz() {
+        return clazz;
+    }
+
+    public Predicate<String> getFieldsPredicate() {
+        return fieldsPredicate;
     }
 }
