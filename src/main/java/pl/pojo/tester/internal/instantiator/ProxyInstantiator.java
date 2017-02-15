@@ -3,6 +3,8 @@ package pl.pojo.tester.internal.instantiator;
 
 import javassist.util.proxy.ProxyFactory;
 import org.apache.commons.collections4.MultiValuedMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pl.pojo.tester.api.ConstructorParameters;
 
 import java.lang.reflect.Constructor;
@@ -12,6 +14,8 @@ import java.lang.reflect.Proxy;
 
 
 class ProxyInstantiator extends AbstractMultiConstructorInstantiator {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(BestConstructorInstantiator.class);
 
     private final ProxyFactory proxyFactory = new ProxyFactory();
 
@@ -57,6 +61,7 @@ class ProxyInstantiator extends AbstractMultiConstructorInstantiator {
                 | IllegalAccessException
                 | InvocationTargetException
                 | NoSuchMethodException e) {
+            LOGGER.debug("Exception: {}", e);
             // ignore, we want to try all constructors
             // if all constructors fail, it will be handled by caller
             return null;
@@ -68,6 +73,7 @@ class ProxyInstantiator extends AbstractMultiConstructorInstantiator {
             method.setAccessible(true);
             return method.invoke(proxy, args);
         } catch (IllegalAccessException | InvocationTargetException e) {
+            LOGGER.debug("Exception: {}", e);
             final Class<?> returnType = method.getReturnType();
             if (returnType.equals(boolean.class) || returnType.equals(Boolean.class)) {
                 return true;

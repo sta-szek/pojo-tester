@@ -5,6 +5,9 @@ import java.util.*;
 
 public class CollectionUtils {
 
+    private CollectionUtils() {
+    }
+
     public static boolean isNotEmpty(final Collection<?> collection) {
         return !isEmpty(collection);
     }
@@ -19,7 +22,7 @@ public class CollectionUtils {
         return list;
     }
 
-    public static <T> HashSet<T> asSet(final T... elements) {
+    public static <T> Set<T> asSet(final T... elements) {
         final HashSet<T> list = new HashSet<>(elements.length);
         Collections.addAll(list, elements);
         return list;

@@ -40,28 +40,20 @@ public class NamedPredicate<T> implements Predicate<T> {
 
     @Override
     public NamedPredicate<T> or(final Predicate<? super T> otherPredicate) {
-        String name = "";
+        String otherName = "";
         if (otherPredicate instanceof NamedPredicate) {
-            name = ((NamedPredicate) otherPredicate).getName();
+            otherName = ((NamedPredicate) otherPredicate).getName();
         }
-        return new NamedPredicate<>(skipFirstIfAlwaysTrueOrFalse() + name, this.predicate.or(otherPredicate));
+        return new NamedPredicate<>(skipFirstIfAlwaysTrueOrFalse() + otherName, this.predicate.or(otherPredicate));
     }
 
     @Override
     public NamedPredicate<T> and(final Predicate<? super T> otherPredicate) {
-        String name = "";
+        String otherName = "";
         if (otherPredicate instanceof NamedPredicate) {
-            name = ((NamedPredicate) otherPredicate).getName();
+            otherName = ((NamedPredicate) otherPredicate).getName();
         }
-        return new NamedPredicate<>(skipFirstIfAlwaysTrueOrFalse() + name, this.predicate.and(otherPredicate));
-    }
-
-    private String skipFirstIfAlwaysTrueOrFalse() {
-        if (StringUtils.isNotBlank(name)) {
-            return name + ",";
-        } else {
-            return "";
-        }
+        return new NamedPredicate<>(skipFirstIfAlwaysTrueOrFalse() + otherName, this.predicate.and(otherPredicate));
     }
 
     @Override
@@ -77,5 +69,13 @@ public class NamedPredicate<T> implements Predicate<T> {
 
     public String getName() {
         return name;
+    }
+
+    private String skipFirstIfAlwaysTrueOrFalse() {
+        if (StringUtils.isNotBlank(name)) {
+            return name + ",";
+        } else {
+            return "";
+        }
     }
 }

@@ -55,6 +55,7 @@ abstract class AbstractMultiConstructorInstantiator extends AbstractObjectInstan
                 }
                 return createObjectFromArgsConstructor(parameterTypes, parameters);
             } catch (final ObjectInstantiationException e) {
+                LOGGER.debug("ObjectInstantiationException: {}", e);
                 // ignore, try all user defined constructor parameters and types
             }
         }
@@ -106,6 +107,7 @@ abstract class AbstractMultiConstructorInstantiator extends AbstractObjectInstan
                                                                             constructorParameters);
                 return createObjectFromArgsConstructor(constructor.getParameterTypes(), parameters);
             } catch (final Exception e) {
+                LOGGER.debug("Exception: {}", e);
                 // ignore, we want to try all constructors
                 // if all constructors fail, it will be handled by caller
                 return null;

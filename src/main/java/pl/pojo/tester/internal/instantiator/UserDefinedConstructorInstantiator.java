@@ -1,6 +1,8 @@
 package pl.pojo.tester.internal.instantiator;
 
 import org.apache.commons.collections4.MultiValuedMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pl.pojo.tester.api.ConstructorParameters;
 
 import java.lang.reflect.Constructor;
@@ -11,6 +13,8 @@ import java.util.Objects;
 import java.util.stream.Stream;
 
 class UserDefinedConstructorInstantiator extends AbstractObjectInstantiator {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(BestConstructorInstantiator.class);
 
     private final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters;
 
@@ -30,7 +34,8 @@ class UserDefinedConstructorInstantiator extends AbstractObjectInstantiator {
     }
 
     private ObjectInstantiationException createObjectInstantiationException() {
-        return new ObjectInstantiationException(clazz, "Could not instantiate object by any user defined constructor types and parameters.");
+        return new ObjectInstantiationException(clazz,
+                                                "Could not instantiate object by any user defined constructor types and parameters.");
     }
 
     private Object createObjectUsingConstructorParameters(final ConstructorParameters constructorParameters) {
@@ -39,7 +44,8 @@ class UserDefinedConstructorInstantiator extends AbstractObjectInstantiator {
             Object[] arguments = constructorParameters.getParameters();
 
             if (isInnerClass()) {
-                constructorParametersTypes = putEnclosingClassAsFirstParameterType(clazz.getEnclosingClass(), constructorParametersTypes);
+                constructorParametersTypes = putEnclosingClassAsFirstParameterType(clazz.getEnclosingClass(),
+                                                                                   constructorParametersTypes);
                 final Object enclosingClassInstance = instantiateEnclosingClass();
                 arguments = putEnclosingClassInstanceAsFirstParameter(enclosingClassInstance, arguments);
             }
@@ -48,6 +54,7 @@ class UserDefinedConstructorInstantiator extends AbstractObjectInstantiator {
             constructor.setAccessible(true);
             return constructor.newInstance(arguments);
         } catch (final NoSuchMethodException | InstantiationException | InvocationTargetException | IllegalAccessException | IllegalArgumentException e) {
+            LOGGER.debug("Exception: {}", e);
             return null;
         }
     }

@@ -2,6 +2,8 @@ package pl.pojo.tester.internal.instantiator;
 
 
 import org.apache.commons.collections4.MultiValuedMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pl.pojo.tester.api.ConstructorParameters;
 
 import java.lang.reflect.Constructor;
@@ -9,6 +11,7 @@ import java.lang.reflect.InvocationTargetException;
 
 class BestConstructorInstantiator extends AbstractMultiConstructorInstantiator {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(BestConstructorInstantiator.class);
 
     BestConstructorInstantiator(final Class<?> clazz, final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
         super(clazz, constructorParameters);
@@ -45,6 +48,7 @@ class BestConstructorInstantiator extends AbstractMultiConstructorInstantiator {
         try {
             return constructor.newInstance();
         } catch (final InstantiationException | IllegalAccessException | InvocationTargetException e) {
+            LOGGER.debug("Exception: {}", e);
             // ignore, we want to try all constructors
             // if all constructors fail, it will be handled by caller
             return null;
