@@ -171,12 +171,14 @@ public class ObjectGenerator {
     }
 
     private void logWithLevel(final int level, final String message, final Object... args) {
-        final StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < level; i++) {
-            stringBuilder.append("\t");
+        if (LOGGER.isDebugEnabled()) {
+            final StringBuilder stringBuilder = new StringBuilder();
+            for (int i = 0; i < level; i++) {
+                stringBuilder.append("\t");
+            }
+            stringBuilder.append(message);
+            LOGGER.debug(stringBuilder.toString(), args);
         }
-        stringBuilder.append(message);
-        LOGGER.debug(stringBuilder.toString(), args);
     }
 
     private List<Object> createCopiesAndFillThem(final List<Object> baseObjects, final Map.Entry<Field, List<Object>> nestedObjectsToSet) {
