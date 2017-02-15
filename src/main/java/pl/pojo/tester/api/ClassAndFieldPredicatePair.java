@@ -63,4 +63,9 @@ public class ClassAndFieldPredicatePair {
     public Predicate<String> getFieldsPredicate() {
         return fieldsPredicate;
     }
+
+    @Override
+    public String toString() {
+        return clazz.getCanonicalName() + "(" + fieldsPredicate + ")";
+    }
 }

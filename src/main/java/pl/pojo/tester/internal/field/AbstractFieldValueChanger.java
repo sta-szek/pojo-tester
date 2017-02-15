@@ -1,5 +1,7 @@
 package pl.pojo.tester.internal.field;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pl.pojo.tester.internal.utils.FieldUtils;
 
 import java.lang.reflect.Field;
@@ -8,6 +10,8 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 public abstract class AbstractFieldValueChanger<T> {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractFieldValueChanger.class);
 
     private AbstractFieldValueChanger next;
 
@@ -21,6 +25,9 @@ public abstract class AbstractFieldValueChanger<T> {
     public AbstractFieldValueChanger attachNext(final AbstractFieldValueChanger abstractFieldValueChanger) {
         if (this.next == null) {
             this.next = abstractFieldValueChanger;
+            LOGGER.debug("Attaching {}to {}",
+                         abstractFieldValueChanger.getClass().getCanonicalName(),
+                         this.getClass().getCanonicalName());
         } else {
             this.next.attachNext(abstractFieldValueChanger);
         }
@@ -29,7 +36,9 @@ public abstract class AbstractFieldValueChanger<T> {
 
     public T increaseValue(final T value) {
         if (canChange(value.getClass())) {
-            return increaseValue(value, value.getClass());
+            final T increasedValue = increaseValue(value, value.getClass());
+            LOGGER.debug("Changing value of type {} from '{}' to '{}'", value.getClass(), value, increasedValue);
+            return increasedValue;
         } else {
             if (next != null) {
                 return (T) next.increaseValue(value);
@@ -66,6 +75,10 @@ public abstract class AbstractFieldValueChanger<T> {
         final T targetFieldValue = (T) FieldUtils.getValue(targetObject, field);
         if (!areDifferentValues(sourceFieldValue, targetFieldValue)) {
             final T increasedValue = increaseValue(targetFieldValue, field.getType());
+            LOGGER.debug("Changing value of type {} from '{}' to '{}'",
+                         field.getType(),
+                         sourceFieldValue,
+                         increasedValue);
             FieldUtils.setValue(targetObject, field, increasedValue);
         }
     }

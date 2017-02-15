@@ -59,7 +59,9 @@ public class NamedPredicate<T> implements Predicate<T> {
     private String skipFirstIfAlwaysTrueOrFalse() {
         if (StringUtils.isNotBlank(name)) {
             return name + ",";
-        } else return "";
+        } else {
+            return "";
+        }
     }
 
     @Override

@@ -12,7 +12,6 @@ import pl.pojo.tester.internal.tester.AbstractTester;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static pl.pojo.tester.internal.preconditions.ParameterPreconditions.checkNotBlank;
@@ -41,7 +40,6 @@ public abstract class AbstractAssertion {
     private final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters = new ArrayListValuedHashMap<>();
     Set<AbstractTester> testers = new HashSet<>();
     private AbstractFieldValueChanger abstractFieldValueChanger;
-
 
     /**
      * Specifies what field values changer will be used for testing.
@@ -183,11 +181,7 @@ public abstract class AbstractAssertion {
     protected void logTestersAndClasses(final Logger logger, final ClassAndFieldPredicatePair... classAndFieldPredicatePairs) {
         if (logger.isDebugEnabled()) {
             final String classes = Arrays.stream(classAndFieldPredicatePairs)
-                                         .map(eachClass -> {
-                                             Class<?> clazz = eachClass.getClazz();
-                                             Predicate<String> predicate = eachClass.getFieldsPredicate();
-                                             return clazz.getCanonicalName() + "(" + predicate + ")";
-                                         })
+                                         .map(ClassAndFieldPredicatePair::toString)
                                          .collect(Collectors.joining(", ", "[", "]"));
 
             logger.debug("Running {} testers on {} classes", testers.size(), classAndFieldPredicatePairs.length);
