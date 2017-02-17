@@ -136,7 +136,7 @@ public class ObjectGenerator {
             result.addAll(partialResult);
         }
         logWithLevel(level,
-                     "End of generating different objects (size={}) for base class {}",
+                     "End of generating different objects (size={}) for base class {} ",
                      result.size(),
                      baseClassAndFieldPredicatePair);
         return result;
@@ -181,7 +181,8 @@ public class ObjectGenerator {
         }
     }
 
-    private List<Object> createCopiesAndFillThem(final List<Object> baseObjects, final Map.Entry<Field, List<Object>> nestedObjectsToSet) {
+    private List<Object> createCopiesAndFillThem(final List<Object> baseObjects,
+                                                 final Map.Entry<Field, List<Object>> nestedObjectsToSet) {
         final List<Object> result = new ArrayList<>();
         final Field fieldToFill = nestedObjectsToSet.getKey();
         final List<Object> objectsToFillWith = nestedObjectsToSet.getValue();

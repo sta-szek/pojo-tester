@@ -388,3 +388,80 @@ This method test all classes. If it encounters field of type from given classes,
 
 Imagine you are testing two classes, `A` and `B`. Class `A` has a field of type `B`. When you pass those classes to the `POJO-TESTER`, it will create instance of `B` class, change its value generating different objects, and finally will set all those objects into class `A`.
 
+
+## Debugging {#debugging}
+`pojo-tester` is not a perfect library. Sometimes you have to debug tests to see what happened.
+If you think that `pojo-tester` has a bug, just switch logging level to `DEBUG` and investigate.
+
+### Switching to debug level
+
+E.g. log4j.properties file:
+
+```log4j.properties
+# Root logger option
+log4j.rootLogger=DEBUG, stdout
+# Direct log messages to stdout
+log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+log4j.appender.stdout.Target=System.out
+log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+log4j.appender.stdout.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss} %-5p - %m%n
+```
+
+
+### Log analyses
+
+List of field value changers:
+```
+(...) Attaching pl.pojo.tester.internal.field.primitive.ByteValueChangerto pl.pojo.tester.internal.field.primitive.BooleanValueChanger
+(...) Attaching pl.pojo.tester.internal.field.primitive.CharacterValueChangerto pl.pojo.tester.internal.field.primitive.ByteValueChanger
+(...) Attaching pl.pojo.tester.internal.field.primitive.DoubleValueChangerto pl.pojo.tester.internal.field.primitive.CharacterValueChanger
+(...) Attaching pl.pojo.tester.internal.field.primitive.IntegerValueChangerto pl.pojo.tester.internal.field.primitive.DoubleValueChanger
+(...) Attaching pl.pojo.tester.internal.field.primitive.LongValueChangerto pl.pojo.tester.internal.field.primitive.IntegerValueChanger
+```
+
+Testers that were used:
+```
+(...) Testers: [EqualsTester, ToStringTester, GetterTester, HashCodeTester, SetterTester, ConstructorTester]
+```
+
+Changing field value:
+```
+(...) Changing value of type class java.lang.String from 'www.pojo.pl' to 'www.pojo.pl++increased' (pl.pojo.tester.internal.field.StringValueChanger@21a947fe)
+(...) Changing value of type int from '1' to '2' (pl.pojo.tester.internal.field.primitive.IntegerValueChanger@69a10787)
+```
+
+Generating objects:
+```
+(..1) Classes: [pl.pojo.tester.model.Pojo2(a,b,c,pojo,pojo3), pl.pojo.tester.model.Pojo(a,b,c), pl.pojo.tester.model.Pojo3(a,b,c,pojo)]
+(..2) Start of generating different objects for base class pl.pojo.tester.model.Pojo2(a,b,c,pojo,pojo3). Base object is Pojo2(a=0, b=0, c=0, pojo=null, pojo3=null) -- others will be cloned from this one
+(..3) Caching 8 different objects for class pl.pojo.tester.model.Pojo in dejaVu cache
+(..4) Reusing 8 objects from 'dejaVu' cache for class pl.pojo.tester.model.Pojo
+(...) Reusing 8 objects from 'dejaVu' cache for class pl.pojo.tester.model.Pojo
+(...) Reusing 8 objects from 'dejaVu' cache for class pl.pojo.tester.model.Pojo
+(...) Reusing 8 objects from 'dejaVu' cache for class pl.pojo.tester.model.Pojo
+(...) Reusing 8 objects from 'dejaVu' cache for class pl.pojo.tester.model.Pojo
+(...) Reusing 8 objects from 'dejaVu' cache for class pl.pojo.tester.model.Pojo
+(...) Reusing 8 objects from 'dejaVu' cache for class pl.pojo.tester.model.Pojo
+(..5) 	Start of generating different objects for base class pl.pojo.tester.model.Pojo3(a,b,c,pojo). Base object is Pojo3(a=0, b=0, c=0, pojo=null) -- others will be cloned from this one
+(...) 	Reusing 8 objects from 'dejaVu' cache for class pl.pojo.tester.model.Pojo
+(...) 	Reusing 8 objects from 'dejaVu' cache for class pl.pojo.tester.model.Pojo
+(...) 	Reusing 8 objects from 'dejaVu' cache for class pl.pojo.tester.model.Pojo
+(...) 	Reusing 8 objects from 'dejaVu' cache for class pl.pojo.tester.model.Pojo
+(...) 	Reusing 8 objects from 'dejaVu' cache for class pl.pojo.tester.model.Pojo
+(...) 	Reusing 8 objects from 'dejaVu' cache for class pl.pojo.tester.model.Pojo
+(...) 	Reusing 8 objects from 'dejaVu' cache for class pl.pojo.tester.model.Pojo
+(...) 	Reusing 8 objects from 'dejaVu' cache for class pl.pojo.tester.model.Pojo
+(..6) 	End of generating different objects (size=72) for base class pl.pojo.tester.model.Pojo3(a,b,c,pojo)
+(...) Caching 72 different objects for class pl.pojo.tester.model.Pojo3 in dejaVu cache
+(...) Reusing 72 objects from 'dejaVu' cache for class pl.pojo.tester.model.Pojo3
+(...) Reusing 72 objects from 'dejaVu' cache for class pl.pojo.tester.model.Pojo3
+(..7) End of generating different objects (size=5256) for base class pl.pojo.tester.model.Pojo2(a,b,c,pojo,pojo3
+```
+
+* `1` print classes that are being tested
+* `2` start generating different objects for given class
+* `3` some objects are cached in case of need for generating them later
+* `4` and some of them are reused
+* `5` generating nested object (see that tabulator is used - this means second level in hierarchy)
+* `6` end of generating nested object
+* `7` end of generating base object

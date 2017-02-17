@@ -65,7 +65,7 @@ public abstract class AbstractPrimitiveValueChanger<T> extends AbstractFieldValu
             return FieldUtils.getValue(null, getGenericTypeClass().getField(FIELD_WITH_PRIMITIVE_CLASS_REFERENCE))
                              .equals(type);
         } catch (final NoSuchFieldException e) {
-            LOGGER.debug("NoSuchFieldException: {}", e);
+            LOGGER.debug("NoSuchFieldException:", e);
             return false;
         }
     }
@@ -81,7 +81,7 @@ public abstract class AbstractPrimitiveValueChanger<T> extends AbstractFieldValu
             return FieldUtils.getValue(null, getGenericTypeClass().getField(FIELD_WITH_PRIMITIVE_CLASS_REFERENCE))
                              .equals(fieldPrimitiveType);
         } catch (final NoSuchFieldException e) {
-            LOGGER.debug("NoSuchFieldException: {}", e);
+            LOGGER.debug("NoSuchFieldException:", e);
             return false;
         }
     }

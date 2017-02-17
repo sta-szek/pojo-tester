@@ -13,7 +13,8 @@ class BestConstructorInstantiator extends AbstractMultiConstructorInstantiator {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BestConstructorInstantiator.class);
 
-    BestConstructorInstantiator(final Class<?> clazz, final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
+    BestConstructorInstantiator(final Class<?> clazz,
+                                final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
         super(clazz, constructorParameters);
     }
 
@@ -39,7 +40,11 @@ class BestConstructorInstantiator extends AbstractMultiConstructorInstantiator {
             declaredConstructor.setAccessible(true);
             return declaredConstructor.newInstance(parameters);
         } catch (final ReflectiveOperationException e) {
-            throw new ObjectInstantiationException(clazz, "Could not create object from args constructor", e);
+            throw new ObjectInstantiationException(clazz,
+                                                   "Could not create object from args constructor",
+                                                   parameterTypes,
+                                                   parameters,
+                                                   e);
         }
     }
 
@@ -48,7 +53,7 @@ class BestConstructorInstantiator extends AbstractMultiConstructorInstantiator {
         try {
             return constructor.newInstance();
         } catch (final InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            LOGGER.debug("Exception: {}", e);
+            LOGGER.debug("Exception:", e);
             // ignore, we want to try all constructors
             // if all constructors fail, it will be handled by caller
             return null;

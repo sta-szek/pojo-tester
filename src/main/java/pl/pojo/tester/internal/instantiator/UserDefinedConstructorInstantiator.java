@@ -18,7 +18,8 @@ class UserDefinedConstructorInstantiator extends AbstractObjectInstantiator {
 
     private final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters;
 
-    UserDefinedConstructorInstantiator(final Class<?> clazz, final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
+    UserDefinedConstructorInstantiator(final Class<?> clazz,
+                                       final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
         super(clazz);
         this.constructorParameters = constructorParameters;
     }
@@ -54,7 +55,7 @@ class UserDefinedConstructorInstantiator extends AbstractObjectInstantiator {
             constructor.setAccessible(true);
             return constructor.newInstance(arguments);
         } catch (final NoSuchMethodException | InstantiationException | InvocationTargetException | IllegalAccessException | IllegalArgumentException e) {
-            LOGGER.debug("Exception: {}", e);
+            LOGGER.debug("Exception:", e);
             return null;
         }
     }
@@ -66,12 +67,14 @@ class UserDefinedConstructorInstantiator extends AbstractObjectInstantiator {
                            .instantiate();
     }
 
-    private Object[] putEnclosingClassInstanceAsFirstParameter(final Object enclosingClassInstance, final Object[] arguments) {
+    private Object[] putEnclosingClassInstanceAsFirstParameter(final Object enclosingClassInstance,
+                                                               final Object[] arguments) {
         return Stream.concat(Stream.of(enclosingClassInstance), Arrays.stream(arguments))
                      .toArray(Object[]::new);
     }
 
-    private Class[] putEnclosingClassAsFirstParameterType(final Class<?> enclosingClass, final Class<?>[] constructorParametersTypes) {
+    private Class[] putEnclosingClassAsFirstParameterType(final Class<?> enclosingClass,
+                                                          final Class<?>[] constructorParametersTypes) {
         return Stream.concat(Stream.of(enclosingClass), Arrays.stream(constructorParametersTypes))
                      .toArray(Class[]::new);
     }

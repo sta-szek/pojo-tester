@@ -19,7 +19,8 @@ class ProxyInstantiator extends AbstractMultiConstructorInstantiator {
 
     private final ProxyFactory proxyFactory = new ProxyFactory();
 
-    ProxyInstantiator(final Class<?> clazz, final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
+    ProxyInstantiator(final Class<?> clazz,
+                      final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
         super(clazz, constructorParameters);
     }
 
@@ -61,7 +62,7 @@ class ProxyInstantiator extends AbstractMultiConstructorInstantiator {
                 | IllegalAccessException
                 | InvocationTargetException
                 | NoSuchMethodException e) {
-            LOGGER.debug("Exception: {}", e);
+            LOGGER.debug("Exception:", e);
             // ignore, we want to try all constructors
             // if all constructors fail, it will be handled by caller
             return null;
@@ -73,7 +74,7 @@ class ProxyInstantiator extends AbstractMultiConstructorInstantiator {
             method.setAccessible(true);
             return method.invoke(proxy, args);
         } catch (IllegalAccessException | InvocationTargetException e) {
-            LOGGER.debug("Exception: {}", e);
+            LOGGER.debug("Exception:", e);
             final Class<?> returnType = method.getReturnType();
             if (returnType.equals(boolean.class) || returnType.equals(Boolean.class)) {
                 return true;

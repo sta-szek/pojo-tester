@@ -18,6 +18,7 @@
   * [Configure field value changer](writing-tests/README.md#configure-fvc)
   * [Create class using selected constructor](writing-tests/README.md#choose-constructor)
   * [Bulk pojos testing](writing-tests/README.md#bulk-testing)
+  * [Debugging](writing-tests/README.md#debugging)
 * [Comparison](comparison/README.md)
   * [Other libraries](comparison/README.md#other-libs)
   * [Tests preconditions](comparison/README.md#precondtioions)

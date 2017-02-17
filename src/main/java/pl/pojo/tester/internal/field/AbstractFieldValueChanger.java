@@ -15,7 +15,9 @@ public abstract class AbstractFieldValueChanger<T> {
 
     private AbstractFieldValueChanger next;
 
-    public void changeFieldsValues(final Object sourceObject, final Object targetObject, final List<Field> fieldsToChange) {
+    public void changeFieldsValues(final Object sourceObject,
+                                   final Object targetObject,
+                                   final List<Field> fieldsToChange) {
         fieldsToChange.forEach(eachField -> checkAndChange(sourceObject, targetObject, eachField));
         callNextValuesChanger(sourceObject, targetObject, fieldsToChange);
     }
@@ -25,7 +27,7 @@ public abstract class AbstractFieldValueChanger<T> {
     public AbstractFieldValueChanger attachNext(final AbstractFieldValueChanger abstractFieldValueChanger) {
         if (this.next == null) {
             this.next = abstractFieldValueChanger;
-            LOGGER.debug("Attaching {}to {}",
+            LOGGER.debug("Attaching {} to {}",
                          abstractFieldValueChanger.getClass().getCanonicalName(),
                          this.getClass().getCanonicalName());
         } else {
@@ -37,12 +39,17 @@ public abstract class AbstractFieldValueChanger<T> {
     public T increaseValue(final T value) {
         if (canChange(value.getClass())) {
             final T increasedValue = increaseValue(value, value.getClass());
-            LOGGER.debug("Changing value of type {} from '{}' to '{}'", value.getClass(), value, increasedValue);
+            LOGGER.debug("Changing value of type {} from '{}' to '{}' ({})",
+                         value.getClass(),
+                         value,
+                         increasedValue,
+                         this);
             return increasedValue;
         } else {
             if (next != null) {
                 return (T) next.increaseValue(value);
             }
+            LOGGER.debug("Could not change value '{}' ot type {} by any field value changer", value, value.getClass());
             return value;
         }
     }
@@ -64,7 +71,9 @@ public abstract class AbstractFieldValueChanger<T> {
         }
     }
 
-    private void callNextValuesChanger(final Object sourceObject, final Object targetObject, final List<Field> fieldsToChange) {
+    private void callNextValuesChanger(final Object sourceObject,
+                                       final Object targetObject,
+                                       final List<Field> fieldsToChange) {
         if (next != null) {
             next.changeFieldsValues(sourceObject, targetObject, fieldsToChange);
         }
@@ -75,10 +84,11 @@ public abstract class AbstractFieldValueChanger<T> {
         final T targetFieldValue = (T) FieldUtils.getValue(targetObject, field);
         if (!areDifferentValues(sourceFieldValue, targetFieldValue)) {
             final T increasedValue = increaseValue(targetFieldValue, field.getType());
-            LOGGER.debug("Changing value of type {} from '{}' to '{}'",
+            LOGGER.debug("Changing value of type {} from '{}' to '{}' ({})",
                          field.getType(),
                          sourceFieldValue,
-                         increasedValue);
+                         increasedValue,
+                         this);
             FieldUtils.setValue(targetObject, field, increasedValue);
         }
     }
