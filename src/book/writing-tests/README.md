@@ -407,6 +407,9 @@ log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
 log4j.appender.stdout.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss} %-5p - %m%n
 ```
 
+Place it in test resources directory:
+
+![](log4jproperties.png)
 
 ### Log analyses
 
