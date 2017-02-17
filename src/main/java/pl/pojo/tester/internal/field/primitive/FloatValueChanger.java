@@ -5,7 +5,7 @@ class FloatValueChanger extends AbstractPrimitiveValueChanger<Float> {
 
     @Override
     public boolean areDifferent(final Float sourceValue, final Float targetValue) {
-        return sourceValue.doubleValue() != targetValue.doubleValue();
+        return Float.compare(sourceValue, targetValue) != 0;
     }
 
     @Override

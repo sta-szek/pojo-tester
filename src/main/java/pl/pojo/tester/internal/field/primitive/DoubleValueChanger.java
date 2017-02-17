@@ -5,7 +5,7 @@ class DoubleValueChanger extends AbstractPrimitiveValueChanger<Double> {
 
     @Override
     public boolean areDifferent(final Double sourceValue, final Double targetValue) {
-        return sourceValue.doubleValue() != targetValue.doubleValue();
+        return Double.compare(sourceValue, targetValue) != 0;
     }
 
     @Override

@@ -1,7 +1,6 @@
 package pl.pojo.tester.api.assertion;
 
 import classesForTest.fields.TestEnum1;
-import com.google.common.collect.Sets;
 import helpers.MultiValuedMapMatcher;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -13,6 +12,7 @@ import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
 import pl.pojo.tester.internal.tester.EqualsTester;
 import pl.pojo.tester.internal.tester.HashCodeTester;
+import pl.pojo.tester.internal.utils.CollectionUtils;
 
 import java.util.Random;
 
@@ -101,7 +101,7 @@ public class AbstractAssertionTest {
         final AbstractAssertion abstractAssertion = new AbstractAssertionImplementation();
         final AbstractFieldValueChanger expectedFieldsValuesChanger = DefaultFieldValueChanger.INSTANCE;
         final EqualsTester equalsTester = mock(EqualsTester.class);
-        setInternalState(abstractAssertion, "testers", Sets.newHashSet(equalsTester));
+        setInternalState(abstractAssertion, "testers", CollectionUtils.asSet(equalsTester));
         abstractAssertion.using(expectedFieldsValuesChanger);
 
         // when
@@ -116,7 +116,7 @@ public class AbstractAssertionTest {
         // given
         final AbstractAssertion abstractAssertion = new AbstractAssertionImplementation();
         final EqualsTester equalsTester = mock(EqualsTester.class);
-        setInternalState(abstractAssertion, "testers", Sets.newHashSet(equalsTester));
+        setInternalState(abstractAssertion, "testers", CollectionUtils.asSet(equalsTester));
         final Class<String> expectedClass = String.class;
         final Object[] expectedArguments = {'c', 'h', 'a', 'r'};
         final Class[] expectedTypes = {char.class, char.class, char.class, char.class};
@@ -135,7 +135,7 @@ public class AbstractAssertionTest {
         // given
         final AbstractAssertion abstractAssertion = spy(new AbstractAssertionImplementation());
         final EqualsTester equalsTester = mock(EqualsTester.class);
-        setInternalState(abstractAssertion, "testers", Sets.newHashSet(equalsTester));
+        setInternalState(abstractAssertion, "testers", CollectionUtils.asSet(equalsTester));
         final Class<String> expectedClass = String.class;
         final Object[] expectedArguments = {'c', 'h', 'a', 'r'};
         final Class[] expectedTypes = {char.class, char.class, char.class, char.class};
@@ -154,7 +154,7 @@ public class AbstractAssertionTest {
         // given
         final AbstractAssertion abstractAssertion = new AbstractAssertionImplementation();
         final EqualsTester equalsTester = mock(EqualsTester.class);
-        setInternalState(abstractAssertion, "testers", Sets.newHashSet(equalsTester));
+        setInternalState(abstractAssertion, "testers", CollectionUtils.asSet(equalsTester));
         final Class<?> expectedClass = String.class;
         final Object[] expectedArguments = {'c', 'h', 'a', 'r'};
         final Class[] expectedTypes = {char.class, char.class, char.class, char.class};
@@ -173,7 +173,7 @@ public class AbstractAssertionTest {
         // given
         final AbstractAssertion abstractAssertion = spy(new AbstractAssertionImplementation());
         final EqualsTester equalsTester = mock(EqualsTester.class);
-        setInternalState(abstractAssertion, "testers", Sets.newHashSet(equalsTester));
+        setInternalState(abstractAssertion, "testers", CollectionUtils.asSet(equalsTester));
         final Object[] expectedArguments = {'c', 'h', 'a', 'r'};
         final Class[] expectedTypes = {char.class, char.class, char.class, char.class};
         final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments, expectedTypes);

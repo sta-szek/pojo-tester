@@ -1,6 +1,6 @@
 package pl.pojo.tester.internal.field.collections.collection;
 
-import org.apache.commons.collections4.CollectionUtils;
+import pl.pojo.tester.internal.utils.CollectionUtils;
 
 import java.util.TreeSet;
 

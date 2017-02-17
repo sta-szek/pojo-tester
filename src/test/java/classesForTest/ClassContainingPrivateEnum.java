@@ -1,17 +1,11 @@
 package classesForTest;
 
-import lombok.ToString;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.util.UUID;
 
-@ToString
 public final class ClassContainingPrivateEnum {
-
-    private enum Status {
-        OK, OK2, OK3
-    }
 
     private final UUID a;
     private final UUID b;
@@ -49,5 +43,19 @@ public final class ClassContainingPrivateEnum {
                                     .append(c)
                                     .append(d)
                                     .toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "ClassContainingPrivateEnum{" +
+               "a=" + a +
+               ", b=" + b +
+               ", c=" + c +
+               ", d='" + d + '\'' +
+               '}';
+    }
+
+    private enum Status {
+        OK, OK2, OK3
     }
 }

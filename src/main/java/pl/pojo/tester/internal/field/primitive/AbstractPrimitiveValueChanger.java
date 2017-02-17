@@ -1,9 +1,12 @@
 package pl.pojo.tester.internal.field.primitive;
 
-import com.google.common.collect.Lists;
-import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
+import pl.pojo.tester.internal.utils.CollectionUtils;
 import pl.pojo.tester.internal.utils.FieldUtils;
+
+import java.util.List;
 
 public abstract class AbstractPrimitiveValueChanger<T> extends AbstractFieldValueChanger<T> {
 
@@ -14,16 +17,16 @@ public abstract class AbstractPrimitiveValueChanger<T> extends AbstractFieldValu
                                                                                       .attachNext(new LongValueChanger())
                                                                                       .attachNext(new ShortValueChanger())
                                                                                       .attachNext(new FloatValueChanger());
-
-    private static final List<Class<?>> PRIMITIVE_CLASSES = Lists.newArrayList(Float.class,
-                                                                               Integer.class,
-                                                                               Long.class,
-                                                                               Float.class,
-                                                                               Double.class,
-                                                                               Byte.class,
-                                                                               Short.class,
-                                                                               Boolean.class,
-                                                                               Character.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractPrimitiveValueChanger.class);
+    private static final List<Class<?>> PRIMITIVE_CLASSES = CollectionUtils.asList(Float.class,
+                                                                                   Integer.class,
+                                                                                   Long.class,
+                                                                                   Float.class,
+                                                                                   Double.class,
+                                                                                   Byte.class,
+                                                                                   Short.class,
+                                                                                   Boolean.class,
+                                                                                   Character.class);
     private static final String FIELD_WITH_PRIMITIVE_CLASS_REFERENCE = "TYPE";
 
     @Override
@@ -62,6 +65,7 @@ public abstract class AbstractPrimitiveValueChanger<T> extends AbstractFieldValu
             return FieldUtils.getValue(null, getGenericTypeClass().getField(FIELD_WITH_PRIMITIVE_CLASS_REFERENCE))
                              .equals(type);
         } catch (final NoSuchFieldException e) {
+            LOGGER.debug("NoSuchFieldException:", e);
             return false;
         }
     }
@@ -72,10 +76,12 @@ public abstract class AbstractPrimitiveValueChanger<T> extends AbstractFieldValu
 
     private boolean isCompatibleWithWrappedPrimitive(final Class<?> type) {
         try {
-            final Object fieldPrimitiveType = FieldUtils.getValue(null, type.getField(FIELD_WITH_PRIMITIVE_CLASS_REFERENCE));
+            final Object fieldPrimitiveType = FieldUtils.getValue(null,
+                                                                  type.getField(FIELD_WITH_PRIMITIVE_CLASS_REFERENCE));
             return FieldUtils.getValue(null, getGenericTypeClass().getField(FIELD_WITH_PRIMITIVE_CLASS_REFERENCE))
                              .equals(fieldPrimitiveType);
         } catch (final NoSuchFieldException e) {
+            LOGGER.debug("NoSuchFieldException:", e);
             return false;
         }
     }

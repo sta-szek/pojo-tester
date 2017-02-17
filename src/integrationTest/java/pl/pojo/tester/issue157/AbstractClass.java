@@ -15,6 +15,7 @@ public abstract class AbstractClass {
     private String a;
     private String b;
     private String c;
+    private int d;
 
     public AbstractClass(final String a) {
         this.a = a;

@@ -2,6 +2,8 @@ package pl.pojo.tester.api.assertion;
 
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
+import org.slf4j.Logger;
+import pl.pojo.tester.api.ClassAndFieldPredicatePair;
 import pl.pojo.tester.api.ConstructorParameters;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 import pl.pojo.tester.internal.instantiator.ClassLoader;
@@ -10,6 +12,7 @@ import pl.pojo.tester.internal.tester.AbstractTester;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static pl.pojo.tester.internal.preconditions.ParameterPreconditions.checkNotBlank;
 import static pl.pojo.tester.internal.preconditions.ParameterPreconditions.checkNotNull;
@@ -38,14 +41,11 @@ public abstract class AbstractAssertion {
     Set<AbstractTester> testers = new HashSet<>();
     private AbstractFieldValueChanger abstractFieldValueChanger;
 
-
     /**
      * Specifies what field values changer will be used for testing.
      *
      * @param abstractFieldValueChanger field values changer
-     *
      * @return itself
-     *
      * @see AbstractFieldValueChanger
      */
     public AbstractAssertion using(final AbstractFieldValueChanger abstractFieldValueChanger) {
@@ -59,9 +59,7 @@ public abstract class AbstractAssertion {
      * Specifies what tests will be performed.
      *
      * @param methods methods to test
-     *
      * @return itself
-     *
      * @see Method
      */
     public AbstractAssertion testing(final Method... methods) {
@@ -76,9 +74,7 @@ public abstract class AbstractAssertion {
      * Specifies what test will be performed.
      *
      * @param method method to test
-     *
      * @return itself
-     *
      * @see Method
      */
     public AbstractAssertion testing(final Method method) {
@@ -115,9 +111,7 @@ public abstract class AbstractAssertion {
      * @param qualifiedClassName        class to instantiate
      * @param constructorParameters     constructor parameters
      * @param constructorParameterTypes constructor parameter's types
-     *
      * @return itself
-     *
      * @see ConstructorParameters
      */
     public AbstractAssertion create(final String qualifiedClassName, final Object[] constructorParameters, final Class<?>[] constructorParameterTypes) {
@@ -134,9 +128,7 @@ public abstract class AbstractAssertion {
      *
      * @param qualifiedClassName    class to instantiate
      * @param constructorParameters constructor parameters
-     *
      * @return itself
-     *
      * @see ConstructorParameters
      */
     public AbstractAssertion create(final String qualifiedClassName, final ConstructorParameters constructorParameters) {
@@ -155,9 +147,7 @@ public abstract class AbstractAssertion {
      * @param clazz                     class to instantiate
      * @param constructorParameters     constructor parameters
      * @param constructorParameterTypes constructor parameter's types
-     *
      * @return itself
-     *
      * @see ConstructorParameters
      */
     public AbstractAssertion create(final Class<?> clazz, final Object[] constructorParameters, final Class<?>[] constructorParameterTypes) {
@@ -175,9 +165,7 @@ public abstract class AbstractAssertion {
      *
      * @param clazz                 class to instantiate
      * @param constructorParameters constructor parameters
-     *
      * @return itself
-     *
      * @see ConstructorParameters
      */
     public AbstractAssertion create(final Class<?> clazz, final ConstructorParameters constructorParameters) {
@@ -190,4 +178,15 @@ public abstract class AbstractAssertion {
 
     protected abstract void runAssertions();
 
+    protected void logTestersAndClasses(final Logger logger, final ClassAndFieldPredicatePair... classAndFieldPredicatePairs) {
+        if (logger.isDebugEnabled()) {
+            final String classes = Arrays.stream(classAndFieldPredicatePairs)
+                                         .map(ClassAndFieldPredicatePair::toString)
+                                         .collect(Collectors.joining(", ", "[", "]"));
+
+            logger.debug("Running {} testers on {} classes", testers.size(), classAndFieldPredicatePairs.length);
+            logger.debug("Testers: {}", testers);
+            logger.debug("Classes: {}", classes);
+        }
+    }
 }

@@ -1,10 +1,10 @@
 package pl.pojo.tester.internal.field;
 
-import com.google.common.collect.Lists;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import pl.pojo.tester.internal.utils.CollectionUtils;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -69,8 +69,8 @@ public class AbstractFieldValueChangerTest {
         final int expectedResult = 2;
         final ClassWithSingleIntField sourceObject = new ClassWithSingleIntField(1);
         final ClassWithSingleIntField targetObject = new ClassWithSingleIntField(expectedResult);
-        final ArrayList<Field> fields = Lists.newArrayList(sourceObject.getClass()
-                                                                       .getDeclaredField("i"));
+        final ArrayList<Field> fields = CollectionUtils.asList(sourceObject.getClass()
+                                                                           .getDeclaredField("i"));
 
         // when
         valueChanger.changeFieldsValues(sourceObject, targetObject, fields);

@@ -1,7 +1,6 @@
 import java.time.ZoneOffset
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
-import java.util.regex.Matcher
 
 buildscript {
     repositories {
@@ -15,6 +14,7 @@ buildscript {
 }
 
 plugins {
+    id 'com.gradle.build-scan' version '1.6'
     id "com.jfrog.bintray" version "1.7.3"
     id "org.sonarqube" version "2.2.1"
     id 'org.unbroken-dome.test-sets' version '1.3.2'
@@ -23,7 +23,7 @@ plugins {
 ext {
     JUNIT_JUPITER_VERSION = "5.0.0-SNAPSHOT"
     JUNIT_PLATFORM_VERSION = "1.0.0-SNAPSHOT"
-    MOCKITO_VERSION = "2.7.4"
+    MOCKITO_VERSION = "2.7.6"
     POWER_MOCK_UTILS_VERSION = "1.6.6"
     ASSERTJ_CORE_VERSION = "3.6.2"
     JACOCO_VERSION = "0.7.9"
@@ -35,6 +35,12 @@ apply plugin: 'jacoco'
 apply plugin: 'info.solidsoft.pitest'
 apply plugin: 'org.junit.platform.gradle.plugin'
 apply plugin: 'maven-publish'
+
+buildScan {
+    licenseAgreementUrl = 'https://gradle.com/terms-of-service'
+    licenseAgree = 'yes'
+    publishAlways()
+}
 
 repositories {
     mavenCentral()
@@ -75,14 +81,13 @@ junitPlatform {
 }
 
 dependencies {
-    compile("org.slf4j:slf4j-simple:1.7.21")
+    compile("org.slf4j:slf4j-log4j12:1.7.22")
     compile("org.apache.commons:commons-lang3:3.4")
     compile("org.apache.commons:commons-collections4:4.1")
-    compile("com.google.collections:google-collections:1.0")
     compile("com.googlecode.combinatoricslib:combinatoricslib:2.1")
-    compile("org.projectlombok:lombok:1.16.12")
     compile("org.javassist:javassist:3.20.0-GA")
 
+    testCompile("org.projectlombok:lombok:1.16.12")
     testCompile("org.junit.jupiter:junit-jupiter-api:${JUNIT_JUPITER_VERSION}") { changing = true }
     testRuntime("org.junit.jupiter:junit-jupiter-engine:${JUNIT_JUPITER_VERSION}") { changing = true }
     testCompile("org.junit.platform:junit-platform-runner:${JUNIT_PLATFORM_VERSION}") { changing = true }

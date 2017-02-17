@@ -1,10 +1,11 @@
 package pl.pojo.tester.internal.instantiator;
 
 
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MultiValuedMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pl.pojo.tester.api.ConstructorParameters;
+import pl.pojo.tester.internal.utils.CollectionUtils;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
@@ -14,12 +15,14 @@ import java.util.Objects;
 import java.util.stream.Stream;
 
 
-@Slf4j
 abstract class AbstractMultiConstructorInstantiator extends AbstractObjectInstantiator {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractMultiConstructorInstantiator.class);
 
     protected final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters;
 
-    AbstractMultiConstructorInstantiator(final Class<?> clazz, final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
+    AbstractMultiConstructorInstantiator(final Class<?> clazz,
+                                         final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
         super(clazz);
         this.constructorParameters = constructorParameters;
     }
@@ -31,8 +34,8 @@ abstract class AbstractMultiConstructorInstantiator extends AbstractObjectInstan
             if (result != null) {
                 return result;
             }
-            log.warn("Could not instantiate class {} with user defined parameters. "
-                             + "Trying create instance finding best constructor", clazz);
+            LOGGER.warn("Could not instantiate class {} with user defined parameters. "
+                        + "Trying create instance finding best constructor", clazz);
         }
         return null;
     }
@@ -53,6 +56,7 @@ abstract class AbstractMultiConstructorInstantiator extends AbstractObjectInstan
                 }
                 return createObjectFromArgsConstructor(parameterTypes, parameters);
             } catch (final ObjectInstantiationException e) {
+                LOGGER.debug("ObjectInstantiationException:", e);
                 // ignore, try all user defined constructor parameters and types
             }
         }
@@ -80,7 +84,8 @@ abstract class AbstractMultiConstructorInstantiator extends AbstractObjectInstan
                            .instantiate();
     }
 
-    private Class[] putEnclosingClassAsFirstParameterType(final Class<?> enclosingClass, final Class<?>[] constructorParametersTypes) {
+    private Class[] putEnclosingClassAsFirstParameterType(final Class<?> enclosingClass,
+                                                          final Class<?>[] constructorParametersTypes) {
         return Stream.concat(Stream.of(enclosingClass), Arrays.stream(constructorParametersTypes))
                      .toArray(Class[]::new);
     }
@@ -89,7 +94,8 @@ abstract class AbstractMultiConstructorInstantiator extends AbstractObjectInstan
         return clazz.getEnclosingClass() != null && !Modifier.isStatic(clazz.getModifiers());
     }
 
-    private Object[] putEnclosingClassInstanceAsFirstParameter(final Object enclosingClassInstance, final Object[] arguments) {
+    private Object[] putEnclosingClassInstanceAsFirstParameter(final Object enclosingClassInstance,
+                                                               final Object[] arguments) {
         return Stream.concat(Stream.of(enclosingClassInstance), Arrays.stream(arguments))
                      .toArray(Object[]::new);
     }
@@ -104,6 +110,7 @@ abstract class AbstractMultiConstructorInstantiator extends AbstractObjectInstan
                                                                             constructorParameters);
                 return createObjectFromArgsConstructor(constructor.getParameterTypes(), parameters);
             } catch (final Exception e) {
+                LOGGER.debug("Exception:", e);
                 // ignore, we want to try all constructors
                 // if all constructors fail, it will be handled by caller
                 return null;

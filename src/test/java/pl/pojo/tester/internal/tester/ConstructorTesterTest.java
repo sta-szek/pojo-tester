@@ -12,6 +12,7 @@ import pl.pojo.tester.internal.field.collections.CollectionsFieldValueChanger;
 import pl.pojo.tester.internal.instantiator.ClassLoader;
 import pl.pojo.tester.internal.instantiator.Instantiable;
 import pl.pojo.tester.internal.preconditions.ParameterPreconditions;
+import pl.pojo.tester.internal.utils.CollectionUtils;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -23,13 +24,14 @@ public class ConstructorTesterTest {
     @Test
     public void Should_Pass_All_Constructor_Tests() {
         // given
-        final Class[] classesToTest = {Pojo.class,
-                                       ParameterPreconditions.class,
-                                       CollectionsFieldValueChanger.class,
-                                       DefaultFieldValueChanger.class,
-                                       Assertions.class,
-                                       Instantiable.class,
-                                       ClassLoader.class};
+        final Class[] classesToTest = { Pojo.class,
+                                        ParameterPreconditions.class,
+                                        CollectionsFieldValueChanger.class,
+                                        DefaultFieldValueChanger.class,
+                                        Assertions.class,
+                                        Instantiable.class,
+                                        CollectionUtils.class,
+                                        ClassLoader.class };
         final ConstructorTester constructorTester = new ConstructorTester(DefaultFieldValueChanger.INSTANCE);
 
         // when
@@ -68,10 +70,10 @@ public class ConstructorTesterTest {
     @Test
     public void Should_Use_User_Constructor_Parameters() {
         // given
-        final Class[] classesToTest = {ClassWithSyntheticConstructor.class};
+        final Class[] classesToTest = { ClassWithSyntheticConstructor.class };
 
-        final ConstructorParameters parameters = new ConstructorParameters(new Object[]{"string"},
-                                                                           new Class[]{String.class});
+        final ConstructorParameters parameters = new ConstructorParameters(new Object[]{ "string" },
+                                                                           new Class[]{ String.class });
         final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters = spy(new ArrayListValuedHashMap<>());
         constructorParameters.put(ClassWithSyntheticConstructor.class, parameters);
 
@@ -89,7 +91,7 @@ public class ConstructorTesterTest {
     @Test
     public void Should_Create_Constructor_Parameters_When_Parameters_Are_Not_Provided() {
         // given
-        final Class[] classesToTest = {ClassWithSyntheticConstructor.class};
+        final Class[] classesToTest = { ClassWithSyntheticConstructor.class };
 
         final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters = spy(new ArrayListValuedHashMap<>());
 
@@ -107,10 +109,14 @@ public class ConstructorTesterTest {
     @Test
     public void Should_Create_Constructor_Parameters_When_Could_Not_Find_Matching_Constructor_Parameters_Types() {
         // given
-        final Class[] classesToTest = {ClassWithSyntheticConstructor.class};
+        final Class[] classesToTest = { ClassWithSyntheticConstructor.class };
 
-        final ConstructorParameters parameters = spy(new ConstructorParameters(new Object[]{"to", "many", "parameters"},
-                                                                               new Class[]{String.class, String.class, String.class}));
+        final ConstructorParameters parameters = spy(new ConstructorParameters(new Object[]{ "to",
+                                                                                             "many",
+                                                                                             "parameters" },
+                                                                               new Class[]{ String.class,
+                                                                                            String.class,
+                                                                                            String.class }));
         final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters = spy(new ArrayListValuedHashMap<>());
         constructorParameters.put(ClassWithSyntheticConstructor.class, parameters);
 
