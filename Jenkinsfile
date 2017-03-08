@@ -101,7 +101,7 @@ pipeline {
             post {
                 success {
                     rocketSend channel: 'pojo-tester',
-                            rawMessage: true,
+//                            rawMessage: true,
 //                            avatar: 'http://ci.pojo.pl/static/be09d97b/images/headshot.png',
                             message: "@all: *pojo-tester ${env.RELEASEVERSION} released!* \n  https://bintray.com/sta-szek/maven/pojo-tester/_latestVersion \n"
                 }
