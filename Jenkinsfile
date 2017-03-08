@@ -31,6 +31,7 @@ pipeline {
         }
         stage("QA") {
             steps {
+                sh "./gradlew junit5CodeCoverageReport"
                 sh "./gradlew sonarqube -Dsonar.host.url=https://sonarqube.com -Dsonar.login=${env.SONARQUBE_TOKEN} | grep -v 'Class not found:'"
             }
         }

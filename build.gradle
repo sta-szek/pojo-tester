@@ -96,43 +96,23 @@ dependencies {
     testCompile("org.powermock.tests:powermock-tests-utils:${POWER_MOCK_UTILS_VERSION}")
 }
 
-jacoco {
-    toolVersion = JACOCO_VERSION
-    reportsDir = file("$buildDir/reports/jacoco")
-}
+afterEvaluate {
 
-jacocoTestReport {
-    reports {
-        xml.enabled true
-        csv.enabled false
-        html.destination "${buildDir}/reports/jacoco/html"
-    }
-}
-
-task jacocoMergeFiles(type: JacocoMerge) {
-    def executionFiles = [file('build/jacoco/integrationTest.exec'), file('build/jacoco/test.exec')]
-    executionData(executionFiles)
-    destinationFile file('build/jacoco/jacoco.exec')
-}
-
-test {
     jacoco {
-        destinationFile = file('build/jacoco/test.exec')
-        classDumpFile = file('build/jacoco/testDumps')
+        toolVersion JACOCO_VERSION
+        applyTo junitPlatformTest
     }
-    minHeapSize = "32m"
-    maxHeapSize = "32m"
-    jvmArgs('-XX:MaxMetaspaceSize=32m')
-}
 
-integrationTest {
-    jacoco {
-        destinationFile = file("build/jacoco/integrationTest.exec")
-        classDumpFile = file("build/jacoco/integrationTestDumps")
+    task junit5CodeCoverageReport(type:JacocoReport){
+        executionData junitPlatformTest
+        sourceSets sourceSets.main
+        sourceDirectories = files(project.sourceSets.main.allSource.srcDirs)
+        classDirectories = files(project.sourceSets.main.output)
+        reports {
+            xml.enabled = false
+            html.destination "${buildDir}/reports/jacoco/html"
+        }
     }
-    minHeapSize = "32m"
-    maxHeapSize = "32m"
-    jvmArgs('-XX:MaxMetaspaceSize=32m')
 }
 
 pitest {
@@ -145,7 +125,7 @@ pitest {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '3.3'
+    gradleVersion = '3.4'
 }
 
 publishing {
@@ -224,14 +204,6 @@ static gitUser() {
     username + " " + useremail
 }
 
-/*
-check.dependsOn jacocoMergeFiles
-jacocoTestReport.dependsOn jacocoMergeFiles
-*/
-
-check.dependsOn jacocoTestReport
-
 build.dependsOn publishToMavenLocal
 check.dependsOn integrationTest
-
 integrationTest.mustRunAfter test
