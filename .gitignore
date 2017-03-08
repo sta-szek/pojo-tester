@@ -1,5 +1,6 @@
 .idea
-build
+/build
+/classes
 .gradle
 
 # Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
