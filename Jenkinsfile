@@ -33,6 +33,14 @@ pipeline {
             steps {
                 sh "./gradlew junit5CodeCoverageReport"
                 sh "./gradlew sonarqube -Dsonar.host.url=https://sonarqube.com -Dsonar.login=${env.SONARQUBE_TOKEN} | grep -v 'Class not found:'"
+                publishHTML target: [
+                        allowMissing         : false,
+                        alwaysLinkToLastBuild: false,
+                        keepAll              : true,
+                        reportDir            : 'build/reports/jacoco',
+                        reportFiles          : 'index.html',
+                        reportName           : 'Coverage report'
+                ]
             }
         }
         stage("Deploy pages") {
