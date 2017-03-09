@@ -2,6 +2,20 @@
 
 Download latest version [ ![Download](https://api.bintray.com/packages/sta-szek/maven/pojo-tester/images/download.svg) ](https://bintray.com/sta-szek/maven/pojo-tester/_latestVersion)
 
+## Release version 0.7.4 {#release-074}
+
+### Features
+* New `BigInteger` and `BigDecimal` FieldValueChangers ([#178](https://github.com/sta-szek/pojo-tester/issues/178))
+* Debug logs for failures investigation ([#179](https://github.com/sta-szek/pojo-tester/issues/179))
+
+### Bugfixes
+* slf4j dependency problems ([#184](https://github.com/sta-szek/pojo-tester/issues/184))
+
+### Others
+* Code coverage report by jacoco + junit5 ([#166](https://github.com/sta-szek/pojo-tester/issues/166))
+
+---
+
 ## Release version 0.7.3 {#release-073}
 
 ### Others
