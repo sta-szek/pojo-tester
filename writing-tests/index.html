@@ -365,6 +365,19 @@
             
         </li>
     
+        <li class="chapter " data-level="1.3.7" data-path="./">
+            
+                <a href="./#debugging">
+            
+                    
+                    Debugging
+            
+                </a>
+            
+
+            
+        </li>
+    
 
             </ul>
             
@@ -483,6 +496,19 @@
     
         <li class="chapter " data-level="1.6.1" data-path="../release-notes/">
             
+                <a href="../release-notes/#release-074">
+            
+                    
+                    Release 0.7.4
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../release-notes/">
+            
                 <a href="../release-notes/#release-073">
             
                     
@@ -494,7 +520,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.6.2" data-path="../release-notes/">
+        <li class="chapter " data-level="1.6.3" data-path="../release-notes/">
             
                 <a href="../release-notes/#release-072">
             
@@ -507,7 +533,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.6.3" data-path="../release-notes/">
+        <li class="chapter " data-level="1.6.4" data-path="../release-notes/">
             
                 <a href="../release-notes/#release-071">
             
@@ -520,7 +546,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.6.4" data-path="../release-notes/">
+        <li class="chapter " data-level="1.6.5" data-path="../release-notes/">
             
                 <a href="../release-notes/#release-070">
             
@@ -533,7 +559,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.6.5" data-path="../release-notes/">
+        <li class="chapter " data-level="1.6.6" data-path="../release-notes/">
             
                 <a href="../release-notes/#release-060">
             
@@ -546,7 +572,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.6.6" data-path="../release-notes/">
+        <li class="chapter " data-level="1.6.7" data-path="../release-notes/">
             
                 <a href="../release-notes/#release-050">
             
@@ -559,7 +585,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.6.7" data-path="../release-notes/">
+        <li class="chapter " data-level="1.6.8" data-path="../release-notes/">
             
                 <a href="../release-notes/#release-040">
             
@@ -572,7 +598,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.6.8" data-path="../release-notes/">
+        <li class="chapter " data-level="1.6.9" data-path="../release-notes/">
             
                 <a href="../release-notes/#release-030">
             
@@ -585,7 +611,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.6.9" data-path="../release-notes/">
+        <li class="chapter " data-level="1.6.10" data-path="../release-notes/">
             
                 <a href="../release-notes/#release-020">
             
@@ -598,7 +624,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.6.10" data-path="../release-notes/">
+        <li class="chapter " data-level="1.6.11" data-path="../release-notes/">
             
                 <a href="../release-notes/#release-010">
             
@@ -901,7 +927,7 @@
                                                                                 .attachNext(customFieldsValuesChanger);
 </code></pre>
 <h3 id="default-fields-values-changer"><a name="default-fields-values-changer" class="plugin-anchor" href="#default-fields-values-changer"><i class="fa fa-link" aria-hidden="true"></i></a>Default fields values changer</h3>
-<p>Default fields values changer is a composition of listed changers:</p>
+<p>Default field value changer (<code>DefaultFieldValueChanger.INSTANCE</code>) is a composition of listed changers:</p>
 <ul>
 <li><code>UUIDValueChanger</code></li>
 <li><code>EnumValueChanger</code></li>
@@ -936,6 +962,8 @@
 <li><code>TreeMapValueChanger</code></li>
 <li><code>IteratorValueChanger</code></li>
 <li><code>IterableValueChanger</code></li>
+<li><code>BigIntegerValueChanger</code></li>
+<li><code>BigDecimalValueChanger</code></li>
 </ul>
 <h2 id="choose-constructor"><a name="choose-constructor" class="plugin-anchor" href="#choose-constructor"><i class="fa fa-link" aria-hidden="true"></i></a>Create class using selected constructor </h2>
 <p>Sometimes you want to choose which constructor is used to instantiate your class or what parameters are passed. Common example is when constructor validates parameters and throws exceptions.</p>
@@ -999,6 +1027,67 @@
 <p>Method <code>assertPojoMethodsForAll</code> works a little bit differently than <code>assertPojoMethodsFor</code>.
 This method test all classes. If it encounters field of type from given classes, it will create an instance of that class and change its value recursively.</p>
 <p>Imagine you are testing two classes, <code>A</code> and <code>B</code>. Class <code>A</code> has a field of type <code>B</code>. When you pass those classes to the <code>POJO-TESTER</code>, it will create instance of <code>B</code> class, change its value generating different objects, and finally will set all those objects into class <code>A</code>.</p>
+<h2 id="debugging"><a name="debugging" class="plugin-anchor" href="#debugging"><i class="fa fa-link" aria-hidden="true"></i></a>Debugging </h2>
+<p><code>pojo-tester</code> is not a perfect library. Sometimes you have to debug tests to see what happened.
+If you think that <code>pojo-tester</code> has a bug, just switch logging level to <code>DEBUG</code> and investigate.</p>
+<h3 id="switching-to-debug-level"><a name="switching-to-debug-level" class="plugin-anchor" href="#switching-to-debug-level"><i class="fa fa-link" aria-hidden="true"></i></a>Switching to debug level</h3>
+<p>E.g. log4j.properties file:</p>
+<pre><code class="lang-log4j.properties"># Root logger option
+log4j.rootLogger=DEBUG, stdout
+# Direct log messages to stdout
+log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+log4j.appender.stdout.Target=System.out
+log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+log4j.appender.stdout.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss} %-5p - %m%n
+</code></pre>
+<p>Place it in test resources directory:</p>
+<p><img src="log4jproperties.png" alt=""></p>
+<h3 id="log-analyses"><a name="log-analyses" class="plugin-anchor" href="#log-analyses"><i class="fa fa-link" aria-hidden="true"></i></a>Log analyses</h3>
+<p>List of field value changers:</p>
+<pre><code>(...) Attaching pl.pojo.tester.internal.field.primitive.ByteValueChangerto pl.pojo.tester.internal.field.primitive.BooleanValueChanger
+(...) Attaching pl.pojo.tester.internal.field.primitive.CharacterValueChangerto pl.pojo.tester.internal.field.primitive.ByteValueChanger
+(...) Attaching pl.pojo.tester.internal.field.primitive.DoubleValueChangerto pl.pojo.tester.internal.field.primitive.CharacterValueChanger
+(...) Attaching pl.pojo.tester.internal.field.primitive.IntegerValueChangerto pl.pojo.tester.internal.field.primitive.DoubleValueChanger
+(...) Attaching pl.pojo.tester.internal.field.primitive.LongValueChangerto pl.pojo.tester.internal.field.primitive.IntegerValueChanger
+</code></pre><p>Testers that were used:</p>
+<pre><code>(...) Testers: [EqualsTester, ToStringTester, GetterTester, HashCodeTester, SetterTester, ConstructorTester]
+</code></pre><p>Changing field value:</p>
+<pre><code>(...) Changing value of type class java.lang.String from &apos;www.pojo.pl&apos; to &apos;www.pojo.pl++increased&apos; (pl.pojo.tester.internal.field.StringValueChanger@21a947fe)
+(...) Changing value of type int from &apos;1&apos; to &apos;2&apos; (pl.pojo.tester.internal.field.primitive.IntegerValueChanger@69a10787)
+</code></pre><p>Generating objects:</p>
+<pre><code>(..1) Classes: [pl.pojo.tester.model.Pojo2(a,b,c,pojo,pojo3), pl.pojo.tester.model.Pojo(a,b,c), pl.pojo.tester.model.Pojo3(a,b,c,pojo)]
+(..2) Start of generating different objects for base class pl.pojo.tester.model.Pojo2(a,b,c,pojo,pojo3). Base object is Pojo2(a=0, b=0, c=0, pojo=null, pojo3=null) -- others will be cloned from this one
+(..3) Caching 8 different objects for class pl.pojo.tester.model.Pojo in dejaVu cache
+(..4) Reusing 8 objects from &apos;dejaVu&apos; cache for class pl.pojo.tester.model.Pojo
+(...) Reusing 8 objects from &apos;dejaVu&apos; cache for class pl.pojo.tester.model.Pojo
+(...) Reusing 8 objects from &apos;dejaVu&apos; cache for class pl.pojo.tester.model.Pojo
+(...) Reusing 8 objects from &apos;dejaVu&apos; cache for class pl.pojo.tester.model.Pojo
+(...) Reusing 8 objects from &apos;dejaVu&apos; cache for class pl.pojo.tester.model.Pojo
+(...) Reusing 8 objects from &apos;dejaVu&apos; cache for class pl.pojo.tester.model.Pojo
+(...) Reusing 8 objects from &apos;dejaVu&apos; cache for class pl.pojo.tester.model.Pojo
+(..5)     Start of generating different objects for base class pl.pojo.tester.model.Pojo3(a,b,c,pojo). Base object is Pojo3(a=0, b=0, c=0, pojo=null) -- others will be cloned from this one
+(...)     Reusing 8 objects from &apos;dejaVu&apos; cache for class pl.pojo.tester.model.Pojo
+(...)     Reusing 8 objects from &apos;dejaVu&apos; cache for class pl.pojo.tester.model.Pojo
+(...)     Reusing 8 objects from &apos;dejaVu&apos; cache for class pl.pojo.tester.model.Pojo
+(...)     Reusing 8 objects from &apos;dejaVu&apos; cache for class pl.pojo.tester.model.Pojo
+(...)     Reusing 8 objects from &apos;dejaVu&apos; cache for class pl.pojo.tester.model.Pojo
+(...)     Reusing 8 objects from &apos;dejaVu&apos; cache for class pl.pojo.tester.model.Pojo
+(...)     Reusing 8 objects from &apos;dejaVu&apos; cache for class pl.pojo.tester.model.Pojo
+(...)     Reusing 8 objects from &apos;dejaVu&apos; cache for class pl.pojo.tester.model.Pojo
+(..6)     End of generating different objects (size=72) for base class pl.pojo.tester.model.Pojo3(a,b,c,pojo)
+(...) Caching 72 different objects for class pl.pojo.tester.model.Pojo3 in dejaVu cache
+(...) Reusing 72 objects from &apos;dejaVu&apos; cache for class pl.pojo.tester.model.Pojo3
+(...) Reusing 72 objects from &apos;dejaVu&apos; cache for class pl.pojo.tester.model.Pojo3
+(..7) End of generating different objects (size=5256) for base class pl.pojo.tester.model.Pojo2(a,b,c,pojo,pojo3
+</code></pre><ul>
+<li><code>1</code> print classes that are being tested</li>
+<li><code>2</code> start generating different objects for given class</li>
+<li><code>3</code> some objects are cached in case of need for generating them later</li>
+<li><code>4</code> and some of them are reused</li>
+<li><code>5</code> generating nested object (see that tabulator is used - this means second level in hierarchy)</li>
+<li><code>6</code> end of generating nested object</li>
+<li><code>7</code> end of generating base object</li>
+</ul>
 <div class="gitbook-share"></div>
 
 
@@ -1044,7 +1133,7 @@ This method test all classes. If it encounters field of type from given classes,
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Writing Tests","level":"1.3","depth":1,"next":{"title":"Basic pojo test","level":"1.3.1","depth":2,"anchor":"#basic-test","path":"writing-tests/README.md","ref":"writing-tests/README.md#basic-test","articles":[]},"previous":{"title":"Avoid boiler-plate tests","level":"1.2.5","depth":2,"anchor":"#avoid-boiler-plate-code","path":"why-use/README.md","ref":"why-use/README.md#avoid-boiler-plate-code","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors","toggle-chapters","sharing","editlink","share","sitemap","disqus","nocache","back-to-top-button","advanced-emoji","prettify-html","ga","github","githubcontributors"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"nocache":{},"disqus":{"useIdentifier":false,"shortName":"pojo"},"github":{"url":"https://github.com/sta-szek/pojo-tester"},"editlink":{"label":"Edit This Page","multilingual":false,"base":"https://github.com/sta-szek/pojo-tester/edit/master/src/book"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sitemap":{"hostname":"http://pojo.pl/"},"back-to-top-button":{},"ga":{"configuration":"auto","token":"UA-84695813-1"},"githubcontributors":{"contributorWidth":"370px","githubOwner":"sta-szek","githubRepository":"pojo-tester"},"advanced-emoji":{"embedEmojis":false},"sharing":{"all":["facebook","google","twitter","weibo","instapaper"],"facebook":true,"google":false,"instapaper":false,"twitter":true,"vk":false,"weibo":false},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{},"toggle-chapters":{},"prettify-html":{},"share":{}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"POJO-TESTER User Guide","gitbook":"*","description":"POJO-TESTER is java testing library, which makes your pojo methods tests much easier and more bulletproof!"},"file":{"path":"writing-tests/README.md","mtime":"2017-01-25T17:07:27.509Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-01-25T17:11:12.338Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Writing Tests","level":"1.3","depth":1,"next":{"title":"Basic pojo test","level":"1.3.1","depth":2,"anchor":"#basic-test","path":"writing-tests/README.md","ref":"writing-tests/README.md#basic-test","articles":[]},"previous":{"title":"Avoid boiler-plate tests","level":"1.2.5","depth":2,"anchor":"#avoid-boiler-plate-code","path":"why-use/README.md","ref":"why-use/README.md#avoid-boiler-plate-code","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors","toggle-chapters","sharing","editlink","share","sitemap","disqus","nocache","back-to-top-button","advanced-emoji","prettify-html","ga","github","githubcontributors"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"nocache":{},"disqus":{"useIdentifier":false,"shortName":"pojo"},"github":{"url":"https://github.com/sta-szek/pojo-tester"},"editlink":{"label":"Edit This Page","multilingual":false,"base":"https://github.com/sta-szek/pojo-tester/edit/master/src/book"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sitemap":{"hostname":"http://pojo.pl/"},"back-to-top-button":{},"ga":{"configuration":"auto","token":"UA-84695813-1"},"githubcontributors":{"contributorWidth":"370px","githubOwner":"sta-szek","githubRepository":"pojo-tester"},"advanced-emoji":{"embedEmojis":false},"sharing":{"all":["facebook","google","twitter","weibo","instapaper"],"facebook":true,"google":false,"instapaper":false,"twitter":true,"vk":false,"weibo":false},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{},"toggle-chapters":{},"prettify-html":{},"share":{}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"POJO-TESTER User Guide","gitbook":"*","description":"POJO-TESTER is java testing library, which makes your pojo methods tests much easier and more bulletproof!"},"file":{"path":"writing-tests/README.md","mtime":"2017-03-09T17:26:23.470Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-03-09T17:35:48.402Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

@@ -13,6 +13,7 @@ pl.pojo.tester.internal.field.collections
 pl.pojo.tester.internal.field.collections.collection
 pl.pojo.tester.internal.field.collections.iterators
 pl.pojo.tester.internal.field.collections.map
+pl.pojo.tester.internal.field.math
 pl.pojo.tester.internal.field.primitive
 pl.pojo.tester.internal.instantiator
 pl.pojo.tester.internal.preconditions
