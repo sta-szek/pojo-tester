@@ -16,7 +16,6 @@ class IterableValueChanger extends AbstractIteratorsFieldValueChanger<Iterable<?
         if (sourceValue == null || targetValue == null) {
             return true;
         } else {
-
             final Object[] sourceValuesArray = IteratorUtils.toArray(sourceValue.iterator());
             final Object[] targetValuesArray = IteratorUtils.toArray(targetValue.iterator());
             return !Arrays.deepEquals(sourceValuesArray, targetValuesArray);
