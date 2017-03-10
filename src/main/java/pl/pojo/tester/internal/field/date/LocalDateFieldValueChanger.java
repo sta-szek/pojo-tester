@@ -7,11 +7,6 @@ import java.time.LocalDate;
 class LocalDateFieldValueChanger extends AbstractFieldValueChanger<LocalDate> {
 
     @Override
-    public boolean areDifferentValues(final LocalDate sourceValue, final LocalDate targetValue) {
-        return !sourceValue.equals(targetValue);
-    }
-
-    @Override
     protected LocalDate increaseValue(final LocalDate value, final Class<?> type) {
         return value.plusDays(1);
     }

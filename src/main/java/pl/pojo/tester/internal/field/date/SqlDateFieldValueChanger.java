@@ -7,14 +7,8 @@ import java.sql.Date;
 class SqlDateFieldValueChanger extends AbstractFieldValueChanger<Date> {
 
     @Override
-    public boolean areDifferentValues(final Date sourceValue, final Date targetValue) {
-        return !sourceValue.equals(targetValue);
-    }
-
-    @Override
     protected Date increaseValue(final Date value, final Class<?> type) {
-        value.setTime(value.getTime() + 1000);
-        return value;
+        return new Date(value.getTime() + 1000);
     }
 
     @Override
