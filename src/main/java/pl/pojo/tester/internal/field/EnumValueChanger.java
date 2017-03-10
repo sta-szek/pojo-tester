@@ -3,12 +3,6 @@ package pl.pojo.tester.internal.field;
 
 class EnumValueChanger extends AbstractFieldValueChanger<Enum> {
 
-
-    @Override
-    public boolean areDifferentValues(final Enum sourceValue, final Enum targetValue) {
-        return sourceValue != targetValue;
-    }
-
     @Override
     protected boolean canChange(final Class<?> type) {
         return type.isEnum();

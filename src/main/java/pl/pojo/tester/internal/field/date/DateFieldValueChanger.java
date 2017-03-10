@@ -16,8 +16,3 @@ class DateFieldValueChanger extends AbstractFieldValueChanger<Date> {
         return type.equals(Date.class);
     }
 }
-
-
-
-
-
