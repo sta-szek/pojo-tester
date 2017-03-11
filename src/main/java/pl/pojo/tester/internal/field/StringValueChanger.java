@@ -1,13 +1,6 @@
 package pl.pojo.tester.internal.field;
 
-import org.apache.commons.lang3.StringUtils;
-
 class StringValueChanger extends AbstractFieldValueChanger<String> {
-
-    @Override
-    public boolean areDifferentValues(final String sourceValue, final String targetValue) {
-        return !StringUtils.equals(sourceValue, targetValue);
-    }
 
     @Override
     protected boolean canChange(final Class<?> type) {

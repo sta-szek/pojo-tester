@@ -2,6 +2,17 @@
 
 Download latest version [ ![Download](https://api.bintray.com/packages/sta-szek/maven/pojo-tester/images/download.svg) ](https://bintray.com/sta-szek/maven/pojo-tester/_latestVersion)
 
+## Release version 0.7.5 {#release-075}
+
+### Features
+* New `Date*FieldValueChangers` ([#187](https://github.com/sta-szek/pojo-tester/issues/187))
+
+### Others
+* Custom `FieldValuChangers` do not have to override `areDifferentValues` anymore unless `!java.lang.Objects.equals(sourceValue, targetValue);` is not enough
+
+
+---
+
 ## Release version 0.7.4 {#release-074}
 
 ### Features

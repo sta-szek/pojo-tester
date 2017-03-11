@@ -8,6 +8,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class AbstractFieldValueChanger<T> {
 
@@ -22,7 +23,9 @@ public abstract class AbstractFieldValueChanger<T> {
         callNextValuesChanger(sourceObject, targetObject, fieldsToChange);
     }
 
-    public abstract boolean areDifferentValues(T sourceValue, T targetValue);
+    public boolean areDifferentValues(final T sourceValue, final T targetValue) {
+        return !Objects.equals(sourceValue, targetValue);
+    }
 
     public AbstractFieldValueChanger attachNext(final AbstractFieldValueChanger abstractFieldValueChanger) {
         if (this.next == null) {

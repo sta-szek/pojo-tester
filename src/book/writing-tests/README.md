@@ -239,9 +239,8 @@ public void Should_Pass_All_Pojo_Tests_Using_Custom_Fields_Values_Changer() {
 ### Define custom fields values changer
 To define your own `fields values changer` you have to extend `pl.pojo.tester.internal.field.AbstractFieldValueChanger` class.
 
-`AbstractFieldValueChanger` defines three methods that you have to override:
+`AbstractFieldValueChanger` defines two methods that you have to override:
 * `boolean canChange(final Class<?> type)` - this methods should perform compatibility checks e.g. if class is equal to your changer type `T`. If you decide that value cannot be changed, no further steps are taken. Methods `areDifferentValues` and `increaseValue` are not invoked.
-* `boolean areDifferentValues(T sourceValue, T targetValue)` - in this method you have to decide, whether values are different or not. If they are equal no changes will be made. Method `increaseValue` is not invoked.
 * `T increaseValue(T value, final Class<?> type)` - this method should change given `value` and return new one. `type` is given as little help, when your field type is e.g. interface and the value is its implementation.
 
 Custom fields values changer may look like this:
@@ -249,11 +248,6 @@ Custom fields values changer may look like this:
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 
 public class CustomFieldsValuesChanger extends AbstractFieldValueChanger<String> {
-
-    @Override
-    public boolean areDifferentValues(final String sourceValue, final String targetValue) {
-        return !sourceValue.equals(targetValue);
-    }
 
     @Override
     protected boolean canChange(final Class<?> type) {

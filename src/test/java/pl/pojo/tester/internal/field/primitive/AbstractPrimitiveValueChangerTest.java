@@ -26,11 +26,6 @@ public class AbstractPrimitiveValueChangerTest {
     private class ImplementationForTest extends AbstractPrimitiveValueChanger<Object> {
 
         @Override
-        protected boolean areDifferent(final Object sourceValue, final Object targetValue) {
-            return false;
-        }
-
-        @Override
         protected Object increase(final Object value) {
             return null;
         }

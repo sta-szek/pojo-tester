@@ -41,7 +41,26 @@ public class ArrayValueChangerTest {
                          "a_object_null",
                          "a_object",
                          "a_a")
-                     .map(fieldName -> dynamicTest(getDefaultDisplayName(fieldName), Should_Change_Array_Value(fieldName)));
+                     .map(fieldName -> dynamicTest(getDefaultDisplayName(fieldName),
+                                                   Should_Change_Array_Value(fieldName)));
+    }
+
+    public Executable Should_Change_Array_Value(final String fieldName) {
+        return () -> {
+            // given
+            final ClassContainingArrays helpClass1 = new ClassContainingArrays();
+            final ClassContainingArrays helpClass2 = new ClassContainingArrays();
+
+            // when
+            valueChanger.changeFieldsValues(helpClass1,
+                                            helpClass2,
+                                            newArrayList(ClassContainingArrays.class.getDeclaredField(fieldName)));
+            final Object result1 = getInternalState(helpClass1, fieldName);
+            final Object result2 = getInternalState(helpClass2, fieldName);
+
+            // then
+            assertThat(result1).isNotEqualTo(result2);
+        };
     }
 
     @TestFactory
@@ -68,6 +87,16 @@ public class ArrayValueChangerTest {
                                                Should_Return_True_Or_False_Whether_Can_Change_Or_Not(value)));
     }
 
+    public Executable Should_Return_True_Or_False_Whether_Can_Change_Or_Not(final CanChangeCase testCase) {
+        return () -> {
+            // when
+            final boolean result = valueChanger.canChange(testCase.field.getType());
+
+            // then
+            assertThat(result).isEqualTo(testCase.result);
+        };
+    }
+
     @TestFactory
     public Stream<DynamicTest> Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not() {
         return Stream.of(new AreDifferentCase(null, null, false),
@@ -83,39 +112,13 @@ public class ArrayValueChangerTest {
                                                Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(value)));
     }
 
-    private Executable Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final AreDifferentCase testCase) {
+    public Executable Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final AreDifferentCase testCase) {
         return () -> {
             // when
             final boolean result = valueChanger.areDifferentValues(testCase.value1, testCase.value2);
 
             // then
             assertThat(result).isEqualTo(testCase.result);
-        };
-    }
-
-    private Executable Should_Return_True_Or_False_Whether_Can_Change_Or_Not(final CanChangeCase testCase) {
-        return () -> {
-            // when
-            final boolean result = valueChanger.canChange(testCase.field.getType());
-
-            // then
-            assertThat(result).isEqualTo(testCase.result);
-        };
-    }
-
-    private Executable Should_Change_Array_Value(final String fieldName) {
-        return () -> {
-            // given
-            final ClassContainingArrays helpClass1 = new ClassContainingArrays();
-            final ClassContainingArrays helpClass2 = new ClassContainingArrays();
-
-            // when
-            valueChanger.changeFieldsValues(helpClass1, helpClass2, newArrayList(ClassContainingArrays.class.getDeclaredField(fieldName)));
-            final Object result1 = getInternalState(helpClass1, fieldName);
-            final Object result2 = getInternalState(helpClass2, fieldName);
-
-            // then
-            assertThat(result1).isNotEqualTo(result2);
         };
     }
 

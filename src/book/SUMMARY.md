@@ -27,6 +27,7 @@
   * [Conclusions](comparison/README.md#conclusions)
 * [Contributors](contributors/README.md)
 * [Release Notes](release-notes/README.md)
+  * [Release 0.7.5](release-notes/README.md#release-075)
   * [Release 0.7.4](release-notes/README.md#release-074)
   * [Release 0.7.3](release-notes/README.md#release-073)
   * [Release 0.7.2](release-notes/README.md#release-072)

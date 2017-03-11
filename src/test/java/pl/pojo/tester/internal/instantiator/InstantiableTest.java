@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.function.Executable;
 import pl.pojo.tester.api.ConstructorParameters;
+import pl.pojo.tester.internal.field.date.DefaultDateAndTimeFieldValueChanger;
 
 import java.io.Serializable;
 import java.util.*;
@@ -37,6 +38,8 @@ public class InstantiableTest {
                          new ClassInstantiator(Runnable.class, ProxyInstantiator.class),
                          new ClassInstantiator(EmptyEnum.class, EnumInstantiator.class),
                          new ClassInstantiator(Instantiable.class, BestConstructorInstantiator.class),
+                         new ClassInstantiator(DefaultDateAndTimeFieldValueChanger.class,
+                                               BestConstructorInstantiator.class),
                          new ClassInstantiator(Constructor_Field.class, BestConstructorInstantiator.class),
                          new ClassInstantiator(Constructor_Stream.class, BestConstructorInstantiator.class),
                          new ClassInstantiator(Constructor_Thread.class, BestConstructorInstantiator.class),

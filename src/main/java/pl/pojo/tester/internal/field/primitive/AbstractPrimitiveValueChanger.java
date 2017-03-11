@@ -30,25 +30,12 @@ public abstract class AbstractPrimitiveValueChanger<T> extends AbstractFieldValu
     private static final String FIELD_WITH_PRIMITIVE_CLASS_REFERENCE = "TYPE";
 
     @Override
-    public boolean areDifferentValues(final T sourceValue, final T targetValue) {
-        if (sourceValue == targetValue) {
-            return false;
-        }
-        if (sourceValue == null || targetValue == null) {
-            return true;
-        } else {
-            return areDifferent(sourceValue, targetValue);
-        }
-    }
-
-    @Override
     protected T increaseValue(final T value, final Class<?> type) {
         return increase(value);
     }
 
     protected abstract T increase(T value);
 
-    protected abstract boolean areDifferent(T sourceValue, T targetValue);
 
     @Override
     protected boolean canChange(final Class<?> type) {
