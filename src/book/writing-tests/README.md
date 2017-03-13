@@ -276,19 +276,7 @@ final AbstractFieldValueChanger valueChanger = DefaultFieldValueChanger.INSTANCE
 
 ### Default fields values changer
 Default field value changer (`DefaultFieldValueChanger.INSTANCE`) is a composition of listed changers:
-* `UUIDValueChanger`
-* `EnumValueChanger`
-* `BooleanValueChanger`
-* `ByteValueChanger`
-* `CharacterValueChanger`
-* `DoubleValueChanger`
-* `IntegerValueChanger`
-* `LongValueChanger`
-* `ShortValueChanger`
-* `StringValueChanger`
-* `FloatValueChanger`
-* `ArrayValueChanger`
-* `StreamValueChanger`
+######Collections
 * `ArrayListValueChanger`
 * `DequeValueChanger`
 * `HashSetValueChanger`
@@ -301,17 +289,44 @@ Default field value changer (`DefaultFieldValueChanger.INSTANCE`) is a compositi
 * `StackValueChanger`
 * `TreeSetValueChanger`
 * `VectorValueChanger`
+* `IterableValueChanger`
+* `IteratorValueChanger`
 * `HashMapValueChanger`
 * `HashtableValueChanger`
 * `LinkedHashMapValueChanger`
 * `MapValueChanger`
 * `SortedMapValueChanger`
 * `TreeMapValueChanger`
-* `IteratorValueChanger`
-* `IterableValueChanger`
-* `BigIntegerValueChanger`
-* `BigDecimalValueChanger`
+* `ArrayValueChanger`
+* `StreamValueChanger`
 
+######Date and time
+* `DateFieldValueChanger`
+* `InstantFieldValueChanger`
+* `LocalDateFieldValueChanger`
+* `LocalDateTimeFieldValueChanger`
+* `LocalTimeFieldValueChanger`
+* `SqlDateFieldValueChanger`
+* `ZonedDateTimeFieldValueChanger`
+
+######Math
+* `BigDecimalValueChanger`
+* `BigIntegerValueChanger`
+
+######Primitives and wrappers
+* `BooleanValueChanger`
+* `ByteValueChanger`
+* `CharacterValueChanger`
+* `DoubleValueChanger`
+* `FloatValueChanger`
+* `IntegerValueChanger`
+* `LongValueChanger`
+* `ShortValueChanger`
+
+######Others
+* `EnumValueChanger`
+* `StringValueChanger`
+* `UUIDValueChanger`
 
 ## Create class using selected constructor {#choose-constructor}
 Sometimes you want to choose which constructor is used to instantiate your class or what parameters are passed. Common example is when constructor validates parameters and throws exceptions.
