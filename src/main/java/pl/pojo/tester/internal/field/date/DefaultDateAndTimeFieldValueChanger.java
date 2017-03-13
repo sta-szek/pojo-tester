@@ -8,7 +8,8 @@ public final class DefaultDateAndTimeFieldValueChanger {
                                                                                                  .attachNext(new LocalDateFieldValueChanger())
                                                                                                  .attachNext(new LocalDateTimeFieldValueChanger())
                                                                                                  .attachNext(new LocalTimeFieldValueChanger())
-                                                                                                 .attachNext(new SqlDateFieldValueChanger());
+                                                                                                 .attachNext(new SqlDateFieldValueChanger())
+                                                                                                 .attachNext(new InstantFieldValueChanger());
 
     private DefaultDateAndTimeFieldValueChanger() {
     }
