@@ -496,6 +496,19 @@
     
         <li class="chapter " data-level="1.6.1" data-path="../release-notes/">
             
+                <a href="../release-notes/#release-075">
+            
+                    
+                    Release 0.7.5
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../release-notes/">
+            
                 <a href="../release-notes/#release-074">
             
                     
@@ -507,7 +520,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.6.2" data-path="../release-notes/">
+        <li class="chapter " data-level="1.6.3" data-path="../release-notes/">
             
                 <a href="../release-notes/#release-073">
             
@@ -520,7 +533,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.6.3" data-path="../release-notes/">
+        <li class="chapter " data-level="1.6.4" data-path="../release-notes/">
             
                 <a href="../release-notes/#release-072">
             
@@ -533,7 +546,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.6.4" data-path="../release-notes/">
+        <li class="chapter " data-level="1.6.5" data-path="../release-notes/">
             
                 <a href="../release-notes/#release-071">
             
@@ -546,7 +559,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.6.5" data-path="../release-notes/">
+        <li class="chapter " data-level="1.6.6" data-path="../release-notes/">
             
                 <a href="../release-notes/#release-070">
             
@@ -559,7 +572,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.6.6" data-path="../release-notes/">
+        <li class="chapter " data-level="1.6.7" data-path="../release-notes/">
             
                 <a href="../release-notes/#release-060">
             
@@ -572,7 +585,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.6.7" data-path="../release-notes/">
+        <li class="chapter " data-level="1.6.8" data-path="../release-notes/">
             
                 <a href="../release-notes/#release-050">
             
@@ -585,7 +598,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.6.8" data-path="../release-notes/">
+        <li class="chapter " data-level="1.6.9" data-path="../release-notes/">
             
                 <a href="../release-notes/#release-040">
             
@@ -598,7 +611,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.6.9" data-path="../release-notes/">
+        <li class="chapter " data-level="1.6.10" data-path="../release-notes/">
             
                 <a href="../release-notes/#release-030">
             
@@ -611,7 +624,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.6.10" data-path="../release-notes/">
+        <li class="chapter " data-level="1.6.11" data-path="../release-notes/">
             
                 <a href="../release-notes/#release-020">
             
@@ -624,7 +637,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.6.11" data-path="../release-notes/">
+        <li class="chapter " data-level="1.6.12" data-path="../release-notes/">
             
                 <a href="../release-notes/#release-010">
             
@@ -890,21 +903,15 @@
 </code></pre>
 <h3 id="define-custom-fields-values-changer"><a name="define-custom-fields-values-changer" class="plugin-anchor" href="#define-custom-fields-values-changer"><i class="fa fa-link" aria-hidden="true"></i></a>Define custom fields values changer</h3>
 <p>To define your own <code>fields values changer</code> you have to extend <code>pl.pojo.tester.internal.field.AbstractFieldValueChanger</code> class.</p>
-<p><code>AbstractFieldValueChanger</code> defines three methods that you have to override:</p>
+<p><code>AbstractFieldValueChanger</code> defines two methods that you have to override:</p>
 <ul>
 <li><code>boolean canChange(final Class&lt;?&gt; type)</code> - this methods should perform compatibility checks e.g. if class is equal to your changer type <code>T</code>. If you decide that value cannot be changed, no further steps are taken. Methods <code>areDifferentValues</code> and <code>increaseValue</code> are not invoked.</li>
-<li><code>boolean areDifferentValues(T sourceValue, T targetValue)</code> - in this method you have to decide, whether values are different or not. If they are equal no changes will be made. Method <code>increaseValue</code> is not invoked.</li>
 <li><code>T increaseValue(T value, final Class&lt;?&gt; type)</code> - this method should change given <code>value</code> and return new one. <code>type</code> is given as little help, when your field type is e.g. interface and the value is its implementation.</li>
 </ul>
 <p>Custom fields values changer may look like this:</p>
 <pre><code class="lang-java"><span class="hljs-keyword">import</span> pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 
 <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CustomFieldsValuesChanger</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">AbstractFieldValueChanger</span>&lt;<span class="hljs-title">String</span>&gt; </span>{
-
-    <span class="hljs-meta">@Override</span>
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">areDifferentValues</span><span class="hljs-params">(<span class="hljs-keyword">final</span> String sourceValue, <span class="hljs-keyword">final</span> String targetValue)</span> </span>{
-        <span class="hljs-keyword">return</span> !sourceValue.equals(targetValue);
-    }
 
     <span class="hljs-meta">@Override</span>
     <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">canChange</span><span class="hljs-params">(<span class="hljs-keyword">final</span> Class&lt;?&gt; type)</span> </span>{
@@ -928,20 +935,8 @@
 </code></pre>
 <h3 id="default-fields-values-changer"><a name="default-fields-values-changer" class="plugin-anchor" href="#default-fields-values-changer"><i class="fa fa-link" aria-hidden="true"></i></a>Default fields values changer</h3>
 <p>Default field value changer (<code>DefaultFieldValueChanger.INSTANCE</code>) is a composition of listed changers:</p>
+<h6 id="collections"><a name="collections" class="plugin-anchor" href="#collections"><i class="fa fa-link" aria-hidden="true"></i></a>Collections</h6>
 <ul>
-<li><code>UUIDValueChanger</code></li>
-<li><code>EnumValueChanger</code></li>
-<li><code>BooleanValueChanger</code></li>
-<li><code>ByteValueChanger</code></li>
-<li><code>CharacterValueChanger</code></li>
-<li><code>DoubleValueChanger</code></li>
-<li><code>IntegerValueChanger</code></li>
-<li><code>LongValueChanger</code></li>
-<li><code>ShortValueChanger</code></li>
-<li><code>StringValueChanger</code></li>
-<li><code>FloatValueChanger</code></li>
-<li><code>ArrayValueChanger</code></li>
-<li><code>StreamValueChanger</code></li>
 <li><code>ArrayListValueChanger</code></li>
 <li><code>DequeValueChanger</code></li>
 <li><code>HashSetValueChanger</code></li>
@@ -954,16 +949,48 @@
 <li><code>StackValueChanger</code></li>
 <li><code>TreeSetValueChanger</code></li>
 <li><code>VectorValueChanger</code></li>
+<li><code>IterableValueChanger</code></li>
+<li><code>IteratorValueChanger</code></li>
 <li><code>HashMapValueChanger</code></li>
 <li><code>HashtableValueChanger</code></li>
 <li><code>LinkedHashMapValueChanger</code></li>
 <li><code>MapValueChanger</code></li>
 <li><code>SortedMapValueChanger</code></li>
 <li><code>TreeMapValueChanger</code></li>
-<li><code>IteratorValueChanger</code></li>
-<li><code>IterableValueChanger</code></li>
-<li><code>BigIntegerValueChanger</code></li>
+<li><code>ArrayValueChanger</code></li>
+<li><code>StreamValueChanger</code></li>
+</ul>
+<h6 id="date-and-time"><a name="date-and-time" class="plugin-anchor" href="#date-and-time"><i class="fa fa-link" aria-hidden="true"></i></a>Date and time</h6>
+<ul>
+<li><code>DateFieldValueChanger</code></li>
+<li><code>InstantFieldValueChanger</code></li>
+<li><code>LocalDateFieldValueChanger</code></li>
+<li><code>LocalDateTimeFieldValueChanger</code></li>
+<li><code>LocalTimeFieldValueChanger</code></li>
+<li><code>SqlDateFieldValueChanger</code></li>
+<li><code>ZonedDateTimeFieldValueChanger</code></li>
+</ul>
+<h6 id="math"><a name="math" class="plugin-anchor" href="#math"><i class="fa fa-link" aria-hidden="true"></i></a>Math</h6>
+<ul>
 <li><code>BigDecimalValueChanger</code></li>
+<li><code>BigIntegerValueChanger</code></li>
+</ul>
+<h6 id="primitives-and-wrappers"><a name="primitives-and-wrappers" class="plugin-anchor" href="#primitives-and-wrappers"><i class="fa fa-link" aria-hidden="true"></i></a>Primitives and wrappers</h6>
+<ul>
+<li><code>BooleanValueChanger</code></li>
+<li><code>ByteValueChanger</code></li>
+<li><code>CharacterValueChanger</code></li>
+<li><code>DoubleValueChanger</code></li>
+<li><code>FloatValueChanger</code></li>
+<li><code>IntegerValueChanger</code></li>
+<li><code>LongValueChanger</code></li>
+<li><code>ShortValueChanger</code></li>
+</ul>
+<h6 id="others"><a name="others" class="plugin-anchor" href="#others"><i class="fa fa-link" aria-hidden="true"></i></a>Others</h6>
+<ul>
+<li><code>EnumValueChanger</code></li>
+<li><code>StringValueChanger</code></li>
+<li><code>UUIDValueChanger</code></li>
 </ul>
 <h2 id="choose-constructor"><a name="choose-constructor" class="plugin-anchor" href="#choose-constructor"><i class="fa fa-link" aria-hidden="true"></i></a>Create class using selected constructor </h2>
 <p>Sometimes you want to choose which constructor is used to instantiate your class or what parameters are passed. Common example is when constructor validates parameters and throws exceptions.</p>
@@ -1133,7 +1160,7 @@ log4j.appender.stdout.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss} %-5p - %m
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Writing Tests","level":"1.3","depth":1,"next":{"title":"Basic pojo test","level":"1.3.1","depth":2,"anchor":"#basic-test","path":"writing-tests/README.md","ref":"writing-tests/README.md#basic-test","articles":[]},"previous":{"title":"Avoid boiler-plate tests","level":"1.2.5","depth":2,"anchor":"#avoid-boiler-plate-code","path":"why-use/README.md","ref":"why-use/README.md#avoid-boiler-plate-code","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors","toggle-chapters","sharing","editlink","share","sitemap","disqus","nocache","back-to-top-button","advanced-emoji","prettify-html","ga","github","githubcontributors"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"nocache":{},"disqus":{"useIdentifier":false,"shortName":"pojo"},"github":{"url":"https://github.com/sta-szek/pojo-tester"},"editlink":{"label":"Edit This Page","multilingual":false,"base":"https://github.com/sta-szek/pojo-tester/edit/master/src/book"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sitemap":{"hostname":"http://pojo.pl/"},"back-to-top-button":{},"ga":{"configuration":"auto","token":"UA-84695813-1"},"githubcontributors":{"contributorWidth":"370px","githubOwner":"sta-szek","githubRepository":"pojo-tester"},"advanced-emoji":{"embedEmojis":false},"sharing":{"all":["facebook","google","twitter","weibo","instapaper"],"facebook":true,"google":false,"instapaper":false,"twitter":true,"vk":false,"weibo":false},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{},"toggle-chapters":{},"prettify-html":{},"share":{}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"POJO-TESTER User Guide","gitbook":"*","description":"POJO-TESTER is java testing library, which makes your pojo methods tests much easier and more bulletproof!"},"file":{"path":"writing-tests/README.md","mtime":"2017-03-09T17:26:23.470Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-03-09T17:35:48.402Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Writing Tests","level":"1.3","depth":1,"next":{"title":"Basic pojo test","level":"1.3.1","depth":2,"anchor":"#basic-test","path":"writing-tests/README.md","ref":"writing-tests/README.md#basic-test","articles":[]},"previous":{"title":"Avoid boiler-plate tests","level":"1.2.5","depth":2,"anchor":"#avoid-boiler-plate-code","path":"why-use/README.md","ref":"why-use/README.md#avoid-boiler-plate-code","articles":[]},"dir":"ltr"},"config":{"plugins":["anchors","toggle-chapters","sharing","editlink","share","sitemap","disqus","nocache","back-to-top-button","advanced-emoji","prettify-html","ga","github","githubcontributors"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"nocache":{},"disqus":{"useIdentifier":false,"shortName":"pojo"},"github":{"url":"https://github.com/sta-szek/pojo-tester"},"editlink":{"label":"Edit This Page","multilingual":false,"base":"https://github.com/sta-szek/pojo-tester/edit/master/src/book"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"sitemap":{"hostname":"http://pojo.pl/"},"back-to-top-button":{},"ga":{"configuration":"auto","token":"UA-84695813-1"},"githubcontributors":{"contributorWidth":"370px","githubOwner":"sta-szek","githubRepository":"pojo-tester"},"advanced-emoji":{"embedEmojis":false},"sharing":{"all":["facebook","google","twitter","weibo","instapaper"],"facebook":true,"google":false,"instapaper":false,"twitter":true,"vk":false,"weibo":false},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{},"toggle-chapters":{},"prettify-html":{},"share":{}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"POJO-TESTER User Guide","gitbook":"*","description":"POJO-TESTER is java testing library, which makes your pojo methods tests much easier and more bulletproof!"},"file":{"path":"writing-tests/README.md","mtime":"2017-03-19T19:09:51.639Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-03-19T19:12:24.223Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
