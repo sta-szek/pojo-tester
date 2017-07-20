@@ -34,10 +34,26 @@ public class EnumInstantiatorTest {
         assertThat(result).isInstanceOf(doubleEnumClass);
     }
 
+    @Test
+    public void Should_Return_One_Enum_Value() {
+        // given
+        final Class<?> oneEnumClass = OneEnum.class;
+        final EnumInstantiator instantiator = new EnumInstantiator(oneEnumClass);
+
+        // when
+        final Object result = instantiator.instantiate();
+
+        // then
+        assertThat(result).isInstanceOf(oneEnumClass);
+    }
+
     enum DoubleEnum {
         FIRST,
         SECOND
     }
 
+    enum OneEnum {
+        FIRST
+    }
 
 }
