@@ -15,7 +15,7 @@ class EnumInstantiator extends AbstractObjectInstantiator {
         final int length = enumConstants.length;
 
         if (length != 0) {
-            final int random = new Random().nextInt(length - 1);
+            final int random = new Random().nextInt(length);
             return enumConstants[random];
         }
         return null;
