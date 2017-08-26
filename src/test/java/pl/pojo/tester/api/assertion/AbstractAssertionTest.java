@@ -10,7 +10,9 @@ import pl.pojo.tester.api.ConstructorParameters;
 import pl.pojo.tester.internal.assertion.AbstractAssertionError;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
+import pl.pojo.tester.internal.tester.EqualsFastTester;
 import pl.pojo.tester.internal.tester.EqualsTester;
+import pl.pojo.tester.internal.tester.HashCodeFastTester;
 import pl.pojo.tester.internal.tester.HashCodeTester;
 import pl.pojo.tester.internal.utils.CollectionUtils;
 
@@ -54,7 +56,21 @@ class AbstractAssertionTest {
     }
 
     @Test
-    void Should_Add_Equals_And_Hash_Code_Testers() {
+    public void Should_Add_Equals_Fast_Tester() {
+        // given
+        final AbstractAssertion abstractAssertion = new AbstractAssertionImplementation();
+        final EqualsTester expectedTester = new EqualsFastTester();
+
+        // when
+        abstractAssertion.testing(Method.EQUALS_FAST);
+
+        // then
+        assertThat(abstractAssertion.testers).usingRecursiveFieldByFieldElementComparator()
+                                             .containsExactly(expectedTester);
+    }
+
+    @Test
+    public void Should_Add_Equals_And_Hash_Code_Testers() {
         // given
         final AbstractAssertion abstractAssertion = new AbstractAssertionImplementation();
         final EqualsTester expectedTester1 = new EqualsTester();
@@ -69,7 +85,22 @@ class AbstractAssertionTest {
     }
 
     @Test
-    void Should_Not_Throw_Exception_When_Class_Has_All_Methods_Well_Implemented() {
+    public void Should_Add_Equals_Fast_And_Hash_Code_Fast_Testers() {
+        // given
+        final AbstractAssertion abstractAssertion = new AbstractAssertionImplementation();
+        final EqualsTester expectedTester1 = new EqualsFastTester();
+        final HashCodeTester expectedTester2 = new HashCodeFastTester();
+
+        // when
+        abstractAssertion.testing(Method.EQUALS_FAST, Method.HASH_CODE_FAST);
+
+        // then
+        assertThat(abstractAssertion.testers).usingRecursiveFieldByFieldElementComparator()
+                                             .containsExactly(expectedTester1, expectedTester2);
+    }
+
+    @Test
+    public void Should_Not_Throw_Exception_When_Class_Has_All_Methods_Well_Implemented() {
         // given
         final Class<?> classUnderTest = GoodPojo_Equals_HashCode_ToString.class;
 
