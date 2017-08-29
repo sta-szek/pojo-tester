@@ -9,7 +9,7 @@ public class EqualsFastTester extends EqualsTester {
         setThoroughTesting(false);
     }
 
-    public EqualsFastTester(AbstractFieldValueChanger abstractFieldValueChanger) {
+    public EqualsFastTester(final AbstractFieldValueChanger abstractFieldValueChanger) {
         super(abstractFieldValueChanger);
         setThoroughTesting(false);
     }

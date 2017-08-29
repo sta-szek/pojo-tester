@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Sublists {
+public final class Sublists {
     private Sublists() {
     }
     /**
@@ -16,9 +16,10 @@ public class Sublists {
      * @return list of sublists of list0
      */
     public static <T> List<List<T>> subsequences(final List<T> list0) {
-        List<T> list = new ArrayList<>(list0);
-        List<List<T>> res = new ArrayList<>();
-        for (int i = 0, n = list.size(); i < n; i++) {
+        final List<T> list = new ArrayList<>(list0);
+        final List<List<T>> res = new ArrayList<>();
+        for (int i = 0,
+             n = list.size(); i < n; i++) {
             res.add(Collections.unmodifiableList(list.subList(i, n)));
         }
         return Collections.unmodifiableList(res);

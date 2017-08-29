@@ -70,14 +70,14 @@ public abstract class AbstractTester {
         objectGenerator = new ObjectGenerator(fieldValuesChanger, constructorParameters, thoroughTesting);
     }
 
-  public boolean isThoroughTesting() {
-    return thoroughTesting;
-  }
+    public boolean isThoroughTesting() {
+        return thoroughTesting;
+    }
 
-  public void setThoroughTesting(final boolean thoroughTesting) {
-    this.thoroughTesting = thoroughTesting;
-    objectGenerator = new ObjectGenerator(fieldValuesChanger, constructorParameters, thoroughTesting);
-  }
+    public void setThoroughTesting(final boolean thoroughTesting) {
+        this.thoroughTesting = thoroughTesting;
+        objectGenerator = new ObjectGenerator(fieldValuesChanger, constructorParameters, thoroughTesting);
+    }
 
   @Override
     public boolean equals(final Object otherObject) {
