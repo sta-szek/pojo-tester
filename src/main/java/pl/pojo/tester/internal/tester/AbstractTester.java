@@ -79,7 +79,7 @@ public abstract class AbstractTester {
         objectGenerator = new ObjectGenerator(fieldValuesChanger, constructorParameters, thoroughTesting);
     }
 
-  @Override
+    @Override
     public boolean equals(final Object otherObject) {
         if (this == otherObject) {
             return true;
