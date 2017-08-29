@@ -74,7 +74,7 @@ public abstract class AbstractTester {
     return thoroughTesting;
   }
 
-  public void setThoroughTesting(boolean thoroughTesting) {
+  public void setThoroughTesting(final boolean thoroughTesting) {
     this.thoroughTesting = thoroughTesting;
     objectGenerator = new ObjectGenerator(fieldValuesChanger, constructorParameters, thoroughTesting);
   }

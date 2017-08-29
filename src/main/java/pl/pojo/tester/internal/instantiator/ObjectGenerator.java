@@ -250,10 +250,10 @@ public class ObjectGenerator {
     }
 
     protected List<List<Field>> fieldListsToUse(final List<Field> fields) {
-      if (thoroughTesting) {
-        return FieldUtils.permutations(fields);
-      } else {
-        return Sublists.subsequences(fields);
-      }
+        if (thoroughTesting) {
+            return FieldUtils.permutations(fields);
+        } else {
+            return Sublists.subsequences(fields);
+        }
     }
 }

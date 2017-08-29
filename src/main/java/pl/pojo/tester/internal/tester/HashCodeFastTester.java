@@ -7,14 +7,13 @@ import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
  */
 public class HashCodeFastTester extends HashCodeTester {
 
-  public HashCodeFastTester() {
-    super();
-    setThoroughTesting(false);
-  }
+    public HashCodeFastTester() {
+        super();
+        setThoroughTesting(false);
+    }
 
-  public HashCodeFastTester(
-      AbstractFieldValueChanger abstractFieldValueChanger) {
-    super(abstractFieldValueChanger);
-    setThoroughTesting(false);
-  }
+    public HashCodeFastTester(final AbstractFieldValueChanger abstractFieldValueChanger) {
+        super(abstractFieldValueChanger);
+        setThoroughTesting(false);
+    }
 }
