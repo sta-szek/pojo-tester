@@ -2,10 +2,8 @@ package pl.pojo.tester.api.assertion;
 
 import pl.pojo.tester.internal.tester.AbstractTester;
 import pl.pojo.tester.internal.tester.ConstructorTester;
-import pl.pojo.tester.internal.tester.EqualsFastTester;
 import pl.pojo.tester.internal.tester.EqualsTester;
 import pl.pojo.tester.internal.tester.GetterTester;
-import pl.pojo.tester.internal.tester.HashCodeFastTester;
 import pl.pojo.tester.internal.tester.HashCodeTester;
 import pl.pojo.tester.internal.tester.SetterTester;
 import pl.pojo.tester.internal.tester.ToStringTester;
@@ -19,22 +17,27 @@ import pl.pojo.tester.internal.tester.ToStringTester;
  * @since 0.1.0
  */
 public enum Method {
-    EQUALS(new EqualsTester()),
-    EQUALS_FAST(new EqualsFastTester()),
-    HASH_CODE(new HashCodeTester()),
-    HASH_CODE_FAST(new HashCodeFastTester()),
-    SETTER(new SetterTester()),
-    GETTER(new GetterTester()),
-    TO_STRING(new ToStringTester()),
-    CONSTRUCTOR(new ConstructorTester());
+    EQUALS(EqualsTester.class),
+    HASH_CODE(HashCodeTester.class),
+    SETTER(SetterTester.class),
+    GETTER(GetterTester.class),
+    TO_STRING(ToStringTester.class),
+    CONSTRUCTOR(ConstructorTester.class);
 
-    private final AbstractTester tester;
+    private final Class<?> testerClass;
 
-    Method(final AbstractTester tester) {
-        this.tester = tester;
+    Method(final Class<?> tester) {
+        this.testerClass = tester;
     }
 
     public AbstractTester getTester() {
-        return tester;
+        try {
+            // we return a new instance to avoid passing state from one test to another
+            return (AbstractTester) testerClass.newInstance();
+        } catch (InstantiationException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

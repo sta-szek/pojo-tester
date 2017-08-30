@@ -26,7 +26,8 @@ public class FastTestingTest {
 
             // then
             assertPojoMethodsFor(classUnderTest)
-                    .testing(Method.EQUALS_FAST, Method.HASH_CODE_FAST)
+                    .testing(Method.EQUALS, Method.HASH_CODE)
+                    .quickly()
                     .areWellImplemented();
         }
         long end = System.currentTimeMillis();

@@ -40,6 +40,7 @@ public abstract class AbstractAssertion {
     private final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters = new ArrayListValuedHashMap<>();
     Set<AbstractTester> testers = new HashSet<>();
     private AbstractFieldValueChanger abstractFieldValueChanger;
+    private boolean thoroughTesting = true;
 
     /**
      * Specifies what field values changer will be used for testing.
@@ -52,6 +53,26 @@ public abstract class AbstractAssertion {
         checkNotNull("abstractFieldValueChanger", abstractFieldValueChanger);
 
         this.abstractFieldValueChanger = abstractFieldValueChanger;
+        return this;
+    }
+
+    /**
+     * Specifies generation of O(2^N) test objects for N fields.
+     *
+     * @return itself
+     */
+    public AbstractAssertion thoroughly() {
+        thoroughTesting = true;
+        return this;
+    }
+
+    /**
+     * Specifies generation of O(N) test objects for N fields.
+     *
+     * @return itself
+     */
+    public AbstractAssertion quickly() {
+        thoroughTesting = false;
         return this;
     }
 
@@ -98,6 +119,8 @@ public abstract class AbstractAssertion {
         if (abstractFieldValueChanger != null) {
             testers.forEach(tester -> tester.setFieldValuesChanger(abstractFieldValueChanger));
         }
+
+        testers.forEach(tester -> tester.setThoroughTesting(thoroughTesting));
 
         testers.forEach(tester -> tester.setUserDefinedConstructors(constructorParameters));
 
