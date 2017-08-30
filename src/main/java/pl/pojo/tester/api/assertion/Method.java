@@ -34,10 +34,18 @@ public enum Method {
         try {
             // we return a new instance to avoid passing state from one test to another
             return (AbstractTester) testerClass.newInstance();
-        } catch (InstantiationException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
+        } catch (InstantiationException | IllegalAccessException e) {
+            throw new CannotCreateTesterInstanceException(e);
+        }
+    }
+
+    /**
+     * This exception cannot be thrown in real life, but the Java syntax and Codacy-bot
+     * require it to be there.
+     */
+    static class CannotCreateTesterInstanceException extends RuntimeException {
+        public CannotCreateTesterInstanceException(Throwable cause) {
+            super(cause);
         }
     }
 }
