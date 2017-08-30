@@ -44,7 +44,7 @@ public enum Method {
      * require it to be there.
      */
     static class CannotCreateTesterInstanceException extends RuntimeException {
-        public CannotCreateTesterInstanceException(Throwable cause) {
+        CannotCreateTesterInstanceException(final Throwable cause) {
             super(cause);
         }
     }
