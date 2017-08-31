@@ -10,3 +10,5 @@
 gradle/wrapper/gradle-wrapper.properties
 docs/gitbook/gitbook-plugin-livereload/
 src/book/javadoc
+
+!.idea/codeStyleSettings.xml
