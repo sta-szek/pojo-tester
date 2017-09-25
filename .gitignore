@@ -12,3 +12,4 @@ docs/gitbook/gitbook-plugin-livereload/
 src/book/javadoc
 
 !.idea/codeStyleSettings.xml
+out

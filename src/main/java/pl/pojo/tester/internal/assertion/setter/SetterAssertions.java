@@ -24,7 +24,7 @@ public class SetterAssertions {
             setter.setAccessible(true);
             setter.invoke(objectUnderAssert, expectedValue);
             final Object value = FieldUtils.getValue(objectUnderAssert, field);
-            final boolean result = Objects.equals(value, expectedValue);
+            final boolean result = Objects.deepEquals(value, expectedValue);
 
             checkResult(result, new SetterAssertionError(classUnderTest, field, expectedValue, value));
         } catch (IllegalAccessException | InvocationTargetException e) {
