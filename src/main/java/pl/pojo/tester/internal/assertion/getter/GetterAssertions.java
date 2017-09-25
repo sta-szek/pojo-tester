@@ -25,7 +25,7 @@ public class GetterAssertions {
             final Object valueFromGetter;
             valueFromGetter = getter.invoke(objectUnderAssert);
             final Object value = FieldUtils.getValue(objectUnderAssert, field);
-            final boolean result = Objects.equals(value, valueFromGetter);
+            final boolean result = Objects.deepEquals(value, valueFromGetter);
 
             checkResult(result, new GetterAssertionError(classUnderTest, field, valueFromGetter, value));
         } catch (IllegalAccessException | InvocationTargetException e) {
