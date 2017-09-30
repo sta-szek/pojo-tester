@@ -6,7 +6,7 @@ Get more information at [pojo-tester documentation site](http://pojo.pl)
 
 If you have any questions, we can chat on [![Rocket.Chat](https://demo.rocket.chat/images/join-chat.svg)](http://chat.pojo.pl/channel/pojo-tester)
 
-Build status is provided by <img src="http://ci.pojo.pl/app/rest/builds/aggregated/strob:(buildType:(project:(id:PojoTester)))/statusIcon.svg">
+Build status is provided by <a href="http://ci.pojo.pl"><img src="http://ci.pojo.pl/app/rest/builds/aggregated/strob:(buildType:(project:(id:PojoTester)))/statusIcon.svg"></a>
 
 Current coverage is [![codecov](https://codecov.io/gh/sta-szek/pojo-tester/branch/master/graph/badge.svg)](https://codecov.io/gh/sta-szek/pojo-tester)
 
