@@ -23,14 +23,14 @@ public abstract class AbstractTester {
     ObjectGenerator objectGenerator;
     private MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters = new ArrayListValuedHashMap<>();
     private AbstractFieldValueChanger fieldValuesChanger = DefaultFieldValueChanger.INSTANCE;
-
+    private boolean thoroughTesting = true;
 
     public AbstractTester() {
         this(DefaultFieldValueChanger.INSTANCE);
     }
 
     public AbstractTester(final AbstractFieldValueChanger abstractFieldValueChanger) {
-        objectGenerator = new ObjectGenerator(abstractFieldValueChanger, constructorParameters);
+        objectGenerator = new ObjectGenerator(abstractFieldValueChanger, constructorParameters, thoroughTesting);
     }
 
     public void test(final Class<?> clazz) {
@@ -62,12 +62,21 @@ public abstract class AbstractTester {
 
     public void setFieldValuesChanger(final AbstractFieldValueChanger fieldValuesChanger) {
         this.fieldValuesChanger = fieldValuesChanger;
-        objectGenerator = new ObjectGenerator(fieldValuesChanger, constructorParameters);
+        objectGenerator = new ObjectGenerator(fieldValuesChanger, constructorParameters, thoroughTesting);
     }
 
     public void setUserDefinedConstructors(final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
         this.constructorParameters = constructorParameters;
-        objectGenerator = new ObjectGenerator(fieldValuesChanger, constructorParameters);
+        objectGenerator = new ObjectGenerator(fieldValuesChanger, constructorParameters, thoroughTesting);
+    }
+
+    public boolean isThoroughTesting() {
+        return thoroughTesting;
+    }
+
+    public void setThoroughTesting(final boolean thoroughTesting) {
+        this.thoroughTesting = thoroughTesting;
+        objectGenerator = new ObjectGenerator(fieldValuesChanger, constructorParameters, thoroughTesting);
     }
 
     @Override

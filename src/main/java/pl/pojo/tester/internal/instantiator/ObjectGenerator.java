@@ -15,6 +15,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+import pl.pojo.tester.internal.utils.Sublists;
 
 public class ObjectGenerator {
 
@@ -22,11 +23,14 @@ public class ObjectGenerator {
 
     private final AbstractFieldValueChanger abstractFieldValueChanger;
     private final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters;
+    private final boolean thoroughTesting;
 
     public ObjectGenerator(final AbstractFieldValueChanger abstractFieldValueChanger,
-                           final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
+                           final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters,
+                           final boolean thorough) {
         this.abstractFieldValueChanger = abstractFieldValueChanger;
         this.constructorParameters = constructorParameters;
+        this.thoroughTesting = thorough;
     }
 
     public Object createNewInstance(final Class<?> clazz) {
@@ -66,7 +70,7 @@ public class ObjectGenerator {
         final Map<Class<?>, List<Field>> userDefinedClassAndFieldToChangePairsMap = convertToClassAndFieldsToChange(
                 userDefinedClassAndFieldPredicatePairsMap);
 
-        final List<List<Field>> baseObjectFieldsPermutations = FieldUtils.permutations(baseClassFieldsToChange);
+        final List<List<Field>> baseObjectFieldsPermutations = fieldListsToUse(baseClassFieldsToChange);
 
         final Object baseObject = createNewInstance(baseClass);
         final LinkedList<Object> result = new LinkedList<>();
@@ -152,7 +156,7 @@ public class ObjectGenerator {
 
     private List<Object> generateDifferentObjects(final Class<?> clazz, final List<Field> fieldsToChange) {
         final List<Object> differentObjects;
-        final List<List<Field>> permutationOfFields = FieldUtils.permutations(fieldsToChange);
+        final List<List<Field>> permutationOfFields = fieldListsToUse(fieldsToChange);
         final Object fieldObject = createNewInstance(clazz);
 
         differentObjects = permutationOfFields.stream()
@@ -245,4 +249,11 @@ public class ObjectGenerator {
         return allFields;
     }
 
+    protected List<List<Field>> fieldListsToUse(final List<Field> fields) {
+        if (thoroughTesting) {
+            return FieldUtils.permutations(fields);
+        } else {
+            return Sublists.subsequences(fields);
+        }
+    }
 }
