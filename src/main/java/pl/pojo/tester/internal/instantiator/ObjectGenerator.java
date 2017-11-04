@@ -15,7 +15,6 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-import pl.pojo.tester.internal.utils.Sublists;
 
 public class ObjectGenerator {
 
@@ -23,14 +22,14 @@ public class ObjectGenerator {
 
     private final AbstractFieldValueChanger abstractFieldValueChanger;
     private final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters;
-    private final boolean thoroughTesting;
+    private final Permutator permutator;
 
     public ObjectGenerator(final AbstractFieldValueChanger abstractFieldValueChanger,
                            final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters,
-                           final boolean thorough) {
+                           final Permutator permutator) {
         this.abstractFieldValueChanger = abstractFieldValueChanger;
         this.constructorParameters = constructorParameters;
-        this.thoroughTesting = thorough;
+        this.permutator = permutator;
     }
 
     public Object createNewInstance(final Class<?> clazz) {
@@ -70,14 +69,13 @@ public class ObjectGenerator {
         final Map<Class<?>, List<Field>> userDefinedClassAndFieldToChangePairsMap = convertToClassAndFieldsToChange(
                 userDefinedClassAndFieldPredicatePairsMap);
 
-        final List<List<Field>> baseObjectFieldsPermutations = fieldListsToUse(baseClassFieldsToChange);
+        final List<List<Field>> baseObjectFieldsPermutations = permutator.permute(baseClassFieldsToChange);
 
         final Object baseObject = createNewInstance(baseClass);
         final LinkedList<Object> result = new LinkedList<>();
         result.add(baseObject);
-        logWithLevel(level,
-                     "Start of generating different objects for base class {}. " +
-                     "Base object is {} -- others will be cloned from this one",
+        logWithLevel(level, "Start of generating different objects for base class {}. " +
+                             "Base object is {} -- others will be cloned from this one",
                      baseClassAndFieldPredicatePair,
                      baseObject);
 
@@ -156,7 +154,7 @@ public class ObjectGenerator {
 
     private List<Object> generateDifferentObjects(final Class<?> clazz, final List<Field> fieldsToChange) {
         final List<Object> differentObjects;
-        final List<List<Field>> permutationOfFields = fieldListsToUse(fieldsToChange);
+        final List<List<Field>> permutationOfFields = permutator.permute(fieldsToChange);
         final Object fieldObject = createNewInstance(clazz);
 
         differentObjects = permutationOfFields.stream()
@@ -247,13 +245,5 @@ public class ObjectGenerator {
             allFields.addAll(FieldUtils.getAllFields(parent));
         } while ((parent = parent.getSuperclass()) != null);
         return allFields;
-    }
-
-    protected List<List<Field>> fieldListsToUse(final List<Field> fields) {
-        if (thoroughTesting) {
-            return FieldUtils.permutations(fields);
-        } else {
-            return Sublists.subsequences(fields);
-        }
     }
 }

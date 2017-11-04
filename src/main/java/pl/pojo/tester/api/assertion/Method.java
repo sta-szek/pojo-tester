@@ -1,5 +1,6 @@
 package pl.pojo.tester.api.assertion;
 
+
 import pl.pojo.tester.internal.tester.AbstractTester;
 import pl.pojo.tester.internal.tester.ConstructorTester;
 import pl.pojo.tester.internal.tester.EqualsTester;
@@ -24,28 +25,17 @@ public enum Method {
     TO_STRING(ToStringTester.class),
     CONSTRUCTOR(ConstructorTester.class);
 
-    private final Class<?> testerClass;
+    private final Class<? extends AbstractTester> testerClass;
 
-    Method(final Class<?> tester) {
+    Method(final Class<? extends AbstractTester> tester) {
         this.testerClass = tester;
     }
 
     public AbstractTester getTester() {
         try {
-            // we return a new instance to avoid passing state from one test to another
-            return (AbstractTester) testerClass.newInstance();
+            return testerClass.newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
-            throw new CannotCreateTesterInstanceException(e);
-        }
-    }
-
-    /**
-     * This exception cannot be thrown in real life, but the Java syntax and Codacy-bot
-     * require it to be there.
-     */
-    static class CannotCreateTesterInstanceException extends RuntimeException {
-        CannotCreateTesterInstanceException(final Throwable cause) {
-            super(cause);
+            throw new TesterInstantiationException(e);
         }
     }
 }

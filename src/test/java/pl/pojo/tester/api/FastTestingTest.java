@@ -1,23 +1,17 @@
 package pl.pojo.tester.api;
 
-import classesForTest.packageFilter.A;
-import classesForTest.packageFilter.B;
-import classesForTest.packageFilter.C;
-import classesForTest.packageFilter.next.D;
-import classesForTest.packageFilter.next.E;
 import org.junit.jupiter.api.Test;
 import pl.pojo.tester.api.assertion.Method;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowable;
 import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
 
 
-public class FastTestingTest {
+class FastTestingTest {
 
     @Test
     void ShouldCompleteInReasonableTime() {
-        long start = System.currentTimeMillis();
+        final long start = System.currentTimeMillis();
         {
             // given
             final Class<?> classUnderTest = Medium.class;
@@ -30,16 +24,16 @@ public class FastTestingTest {
                     .quickly()
                     .areWellImplemented();
         }
-        long end = System.currentTimeMillis();
-        assertThat(end - start).isLessThan(500l);
+        final long end = System.currentTimeMillis();
+        assertThat(end - start).isLessThan(500L);
     }
 }
 
 class Medium {
-    int a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u;
+    private int a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u;
 
     @Override
-    public boolean equals(Object o1) {
+    public boolean equals(final Object o1) {
         if (this == o1) {
             return true;
         }
@@ -47,7 +41,7 @@ class Medium {
             return false;
         }
 
-        Medium medium = (Medium) o1;
+        final Medium medium = (Medium) o1;
 
         if (a != medium.a) {
             return false;

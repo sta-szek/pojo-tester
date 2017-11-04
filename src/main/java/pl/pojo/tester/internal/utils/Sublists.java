@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 public final class Sublists {
+
     private Sublists() {
     }
 
@@ -15,15 +16,15 @@ public final class Sublists {
      * in the original list will not affect the returned sublists.
      *
      * @param list list of objects
-     * @param <T>   the type of list element
+     * @param <T>  the type of list element
      * @return sublists of list
      */
     public static <T> List<List<T>> subsequences(final List<T> list) {
         final List<T> copyOfList = new ArrayList<>(list);
-        final List<List<T>> res = new ArrayList<>();
+        final List<List<T>> result = new ArrayList<>();
         for (int i = 0; i < copyOfList.size(); i++) {
-            res.add(Collections.unmodifiableList(copyOfList.subList(i, copyOfList.size())));
+            result.add(Collections.unmodifiableList(copyOfList.subList(i, copyOfList.size())));
         }
-        return Collections.unmodifiableList(res);
+        return Collections.unmodifiableList(result);
     }
 }

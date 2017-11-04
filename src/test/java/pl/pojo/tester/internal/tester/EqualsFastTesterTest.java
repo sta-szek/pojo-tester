@@ -1,13 +1,6 @@
 package pl.pojo.tester.internal.tester;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowable;
-import static org.assertj.core.util.Lists.newArrayList;
-
 import classesForTest.fields.TestEnum1;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.function.Predicate;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -15,6 +8,15 @@ import org.junit.jupiter.api.Test;
 import pl.pojo.tester.api.FieldPredicate;
 import pl.pojo.tester.internal.assertion.equals.AbstractEqualsAssertionError;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
+import pl.pojo.tester.internal.instantiator.SublistFieldPermutator;
+
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.function.Predicate;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
+import static org.assertj.core.util.Lists.newArrayList;
 
 
 public class EqualsFastTesterTest {
@@ -24,7 +26,7 @@ public class EqualsFastTesterTest {
         // given
         final Class[] classesToTest = {GoodPojo_Equals_HashCode_ToString.class};
         final EqualsTester equalsTester = new EqualsTester(DefaultFieldValueChanger.INSTANCE);
-        equalsTester.setThoroughTesting(false);
+        equalsTester.setPermutator(new SublistFieldPermutator());
 
         // when
         final Throwable result = catchThrowable(() -> equalsTester.testAll(classesToTest));
@@ -37,7 +39,7 @@ public class EqualsFastTesterTest {
     public void Should_Pass_All_Equals_Tests_Excluding_Fields() {
         // given
         final EqualsTester equalsTester = new EqualsTester();
-        equalsTester.setThoroughTesting(false);
+        equalsTester.setPermutator(new SublistFieldPermutator());
         final Class<?> clazz = BadPojoEqualsDifferentObjectSameType.class;
         final ArrayList<String> excludedFields = newArrayList("notIncludedToEqual_byteField",
                                                               "notIncludedToEqual_shortType");
@@ -53,7 +55,7 @@ public class EqualsFastTesterTest {
     public void Should_Pass_All_Equals_Tests_Including_Fields() {
         // given
         final EqualsTester equalsTester = new EqualsTester();
-        equalsTester.setThoroughTesting(false);
+        equalsTester.setPermutator(new SublistFieldPermutator());
         final Class<?> clazz = BadPojoEqualsDifferentObjectSameType.class;
         final ArrayList<String> includedFields = newArrayList("byteField", "shortType");
 
@@ -69,7 +71,7 @@ public class EqualsFastTesterTest {
         // given
         final Class[] classesToTest = {BadPojoEqualsNull.class};
         final EqualsTester equalsTester = new EqualsTester();
-        equalsTester.setThoroughTesting(false);
+        equalsTester.setPermutator(new SublistFieldPermutator());
 
         // when
         final Throwable result = catchThrowable(() -> equalsTester.testAll(classesToTest));
@@ -83,7 +85,7 @@ public class EqualsFastTesterTest {
         // given
         final Class[] classesToTest = {BadPojoEqualsItself.class};
         final EqualsTester equalsTester = new EqualsTester();
-        equalsTester.setThoroughTesting(false);
+        equalsTester.setPermutator(new SublistFieldPermutator());
 
         // when
         final Throwable result = catchThrowable(() -> equalsTester.testAll(classesToTest));
@@ -97,7 +99,7 @@ public class EqualsFastTesterTest {
         // given
         final Class[] classesToTest = {BadPojoEqualsDifferentType.class};
         final EqualsTester equalsTester = new EqualsTester();
-        equalsTester.setThoroughTesting(false);
+        equalsTester.setPermutator(new SublistFieldPermutator());
 
         // when
         final Throwable result = catchThrowable(() -> equalsTester.testAll(classesToTest));
@@ -110,10 +112,10 @@ public class EqualsFastTesterTest {
     public void Should_Fail_Multiple_Classes() {
         // given
         final Class[] classesToTest = {BadPojoEqualsNull.class,
-                                       BadPojoEqualsDifferentType.class,
-                                       BadPojoEqualsItself.class};
+                BadPojoEqualsDifferentType.class,
+                BadPojoEqualsItself.class};
         final EqualsTester equalsTester = new EqualsTester();
-        equalsTester.setThoroughTesting(false);
+        equalsTester.setPermutator(new SublistFieldPermutator());
 
         // when
         final Throwable result = catchThrowable(() -> equalsTester.testAll(classesToTest));
@@ -127,7 +129,7 @@ public class EqualsFastTesterTest {
         // given
         final Class[] classesToTest = {BadPojoEqualsDifferentObjectSameType.class};
         final EqualsTester equalsTester = new EqualsTester();
-        equalsTester.setThoroughTesting(false);
+        equalsTester.setPermutator(new SublistFieldPermutator());
 
         // when
         final Throwable result = catchThrowable(() -> equalsTester.testAll(classesToTest));
@@ -140,7 +142,7 @@ public class EqualsFastTesterTest {
     public void Should_Fail_When_Equals_Implementation_Depends_On_Excluded_Field() {
         // given
         final EqualsTester equalsTester = new EqualsTester();
-        equalsTester.setThoroughTesting(false);
+        equalsTester.setPermutator(new SublistFieldPermutator());
         final Class<?> classToTest = GoodPojo_Equals_HashCode_ToString.class;
         final Predicate<String> includedFields = FieldPredicate.include("byteField");
 
@@ -313,9 +315,9 @@ public class EqualsFastTesterTest {
         @Override
         public String toString() {
             return byteField + " " +
-                   shortType + " " +
-                   notIncludedToEqual_byteField + " " +
-                   notIncludedToEqual_shortType;
+                    shortType + " " +
+                    notIncludedToEqual_byteField + " " +
+                    notIncludedToEqual_shortType;
         }
 
         @Override

@@ -7,6 +7,9 @@ import pl.pojo.tester.api.ClassAndFieldPredicatePair;
 import pl.pojo.tester.api.ConstructorParameters;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 import pl.pojo.tester.internal.instantiator.ClassLoader;
+import pl.pojo.tester.internal.instantiator.Permutator;
+import pl.pojo.tester.internal.instantiator.SublistFieldPermutator;
+import pl.pojo.tester.internal.instantiator.ThoroughFieldPermutator;
 import pl.pojo.tester.internal.tester.AbstractTester;
 
 import java.util.Arrays;
@@ -40,7 +43,7 @@ public abstract class AbstractAssertion {
     private final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters = new ArrayListValuedHashMap<>();
     Set<AbstractTester> testers = new HashSet<>();
     private AbstractFieldValueChanger abstractFieldValueChanger;
-    private boolean thoroughTesting = true;
+    private Permutator permutator = new ThoroughFieldPermutator();
 
     /**
      * Specifies what field values changer will be used for testing.
@@ -62,7 +65,7 @@ public abstract class AbstractAssertion {
      * @return itself
      */
     public AbstractAssertion thoroughly() {
-        thoroughTesting = true;
+        this.permutator = new ThoroughFieldPermutator();
         return this;
     }
 
@@ -72,7 +75,7 @@ public abstract class AbstractAssertion {
      * @return itself
      */
     public AbstractAssertion quickly() {
-        thoroughTesting = false;
+        this.permutator = new SublistFieldPermutator();
         return this;
     }
 
@@ -120,8 +123,7 @@ public abstract class AbstractAssertion {
             testers.forEach(tester -> tester.setFieldValuesChanger(abstractFieldValueChanger));
         }
 
-        testers.forEach(tester -> tester.setThoroughTesting(thoroughTesting));
-
+        testers.forEach(tester -> tester.setPermutator(permutator));
         testers.forEach(tester -> tester.setUserDefinedConstructors(constructorParameters));
 
         runAssertions();

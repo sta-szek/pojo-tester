@@ -35,9 +35,9 @@ class ObjectGeneratorTest {
     private final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters = new
             ArrayListValuedHashMap<>();
 
-    public ObjectGenerator makeObjectGenerator(final AbstractFieldValueChanger abstractFieldValueChanger,
-        final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
-      return new ObjectGenerator(abstractFieldValueChanger, constructorParameters, true);
+    private ObjectGenerator makeObjectGenerator(final AbstractFieldValueChanger abstractFieldValueChanger,
+                                                final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
+        return new ObjectGenerator(abstractFieldValueChanger, constructorParameters, new ThoroughFieldPermutator());
     }
 
     @Test
@@ -212,82 +212,82 @@ class ObjectGeneratorTest {
     }
 
     @Data
-    class Arrays_Primitive_Boolean {
+    private class Arrays_Primitive_Boolean {
         private final boolean[] a = new boolean[]{};
     }
 
     @Data
-    class Arrays_Primitive_Byte {
+    private class Arrays_Primitive_Byte {
         private final byte[] b = new byte[]{};
     }
 
     @Data
-    class Arrays_Primitive_Char {
+    private class Arrays_Primitive_Char {
         private final char[] c = new char[]{};
     }
 
     @Data
-    class Arrays_Primitive_Double {
+    private class Arrays_Primitive_Double {
         private final double[] d = new double[]{};
     }
 
     @Data
-    class Arrays_Primitive_Float {
+    private class Arrays_Primitive_Float {
         private final float[] e = new float[]{};
     }
 
     @Data
-    class Arrays_Primitive_Int {
+    private class Arrays_Primitive_Int {
         private final int[] f = new int[]{};
     }
 
     @Data
-    class Arrays_Primitive_Long {
+    private class Arrays_Primitive_Long {
         private final long[] g = new long[]{};
     }
 
     @Data
-    class Arrays_Primitive_Short {
+    private class Arrays_Primitive_Short {
         private final short[] h = new short[]{};
     }
 
     @Data
-    class Arrays_Wrapped_Boolean {
+    private class Arrays_Wrapped_Boolean {
         private final Boolean[] i = new Boolean[]{};
     }
 
     @Data
-    class Arrays_Wrapped_Byte {
+    private class Arrays_Wrapped_Byte {
         private final Byte[] j = new Byte[]{};
     }
 
     @Data
-    class Arrays_Wrapped_Character {
+    private class Arrays_Wrapped_Character {
         private final Character[] k = new Character[]{};
     }
 
     @Data
-    class Arrays_Wrapped_Double {
+    private class Arrays_Wrapped_Double {
         private final Double[] l = new Double[]{};
     }
 
     @Data
-    class Arrays_Wrapped_Float {
+    private class Arrays_Wrapped_Float {
         private final Float[] m = new Float[]{};
     }
 
     @Data
-    class Arrays_Wrapped_Integer {
+    private class Arrays_Wrapped_Integer {
         private final Integer[] n = new Integer[]{};
     }
 
     @Data
-    class Arrays_Wrapped_Long {
+    private class Arrays_Wrapped_Long {
         private final Long[] o = new Long[]{};
     }
 
     @Data
-    class Arrays_Wrapped_Short {
+    private class Arrays_Wrapped_Short {
         private final Short[] p = new Short[]{};
     }
 
@@ -349,20 +349,20 @@ class ObjectGeneratorTest {
     }
 
     @Data
-    class ClassWithBooleanField {
+    private class ClassWithBooleanField {
         private boolean booleanField;
     }
 
     @Data
     @AllArgsConstructor
-    class DifferentObjectTestCase {
+    private class DifferentObjectTestCase {
         private Class<?> clazz;
         private int expectedSize;
     }
 
     @Data
     @AllArgsConstructor
-    class RecursivelyDifferentObjectTestCase {
+    private class RecursivelyDifferentObjectTestCase {
         private int expectedSize;
         private ClassAndFieldPredicatePair baseClass;
         private ClassAndFieldPredicatePair[] otherClasses;

@@ -2,6 +2,18 @@
 
 Download latest version [ ![Download](https://api.bintray.com/packages/sta-szek/maven/pojo-tester/images/download.svg) ](https://bintray.com/sta-szek/maven/pojo-tester/_latestVersion)
 
+## Release version 0.7.6 {#release-076}
+
+### Features
+* Quick testing - generate less objects ([#201](https://github.com/sta-szek/pojo-tester/issues/201), [#203](https://github.com/sta-szek/pojo-tester/issues/203))
+
+### Others
+* Issue with one-value enum (out of range exception) ([#199](https://github.com/sta-szek/pojo-tester/issues/199))
+* Defensive copy of arrays on getters ([#212](https://github.com/sta-szek/pojo-tester/issues/212))
+
+
+---
+
 ## Release version 0.7.5 {#release-075}
 
 ### Features
