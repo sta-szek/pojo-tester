@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 
 import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
 
-public class AllTypesTest {
+class AllTypesTest {
 
     @Test
-    public void Should_Test_Class_With_Collections_Collection_Types() {
+    void Should_Test_Class_With_Collections_Collection_Types() {
         // given
 
         // when
@@ -18,7 +18,7 @@ public class AllTypesTest {
     }
 
     @Test
-    public void Should_Test_Class_With_Collections_Iterators_Types() {
+    void Should_Test_Class_With_Collections_Iterators_Types() {
         // given
 
         // when
@@ -28,7 +28,7 @@ public class AllTypesTest {
     }
 
     @Test
-    public void Should_Test_Class_With_Collections_Map_Types() {
+    void Should_Test_Class_With_Collections_Map_Types() {
         // given
 
         // when
@@ -38,7 +38,7 @@ public class AllTypesTest {
     }
 
     @Test
-    public void Should_Test_Class_With_Collections_Other_Types() {
+    void Should_Test_Class_With_Collections_Other_Types() {
         // given
 
         // when
@@ -48,7 +48,7 @@ public class AllTypesTest {
     }
 
     @Test
-    public void Should_Test_Class_With_Collections_Types() {
+    void Should_Test_Class_With_Collections_Types() {
         // given
 
         // when
@@ -58,7 +58,7 @@ public class AllTypesTest {
     }
 
     @Test
-    public void Should_Test_Class_With_Math_Types() {
+    void Should_Test_Class_With_Math_Types() {
         // given
 
         // when
@@ -68,7 +68,7 @@ public class AllTypesTest {
     }
 
     @Test
-    public void Should_Test_Class_With_Other_Types() {
+    void Should_Test_Class_With_Other_Types() {
         // given
 
         // when
@@ -78,7 +78,7 @@ public class AllTypesTest {
     }
 
     @Test
-    public void Should_Test_Class_With_Primitive_Types() {
+    void Should_Test_Class_With_Primitive_Types() {
         // given
 
         // when
@@ -88,7 +88,7 @@ public class AllTypesTest {
     }
 
     @Test
-    public void Should_Test_Class_With_Primitive_Wrapped_Types() {
+    void Should_Test_Class_With_Primitive_Wrapped_Types() {
         // given
 
         // when

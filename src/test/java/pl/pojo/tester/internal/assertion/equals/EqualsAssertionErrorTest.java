@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class EqualsAssertionErrorTest {
+class EqualsAssertionErrorTest {
 
     @Test
-    public void Should_Return_Expected_Error_Prefix() {
+    void Should_Return_Expected_Error_Prefix() {
         // given
         final String expectedMessage = "Class java.lang.String has bad 'equals' method implementation.";
         final AbstractEqualsAssertionError error = new MockOfEqualsAssertionError(String.class);

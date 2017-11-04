@@ -8,10 +8,10 @@ import java.lang.reflect.Field;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class AbstractPrimitiveValueChangerTest {
+class AbstractPrimitiveValueChangerTest {
 
     @Test
-    public void Should_Return_False_When_Field_Is_Not_Primitive() throws Exception {
+    void Should_Return_False_When_Field_Is_Not_Primitive() throws Exception {
         // given
         final Field field = Thread.class.getDeclaredField("threadQ");
         final AbstractPrimitiveValueChanger<Object> changerMock = new ImplementationForTest();

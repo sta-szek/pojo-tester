@@ -18,24 +18,24 @@ import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 import static org.powermock.reflect.Whitebox.getInternalState;
 
 
-public class DoubleValueChangerTest {
+class DoubleValueChangerTest {
 
     private final AbstractFieldValueChanger<Double> valueChanger = new DoubleValueChanger();
 
     @TestFactory
-    public Stream<DynamicTest> Should_Change_Primitive_Value() {
+    Stream<DynamicTest> Should_Change_Primitive_Value() {
         return Stream.of(Double.MAX_VALUE, Double.MIN_VALUE, Double.MIN_NORMAL, (double) 0, (double) -1, (double) 1)
                      .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Change_Primitive_Value(value)));
     }
 
     @TestFactory
-    public Stream<DynamicTest> Should_Change_Wrapped_Value() {
+    Stream<DynamicTest> Should_Change_Wrapped_Value() {
         return Stream.of(Double.MAX_VALUE, Double.MIN_VALUE, Double.MIN_NORMAL, (double) 0, (double) -1, (double) 1)
                      .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Change_Wrapped_Value(value)));
     }
 
     @TestFactory
-    public Stream<DynamicTest> Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not() {
+    Stream<DynamicTest> Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not() {
         return Stream.of(new TestCase(null, null, false),
                          new TestCase((double) 0, (double) 0, false),
                          new TestCase(Double.MIN_VALUE, Double.MIN_VALUE, false),
@@ -56,7 +56,9 @@ public class DoubleValueChangerTest {
             final AllFiledTypes helpClass2 = new AllFiledTypes(value);
 
             // when
-            valueChanger.changeFieldsValues(helpClass1, helpClass2, Lists.newArrayList(AllFiledTypes.class.getDeclaredFields()));
+            valueChanger.changeFieldsValues(helpClass1,
+                                            helpClass2,
+                                            Lists.newArrayList(AllFiledTypes.class.getDeclaredFields()));
             final Double result1 = getInternalState(helpClass1, "doubleType");
             final Double result2 = getInternalState(helpClass2, "doubleType");
 
@@ -72,7 +74,9 @@ public class DoubleValueChangerTest {
             final AllFiledTypes_Wrapped helpClass2 = new AllFiledTypes_Wrapped(value);
 
             // when
-            valueChanger.changeFieldsValues(helpClass1, helpClass2, Lists.newArrayList(AllFiledTypes_Wrapped.class.getDeclaredFields()));
+            valueChanger.changeFieldsValues(helpClass1,
+                                            helpClass2,
+                                            Lists.newArrayList(AllFiledTypes_Wrapped.class.getDeclaredFields()));
             final Double result1 = getInternalState(helpClass1, "doubleType");
             final Double result2 = getInternalState(helpClass2, "doubleType");
 

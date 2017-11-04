@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class AbstractToStringAssertionErrorTest {
+class AbstractToStringAssertionErrorTest {
 
     @Test
-    public void Should_Return_Expected_Error_Prefix() throws NoSuchFieldException {
+    void Should_Return_Expected_Error_Prefix() {
         // given
         final String expectedMessage = "Class java.lang.String has bad 'toString' method implementation.";
         final Class<String> testedCass = String.class;

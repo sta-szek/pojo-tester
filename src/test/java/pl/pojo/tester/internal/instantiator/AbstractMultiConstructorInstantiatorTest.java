@@ -15,11 +15,11 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 class AbstractMultiConstructorInstantiatorTest {
 
     @Test
-    public void Should_Create_Object_Using_User_Parameters() {
+    void Should_Create_Object_Using_User_Parameters() {
         // given
         final ArrayListValuedHashMap<Class<?>, ConstructorParameters> constructorParameters = new ArrayListValuedHashMap<>();
         final Class<?> clazz = A.class;
-        constructorParameters.put(clazz, new ConstructorParameters(new Object[]{ 12345 }, new Class[]{ int.class }));
+        constructorParameters.put(clazz, new ConstructorParameters(new Object[]{12345}, new Class[]{int.class}));
         final AbstractMultiConstructorInstantiator instantiator = new MockMultiConstructorInstantiator(clazz,
                                                                                                        constructorParameters);
         final A expectedResult = new A(12345);
@@ -32,7 +32,7 @@ class AbstractMultiConstructorInstantiatorTest {
     }
 
     @Test
-    public void Should_Return_Null_If_Parameters_For_This_Class_Are_Empty() {
+    void Should_Return_Null_If_Parameters_For_This_Class_Are_Empty() {
         // given
         final ArrayListValuedHashMap<Class<?>, ConstructorParameters> constructorParameters = new ArrayListValuedHashMap<>();
         final Class<?> clazz = A.class;
@@ -47,7 +47,7 @@ class AbstractMultiConstructorInstantiatorTest {
     }
 
     @Test
-    public void Should_Throw_Exception_If_Constructor_Throws_Exception() {
+    void Should_Throw_Exception_If_Constructor_Throws_Exception() {
         // given
         final ArrayListValuedHashMap<Class<?>, ConstructorParameters> constructorParameters = new ArrayListValuedHashMap<>();
         final Class<?> clazz = B.class;
@@ -101,7 +101,7 @@ class AbstractMultiConstructorInstantiatorTest {
 
     private class B {
 
-        public B(final int a) {
+        B(final int a) {
             throw new RuntimeException("eee");
         }
     }

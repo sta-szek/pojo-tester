@@ -17,12 +17,12 @@ import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 import static org.powermock.reflect.Whitebox.getInternalState;
 
 
-public class CharacterValueChangerTest {
+class CharacterValueChangerTest {
 
     private final AbstractFieldValueChanger<Character> valueChanger = new CharacterValueChanger();
 
     @TestFactory
-    public Stream<DynamicTest> Should_Change_Primitive_Value() {
+    Stream<DynamicTest> Should_Change_Primitive_Value() {
         return Stream.of(Character.MAX_VALUE,
                          Character.MIN_VALUE,
                          " ".toCharArray()[0])
@@ -30,7 +30,7 @@ public class CharacterValueChangerTest {
     }
 
     @TestFactory
-    public Stream<DynamicTest> Should_Change_Wrapped_Value() {
+    Stream<DynamicTest> Should_Change_Wrapped_Value() {
         return Stream.of(Character.MAX_VALUE,
                          Character.MIN_VALUE,
                          " ".toCharArray()[0])
@@ -38,7 +38,7 @@ public class CharacterValueChangerTest {
     }
 
     @TestFactory
-    public Stream<DynamicTest> Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not() {
+    Stream<DynamicTest> Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not() {
         return Stream.of(new TestCase(null, null, false),
                          new TestCase((char) 0, (char) 0, false),
                          new TestCase(Character.MIN_VALUE, Character.MIN_VALUE, false),
@@ -59,7 +59,9 @@ public class CharacterValueChangerTest {
             final AllFiledTypes helpClass2 = new AllFiledTypes(value);
 
             // when
-            valueChanger.changeFieldsValues(helpClass1, helpClass2, Lists.newArrayList(AllFiledTypes.class.getDeclaredFields()));
+            valueChanger.changeFieldsValues(helpClass1,
+                                            helpClass2,
+                                            Lists.newArrayList(AllFiledTypes.class.getDeclaredFields()));
             final Character result1 = getInternalState(helpClass1, "characterType");
             final Character result2 = getInternalState(helpClass2, "characterType");
 
@@ -75,7 +77,9 @@ public class CharacterValueChangerTest {
             final AllFiledTypes_Wrapped helpClass2 = new AllFiledTypes_Wrapped(value);
 
             // when
-            valueChanger.changeFieldsValues(helpClass1, helpClass2, Lists.newArrayList(AllFiledTypes_Wrapped.class.getDeclaredFields()));
+            valueChanger.changeFieldsValues(helpClass1,
+                                            helpClass2,
+                                            Lists.newArrayList(AllFiledTypes_Wrapped.class.getDeclaredFields()));
             final Character result1 = getInternalState(helpClass1, "characterType");
             final Character result2 = getInternalState(helpClass2, "characterType");
 

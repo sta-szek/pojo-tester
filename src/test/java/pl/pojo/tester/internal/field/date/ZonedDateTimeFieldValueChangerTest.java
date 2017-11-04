@@ -18,9 +18,10 @@ class ZonedDateTimeFieldValueChangerTest {
     private final ZonedDateTimeFieldValueChanger valueChanger = new ZonedDateTimeFieldValueChanger();
 
     @TestFactory
-    public Stream<DynamicTest> Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not() {
+    Stream<DynamicTest> Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not() {
         final ZonedDateTime date1 = ZonedDateTime.now();
-        final ZonedDateTime date2 = ZonedDateTime.now().plusHours(1);
+        final ZonedDateTime date2 = ZonedDateTime.now()
+                                                 .plusHours(1);
         return Stream.of(new AreDifferentCase(null, null, false),
                          new AreDifferentCase(date1, date1, false),
                          new AreDifferentCase(null, date2, true),
@@ -30,7 +31,7 @@ class ZonedDateTimeFieldValueChangerTest {
                                                Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(value)));
     }
 
-    public Executable Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final AreDifferentCase testCase) {
+    private Executable Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final AreDifferentCase testCase) {
         return () -> {
             // when
             final boolean result = valueChanger.areDifferentValues(testCase.value1, testCase.value2);
@@ -41,7 +42,7 @@ class ZonedDateTimeFieldValueChangerTest {
     }
 
     @Test
-    public void Should_Increase_Value() {
+    void Should_Increase_Value() {
         // given
         final ZonedDateTime beforeChange = ZonedDateTime.now();
 
@@ -53,7 +54,7 @@ class ZonedDateTimeFieldValueChangerTest {
     }
 
     @Test
-    public void Should_Return_True_If_Can_Change() {
+    void Should_Return_True_If_Can_Change() {
         // given
 
         // when
@@ -64,7 +65,7 @@ class ZonedDateTimeFieldValueChangerTest {
     }
 
     @Test
-    public void Should_Return_False_If_Can_Not_Change() {
+    void Should_Return_False_If_Can_Not_Change() {
         // given
 
         // when

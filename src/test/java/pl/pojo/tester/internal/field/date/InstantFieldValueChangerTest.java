@@ -19,7 +19,7 @@ class InstantFieldValueChangerTest {
     private final InstantFieldValueChanger valueChanger = new InstantFieldValueChanger();
 
     @TestFactory
-    public Stream<DynamicTest> Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not() {
+    Stream<DynamicTest> Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not() {
         final Instant instant1 = new Date(123456).toInstant();
         final Instant instant2 = new Date(654321).toInstant();
         return Stream.of(new AreDifferentCase(null, null, false),
@@ -31,7 +31,7 @@ class InstantFieldValueChangerTest {
                                                Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(value)));
     }
 
-    public Executable Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final AreDifferentCase testCase) {
+    private Executable Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final AreDifferentCase testCase) {
         return () -> {
             // when
             final boolean result = valueChanger.areDifferentValues(testCase.value1, testCase.value2);
@@ -42,7 +42,7 @@ class InstantFieldValueChangerTest {
     }
 
     @Test
-    public void Should_Increase_Value() {
+    void Should_Increase_Value() {
         // given
         final Instant beforeChange = new Date().toInstant();
 
@@ -54,7 +54,7 @@ class InstantFieldValueChangerTest {
     }
 
     @Test
-    public void Should_Return_True_If_Can_Change() {
+    void Should_Return_True_If_Can_Change() {
         // given
 
         // when
@@ -65,7 +65,7 @@ class InstantFieldValueChangerTest {
     }
 
     @Test
-    public void Should_Return_False_If_Can_Not_Change() {
+    void Should_Return_False_If_Can_Not_Change() {
         // given
 
         // when

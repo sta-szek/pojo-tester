@@ -18,10 +18,10 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.util.Lists.newArrayList;
 
 
-public class EqualsTesterTest {
+class EqualsTesterTest {
 
     @Test
-    public void Should_Pass_All_Equals_Tests() {
+    void Should_Pass_All_Equals_Tests() {
         // given
         final Class[] classesToTest = {GoodPojo_Equals_HashCode_ToString.class};
         final EqualsTester equalsTester = new EqualsTester(DefaultFieldValueChanger.INSTANCE);
@@ -34,7 +34,7 @@ public class EqualsTesterTest {
     }
 
     @Test
-    public void Should_Pass_All_Equals_Tests_Excluding_Fields() {
+    void Should_Pass_All_Equals_Tests_Excluding_Fields() {
         // given
         final EqualsTester equalsTester = new EqualsTester();
         final Class<?> clazz = BadPojoEqualsDifferentObjectSameType.class;
@@ -49,7 +49,7 @@ public class EqualsTesterTest {
     }
 
     @Test
-    public void Should_Pass_All_Equals_Tests_Including_Fields() {
+    void Should_Pass_All_Equals_Tests_Including_Fields() {
         // given
         final EqualsTester equalsTester = new EqualsTester();
         final Class<?> clazz = BadPojoEqualsDifferentObjectSameType.class;
@@ -63,7 +63,7 @@ public class EqualsTesterTest {
     }
 
     @Test
-    public void Should_Fail_Null_Test() {
+    void Should_Fail_Null_Test() {
         // given
         final Class[] classesToTest = {BadPojoEqualsNull.class};
         final EqualsTester equalsTester = new EqualsTester();
@@ -76,7 +76,7 @@ public class EqualsTesterTest {
     }
 
     @Test
-    public void Should_Fail_Itself_Test() {
+    void Should_Fail_Itself_Test() {
         // given
         final Class[] classesToTest = {BadPojoEqualsItself.class};
         final EqualsTester equalsTester = new EqualsTester();
@@ -89,7 +89,7 @@ public class EqualsTesterTest {
     }
 
     @Test
-    public void Should_Fail_Different_Type_Test() {
+    void Should_Fail_Different_Type_Test() {
         // given
         final Class[] classesToTest = {BadPojoEqualsDifferentType.class};
         final EqualsTester equalsTester = new EqualsTester();
@@ -102,11 +102,11 @@ public class EqualsTesterTest {
     }
 
     @Test
-    public void Should_Fail_Multiple_Classes() {
+    void Should_Fail_Multiple_Classes() {
         // given
         final Class[] classesToTest = {BadPojoEqualsNull.class,
-                                       BadPojoEqualsDifferentType.class,
-                                       BadPojoEqualsItself.class};
+                BadPojoEqualsDifferentType.class,
+                BadPojoEqualsItself.class};
         final EqualsTester equalsTester = new EqualsTester();
 
         // when
@@ -117,7 +117,7 @@ public class EqualsTesterTest {
     }
 
     @Test
-    public void Should_Fail_Different_Object_With_Same_Type() {
+    void Should_Fail_Different_Object_With_Same_Type() {
         // given
         final Class[] classesToTest = {BadPojoEqualsDifferentObjectSameType.class};
         final EqualsTester equalsTester = new EqualsTester();
@@ -130,7 +130,7 @@ public class EqualsTesterTest {
     }
 
     @Test
-    public void Should_Fail_When_Equals_Implementation_Depends_On_Excluded_Field() {
+    void Should_Fail_When_Equals_Implementation_Depends_On_Excluded_Field() {
         // given
         final EqualsTester equalsTester = new EqualsTester();
         final Class<?> classToTest = GoodPojo_Equals_HashCode_ToString.class;
@@ -144,18 +144,18 @@ public class EqualsTesterTest {
     }
 
     private class GoodPojo_Equals_HashCode_ToString {
-        public long random;
-        public byte byteField;
-        public short shortType;
-        public int intType;
-        public long longType;
-        public double doubleType;
-        public boolean booleanType;
-        public float floatType;
-        public char charType;
-        public TestEnum1 testEnum1;
+        long random;
+        byte byteField;
+        short shortType;
+        int intType;
+        long longType;
+        double doubleType;
+        boolean booleanType;
+        float floatType;
+        char charType;
+        TestEnum1 testEnum1;
 
-        public GoodPojo_Equals_HashCode_ToString() {
+        GoodPojo_Equals_HashCode_ToString() {
             final Random random = new Random();
             this.random = random.nextLong();
         }
@@ -305,9 +305,9 @@ public class EqualsTesterTest {
         @Override
         public String toString() {
             return byteField + " " +
-                   shortType + " " +
-                   notIncludedToEqual_byteField + " " +
-                   notIncludedToEqual_shortType;
+                    shortType + " " +
+                    notIncludedToEqual_byteField + " " +
+                    notIncludedToEqual_shortType;
         }
 
         @Override
@@ -335,7 +335,7 @@ public class EqualsTesterTest {
         }
     }
 
-    class BadPojoEqualsDifferentType {
+    private class BadPojoEqualsDifferentType {
         private byte byteField;
         private short shortType;
         private int intType;
@@ -365,7 +365,7 @@ public class EqualsTesterTest {
 
     }
 
-    class BadPojoEqualsItself {
+    private class BadPojoEqualsItself {
         private byte byteField;
         private short shortType;
         private int intType;

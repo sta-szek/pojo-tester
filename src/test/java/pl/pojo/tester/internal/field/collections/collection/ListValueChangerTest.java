@@ -9,10 +9,10 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class ListValueChangerTest {
+class ListValueChangerTest {
 
     @Test
-    public void Should_Return_Null_When_Value_Is_Not_Null_And_Not_Empty() {
+    void Should_Return_Null_When_Value_Is_Not_Null_And_Not_Empty() {
         // given
         final List<String> value = new ArrayList<>();
         value.add("test");
@@ -28,7 +28,7 @@ public class ListValueChangerTest {
     }
 
     @Test
-    public void Should_Return_Any_Instance_When_Value_Is_Null() {
+    void Should_Return_Any_Instance_When_Value_Is_Null() {
         // given
         final List<String> value = null;
         final Class<List> type = List.class;
@@ -43,7 +43,7 @@ public class ListValueChangerTest {
     }
 
     @Test
-    public void Should_Return_Any_Instance_When_Value_Is_Empty() {
+    void Should_Return_Any_Instance_When_Value_Is_Empty() {
         // given
         final List<String> value = new ArrayList<>();
         final Class<List> type = List.class;

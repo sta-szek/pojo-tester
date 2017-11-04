@@ -16,13 +16,12 @@ import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 import static org.powermock.reflect.Whitebox.getInternalState;
 
 
-
-public class StringValueChangerTest {
+class StringValueChangerTest {
 
     private final AbstractFieldValueChanger<String> valueChanger = new StringValueChanger();
 
     @Test
-    public void Should_Change_Value() {
+    void Should_Change_Value() {
         // given
         final AllFiledTypes helpClass1 = new AllFiledTypes("test");
         final AllFiledTypes helpClass2 = new AllFiledTypes("test");
@@ -39,7 +38,7 @@ public class StringValueChangerTest {
     }
 
     @TestFactory
-    public Stream<DynamicTest> Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not() {
+    Stream<DynamicTest> Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not() {
         return Stream.of(new TestCase(null, null, false),
                          new TestCase("", "", false),
                          new TestCase("same", "same", false),
@@ -50,7 +49,7 @@ public class StringValueChangerTest {
                                                Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(value)));
     }
 
-    public Executable Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final TestCase value) {
+    private Executable Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final TestCase value) {
         return () -> {
             // when
             final boolean result = valueChanger.areDifferentValues(value.value1, value.value2);

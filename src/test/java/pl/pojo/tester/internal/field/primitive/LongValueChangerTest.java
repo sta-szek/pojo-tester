@@ -17,24 +17,24 @@ import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 import static org.powermock.reflect.Whitebox.getInternalState;
 
 
-public class LongValueChangerTest {
+class LongValueChangerTest {
 
     private final AbstractFieldValueChanger<Long> valueChanger = new LongValueChanger();
 
     @TestFactory
-    public Stream<DynamicTest> Should_Change_Primitive_Value() {
+    Stream<DynamicTest> Should_Change_Primitive_Value() {
         return Stream.of(Long.MAX_VALUE, Long.MIN_VALUE, (long) 0, (long) -1, (long) 1)
                      .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Change_Primitive_Value(value)));
     }
 
     @TestFactory
-    public Stream<DynamicTest> Should_Change_Wrapped_Value() {
+    Stream<DynamicTest> Should_Change_Wrapped_Value() {
         return Stream.of(Long.MAX_VALUE, Long.MIN_VALUE, (long) 0, (long) -1, (long) 1)
                      .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Change_Wrapped_Value(value)));
     }
 
     @TestFactory
-    public Stream<DynamicTest> Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not() {
+    Stream<DynamicTest> Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not() {
         return Stream.of(new TestCase(null, null, false),
                          new TestCase((long) 0, (long) 0, false),
                          new TestCase(Long.MIN_VALUE, Long.MIN_VALUE, false),
@@ -55,7 +55,9 @@ public class LongValueChangerTest {
             final AllFiledTypes helpClass2 = new AllFiledTypes(value);
 
             // when
-            valueChanger.changeFieldsValues(helpClass1, helpClass2, Lists.newArrayList(AllFiledTypes.class.getDeclaredFields()));
+            valueChanger.changeFieldsValues(helpClass1,
+                                            helpClass2,
+                                            Lists.newArrayList(AllFiledTypes.class.getDeclaredFields()));
             final Long result1 = getInternalState(helpClass1, "longType");
             final Long result2 = getInternalState(helpClass2, "longType");
 
@@ -71,7 +73,9 @@ public class LongValueChangerTest {
             final AllFiledTypes_Wrapped helpClass2 = new AllFiledTypes_Wrapped(value);
 
             // when
-            valueChanger.changeFieldsValues(helpClass1, helpClass2, Lists.newArrayList(AllFiledTypes_Wrapped.class.getDeclaredFields()));
+            valueChanger.changeFieldsValues(helpClass1,
+                                            helpClass2,
+                                            Lists.newArrayList(AllFiledTypes_Wrapped.class.getDeclaredFields()));
             final Long result1 = getInternalState(helpClass1, "longType");
             final Long result2 = getInternalState(helpClass2, "longType");
 

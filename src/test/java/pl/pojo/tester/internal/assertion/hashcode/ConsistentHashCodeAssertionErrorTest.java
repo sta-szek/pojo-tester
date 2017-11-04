@@ -5,19 +5,19 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class ConsistentHashCodeAssertionErrorTest {
+class ConsistentHashCodeAssertionErrorTest {
 
     @Test
-    public void Should_Return_Expected_Detailed_Message() {
+    void Should_Return_Expected_Detailed_Message() {
         // given
         final String expectedMessage = "The hashCode method should return same hash code for same object.\n"
-                                       + "Current implementation returns different values.\n"
-                                       + "Object:\n"
-                                       + "testedObject\n"
-                                       + "has two different hash codes:\n"
-                                       + "1\n"
-                                       + "and\n"
-                                       + "2";
+                + "Current implementation returns different values.\n"
+                + "Object:\n"
+                + "testedObject\n"
+                + "has two different hash codes:\n"
+                + "1\n"
+                + "and\n"
+                + "2";
         final Class<String> testedCass = String.class;
         final String testedObject = "testedObject";
         final int secondHashCode = 2;

@@ -8,10 +8,10 @@ import java.util.LinkedHashSet;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class LinkedHashSetValueChangerTest {
+class LinkedHashSetValueChangerTest {
 
     @Test
-    public void Should_Return_Null_When_Value_Is_Not_Null_And_Not_Empty() {
+    void Should_Return_Null_When_Value_Is_Not_Null_And_Not_Empty() {
         // given
         final LinkedHashSet<String> value = new LinkedHashSet<>();
         value.add("test");
@@ -27,7 +27,7 @@ public class LinkedHashSetValueChangerTest {
     }
 
     @Test
-    public void Should_Return_Any_Instance_When_Value_Is_Null() {
+    void Should_Return_Any_Instance_When_Value_Is_Null() {
         // given
         final LinkedHashSet<String> value = null;
         final Class<LinkedHashSet> type = LinkedHashSet.class;
@@ -42,7 +42,7 @@ public class LinkedHashSetValueChangerTest {
     }
 
     @Test
-    public void Should_Return_Any_Instance_When_Value_Is_Empty() {
+    void Should_Return_Any_Instance_When_Value_Is_Empty() {
         // given
         final LinkedHashSet<String> value = new LinkedHashSet<>();
         final Class<LinkedHashSet> type = LinkedHashSet.class;

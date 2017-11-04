@@ -16,12 +16,12 @@ import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 import static org.powermock.reflect.Whitebox.getInternalState;
 
 
-public class ArrayValueChangerTest {
+class ArrayValueChangerTest {
 
     private final ArrayValueChanger valueChanger = new ArrayValueChanger();
 
     @TestFactory
-    public Stream<DynamicTest> Should_Change_Array_Value() {
+    Stream<DynamicTest> Should_Change_Array_Value() {
         return Stream.of("a_int",
                          "a_char",
                          "a_float",
@@ -45,7 +45,7 @@ public class ArrayValueChangerTest {
                                                    Should_Change_Array_Value(fieldName)));
     }
 
-    public Executable Should_Change_Array_Value(final String fieldName) {
+    private Executable Should_Change_Array_Value(final String fieldName) {
         return () -> {
             // given
             final ClassContainingArrays helpClass1 = new ClassContainingArrays();
@@ -64,7 +64,7 @@ public class ArrayValueChangerTest {
     }
 
     @TestFactory
-    public Stream<DynamicTest> Should_Return_True_Or_False_Whether_Can_Change_Or_Not() throws NoSuchFieldException {
+    Stream<DynamicTest> Should_Return_True_Or_False_Whether_Can_Change_Or_Not() throws NoSuchFieldException {
         return Stream.of(new CanChangeCase(ClassContainingArrays.class.getDeclaredField("a_int"), true),
                          new CanChangeCase(ClassContainingArrays.class.getDeclaredField("a_char"), true),
                          new CanChangeCase(ClassContainingArrays.class.getDeclaredField("a_float"), true),
@@ -87,7 +87,7 @@ public class ArrayValueChangerTest {
                                                Should_Return_True_Or_False_Whether_Can_Change_Or_Not(value)));
     }
 
-    public Executable Should_Return_True_Or_False_Whether_Can_Change_Or_Not(final CanChangeCase testCase) {
+    private Executable Should_Return_True_Or_False_Whether_Can_Change_Or_Not(final CanChangeCase testCase) {
         return () -> {
             // when
             final boolean result = valueChanger.canChange(testCase.field.getType());
@@ -98,7 +98,7 @@ public class ArrayValueChangerTest {
     }
 
     @TestFactory
-    public Stream<DynamicTest> Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not() {
+    Stream<DynamicTest> Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not() {
         return Stream.of(new AreDifferentCase(null, null, false),
                          new AreDifferentCase(new int[0], new int[0], false),
                          new AreDifferentCase(new Object[1], new Object[1], false),
@@ -112,7 +112,7 @@ public class ArrayValueChangerTest {
                                                Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(value)));
     }
 
-    public Executable Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final AreDifferentCase testCase) {
+    private Executable Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final AreDifferentCase testCase) {
         return () -> {
             // when
             final boolean result = valueChanger.areDifferentValues(testCase.value1, testCase.value2);

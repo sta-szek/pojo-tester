@@ -29,14 +29,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 
-public class ObjectGeneratorTest {
+class ObjectGeneratorTest {
 
     private final AbstractFieldValueChanger abstractFieldValueChanger = DefaultFieldValueChanger.INSTANCE;
     private final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters = new
             ArrayListValuedHashMap<>();
 
     @Test
-    public void Should_Generate_Different_Objects_For_Class_Containing_Boolean_Type() {
+    void Should_Generate_Different_Objects_For_Class_Containing_Boolean_Type() {
         // given
         final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger, constructorParameters);
         final ClassAndFieldPredicatePair classAndFieldPredicatePair = new ClassAndFieldPredicatePair(
@@ -47,11 +47,11 @@ public class ObjectGeneratorTest {
 
         // then
         assertThat(result).hasSize(2)
-                .doesNotHaveDuplicates();
+                          .doesNotHaveDuplicates();
     }
 
     @Test
-    public void Should_Generate_Different_Objects_For_Class_With_Private_Enum() {
+    void Should_Generate_Different_Objects_For_Class_With_Private_Enum() {
         // given
         final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger, constructorParameters);
         final ClassAndFieldPredicatePair classAndFieldPredicatePair = new ClassAndFieldPredicatePair(
@@ -62,11 +62,11 @@ public class ObjectGeneratorTest {
 
         // then
         assertThat(result).hasSize(16)
-                .doesNotHaveDuplicates();
+                          .doesNotHaveDuplicates();
     }
 
     @Test
-    public void Should_Create_Any_Instance() {
+    void Should_Create_Any_Instance() {
         // given
         final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger, constructorParameters);
         final Class<?> expectedClass = GoodPojo_Equals_HashCode_ToString.class;
@@ -79,15 +79,15 @@ public class ObjectGeneratorTest {
     }
 
     @TestFactory
-    public Stream<DynamicTest> Should_Create_Same_Instance() {
+    Stream<DynamicTest> Should_Create_Same_Instance() {
         return Stream.of(new GoodPojo_Equals_HashCode_ToString(), new ObjectContainingArray(),
                          new Collections(),
                          new Maps(),
                          new SecondChild())
-                .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Create_Same_Instance(value)));
+                     .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Create_Same_Instance(value)));
     }
 
-    public Executable Should_Create_Same_Instance(final Object objectToCreateSameInstance) {
+    private Executable Should_Create_Same_Instance(final Object objectToCreateSameInstance) {
         return () -> {
             // given
             final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger,
@@ -102,7 +102,7 @@ public class ObjectGeneratorTest {
     }
 
     @TestFactory
-    public Stream<DynamicTest> Should_Generate_Different_Objects() {
+    Stream<DynamicTest> Should_Generate_Different_Objects() {
         return Stream.of(new DifferentObjectTestCase(A.class, 4),
                          new DifferentObjectTestCase(B.class, 8),
                          new DifferentObjectTestCase(C.class, 16),
@@ -129,10 +129,10 @@ public class ObjectGeneratorTest {
                          new DifferentObjectTestCase(Arrays_Wrapped_Integer.class, 2),
                          new DifferentObjectTestCase(Arrays_Wrapped_Long.class, 2),
                          new DifferentObjectTestCase(Arrays_Wrapped_Short.class, 2))
-                .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Generate_Different_Objects(value)));
+                     .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Generate_Different_Objects(value)));
     }
 
-    public Executable Should_Generate_Different_Objects(final DifferentObjectTestCase testCase) {
+    private Executable Should_Generate_Different_Objects(final DifferentObjectTestCase testCase) {
         return () -> {
             // given
             final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger,
@@ -144,15 +144,15 @@ public class ObjectGeneratorTest {
 
             // then
             assertThat(result).hasSize(testCase.expectedSize)
-                    .doesNotHaveDuplicates();
+                              .doesNotHaveDuplicates();
         };
     }
 
     @TestFactory
-    public Stream<DynamicTest> Should_Generate_Different_Objects_Recursively() throws IllegalAccessException {
-        final ClassAndFieldPredicatePair[] pair1 = { pair(E.class), pair(F.class) };
-        final ClassAndFieldPredicatePair[] pair2 = { pair(F.class) };
-        final ClassAndFieldPredicatePair[] pair3 = { pair(A.class), pair(B.class), pair(F.class), pair(G.class) };
+    Stream<DynamicTest> Should_Generate_Different_Objects_Recursively() {
+        final ClassAndFieldPredicatePair[] pair1 = {pair(E.class), pair(F.class)};
+        final ClassAndFieldPredicatePair[] pair2 = {pair(F.class)};
+        final ClassAndFieldPredicatePair[] pair3 = {pair(A.class), pair(B.class), pair(F.class), pair(G.class)};
 
         final RecursivelyDifferentObjectTestCase case1 = new RecursivelyDifferentObjectTestCase(18,
                                                                                                 pair(D.class),
@@ -167,11 +167,11 @@ public class ObjectGeneratorTest {
                                                                                                 pair3);
 
         return Stream.of(case1, case2, case3)
-                .map(value -> dynamicTest(getDefaultDisplayName(value),
-                                          Should_Generate_Different_Objects_Recursively(value)));
+                     .map(value -> dynamicTest(getDefaultDisplayName(value),
+                                               Should_Generate_Different_Objects_Recursively(value)));
     }
 
-    public Executable Should_Generate_Different_Objects_Recursively(final RecursivelyDifferentObjectTestCase testCase) {
+    private Executable Should_Generate_Different_Objects_Recursively(final RecursivelyDifferentObjectTestCase testCase) {
         return () -> {
             // given
             final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger,
@@ -183,12 +183,12 @@ public class ObjectGeneratorTest {
 
             // then
             assertThat(result).hasSize(testCase.expectedSize)
-                    .doesNotHaveDuplicates();
+                              .doesNotHaveDuplicates();
         };
     }
 
     @Test
-    public void Should_Not_Fall_In_Endless_Loop() throws IllegalAccessException {
+    void Should_Not_Fall_In_Endless_Loop() {
         // given
         final ObjectGenerator objectGenerator = new ObjectGenerator(abstractFieldValueChanger, constructorParameters);
         final ClassAndFieldPredicatePair iClass = new ClassAndFieldPredicatePair(R.class);
@@ -199,7 +199,7 @@ public class ObjectGeneratorTest {
 
         // then
         assertThat(result).hasSize(expectedSize)
-                .doesNotHaveDuplicates();
+                          .doesNotHaveDuplicates();
     }
 
     private ClassAndFieldPredicatePair pair(final Class<?> clazz) {
@@ -364,18 +364,18 @@ public class ObjectGeneratorTest {
     }
 
     private class GoodPojo_Equals_HashCode_ToString {
-        public long random;
-        public byte byteField;
-        public short shortType;
-        public int intType;
-        public long longType;
-        public double doubleType;
-        public boolean booleanType;
-        public float floatType;
-        public char charType;
-        public TestEnum1 testEnum1;
+        long random;
+        byte byteField;
+        short shortType;
+        int intType;
+        long longType;
+        double doubleType;
+        boolean booleanType;
+        float floatType;
+        char charType;
+        TestEnum1 testEnum1;
 
-        public GoodPojo_Equals_HashCode_ToString() {
+        GoodPojo_Equals_HashCode_ToString() {
             final Random random = new Random();
             this.random = random.nextLong();
         }
@@ -383,16 +383,16 @@ public class ObjectGeneratorTest {
         @Override
         public String toString() {
             return new ToStringBuilder(this).append("random", random)
-                    .append("byteField", byteField)
-                    .append("shortType", shortType)
-                    .append("intType", intType)
-                    .append("longType", longType)
-                    .append("doubleType", doubleType)
-                    .append("booleanType", booleanType)
-                    .append("floatType", floatType)
-                    .append("charType", charType)
-                    .append("testEnum1", testEnum1)
-                    .toString();
+                                            .append("byteField", byteField)
+                                            .append("shortType", shortType)
+                                            .append("intType", intType)
+                                            .append("longType", longType)
+                                            .append("doubleType", doubleType)
+                                            .append("booleanType", booleanType)
+                                            .append("floatType", floatType)
+                                            .append("charType", charType)
+                                            .append("testEnum1", testEnum1)
+                                            .toString();
         }
 
         @Override
@@ -408,31 +408,31 @@ public class ObjectGeneratorTest {
             final GoodPojo_Equals_HashCode_ToString that = (GoodPojo_Equals_HashCode_ToString) o;
 
             return new EqualsBuilder().append(random, that.random)
-                    .append(byteField, that.byteField)
-                    .append(shortType, that.shortType)
-                    .append(intType, that.intType)
-                    .append(longType, that.longType)
-                    .append(doubleType, that.doubleType)
-                    .append(booleanType, that.booleanType)
-                    .append(floatType, that.floatType)
-                    .append(charType, that.charType)
-                    .append(testEnum1, that.testEnum1)
-                    .isEquals();
+                                      .append(byteField, that.byteField)
+                                      .append(shortType, that.shortType)
+                                      .append(intType, that.intType)
+                                      .append(longType, that.longType)
+                                      .append(doubleType, that.doubleType)
+                                      .append(booleanType, that.booleanType)
+                                      .append(floatType, that.floatType)
+                                      .append(charType, that.charType)
+                                      .append(testEnum1, that.testEnum1)
+                                      .isEquals();
         }
 
         @Override
         public int hashCode() {
             return new HashCodeBuilder().append(random)
-                    .append(byteField)
-                    .append(shortType)
-                    .append(intType)
-                    .append(longType)
-                    .append(doubleType)
-                    .append(booleanType)
-                    .append(floatType)
-                    .append(charType)
-                    .append(testEnum1)
-                    .toHashCode();
+                                        .append(byteField)
+                                        .append(shortType)
+                                        .append(intType)
+                                        .append(longType)
+                                        .append(doubleType)
+                                        .append(booleanType)
+                                        .append(floatType)
+                                        .append(charType)
+                                        .append(testEnum1)
+                                        .toHashCode();
         }
 
         public long getRandom() {

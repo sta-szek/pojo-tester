@@ -18,24 +18,24 @@ import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 import static org.powermock.reflect.Whitebox.getInternalState;
 
 
-public class FloatValueChangerTest {
+class FloatValueChangerTest {
 
     private final AbstractFieldValueChanger<Float> valueChanger = new FloatValueChanger();
 
     @TestFactory
-    public Stream<DynamicTest> Should_Change_Primitive_Value() {
+    Stream<DynamicTest> Should_Change_Primitive_Value() {
         return Stream.of(Float.MAX_VALUE, Float.MIN_VALUE, Float.MIN_NORMAL, (float) 0, (float) -1, (float) 1)
                      .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Change_Primitive_Value(value)));
     }
 
     @TestFactory
-    public Stream<DynamicTest> Should_Change_Wrapped_Value() {
+    Stream<DynamicTest> Should_Change_Wrapped_Value() {
         return Stream.of(Float.MAX_VALUE, Float.MIN_VALUE, Float.MIN_NORMAL, (float) 0, (float) -1, (float) 1)
                      .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Change_Wrapped_Value(value)));
     }
 
     @TestFactory
-    public Stream<DynamicTest> Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not() {
+    Stream<DynamicTest> Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not() {
         return Stream.of(new TestCase(null, null, false),
                          new TestCase((float) 0, (float) 0, false),
                          new TestCase(Float.MIN_VALUE, Float.MIN_VALUE, false),
@@ -56,7 +56,9 @@ public class FloatValueChangerTest {
             final AllFiledTypes helpClass2 = new AllFiledTypes(value);
 
             // when
-            valueChanger.changeFieldsValues(helpClass1, helpClass2, Lists.newArrayList(AllFiledTypes.class.getDeclaredFields()));
+            valueChanger.changeFieldsValues(helpClass1,
+                                            helpClass2,
+                                            Lists.newArrayList(AllFiledTypes.class.getDeclaredFields()));
             final Float result1 = getInternalState(helpClass1, "floatType");
             final Float result2 = getInternalState(helpClass2, "floatType");
 
@@ -72,7 +74,9 @@ public class FloatValueChangerTest {
             final AllFiledTypes_Wrapped helpClass2 = new AllFiledTypes_Wrapped(value);
 
             // when
-            valueChanger.changeFieldsValues(helpClass1, helpClass2, Lists.newArrayList(AllFiledTypes_Wrapped.class.getDeclaredFields()));
+            valueChanger.changeFieldsValues(helpClass1,
+                                            helpClass2,
+                                            Lists.newArrayList(AllFiledTypes_Wrapped.class.getDeclaredFields()));
             final Float result1 = getInternalState(helpClass1, "floatType");
             final Float result2 = getInternalState(helpClass2, "floatType");
 

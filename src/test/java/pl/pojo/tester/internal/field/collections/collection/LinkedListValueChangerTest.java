@@ -8,10 +8,10 @@ import java.util.LinkedList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class LinkedListValueChangerTest {
+class LinkedListValueChangerTest {
 
     @Test
-    public void Should_Return_Null_When_Value_Is_Not_Null_And_Not_Empty() {
+    void Should_Return_Null_When_Value_Is_Not_Null_And_Not_Empty() {
         // given
         final LinkedList<String> value = new LinkedList<>();
         value.add("test");
@@ -27,7 +27,7 @@ public class LinkedListValueChangerTest {
     }
 
     @Test
-    public void Should_Return_Any_Instance_When_Value_Is_Null() {
+    void Should_Return_Any_Instance_When_Value_Is_Null() {
         // given
         final LinkedList<String> value = null;
         final Class<LinkedList> type = LinkedList.class;
@@ -42,7 +42,7 @@ public class LinkedListValueChangerTest {
     }
 
     @Test
-    public void Should_Return_Any_Instance_When_Value_Is_Empty() {
+    void Should_Return_Any_Instance_When_Value_Is_Empty() {
         // given
         final LinkedList<String> value = new LinkedList<>();
         final Class<LinkedList> type = LinkedList.class;

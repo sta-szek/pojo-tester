@@ -14,10 +14,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 
-public class MethodTest {
+class MethodTest {
 
     @TestFactory
-    public Stream<DynamicTest> Should_Return_Expected_Tester() {
+    Stream<DynamicTest> Should_Return_Expected_Tester() {
         return Stream.of(new TestCase(Method.EQUALS, EqualsTester.class),
                          new TestCase(Method.HASH_CODE, HashCodeTester.class),
                          new TestCase(Method.TO_STRING, ToStringTester.class),

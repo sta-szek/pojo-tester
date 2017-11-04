@@ -11,10 +11,10 @@ import static org.mockito.Mockito.*;
 import static org.powermock.reflect.Whitebox.setInternalState;
 
 
-public class MultiClassAssertionTest {
+class MultiClassAssertionTest {
 
     @Test
-    public void Should_Test_Against_Each_Tester() {
+    void Should_Test_Against_Each_Tester() {
         // given
         final ClassAndFieldPredicatePair caf = new ClassAndFieldPredicatePair(A.class);
         final MultiClassAssertion multiClassAssertion = new MultiClassAssertion(CollectionUtils.asList(caf));

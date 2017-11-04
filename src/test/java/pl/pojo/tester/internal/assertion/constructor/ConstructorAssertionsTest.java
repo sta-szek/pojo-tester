@@ -8,10 +8,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
 
-public class ConstructorAssertionsTest {
+class ConstructorAssertionsTest {
 
     @Test
-    public void Should_Not_Throw_Exception_When_One_Arg_Constructor_Initialized_Class() throws NoSuchMethodException {
+    void Should_Not_Throw_Exception_When_One_Arg_Constructor_Initialized_Class() throws NoSuchMethodException {
         // given
         final Constructor<?> declaredConstructor = StringConstructor.class.getDeclaredConstructor(String.class);
         final ConstructorAssertions assertions = new ConstructorAssertions(declaredConstructor);
@@ -25,7 +25,7 @@ public class ConstructorAssertionsTest {
     }
 
     @Test
-    public void Should_Not_Throw_Exception_When_Default_Constructor_Initialized_Class() throws NoSuchMethodException {
+    void Should_Not_Throw_Exception_When_Default_Constructor_Initialized_Class() throws NoSuchMethodException {
         // given
         final Constructor<?> declaredConstructor = DefaultConstructor.class.getDeclaredConstructor();
         final ConstructorAssertions assertions = new ConstructorAssertions(declaredConstructor);
@@ -39,7 +39,7 @@ public class ConstructorAssertionsTest {
     }
 
     @Test
-    public void Should_Throw_Exception_When_Getter_Does_Not_Return_Expected_Value() throws NoSuchMethodException {
+    void Should_Throw_Exception_When_Getter_Does_Not_Return_Expected_Value() throws NoSuchMethodException {
         // given
         final Constructor<?> declaredConstructor = ConstructorThrowingException.class.getDeclaredConstructor();
         final ConstructorAssertions assertions = new ConstructorAssertions(declaredConstructor);
@@ -53,7 +53,7 @@ public class ConstructorAssertionsTest {
     }
 
     private static class StringConstructor {
-        public StringConstructor(final String string) {
+        StringConstructor(final String string) {
         }
     }
 
@@ -62,7 +62,7 @@ public class ConstructorAssertionsTest {
     }
 
     private static class ConstructorThrowingException {
-        public ConstructorThrowingException() {
+        ConstructorThrowingException() {
             throw new RuntimeException();
         }
     }

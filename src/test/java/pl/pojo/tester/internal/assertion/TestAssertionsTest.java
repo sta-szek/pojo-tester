@@ -13,10 +13,10 @@ import java.lang.reflect.Constructor;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class TestAssertionsTest {
+class TestAssertionsTest {
 
     @Test
-    public void Should_Return_Expected_Equal_Assertion() {
+    void Should_Return_Expected_Equal_Assertion() {
         // given
         final TestAssertions testAssertions = new TestAssertions();
         final String objectUnderTest = "objectUnderTest";
@@ -30,7 +30,7 @@ public class TestAssertionsTest {
     }
 
     @Test
-    public void Should_Return_Expected_HashCode_Assertion() {
+    void Should_Return_Expected_HashCode_Assertion() {
         // given
         final TestAssertions testAssertions = new TestAssertions();
         final String objectUnderTest = "objectUnderTest";
@@ -44,7 +44,7 @@ public class TestAssertionsTest {
     }
 
     @Test
-    public void Should_Return_Expected_ToString_Assertion() {
+    void Should_Return_Expected_ToString_Assertion() {
         // given
         final TestAssertions testAssertions = new TestAssertions();
         final String objectUnderTest = "objectUnderTest";
@@ -58,7 +58,7 @@ public class TestAssertionsTest {
     }
 
     @Test
-    public void Should_Return_Expected_Setter_Assertion() {
+    void Should_Return_Expected_Setter_Assertion() {
         // given
         final TestAssertions testAssertions = new TestAssertions();
         final String objectUnderTest = "objectUnderTest";
@@ -72,7 +72,7 @@ public class TestAssertionsTest {
     }
 
     @Test
-    public void Should_Return_Expected_Getter_Assertion() {
+    void Should_Return_Expected_Getter_Assertion() {
         // given
         final TestAssertions testAssertions = new TestAssertions();
         final String objectUnderTest = "objectUnderTest";
@@ -86,7 +86,7 @@ public class TestAssertionsTest {
     }
 
     @Test
-    public void Should_Return_Expected_Constructor_Assertion() throws NoSuchMethodException {
+    void Should_Return_Expected_Constructor_Assertion() throws NoSuchMethodException {
         // given
         final TestAssertions testAssertions = new TestAssertions();
         final Constructor<Pojo> declaredConstructor = Pojo.class.getDeclaredConstructor();
@@ -99,6 +99,7 @@ public class TestAssertionsTest {
         assertThat(result).isEqualToComparingFieldByField(expectedResult);
     }
 
-    private static class Pojo {}
+    private static class Pojo {
+    }
 
 }

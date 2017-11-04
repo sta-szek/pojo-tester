@@ -14,11 +14,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
 
-public class SetterAssertionsTest {
+class SetterAssertionsTest {
 
     @Test
-    public void Should_Not_Throw_Exception_When_Setter_Sets_Value()
-            throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException {
+    void Should_Not_Throw_Exception_When_Setter_Sets_Value()
+            throws NoSuchMethodException {
         // given
         final GoodPojo_Equals_HashCode_ToString pojo = new GoodPojo_Equals_HashCode_ToString();
         pojo.charType = 'x';
@@ -27,15 +27,17 @@ public class SetterAssertionsTest {
         final Method setter = pojoClass.getMethod("setCharType", char.class);
 
         // when
-        final Throwable result = catchThrowable(() -> assertions.willSetValueOnField(setter, pojo.getClass()
-                                                                                                 .getField("charType"), 'x'));
+        final Throwable result = catchThrowable(() -> assertions.willSetValueOnField(setter,
+                                                                                     pojo.getClass()
+                                                                                         .getField("charType"),
+                                                                                     'x'));
         // then
         assertThat(result).isNull();
     }
 
     @Test
-    public void Should_Throw_Exception_When_Setter_Does_Not_Set_Value()
-            throws NoSuchFieldException, IllegalAccessException, NoSuchMethodException {
+    void Should_Throw_Exception_When_Setter_Does_Not_Set_Value()
+            throws NoSuchMethodException {
         // given
         final BadPojoSetterGetter pojo = new BadPojoSetterGetter();
         final SetterAssertions assertions = new SetterAssertions(pojo);
@@ -43,8 +45,10 @@ public class SetterAssertionsTest {
         final Method setter = pojoClass.getMethod("setX", char.class);
 
         // when
-        final Throwable result = catchThrowable(() -> assertions.willSetValueOnField(setter, pojo.getClass()
-                                                                                                 .getField("charY"), 'x'));
+        final Throwable result = catchThrowable(() -> assertions.willSetValueOnField(setter,
+                                                                                     pojo.getClass()
+                                                                                         .getField("charY"),
+                                                                                     'x'));
         // then
         assertThat(result).isInstanceOf(SetterAssertionError.class);
     }

@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class GetOrSetValueExceptionTest {
+class GetOrSetValueExceptionTest {
 
     @Test
-    public void Should_Create_Message_Containing_Field_Name_And_Class_And_Cause_Message() {
+    void Should_Create_Message_Containing_Field_Name_And_Class_And_Cause_Message() {
         // given
         final String causeMessage = "cause-message";
         final String fieldName = "class_a_field_name";

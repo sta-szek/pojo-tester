@@ -9,10 +9,10 @@ import java.util.LinkedList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class DequeValueChangerTest {
+class DequeValueChangerTest {
 
     @Test
-    public void Should_Return_Null_When_Value_Is_Not_Null_And_Not_Empty() {
+    void Should_Return_Null_When_Value_Is_Not_Null_And_Not_Empty() {
         // given
         final Deque<String> value = new LinkedList<>();
         value.add("test");
@@ -28,7 +28,7 @@ public class DequeValueChangerTest {
     }
 
     @Test
-    public void Should_Return_Any_Instance_When_Value_Is_Null() {
+    void Should_Return_Any_Instance_When_Value_Is_Null() {
         // given
         final Deque<String> value = null;
         final Class<Deque> type = Deque.class;
@@ -43,7 +43,7 @@ public class DequeValueChangerTest {
     }
 
     @Test
-    public void Should_Return_Any_Instance_When_Value_Is_Empty() {
+    void Should_Return_Any_Instance_When_Value_Is_Empty() {
         // given
         final Deque<String> value = new LinkedList<>();
         final Class<Deque> type = Deque.class;

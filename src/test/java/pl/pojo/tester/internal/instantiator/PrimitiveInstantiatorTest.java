@@ -11,10 +11,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 
-public class PrimitiveInstantiatorTest {
+class PrimitiveInstantiatorTest {
 
     @TestFactory
-    public Stream<DynamicTest> Should_Instantiate_Primitive() {
+    Stream<DynamicTest> Should_Instantiate_Primitive() {
         return Stream.of(Integer.class,
                          Byte.class,
                          Character.class,
@@ -34,7 +34,7 @@ public class PrimitiveInstantiatorTest {
                      .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Instantiate_Primitive(value)));
     }
 
-    public Executable Should_Instantiate_Primitive(final Class<?> classToInstantiate) {
+    private Executable Should_Instantiate_Primitive(final Class<?> classToInstantiate) {
         return () -> {
             // given
             final PrimitiveInstantiator instantiator = new PrimitiveInstantiator(classToInstantiate);

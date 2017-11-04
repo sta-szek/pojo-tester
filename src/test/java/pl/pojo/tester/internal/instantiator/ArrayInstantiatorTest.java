@@ -12,10 +12,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 
-public class ArrayInstantiatorTest {
+class ArrayInstantiatorTest {
 
     @TestFactory
-    public Stream<DynamicTest> Should_Create_Array_By_Class() {
+    Stream<DynamicTest> Should_Create_Array_By_Class() {
         return Stream.of(Integer[].class,
                          Byte[].class,
                          Character[].class,
@@ -35,7 +35,7 @@ public class ArrayInstantiatorTest {
                      .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Create_Array(value)));
     }
 
-    public Executable Should_Create_Array(final Class<?> classToInstantiate) {
+    private Executable Should_Create_Array(final Class<?> classToInstantiate) {
         return () -> {
             // given
             final ArrayInstantiator instantiator = new ArrayInstantiator(classToInstantiate);

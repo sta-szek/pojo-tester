@@ -17,10 +17,10 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 
-public class MethodUtilsTest {
+class MethodUtilsTest {
 
     @TestFactory
-    public Stream<DynamicTest> Should_Throw_Exception_When_Setter_Was_Not_Found() throws NoSuchFieldException {
+    Stream<DynamicTest> Should_Throw_Exception_When_Setter_Was_Not_Found() throws NoSuchFieldException {
         final Field fieldA = field(Setters.class, "a");
         final Field fieldB = field(Setters.class, "b");
         final Field fieldC = field(Setters.class, "c");
@@ -38,7 +38,7 @@ public class MethodUtilsTest {
                                                Should_Throw_Exception_When_Setter_Was_Not_Found(value)));
     }
 
-    public Executable Should_Throw_Exception_When_Setter_Was_Not_Found(final Field field) {
+    private Executable Should_Throw_Exception_When_Setter_Was_Not_Found(final Field field) {
         return () -> {
             // when
             final Throwable result = catchThrowable(() -> MethodUtils.findSetterFor(Setters.class, field));
@@ -49,7 +49,7 @@ public class MethodUtilsTest {
     }
 
     @TestFactory
-    public Stream<DynamicTest> Should_Throw_Exception_When_Getter_Was_Not_Found() throws NoSuchFieldException {
+    Stream<DynamicTest> Should_Throw_Exception_When_Getter_Was_Not_Found() throws NoSuchFieldException {
         final Field fieldA = field(Getters.class, "a");
         final Field fieldB = field(Getters.class, "b");
         final Field fieldD = field(Getters.class, "d");
@@ -67,7 +67,7 @@ public class MethodUtilsTest {
                                                Should_Throw_Exception_When_Getter_Was_Not_Found(value)));
     }
 
-    public Executable Should_Throw_Exception_When_Getter_Was_Not_Found(final Field field) {
+    private Executable Should_Throw_Exception_When_Getter_Was_Not_Found(final Field field) {
         return () -> {
             // when
             final Throwable result = catchThrowable(() -> MethodUtils.findGetterFor(Getters.class, field));
@@ -78,7 +78,7 @@ public class MethodUtilsTest {
     }
 
     @TestFactory
-    public Stream<DynamicTest> Should_Return_Expected_Getter() throws NoSuchFieldException, NoSuchMethodException {
+    Stream<DynamicTest> Should_Return_Expected_Getter() throws NoSuchFieldException, NoSuchMethodException {
         final Field field1 = field(Getters.class, "getter1");
         final Field field2 = field(Getters.class, "getter2");
         final Field field3 = field(Getters.class, "getter3");
@@ -119,7 +119,7 @@ public class MethodUtilsTest {
                      .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Return_Expected_Getter(value)));
     }
 
-    public Executable Should_Return_Expected_Getter(final GetterTestCase testCase) {
+    private Executable Should_Return_Expected_Getter(final GetterTestCase testCase) {
         return () -> {
             // when
             final Method result = MethodUtils.findGetterFor(testCase.field.getDeclaringClass(), testCase.field);
@@ -130,7 +130,7 @@ public class MethodUtilsTest {
     }
 
     @TestFactory
-    public Stream<DynamicTest> Should_Return_Expected_Setter() throws NoSuchFieldException, NoSuchMethodException {
+    Stream<DynamicTest> Should_Return_Expected_Setter() throws NoSuchFieldException, NoSuchMethodException {
         final Field field1 = field(Setters.class, "setter1");
         final Field field2 = field(Setters.class, "setter2");
         final Field field3 = field(Setters.class, "setter3");
@@ -167,7 +167,7 @@ public class MethodUtilsTest {
                      .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Return_Expected_Setter(value)));
     }
 
-    public Executable Should_Return_Expected_Setter(final SetterTestCase testCase) {
+    private Executable Should_Return_Expected_Setter(final SetterTestCase testCase) {
         return () -> {
             // when
             final Method result = MethodUtils.findSetterFor(testCase.field.getDeclaringClass(), testCase.field);

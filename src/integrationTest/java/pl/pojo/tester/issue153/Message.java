@@ -8,7 +8,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.UUID;
 
-public class Message {
+class Message {
 
     private final UUID id;
     private final Set<Person> readers;

@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class EnumInstantiatorTest {
 
     @Test
-    public void Should_Return_Null_When_Enum_Is_Empty() {
+    void Should_Return_Null_When_Enum_Is_Empty() {
         // given
         final EnumInstantiator instantiator = new EnumInstantiator(EmptyEnum.class);
 
@@ -22,7 +22,7 @@ public class EnumInstantiatorTest {
     }
 
     @Test
-    public void Should_Return_Any_Enum_Value() {
+    void Should_Return_Any_Enum_Value() {
         // given
         final Class<?> doubleEnumClass = DoubleEnum.class;
         final EnumInstantiator instantiator = new EnumInstantiator(doubleEnumClass);
@@ -35,7 +35,7 @@ public class EnumInstantiatorTest {
     }
 
     @Test
-    public void Should_Return_One_Enum_Value() {
+    void Should_Return_One_Enum_Value() {
         // given
         final Class<?> oneEnumClass = OneEnum.class;
         final EnumInstantiator instantiator = new EnumInstantiator(oneEnumClass);

@@ -22,17 +22,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 
-public class InstantiableTest {
+class InstantiableTest {
 
     private static final MultiValuedMap<Class<?>, ConstructorParameters> CLASS_AND_CONSTRUCTOR_PARAMETERS = new ArrayListValuedHashMap<>();
 
     @BeforeAll
-    private static void beforeAll() {
+    static void beforeAll() {
         CLASS_AND_CONSTRUCTOR_PARAMETERS.put(UserDefinedClass.class, null);
     }
 
     @TestFactory
-    public Stream<DynamicTest> Should_Return_Expected_Instantiator_For_Class() throws NoSuchFieldException {
+    Stream<DynamicTest> Should_Return_Expected_Instantiator_For_Class() {
         return Stream.of(new ClassInstantiator(Serializable.class, ProxyInstantiator.class),
                          new ClassInstantiator(Override.class, ProxyInstantiator.class),
                          new ClassInstantiator(Runnable.class, ProxyInstantiator.class),
@@ -118,7 +118,7 @@ public class InstantiableTest {
                                                Should_Return_Expected_Instantiator_For_Class(value)));
     }
 
-    public Executable Should_Return_Expected_Instantiator_For_Class(final ClassInstantiator testCase) {
+    private Executable Should_Return_Expected_Instantiator_For_Class(final ClassInstantiator testCase) {
         return () -> {
             // when
             final Object result = Instantiable.forClass(testCase.clazz, CLASS_AND_CONSTRUCTOR_PARAMETERS);
@@ -129,19 +129,20 @@ public class InstantiableTest {
     }
 
     @Test
-    public void Should_Instantiate_Two_Classes() {
+    void Should_Instantiate_Two_Classes() {
         // given
-        final Class[] classesToInstantiate = { A.class, B.class };
+        final Class[] classesToInstantiate = {A.class, B.class};
 
         // when
         final Object[] result = Instantiable.instantiateClasses(classesToInstantiate, new ArrayListValuedHashMap<>());
 
         // then
-        assertThat(result).extracting(Object::getClass).containsExactlyInAnyOrder(classesToInstantiate);
+        assertThat(result).extracting(Object::getClass)
+                          .containsExactlyInAnyOrder(classesToInstantiate);
     }
 
     @Test
-    public void Should_Return_User_Defined_Constructor_Instantiator_If_Class_Does_Not_Qualifies_For_Proxy_And() {
+    void Should_Return_User_Defined_Constructor_Instantiator_If_Class_Does_Not_Qualifies_For_Proxy_And() {
         // given
         final ArrayListValuedHashMap<Class<?>, ConstructorParameters> constructorParameters = new ArrayListValuedHashMap<>();
         final Class<?> clazz = A.class;
@@ -155,7 +156,7 @@ public class InstantiableTest {
     }
 
     @Test
-    public void Should_Return_Proxy_Instantiator_If_Class_Qualifies_For_Proxy_And_User_Defined_Constructor_Parameters() {
+    void Should_Return_Proxy_Instantiator_If_Class_Qualifies_For_Proxy_And_User_Defined_Constructor_Parameters() {
         // given
         final ArrayListValuedHashMap<Class<?>, ConstructorParameters> constructorParameters = new ArrayListValuedHashMap<>();
         final Class<?> clazz = Abstract.class;

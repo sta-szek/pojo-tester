@@ -13,10 +13,10 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.util.Lists.newArrayList;
 
 
-public class GetterTesterTest {
+class GetterTesterTest {
 
     @Test
-    public void Should_Pass_All_Getter_Tests() {
+    void Should_Pass_All_Getter_Tests() {
         // given
         final Class[] classesToTest = {GoodPojoGetter.class};
         final GetterTester getterTester = new GetterTester(DefaultFieldValueChanger.INSTANCE);
@@ -29,7 +29,7 @@ public class GetterTesterTest {
     }
 
     @Test
-    public void Should_Pass_All_Getter_Tests_Excluding_Fields() {
+    void Should_Pass_All_Getter_Tests_Excluding_Fields() {
         // given
         final GetterTester getterTester = new GetterTester();
         final Class<?> clazz = BadPojoGetter.class;
@@ -43,7 +43,7 @@ public class GetterTesterTest {
     }
 
     @Test
-    public void Should_Pass_All_Getter_Tests_Including_Fields() {
+    void Should_Pass_All_Getter_Tests_Including_Fields() {
         // given
         final GetterTester getterTester = new GetterTester();
         final Class<?> clazz = BadPojoGetter.class;
@@ -57,7 +57,7 @@ public class GetterTesterTest {
     }
 
     @Test
-    public void Should_Fail_Multiple_Classes() {
+    void Should_Fail_Multiple_Classes() {
         // given
         final Class[] classesToTest = {BadPojoGetter.class, Getters.class};
         final GetterTester getterTester = new GetterTester();
@@ -99,13 +99,13 @@ public class GetterTesterTest {
 
     private class Getters {
 
-        public boolean getter1;
-        public boolean getter2;
-        public boolean getter3;
-        public Boolean getter4;
-        public int getter5;
-        public Integer getter6;
-        public Boolean getter7;
+        boolean getter1;
+        boolean getter2;
+        boolean getter3;
+        Boolean getter4;
+        int getter5;
+        Integer getter6;
+        Boolean getter7;
         private int a;
         private int b;
         private int d;

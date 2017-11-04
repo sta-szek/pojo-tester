@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class StringClassInstantiatorTest {
+class StringClassInstantiatorTest {
 
     @Test
-    public void Should_Return_Pojo_String() {
+    void Should_Return_Pojo_String() {
         // given
         final StringClassInstantiator instantiator = new StringClassInstantiator();
         final String expectedResult = "www.pojo.pl";

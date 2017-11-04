@@ -8,10 +8,10 @@ import static pl.pojo.tester.internal.preconditions.ParameterPreconditions.check
 import static pl.pojo.tester.internal.preconditions.ParameterPreconditions.checkNotNull;
 
 
-public class ParameterPreconditionsTest {
+class ParameterPreconditionsTest {
 
     @Test
-    public void Should_Throw_Exception_When_String_Parameter_Is_Empty_String() {
+    void Should_Throw_Exception_When_String_Parameter_Is_Empty_String() {
         // given
 
         // when
@@ -22,7 +22,7 @@ public class ParameterPreconditionsTest {
     }
 
     @Test
-    public void Should_Throw_Exception_When_String_Parameter_Is_White_Char_String() {
+    void Should_Throw_Exception_When_String_Parameter_Is_White_Char_String() {
         // given
 
         // when
@@ -33,7 +33,7 @@ public class ParameterPreconditionsTest {
     }
 
     @Test
-    public void Should_Throw_Exception_When_String_Parameter_Is_Null() {
+    void Should_Throw_Exception_When_String_Parameter_Is_Null() {
         // given
         final String parameterValue = null;
 
@@ -45,7 +45,7 @@ public class ParameterPreconditionsTest {
     }
 
     @Test
-    public void Should_Not_Throw_Exception_When_String_Parameter_Is_Not_Blank() {
+    void Should_Not_Throw_Exception_When_String_Parameter_Is_Not_Blank() {
         // given
 
         // when
@@ -56,7 +56,7 @@ public class ParameterPreconditionsTest {
     }
 
     @Test
-    public void Should_Throw_Exception_When_At_Least_One_Parameter_Is_Empty_String() {
+    void Should_Throw_Exception_When_At_Least_One_Parameter_Is_Empty_String() {
         // given
         final String[] parameterValue = new String[]{"valid", ""};
 
@@ -69,7 +69,7 @@ public class ParameterPreconditionsTest {
     }
 
     @Test
-    public void Should_Throw_Exception_When_At_Least_One_Parameter_Is_White_Char_String() {
+    void Should_Throw_Exception_When_At_Least_One_Parameter_Is_White_Char_String() {
         // given
         final String[] parameterValue = new String[]{"valid", " "};
 
@@ -81,7 +81,7 @@ public class ParameterPreconditionsTest {
     }
 
     @Test
-    public void Should_Not_Throw_Exception_When_All_Parameters_Are_Not_Blank() {
+    void Should_Not_Throw_Exception_When_All_Parameters_Are_Not_Blank() {
         // given
         final String[] parameterValue = new String[]{"valid", "valid"};
 
@@ -93,7 +93,7 @@ public class ParameterPreconditionsTest {
     }
 
     @Test
-    public void Should_Throw_Exception_When_At_Least_One_Parameter_Is_Null() {
+    void Should_Throw_Exception_When_At_Least_One_Parameter_Is_Null() {
         // given
         final String[] parameterValue = new String[]{"valid", null};
 
@@ -105,7 +105,7 @@ public class ParameterPreconditionsTest {
     }
 
     @Test
-    public void Should_Throw_Exception_When_Object_Parameter_Is_Null() {
+    void Should_Throw_Exception_When_Object_Parameter_Is_Null() {
         // given
         final Object parameterValue = null;
 
@@ -117,7 +117,7 @@ public class ParameterPreconditionsTest {
     }
 
     @Test
-    public void Should_Not_Throw_Exception_When_Object_Parameter_Is_Not_Null() {
+    void Should_Not_Throw_Exception_When_Object_Parameter_Is_Not_Null() {
         // given
         final Object parameterValue = new Object();
 
@@ -129,7 +129,7 @@ public class ParameterPreconditionsTest {
     }
 
     @Test
-    public void Should_Throw_Exception_When_At_Least_One_Object_Parameter_Is_Null() {
+    void Should_Throw_Exception_When_At_Least_One_Object_Parameter_Is_Null() {
         // given
         final Object[] parameterValue = {new Object(), null};
 
@@ -141,7 +141,7 @@ public class ParameterPreconditionsTest {
     }
 
     @Test
-    public void Should_Not_Throw_Exception_When_All_Parameters_Are_Not_Null() {
+    void Should_Not_Throw_Exception_When_All_Parameters_Are_Not_Null() {
         // given
         final Object[] parameterValue = {new Object(), new Object()};
 

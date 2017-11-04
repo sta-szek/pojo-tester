@@ -18,18 +18,18 @@ import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 import static org.powermock.reflect.Whitebox.getInternalState;
 
 
-public class EnumValueChangerTest {
+class EnumValueChangerTest {
 
     private final AbstractFieldValueChanger<Enum> valueChanger = new EnumValueChanger();
 
     @TestFactory
-    public Stream<DynamicTest> Should_Change_Enum_Value() {
+    Stream<DynamicTest> Should_Change_Enum_Value() {
         return Stream.of(TestEnum1.ENUM1, TestEnum1.ENUM2)
                      .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Change_Enum_Value(value)));
     }
 
     @TestFactory
-    public Stream<DynamicTest> Should_Return_True_Or_False_Whether_Can_Change_Or_Not() throws NoSuchFieldException {
+    Stream<DynamicTest> Should_Return_True_Or_False_Whether_Can_Change_Or_Not() throws NoSuchFieldException {
         return Stream.of(new CanChangeCase(EnumFields.class.getDeclaredField("nullEnum"), true),
                          new CanChangeCase(EnumFields.class.getDeclaredField("testEnum1"), true),
                          new CanChangeCase(EnumFields.class.getDeclaredField("singleEnum1"), true),
@@ -41,7 +41,7 @@ public class EnumValueChangerTest {
     }
 
     @TestFactory
-    public Stream<DynamicTest> Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not() {
+    Stream<DynamicTest> Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not() {
         return Stream.of(new AreDifferentCase(null, null, false),
                          new AreDifferentCase(TestEnum1.ENUM1, TestEnum1.ENUM1, false),
                          new AreDifferentCase(TestEnum1.ENUM2, TestEnum1.ENUM2, false),
@@ -55,7 +55,7 @@ public class EnumValueChangerTest {
     }
 
     @Test
-    public void Should_Throw_Exception_When_Enum_Has_No_Constants() {
+    void Should_Throw_Exception_When_Enum_Has_No_Constants() {
         // given
 
         // when
@@ -66,7 +66,7 @@ public class EnumValueChangerTest {
     }
 
     @Test
-    public void Should_Return_Null_For_Single_Enum_Constant() {
+    void Should_Return_Null_For_Single_Enum_Constant() {
         // given
 
         // when

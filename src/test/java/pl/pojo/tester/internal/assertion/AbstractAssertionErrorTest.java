@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class AbstractAssertionErrorTest {
+class AbstractAssertionErrorTest {
 
     @Test
-    public void Should_Set_Stack_Trace_To_Empty_Array() {
+    void Should_Set_Stack_Trace_To_Empty_Array() {
         // given
         final Class<String> testedCass = String.class;
         final StackTraceElement[] expectedResult = new StackTraceElement[]{};
@@ -22,14 +22,14 @@ public class AbstractAssertionErrorTest {
     }
 
     @Test
-    public void Should_Return_Expected_Message() {
+    void Should_Return_Expected_Message() {
         // given
         final Class<String> testedCass = String.class;
         final String expectedResult = "\n"
-                                      + "\n"
-                                      + "\n"
-                                      + "errorPrefix\n"
-                                      + "detailedMessage";
+                + "\n"
+                + "\n"
+                + "errorPrefix\n"
+                + "detailedMessage";
         final AbstractAssertionError error = new MockOfAssertionError(testedCass);
 
         // when

@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class ArrayListValueChangerTest {
+class ArrayListValueChangerTest {
 
     @Test
-    public void Should_Return_Null_When_Value_Is_Not_Null_And_Not_Empty() {
+    void Should_Return_Null_When_Value_Is_Not_Null_And_Not_Empty() {
         // given
         final ArrayList<String> value = new ArrayList<>();
         value.add("test");
@@ -27,7 +27,7 @@ public class ArrayListValueChangerTest {
     }
 
     @Test
-    public void Should_Return_Any_Instance_When_Value_Is_Null() {
+    void Should_Return_Any_Instance_When_Value_Is_Null() {
         // given
         final ArrayList<String> value = null;
         final Class<ArrayList> type = ArrayList.class;
@@ -42,7 +42,7 @@ public class ArrayListValueChangerTest {
     }
 
     @Test
-    public void Should_Return_Any_Instance_When_Value_Is_Empty() {
+    void Should_Return_Any_Instance_When_Value_Is_Empty() {
         // given
         final ArrayList<String> value = new ArrayList<>();
         final Class<ArrayList> type = ArrayList.class;

@@ -11,22 +11,22 @@ import java.util.Random;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class ClassAndFieldPredicatePairTest {
+class ClassAndFieldPredicatePairTest {
 
     @Test
-    public void Should_Create_Predicate_That_Accepts_All_Fields() {
+    void Should_Create_Predicate_That_Accepts_All_Fields() {
         // given
         final Class<?> clazz = GoodPojo_Equals_HashCode_ToString.class;
         final String[] expectedFields = new String[]{"random",
-                                                     "byteField",
-                                                     "shortType",
-                                                     "intType",
-                                                     "longType",
-                                                     "doubleType",
-                                                     "booleanType",
-                                                     "floatType",
-                                                     "charType",
-                                                     "testEnum1"};
+                "byteField",
+                "shortType",
+                "intType",
+                "longType",
+                "doubleType",
+                "booleanType",
+                "floatType",
+                "charType",
+                "testEnum1"};
         // when
         final ClassAndFieldPredicatePair result = new ClassAndFieldPredicatePair(clazz);
 
@@ -35,19 +35,19 @@ public class ClassAndFieldPredicatePairTest {
     }
 
     @Test
-    public void Should_Create_Predicate_That_Accepts_All_Fields_By_Class_Name() {
+    void Should_Create_Predicate_That_Accepts_All_Fields_By_Class_Name() {
         // given
         final Class<?> expectedClass = GoodPojo_Equals_HashCode_ToString.class;
         final String[] expectedFields = new String[]{"random",
-                                                     "byteField",
-                                                     "shortType",
-                                                     "intType",
-                                                     "longType",
-                                                     "doubleType",
-                                                     "booleanType",
-                                                     "floatType",
-                                                     "charType",
-                                                     "testEnum1"};
+                "byteField",
+                "shortType",
+                "intType",
+                "longType",
+                "doubleType",
+                "booleanType",
+                "floatType",
+                "charType",
+                "testEnum1"};
 
         // when
         final ClassAndFieldPredicatePair result = new ClassAndFieldPredicatePair(expectedClass.getName());
@@ -58,22 +58,24 @@ public class ClassAndFieldPredicatePairTest {
     }
 
     @Test
-    public void Should_Create_Predicate_That_Accepts_Given_Fields_By_Class_Name() {
+    void Should_Create_Predicate_That_Accepts_Given_Fields_By_Class_Name() {
         // given
         final Class<?> expectedClass = GoodPojo_Equals_HashCode_ToString.class;
         final String[] expectedFields = new String[]{"random",
-                                                     "byteField",
-                                                     "shortType",
-                                                     "intType",
-                                                     "longType",
-                                                     "doubleType",
-                                                     "booleanType",
-                                                     "floatType",
-                                                     "charType",
-                                                     "testEnum1"};
+                "byteField",
+                "shortType",
+                "intType",
+                "longType",
+                "doubleType",
+                "booleanType",
+                "floatType",
+                "charType",
+                "testEnum1"};
 
         // when
-        final ClassAndFieldPredicatePair result = new ClassAndFieldPredicatePair(expectedClass.getName(), FieldPredicate.includeAllFields(expectedClass));
+        final ClassAndFieldPredicatePair result = new ClassAndFieldPredicatePair(expectedClass.getName(),
+                                                                                 FieldPredicate.includeAllFields(
+                                                                                         expectedClass));
 
         // then
         assertThat(result.getClazz()).isEqualTo(expectedClass);
@@ -81,18 +83,18 @@ public class ClassAndFieldPredicatePairTest {
     }
 
     private class GoodPojo_Equals_HashCode_ToString {
-        public long random;
-        public byte byteField;
-        public short shortType;
-        public int intType;
-        public long longType;
-        public double doubleType;
-        public boolean booleanType;
-        public float floatType;
-        public char charType;
-        public TestEnum1 testEnum1;
+        long random;
+        byte byteField;
+        short shortType;
+        int intType;
+        long longType;
+        double doubleType;
+        boolean booleanType;
+        float floatType;
+        char charType;
+        TestEnum1 testEnum1;
 
-        public GoodPojo_Equals_HashCode_ToString() {
+        GoodPojo_Equals_HashCode_ToString() {
             final Random random = new Random();
             this.random = random.nextLong();
         }

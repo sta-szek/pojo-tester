@@ -22,12 +22,12 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 
-public class BestConstructorInstantiatorTest {
+class BestConstructorInstantiatorTest {
 
     private final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters = new ArrayListValuedHashMap<>();
 
     @TestFactory
-    public Stream<DynamicTest> Should_Instantiate_Non_Public_Classes() {
+    Stream<DynamicTest> Should_Instantiate_Non_Public_Classes() {
         return Stream.of("classesForTest.UnpublicClass",
                          "classesForTest.UnpublicClass$PrivateStaticFinalNestedClass",
                          "classesForTest.UnpublicClass$PrivateStaticFinalNestedClass$PrivateStaticFinalNestedClass2",
@@ -53,14 +53,16 @@ public class BestConstructorInstantiatorTest {
                          "classesForTest.Person",
                          "classesForTest.Person$PersonBuilder"
         )
-                     .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Instantiate_Non_Public_Classes(value)));
+                     .map(value -> dynamicTest(getDefaultDisplayName(value),
+                                               Should_Instantiate_Non_Public_Classes(value)));
     }
 
-    public Executable Should_Instantiate_Non_Public_Classes(final String className) {
+    private Executable Should_Instantiate_Non_Public_Classes(final String className) {
         return () -> {
             // given
             final Class<?> classUnderTest = Class.forName(className);
-            final BestConstructorInstantiator instantiator = new BestConstructorInstantiator(classUnderTest, constructorParameters);
+            final BestConstructorInstantiator instantiator = new BestConstructorInstantiator(classUnderTest,
+                                                                                             constructorParameters);
 
             // when
             final Object result = instantiator.instantiate();
@@ -71,7 +73,7 @@ public class BestConstructorInstantiatorTest {
     }
 
     @TestFactory
-    public Stream<DynamicTest> Should_Create_Object_Using_Best_Constructor() {
+    Stream<DynamicTest> Should_Create_Object_Using_Best_Constructor() {
         return Stream.of(Constructor_Array_Boolean.class,
                          Constructor_Array_Boolean_Primitive.class,
                          Constructor_Array_Byte.class,
@@ -107,10 +109,11 @@ public class BestConstructorInstantiatorTest {
                                                Should_Create_Object_Using_Best_Constructor(value)));
     }
 
-    public Executable Should_Create_Object_Using_Best_Constructor(final Class<?> classToInstantiate) {
+    private Executable Should_Create_Object_Using_Best_Constructor(final Class<?> classToInstantiate) {
         return () -> {
             // given
-            final BestConstructorInstantiator instantiator = new BestConstructorInstantiator(classToInstantiate, constructorParameters);
+            final BestConstructorInstantiator instantiator = new BestConstructorInstantiator(classToInstantiate,
+                                                                                             constructorParameters);
 
             // when
             final Object result = instantiator.instantiate();
@@ -121,17 +124,18 @@ public class BestConstructorInstantiatorTest {
     }
 
     @TestFactory
-    public Stream<DynamicTest> Should_Throw_Exception_When_Cannot_Instantiate_Class() {
+    Stream<DynamicTest> Should_Throw_Exception_When_Cannot_Instantiate_Class() {
         return Stream.of(One_Arg_Constructor_Throws_NPE.class,
                          No_Args_Constructor_Throws_NPE.class)
                      .map(value -> dynamicTest(getDefaultDisplayName(value.getName()),
                                                Should_Throw_Exception_When_Cannot_Instantiate_Class(value)));
     }
 
-    public Executable Should_Throw_Exception_When_Cannot_Instantiate_Class(final Class<?> classToInstantiate) {
+    private Executable Should_Throw_Exception_When_Cannot_Instantiate_Class(final Class<?> classToInstantiate) {
         return () -> {
             // given
-            final BestConstructorInstantiator instantiator = new BestConstructorInstantiator(classToInstantiate, constructorParameters);
+            final BestConstructorInstantiator instantiator = new BestConstructorInstantiator(classToInstantiate,
+                                                                                             constructorParameters);
 
             // when
             final Throwable result = catchThrowable(instantiator::instantiate);
@@ -142,10 +146,11 @@ public class BestConstructorInstantiatorTest {
     }
 
     @Test
-    public void Should_Create_Object_Using_Private_Constructor() {
+    void Should_Create_Object_Using_Private_Constructor() {
         // given
         final Class<?> classToInstantiate = PrivateConstructor.class;
-        final BestConstructorInstantiator instantiator = new BestConstructorInstantiator(classToInstantiate, constructorParameters);
+        final BestConstructorInstantiator instantiator = new BestConstructorInstantiator(classToInstantiate,
+                                                                                         constructorParameters);
 
         // when
         final Object result = instantiator.instantiate();
@@ -155,10 +160,11 @@ public class BestConstructorInstantiatorTest {
     }
 
     @Test
-    public void Should_Create_Object_With_Second_Constructor_If_First_Threw_exception() {
+    void Should_Create_Object_With_Second_Constructor_If_First_Threw_exception() {
         // given
         final Class<?> classToInstantiate = Constructors_First_Throws_Exception.class;
-        final BestConstructorInstantiator instantiator = new BestConstructorInstantiator(classToInstantiate, constructorParameters);
+        final BestConstructorInstantiator instantiator = new BestConstructorInstantiator(classToInstantiate,
+                                                                                         constructorParameters);
 
         // when
         final Object result = instantiator.instantiate();
@@ -168,11 +174,11 @@ public class BestConstructorInstantiatorTest {
     }
 
     @Test
-    public void Should_Create_Object_With_User_Defined_Constructor_Parameters() {
+    void Should_Create_Object_With_User_Defined_Constructor_Parameters() {
         // given
         final ArrayListValuedHashMap<Class<?>, ConstructorParameters> constructorParameters = new ArrayListValuedHashMap<>();
-        final ConstructorParameters parameters = new ConstructorParameters(new Object[]{ "expectedString" },
-                                                                           new Class[]{ Object.class });
+        final ConstructorParameters parameters = new ConstructorParameters(new Object[]{"expectedString"},
+                                                                           new Class[]{Object.class});
         constructorParameters.put(NoDefaultConstructor.class, parameters);
         final BestConstructorInstantiator instantiator = new BestConstructorInstantiator(NoDefaultConstructor.class,
                                                                                          constructorParameters);
@@ -187,7 +193,7 @@ public class BestConstructorInstantiatorTest {
     }
 
     private class One_Arg_Constructor_Throws_NPE {
-        public One_Arg_Constructor_Throws_NPE(final Object o) {
+        One_Arg_Constructor_Throws_NPE(final Object o) {
             throw new NullPointerException("test");
         }
     }
@@ -201,18 +207,18 @@ public class BestConstructorInstantiatorTest {
         private int c;
         private Object object;
 
-        public NoDefaultConstructor(final int a) {
+        NoDefaultConstructor(final int a) {
             this.a = a;
         }
 
-        public NoDefaultConstructor(final Object object) {
+        NoDefaultConstructor(final Object object) {
             this.object = object;
         }
     }
 
     private class No_Args_Constructor_Throws_NPE {
 
-        public No_Args_Constructor_Throws_NPE() {
+        No_Args_Constructor_Throws_NPE() {
             throw new NullPointerException("test");
         }
     }
@@ -221,7 +227,7 @@ public class BestConstructorInstantiatorTest {
 
         private final Boolean[] array;
 
-        public Constructor_Array_Boolean(final Boolean[] array) {
+        Constructor_Array_Boolean(final Boolean[] array) {
             this.array = array;
         }
     }
@@ -230,7 +236,7 @@ public class BestConstructorInstantiatorTest {
 
         private final boolean[] array;
 
-        public Constructor_Array_Boolean_Primitive(final boolean[] array) {
+        Constructor_Array_Boolean_Primitive(final boolean[] array) {
             this.array = array;
         }
     }
@@ -239,7 +245,7 @@ public class BestConstructorInstantiatorTest {
 
         private final Byte[] array;
 
-        public Constructor_Array_Byte(final Byte[] array) {
+        Constructor_Array_Byte(final Byte[] array) {
             this.array = array;
         }
     }
@@ -248,7 +254,7 @@ public class BestConstructorInstantiatorTest {
 
         private final byte[] array;
 
-        public Constructor_Array_Byte_Primitive(final byte[] array) {
+        Constructor_Array_Byte_Primitive(final byte[] array) {
             this.array = array;
         }
     }
@@ -257,7 +263,7 @@ public class BestConstructorInstantiatorTest {
 
         private final Character[] array;
 
-        public Constructor_Array_Char(final Character[] array) {
+        Constructor_Array_Char(final Character[] array) {
             this.array = array;
         }
     }
@@ -266,7 +272,7 @@ public class BestConstructorInstantiatorTest {
 
         private final char[] array;
 
-        public Constructor_Array_Char_Primitive(final char[] array) {
+        Constructor_Array_Char_Primitive(final char[] array) {
             this.array = array;
         }
     }
@@ -275,7 +281,7 @@ public class BestConstructorInstantiatorTest {
 
         private final Double[] array;
 
-        public Constructor_Array_Double(final Double[] array) {
+        Constructor_Array_Double(final Double[] array) {
             this.array = array;
         }
     }
@@ -284,7 +290,7 @@ public class BestConstructorInstantiatorTest {
 
         private final double[] array;
 
-        public Constructor_Array_Double_Primitive(final double[] array) {
+        Constructor_Array_Double_Primitive(final double[] array) {
             this.array = array;
         }
     }
@@ -293,7 +299,7 @@ public class BestConstructorInstantiatorTest {
 
         private final Float[] array;
 
-        public Constructor_Array_Float(final Float[] array) {
+        Constructor_Array_Float(final Float[] array) {
             this.array = array;
         }
     }
@@ -302,7 +308,7 @@ public class BestConstructorInstantiatorTest {
 
         private final float[] array;
 
-        public Constructor_Array_Float_Primitive(final float[] array) {
+        Constructor_Array_Float_Primitive(final float[] array) {
             this.array = array;
         }
     }
@@ -311,7 +317,7 @@ public class BestConstructorInstantiatorTest {
 
         private final Integer[] array;
 
-        public Constructor_Array_Int(final Integer[] array) {
+        Constructor_Array_Int(final Integer[] array) {
             this.array = array;
         }
     }
@@ -320,7 +326,7 @@ public class BestConstructorInstantiatorTest {
 
         private final int[] array;
 
-        public Constructor_Array_Int_Primitive(final int[] array) {
+        Constructor_Array_Int_Primitive(final int[] array) {
             this.array = array;
         }
     }
@@ -329,7 +335,7 @@ public class BestConstructorInstantiatorTest {
 
         private final Long[] array;
 
-        public Constructor_Array_Long(final Long[] array) {
+        Constructor_Array_Long(final Long[] array) {
             this.array = array;
         }
     }
@@ -338,7 +344,7 @@ public class BestConstructorInstantiatorTest {
 
         private final long[] array;
 
-        public Constructor_Array_Long_Primitive(final long[] array) {
+        Constructor_Array_Long_Primitive(final long[] array) {
             this.array = array;
         }
     }
@@ -347,7 +353,7 @@ public class BestConstructorInstantiatorTest {
 
         private final Short[] array;
 
-        public Constructor_Array_Short(final Short[] array) {
+        Constructor_Array_Short(final Short[] array) {
             this.array = array;
         }
     }
@@ -356,7 +362,7 @@ public class BestConstructorInstantiatorTest {
 
         private final short[] array;
 
-        public Constructor_Array_Short_Primitive(final short[] array) {
+        Constructor_Array_Short_Primitive(final short[] array) {
             this.array = array;
         }
     }

@@ -3,7 +3,7 @@ package helpers;
 import org.mockito.ArgumentMatcher;
 import pl.pojo.tester.api.ClassAndFieldPredicatePair;
 
-public class ClassNameAndFieldPredicatePairArgumentMatcher implements ArgumentMatcher<ClassAndFieldPredicatePair> {
+class ClassNameAndFieldPredicatePairArgumentMatcher implements ArgumentMatcher<ClassAndFieldPredicatePair> {
     private final String className;
     private final String fieldName;
 
