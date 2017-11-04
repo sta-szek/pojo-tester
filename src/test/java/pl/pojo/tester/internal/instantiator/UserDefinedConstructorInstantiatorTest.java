@@ -18,24 +18,32 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 
-public class UserDefinedConstructorInstantiatorTest {
+class UserDefinedConstructorInstantiatorTest {
 
     private final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters = new ArrayListValuedHashMap<>();
 
     {
-        constructorParameters.put(UserDefinedClass.class, new ConstructorParameters(new Object[]{1, 2}, new Class<?>[]{int.class, int.class}));
-        constructorParameters.put(ClassWithPrivateConstructor.class, new ConstructorParameters(new Object[]{1}, new Class<?>[]{int.class}));
-        constructorParameters.put(One_Arg_Constructor_Throws_NPE.class, new ConstructorParameters(new Object[]{1}, new Class<?>[]{Object.class}));
-        constructorParameters.put(No_Args_Constructor_Throws_NPE.class, new ConstructorParameters(new Object[0], new Class<?>[0]));
-        constructorParameters.put(InnerClass.class, new ConstructorParameters(new Object[]{1}, new Class<?>[]{int.class}));
-        constructorParameters.put(NestedClass.class, new ConstructorParameters(new Object[]{1}, new Class<?>[]{int.class}));
+        constructorParameters.put(UserDefinedClass.class,
+                                  new ConstructorParameters(new Object[]{1, 2}, new Class<?>[]{int.class, int.class}));
+        constructorParameters.put(ClassWithPrivateConstructor.class,
+                                  new ConstructorParameters(new Object[]{1}, new Class<?>[]{int.class}));
+        constructorParameters.put(One_Arg_Constructor_Throws_NPE.class,
+                                  new ConstructorParameters(new Object[]{1}, new Class<?>[]{Object.class}));
+        constructorParameters.put(No_Args_Constructor_Throws_NPE.class,
+                                  new ConstructorParameters(new Object[0], new Class<?>[0]));
+        constructorParameters.put(InnerClass.class,
+                                  new ConstructorParameters(new Object[]{1}, new Class<?>[]{int.class}));
+        constructorParameters.put(NestedClass.class,
+                                  new ConstructorParameters(new Object[]{1}, new Class<?>[]{int.class}));
     }
 
     @Test
-    public void Should_Create_Object_Using_Private_Constructor() {
+    void Should_Create_Object_Using_Private_Constructor() {
         // given
         final Class<ClassWithPrivateConstructor> classToInstantiate = ClassWithPrivateConstructor.class;
-        final UserDefinedConstructorInstantiator instantiator = new UserDefinedConstructorInstantiator(classToInstantiate, constructorParameters);
+        final UserDefinedConstructorInstantiator instantiator = new UserDefinedConstructorInstantiator(
+                classToInstantiate,
+                constructorParameters);
 
         // when
         final Object result = instantiator.instantiate();
@@ -45,10 +53,12 @@ public class UserDefinedConstructorInstantiatorTest {
     }
 
     @Test
-    public void Should_Create_Object_For_Inner_Class() {
+    void Should_Create_Object_For_Inner_Class() {
         // given
         final Class<InnerClass> classToInstantiate = InnerClass.class;
-        final UserDefinedConstructorInstantiator instantiator = new UserDefinedConstructorInstantiator(classToInstantiate, constructorParameters);
+        final UserDefinedConstructorInstantiator instantiator = new UserDefinedConstructorInstantiator(
+                classToInstantiate,
+                constructorParameters);
 
         // when
         final Object result = instantiator.instantiate();
@@ -58,10 +68,12 @@ public class UserDefinedConstructorInstantiatorTest {
     }
 
     @Test
-    public void Should_Create_Object_For_Nested_Class() {
+    void Should_Create_Object_For_Nested_Class() {
         // given
         final Class<NestedClass> classToInstantiate = NestedClass.class;
-        final UserDefinedConstructorInstantiator instantiator = new UserDefinedConstructorInstantiator(classToInstantiate, constructorParameters);
+        final UserDefinedConstructorInstantiator instantiator = new UserDefinedConstructorInstantiator(
+                classToInstantiate,
+                constructorParameters);
 
         // when
         final Object result = instantiator.instantiate();
@@ -71,16 +83,19 @@ public class UserDefinedConstructorInstantiatorTest {
     }
 
     @TestFactory
-    public Stream<DynamicTest> Should_Throw_Exception_When_Cannot_Instantiate_Class() {
+    Stream<DynamicTest> Should_Throw_Exception_When_Cannot_Instantiate_Class() {
         return Stream.of(One_Arg_Constructor_Throws_NPE.class,
                          No_Args_Constructor_Throws_NPE.class)
-                     .map(value -> dynamicTest(getDefaultDisplayName(value.getName()), Should_Throw_Exception_When_Cannot_Instantiate_Class(value)));
+                     .map(value -> dynamicTest(getDefaultDisplayName(value.getName()),
+                                               Should_Throw_Exception_When_Cannot_Instantiate_Class(value)));
     }
 
-    public Executable Should_Throw_Exception_When_Cannot_Instantiate_Class(final Class<?> classToInstantiate) {
+    private Executable Should_Throw_Exception_When_Cannot_Instantiate_Class(final Class<?> classToInstantiate) {
         return () -> {
             // given
-            final UserDefinedConstructorInstantiator instantiator = new UserDefinedConstructorInstantiator(classToInstantiate, constructorParameters);
+            final UserDefinedConstructorInstantiator instantiator = new UserDefinedConstructorInstantiator(
+                    classToInstantiate,
+                    constructorParameters);
 
             // when
             final Throwable result = catchThrowable(instantiator::instantiate);
@@ -106,11 +121,11 @@ public class UserDefinedConstructorInstantiatorTest {
         private final int a;
         private final int b;
 
-        public UserDefinedClass(final int a) {
+        UserDefinedClass(final int a) {
             throw new RuntimeException("test");
         }
 
-        public UserDefinedClass(final int a, final int b) {
+        UserDefinedClass(final int a, final int b) {
             this.a = a;
             this.b = b;
         }
@@ -122,14 +137,14 @@ public class UserDefinedConstructorInstantiatorTest {
     }
 
     private class One_Arg_Constructor_Throws_NPE {
-        public One_Arg_Constructor_Throws_NPE(final Object o) {
+        One_Arg_Constructor_Throws_NPE(final Object o) {
             throw new NullPointerException("test");
         }
     }
 
     private class No_Args_Constructor_Throws_NPE {
 
-        public No_Args_Constructor_Throws_NPE() {
+        No_Args_Constructor_Throws_NPE() {
             throw new NullPointerException("test");
         }
     }

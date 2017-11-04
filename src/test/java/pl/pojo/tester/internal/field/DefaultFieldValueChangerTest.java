@@ -21,9 +21,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 class DefaultFieldValueChangerTest {
 
     @Test
-    public void Should_Contains_All_Field_Value_Changers_From_Package() throws NoSuchFieldException, IllegalAccessException, ClassNotFoundException {
+    void Should_Contains_All_Field_Value_Changers_From_Package() throws NoSuchFieldException, IllegalAccessException, ClassNotFoundException {
         // given
-        final Package aPackage = DefaultFieldValueChanger.INSTANCE.getClass().getPackage();
+        final Package aPackage = DefaultFieldValueChanger.INSTANCE.getClass()
+                                                                  .getPackage();
 
         // when
         final Set<Class> result = countFieldValueChangersByComposition();
@@ -35,9 +36,10 @@ class DefaultFieldValueChangerTest {
     }
 
     @Test
-    public void Should_Not_Contain_All_Field_Value_Changers_From_Package() throws NoSuchFieldException, IllegalAccessException, ClassNotFoundException {
+    void Should_Not_Contain_All_Field_Value_Changers_From_Package() throws NoSuchFieldException, IllegalAccessException, ClassNotFoundException {
         // given
-        final Package aPackage = DefaultDateAndTimeFieldValueChanger.INSTANCE.getClass().getPackage();
+        final Package aPackage = DefaultDateAndTimeFieldValueChanger.INSTANCE.getClass()
+                                                                             .getPackage();
 
         // when
         final Set<Class> result = countFieldValueChangersByComposition();
@@ -55,7 +57,8 @@ class DefaultFieldValueChangerTest {
         final ArrayList<File> directories = new ArrayList<>();
         final String packageToPath = pckgname.replace('.', '/');
         try {
-            final ClassLoader cld = Thread.currentThread().getContextClassLoader();
+            final ClassLoader cld = Thread.currentThread()
+                                          .getContextClassLoader();
             if (cld == null) {
                 throw new ClassNotFoundException("Can't get class loader.");
             }
@@ -63,14 +66,15 @@ class DefaultFieldValueChangerTest {
             // Ask for all resources for the packageToPath
             final Enumeration<URL> resources = cld.getResources(packageToPath);
             while (resources.hasMoreElements()) {
-                directories.add(new File(URLDecoder.decode(resources.nextElement().getPath(), "UTF-8")));
+                directories.add(new File(URLDecoder.decode(resources.nextElement()
+                                                                    .getPath(), "UTF-8")));
             }
         } catch (final NullPointerException x) {
             throw new ClassNotFoundException(pckgname +
-                                             " does not appear to be a valid package (Null pointer exception)");
+                                                     " does not appear to be a valid package (Null pointer exception)");
         } catch (final UnsupportedEncodingException encex) {
             throw new ClassNotFoundException(pckgname +
-                                             " does not appear to be a valid package (Unsupported encoding)");
+                                                     " does not appear to be a valid package (Unsupported encoding)");
         } catch (final IOException ioex) {
             throw new ClassNotFoundException("IOException was thrown when trying to get all resources for " + pckgname);
         }
@@ -85,14 +89,22 @@ class DefaultFieldValueChangerTest {
 
                 for (final File file : files) {
                     // we are only interested in .class files
-                    if ((file.getName().endsWith(".class")) && (!file.getName().contains("$"))) {
+                    if ((file.getName()
+                             .endsWith(".class")) && (!file.getName()
+                                                           .contains("$"))) {
                         // removes the .class extension
-                        final int index = directoryFile.getPath().indexOf(packageToPath);
-                        final String packagePrefix = directoryFile.getPath().substring(index).replace('/', '.');
+                        final int index = directoryFile.getPath()
+                                                       .indexOf(packageToPath);
+                        final String packagePrefix = directoryFile.getPath()
+                                                                  .substring(index)
+                                                                  .replace('/', '.');
                         try {
                             final String className = packagePrefix +
-                                                     '.' +
-                                                     file.getName().substring(0, file.getName().length() - 6);
+                                    '.' +
+                                    file.getName()
+                                        .substring(0,
+                                                   file.getName()
+                                                       .length() - 6);
                             classes.add(Class.forName(className));
                         } catch (final NoClassDefFoundError e) {
                             // do nothing. this class hasn't been found by the loader, and we don't care.
@@ -103,9 +115,9 @@ class DefaultFieldValueChangerTest {
                 }
             } else {
                 throw new ClassNotFoundException(pckgname +
-                                                 " (" +
-                                                 directoryFile.getPath() +
-                                                 ") does not appear to be a valid package");
+                                                         " (" +
+                                                         directoryFile.getPath() +
+                                                         ") does not appear to be a valid package");
             }
         }
         return classes.stream()

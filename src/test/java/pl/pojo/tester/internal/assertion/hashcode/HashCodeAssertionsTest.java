@@ -12,10 +12,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
 
-public class HashCodeAssertionsTest {
+class HashCodeAssertionsTest {
 
     @Test
-    public void Should_Throw_Exception_When_HashCode_Method_Is_Not_Consistent() {
+    void Should_Throw_Exception_When_HashCode_Method_Is_Not_Consistent() {
         // given
         final BadPojoHashCode_NotConsistent objectUnderAssert = new BadPojoHashCode_NotConsistent();
         final HashCodeAssertions hashCodeAssertions = new HashCodeAssertions(objectUnderAssert);
@@ -28,7 +28,7 @@ public class HashCodeAssertionsTest {
     }
 
     @Test
-    public void Should_Throw_Exception_When_HashCode_Method_Returns_Different_HashCode_For_Same_Objects() {
+    void Should_Throw_Exception_When_HashCode_Method_Returns_Different_HashCode_For_Same_Objects() {
         // given
         final BadPojoHashCode_SameObjects objectUnderAssert = new BadPojoHashCode_SameObjects();
         final HashCodeAssertions hashCodeAssertions = new HashCodeAssertions(objectUnderAssert);
@@ -41,7 +41,7 @@ public class HashCodeAssertionsTest {
     }
 
     @Test
-    public void Should_Throw_Exception_When_HashCode_Method_Returns_Same_HashCode_For_Different_Objects() {
+    void Should_Throw_Exception_When_HashCode_Method_Returns_Same_HashCode_For_Different_Objects() {
         // given
         final BadPojoHashCode_DifferentObjects objectUnderAssert1 = new BadPojoHashCode_DifferentObjects(1);
         final BadPojoHashCode_DifferentObjects objectUnderAssert2 = new BadPojoHashCode_DifferentObjects(2);
@@ -55,7 +55,7 @@ public class HashCodeAssertionsTest {
     }
 
     @Test
-    public void Should_Not_Throw_Exception_When_HashCode_Method_Returns_Different_HashCode_For_Different_Objects() {
+    void Should_Not_Throw_Exception_When_HashCode_Method_Returns_Different_HashCode_For_Different_Objects() {
         // given
         final GoodPojo_Equals_HashCode_ToString objectUnderAssert1 = new GoodPojo_Equals_HashCode_ToString();
         final GoodPojo_Equals_HashCode_ToString objectUnderAssert2 = new GoodPojo_Equals_HashCode_ToString();
@@ -70,7 +70,7 @@ public class HashCodeAssertionsTest {
     }
 
     @Test
-    public void Should_Not_Throw_Exception_When_HashCode_Method_Returns_Same_HashCode_For_Same_Objects() {
+    void Should_Not_Throw_Exception_When_HashCode_Method_Returns_Same_HashCode_For_Same_Objects() {
         // given
         final GoodPojo_Equals_HashCode_ToString objectUnderAssert = new GoodPojo_Equals_HashCode_ToString();
         final HashCodeAssertions hashCodeAssertions = new HashCodeAssertions(objectUnderAssert);
@@ -83,7 +83,7 @@ public class HashCodeAssertionsTest {
     }
 
     @Test
-    public void Should_Not_Throw_Exception_When_HashCode_Method_Is_Consistent() {
+    void Should_Not_Throw_Exception_When_HashCode_Method_Is_Consistent() {
         // given
         final GoodPojo_Equals_HashCode_ToString objectUnderAssert = new GoodPojo_Equals_HashCode_ToString();
         final HashCodeAssertions hashCodeAssertions = new HashCodeAssertions(objectUnderAssert);
@@ -118,18 +118,18 @@ public class HashCodeAssertionsTest {
     }
 
     private class GoodPojo_Equals_HashCode_ToString {
-        public long random;
-        public byte byteField;
-        public short shortType;
-        public int intType;
-        public long longType;
-        public double doubleType;
-        public boolean booleanType;
-        public float floatType;
-        public char charType;
-        public TestEnum1 testEnum1;
+        long random;
+        byte byteField;
+        short shortType;
+        int intType;
+        long longType;
+        double doubleType;
+        boolean booleanType;
+        float floatType;
+        char charType;
+        TestEnum1 testEnum1;
 
-        public GoodPojo_Equals_HashCode_ToString() {
+        GoodPojo_Equals_HashCode_ToString() {
             final Random random = new Random();
             this.random = random.nextLong();
         }
@@ -274,7 +274,7 @@ public class HashCodeAssertionsTest {
 
         int a;
 
-        public BadPojoHashCode_DifferentObjects(final int a) {
+        BadPojoHashCode_DifferentObjects(final int a) {
             this.a = a;
         }
 

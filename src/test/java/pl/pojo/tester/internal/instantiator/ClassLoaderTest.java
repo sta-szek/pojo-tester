@@ -13,10 +13,10 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 
-public class ClassLoaderTest {
+class ClassLoaderTest {
 
     @TestFactory
-    public Stream<DynamicTest> Should_Load_Expected_Class_By_Qualified_Class_Name() throws NoSuchFieldException {
+    Stream<DynamicTest> Should_Load_Expected_Class_By_Qualified_Class_Name() {
         return Stream.of("pl.pojo.tester.internal.instantiator.Instantiable",
                          "classesForTest.EmptyEnum",
                          "classesForTest.Constructor_Field",
@@ -70,7 +70,7 @@ public class ClassLoaderTest {
                                                Should_Load_Expected_Class_By_Qualified_Class_Name(value)));
     }
 
-    public Executable Should_Load_Expected_Class_By_Qualified_Class_Name(final String qualifiedClassName) {
+    private Executable Should_Load_Expected_Class_By_Qualified_Class_Name(final String qualifiedClassName) {
         return () -> {
             // when
             final Class<?> result = ClassLoader.loadClass(qualifiedClassName);
@@ -81,7 +81,7 @@ public class ClassLoaderTest {
     }
 
     @Test
-    public void Should_Throw_Exception_If_Class_Does_Not_Exist() {
+    void Should_Throw_Exception_If_Class_Does_Not_Exist() {
         // given
 
         // when

@@ -11,11 +11,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
 
-
-public class DefaultPackageFilterTest {
+class DefaultPackageFilterTest {
 
     @Test
-    public void Should_Return_Classes_From_Given_Package() {
+    void Should_Return_Classes_From_Given_Package() {
         // given
         final Class<?>[] expectedClasses = new Class[]{A.class, B.class, C.class, D.class, E.class};
 
@@ -28,7 +27,7 @@ public class DefaultPackageFilterTest {
     }
 
     @Test
-    public void Should_Return_Classes_From_Given_Package_Name() {
+    void Should_Return_Classes_From_Given_Package_Name() {
         // given
         final Class<?>[] expectedClasses = new Class[]{D.class, E.class};
 
@@ -41,7 +40,7 @@ public class DefaultPackageFilterTest {
     }
 
     @Test
-    public void Should_Throw_Exception_When_Invalid_Package_Name() {
+    void Should_Throw_Exception_When_Invalid_Package_Name() {
         // given
 
         // when

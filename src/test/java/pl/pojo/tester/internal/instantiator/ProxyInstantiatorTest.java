@@ -21,18 +21,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 
-public class ProxyInstantiatorTest {
+class ProxyInstantiatorTest {
 
     private final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters = new ArrayListValuedHashMap<>();
 
     @TestFactory
-    public Stream<DynamicTest> Should_Instantiate_Abstract_Interface_Or_Annotation_Classes() {
+    Stream<DynamicTest> Should_Instantiate_Abstract_Interface_Or_Annotation_Classes() {
         return Stream.of(Annotation.class, Abstract.class, Interface.class, Abstract_PrivateConstructor.class)
                      .map(value -> dynamicTest(getDefaultDisplayName(value.getName()),
                                                Should_Instantiate_Abstract_Interface_Or_Annotation_Classes(value)));
     }
 
-    public Executable Should_Instantiate_Abstract_Interface_Or_Annotation_Classes(final Class<?> classToInstantiate) {
+    private Executable Should_Instantiate_Abstract_Interface_Or_Annotation_Classes(final Class<?> classToInstantiate) {
         return () -> {
             // given
             final ProxyInstantiator instantiator = new ProxyInstantiator(classToInstantiate, constructorParameters);
@@ -46,7 +46,7 @@ public class ProxyInstantiatorTest {
     }
 
     @Test
-    public void Should_Create_Java_Proxy_Which_Returns_Expected_Values() {
+    void Should_Create_Java_Proxy_Which_Returns_Expected_Values() {
         // given
         final ProxyInstantiator instantiator = new ProxyInstantiator(Interface.class, constructorParameters);
 
@@ -60,13 +60,13 @@ public class ProxyInstantiatorTest {
     }
 
     @TestFactory
-    public Stream<DynamicTest> Should_Create_Abstract_Class_Without_Default_Constructor() {
+    Stream<DynamicTest> Should_Create_Abstract_Class_Without_Default_Constructor() {
         return Stream.of(A.class, B.class, C.class, D.class, E.class)
                      .map(value -> dynamicTest(getDefaultDisplayName(value.getName()),
                                                Should_Create_Abstract_Class_Without_Default_Constructor(value)));
     }
 
-    public Executable Should_Create_Abstract_Class_Without_Default_Constructor(final Class<?> classToInstantiate) {
+    private Executable Should_Create_Abstract_Class_Without_Default_Constructor(final Class<?> classToInstantiate) {
         return () -> {
             // given
 

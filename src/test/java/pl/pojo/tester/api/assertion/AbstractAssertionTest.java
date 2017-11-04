@@ -23,10 +23,10 @@ import static org.powermock.reflect.Whitebox.getInternalState;
 import static org.powermock.reflect.Whitebox.setInternalState;
 
 
-public class AbstractAssertionTest {
+class AbstractAssertionTest {
 
     @Test
-    public void Should_Set_Field_Value_Changer() {
+    void Should_Set_Field_Value_Changer() {
         // given
         final AbstractAssertion abstractAssertion = new AbstractAssertionImplementation();
         final AbstractFieldValueChanger expectedFieldsValuesChanger = DefaultFieldValueChanger.INSTANCE;
@@ -40,7 +40,7 @@ public class AbstractAssertionTest {
     }
 
     @Test
-    public void Should_Add_Equals_Tester() {
+    void Should_Add_Equals_Tester() {
         // given
         final AbstractAssertion abstractAssertion = new AbstractAssertionImplementation();
         final EqualsTester expectedTester = new EqualsTester();
@@ -54,7 +54,7 @@ public class AbstractAssertionTest {
     }
 
     @Test
-    public void Should_Add_Equals_And_Hash_Code_Testers() {
+    void Should_Add_Equals_And_Hash_Code_Testers() {
         // given
         final AbstractAssertion abstractAssertion = new AbstractAssertionImplementation();
         final EqualsTester expectedTester1 = new EqualsTester();
@@ -69,7 +69,7 @@ public class AbstractAssertionTest {
     }
 
     @Test
-    public void Should_Not_Throw_Exception_When_Class_Has_All_Methods_Well_Implemented() {
+    void Should_Not_Throw_Exception_When_Class_Has_All_Methods_Well_Implemented() {
         // given
         final Class<?> classUnderTest = GoodPojo_Equals_HashCode_ToString.class;
 
@@ -82,7 +82,7 @@ public class AbstractAssertionTest {
     }
 
     @Test
-    public void Should_Throw_Exception_When_Class_Has_Method_Implemented_In_Wrong_Way() {
+    void Should_Throw_Exception_When_Class_Has_Method_Implemented_In_Wrong_Way() {
         // given
         final Class<?> classUnderTest = BadPojoEqualsItself.class;
 
@@ -96,7 +96,7 @@ public class AbstractAssertionTest {
     }
 
     @Test
-    public void Should_Set_Field_Value_Changer_To_Testers() {
+    void Should_Set_Field_Value_Changer_To_Testers() {
         // given
         final AbstractAssertion abstractAssertion = new AbstractAssertionImplementation();
         final AbstractFieldValueChanger expectedFieldsValuesChanger = DefaultFieldValueChanger.INSTANCE;
@@ -112,7 +112,7 @@ public class AbstractAssertionTest {
     }
 
     @Test
-    public void Should_Set_User_Defined_Class_And_Constructor_Parameters_To_Tester() {
+    void Should_Set_User_Defined_Class_And_Constructor_Parameters_To_Tester() {
         // given
         final AbstractAssertion abstractAssertion = new AbstractAssertionImplementation();
         final EqualsTester equalsTester = mock(EqualsTester.class);
@@ -120,18 +120,20 @@ public class AbstractAssertionTest {
         final Class<String> expectedClass = String.class;
         final Object[] expectedArguments = {'c', 'h', 'a', 'r'};
         final Class[] expectedTypes = {char.class, char.class, char.class, char.class};
-        final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments, expectedTypes);
+        final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments,
+                                                                                              expectedTypes);
         abstractAssertion.create(expectedClass, expectedConstructorParameters);
 
         // when
         abstractAssertion.areWellImplemented();
 
         // then
-        verify(equalsTester, times(1)).setUserDefinedConstructors(argThat(new MultiValuedMapMatcher(expectedClass, expectedConstructorParameters)));
+        verify(equalsTester, times(1)).setUserDefinedConstructors(argThat(new MultiValuedMapMatcher(expectedClass,
+                                                                                                    expectedConstructorParameters)));
     }
 
     @Test
-    public void Should_Call_Next_Create_Method() {
+    void Should_Call_Next_Create_Method() {
         // given
         final AbstractAssertion abstractAssertion = spy(new AbstractAssertionImplementation());
         final EqualsTester equalsTester = mock(EqualsTester.class);
@@ -139,7 +141,8 @@ public class AbstractAssertionTest {
         final Class<String> expectedClass = String.class;
         final Object[] expectedArguments = {'c', 'h', 'a', 'r'};
         final Class[] expectedTypes = {char.class, char.class, char.class, char.class};
-        final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments, expectedTypes);
+        final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments,
+                                                                                              expectedTypes);
         abstractAssertion.create(expectedClass, expectedArguments, expectedTypes);
 
         // when
@@ -150,7 +153,7 @@ public class AbstractAssertionTest {
     }
 
     @Test
-    public void Should_Set_User_Defined_Class_And_Constructor_Parameters_To_Tester_Using_Class_Name() {
+    void Should_Set_User_Defined_Class_And_Constructor_Parameters_To_Tester_Using_Class_Name() {
         // given
         final AbstractAssertion abstractAssertion = new AbstractAssertionImplementation();
         final EqualsTester equalsTester = mock(EqualsTester.class);
@@ -158,25 +161,28 @@ public class AbstractAssertionTest {
         final Class<?> expectedClass = String.class;
         final Object[] expectedArguments = {'c', 'h', 'a', 'r'};
         final Class[] expectedTypes = {char.class, char.class, char.class, char.class};
-        final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments, expectedTypes);
+        final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments,
+                                                                                              expectedTypes);
         abstractAssertion.create("java.lang.String", expectedConstructorParameters);
 
         // when
         abstractAssertion.areWellImplemented();
 
         // then
-        verify(equalsTester, times(1)).setUserDefinedConstructors(argThat(new MultiValuedMapMatcher(expectedClass, expectedConstructorParameters)));
+        verify(equalsTester, times(1)).setUserDefinedConstructors(argThat(new MultiValuedMapMatcher(expectedClass,
+                                                                                                    expectedConstructorParameters)));
     }
 
     @Test
-    public void Should_Call_Next_Create_Method_Using_Class_Name() {
+    void Should_Call_Next_Create_Method_Using_Class_Name() {
         // given
         final AbstractAssertion abstractAssertion = spy(new AbstractAssertionImplementation());
         final EqualsTester equalsTester = mock(EqualsTester.class);
         setInternalState(abstractAssertion, "testers", CollectionUtils.asSet(equalsTester));
         final Object[] expectedArguments = {'c', 'h', 'a', 'r'};
         final Class[] expectedTypes = {char.class, char.class, char.class, char.class};
-        final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments, expectedTypes);
+        final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments,
+                                                                                              expectedTypes);
         final String expectedClassName = "java.lang.String";
         abstractAssertion.create(expectedClassName, expectedArguments, expectedTypes);
 
@@ -196,18 +202,18 @@ public class AbstractAssertionTest {
     }
 
     private class GoodPojo_Equals_HashCode_ToString {
-        public long random;
-        public byte byteField;
-        public short shortType;
-        public int intType;
-        public long longType;
-        public double doubleType;
-        public boolean booleanType;
-        public float floatType;
-        public char charType;
-        public TestEnum1 testEnum1;
+        long random;
+        byte byteField;
+        short shortType;
+        int intType;
+        long longType;
+        double doubleType;
+        boolean booleanType;
+        float floatType;
+        char charType;
+        TestEnum1 testEnum1;
 
-        public GoodPojo_Equals_HashCode_ToString() {
+        GoodPojo_Equals_HashCode_ToString() {
             final Random random = new Random();
             this.random = random.nextLong();
         }
@@ -348,7 +354,7 @@ public class AbstractAssertionTest {
         }
     }
 
-    class BadPojoEqualsItself {
+    private class BadPojoEqualsItself {
         private byte byteField;
         private short shortType;
         private int intType;

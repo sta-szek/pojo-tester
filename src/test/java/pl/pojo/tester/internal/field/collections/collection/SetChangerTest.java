@@ -9,10 +9,10 @@ import java.util.Set;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class SetChangerTest {
+class SetChangerTest {
 
     @Test
-    public void Should_Return_Null_When_Value_Is_Not_Null_And_Not_Empty() {
+    void Should_Return_Null_When_Value_Is_Not_Null_And_Not_Empty() {
         // given
         final Set<String> value = new HashSet<>();
         value.add("test");
@@ -28,7 +28,7 @@ public class SetChangerTest {
     }
 
     @Test
-    public void Should_Return_Any_Instance_When_Value_Is_Null() {
+    void Should_Return_Any_Instance_When_Value_Is_Null() {
         // given
         final Set<String> value = null;
         final Class<Set> type = Set.class;
@@ -43,7 +43,7 @@ public class SetChangerTest {
     }
 
     @Test
-    public void Should_Return_Any_Instance_When_Value_Is_Empty() {
+    void Should_Return_Any_Instance_When_Value_Is_Empty() {
         // given
         final Set<String> value = new HashSet<>();
         final Class<Set> type = Set.class;

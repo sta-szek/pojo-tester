@@ -8,10 +8,10 @@ import java.util.Stack;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class StackChangerTest {
+class StackChangerTest {
 
     @Test
-    public void Should_Return_Null_When_Value_Is_Not_Null_And_Not_Empty() {
+    void Should_Return_Null_When_Value_Is_Not_Null_And_Not_Empty() {
         // given
         final Stack<String> value = new Stack<>();
         value.add("test");
@@ -27,7 +27,7 @@ public class StackChangerTest {
     }
 
     @Test
-    public void Should_Return_Any_Instance_When_Value_Is_Null() {
+    void Should_Return_Any_Instance_When_Value_Is_Null() {
         // given
         final Stack<String> value = null;
         final Class<Stack> type = Stack.class;
@@ -42,7 +42,7 @@ public class StackChangerTest {
     }
 
     @Test
-    public void Should_Return_Any_Instance_When_Value_Is_Empty() {
+    void Should_Return_Any_Instance_When_Value_Is_Empty() {
         // given
         final Stack<String> value = new Stack<>();
         final Class<Stack> type = Stack.class;

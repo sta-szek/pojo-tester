@@ -14,10 +14,10 @@ import static org.mockito.Mockito.*;
 import static org.powermock.reflect.Whitebox.getInternalState;
 
 
-public class AbstractFieldValueChangerTest {
+class AbstractFieldValueChangerTest {
 
     @Test
-    public void Should_Register_First_Value_Changer() {
+    void Should_Register_First_Value_Changer() {
         // given
         final AbstractFieldValueChanger abstractFieldValueChanger = new ImplementationForTest();
 
@@ -30,7 +30,7 @@ public class AbstractFieldValueChangerTest {
     }
 
     @Test
-    public void Should_Not_Change_If_No_Matching_Changer() {
+    void Should_Not_Change_If_No_Matching_Changer() {
         // given
         final AbstractFieldValueChanger abstractFieldValueChanger = new ImplementationForTest();
         final String expectedValue = "string";
@@ -43,7 +43,7 @@ public class AbstractFieldValueChangerTest {
     }
 
     @Test
-    public void Should_Register_Value_Changer_To_Already_Registered_One() {
+    void Should_Register_Value_Changer_To_Already_Registered_One() {
         // given
         final AbstractFieldValueChanger abstractFieldValueChanger = new ImplementationForTest();
 
@@ -59,7 +59,7 @@ public class AbstractFieldValueChangerTest {
     }
 
     @Test
-    public void Should_Not_Change_If_Values_Are_Different() throws NoSuchFieldException {
+    void Should_Not_Change_If_Values_Are_Different() throws NoSuchFieldException {
         // given
         final AbstractFieldValueChanger valueChanger = mock(AbstractFieldValueChanger.class,
                                                             Mockito.CALLS_REAL_METHODS);

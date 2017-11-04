@@ -8,23 +8,24 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
 
-public class ToStringAssertionsTest {
+class ToStringAssertionsTest {
 
     @Test
-    public void Should_Throw_Exception_When_ToString_Method_Does_Not_Contain_Value() {
+    void Should_Throw_Exception_When_ToString_Method_Does_Not_Contain_Value() {
         // given
         final ToStringWithoutField objectUnderAssert = new ToStringWithoutField();
         final ToStringAssertions toStringAssertions = new ToStringAssertions(objectUnderAssert);
 
         // when
-        final Throwable result = catchThrowable(() -> toStringAssertions.contains("unexpectedField", "unexpectedValue"));
+        final Throwable result = catchThrowable(() -> toStringAssertions.contains("unexpectedField",
+                                                                                  "unexpectedValue"));
 
         // then
         assertThat(result).isInstanceOf(ContainsToStringAssertionError.class);
     }
 
     @Test
-    public void Should_Throw_Exception_When_ToString_Method_Contains_Value() {
+    void Should_Throw_Exception_When_ToString_Method_Contains_Value() {
         // given
         final ToStringWithoutField objectUnderAssert = new ToStringWithoutField();
         final ToStringAssertions toStringAssertions = new ToStringAssertions(objectUnderAssert);
@@ -38,7 +39,7 @@ public class ToStringAssertionsTest {
 
 
     @Test
-    public void Should_Not_Throw_Exception_When_ToString_Method_Contains_Value() {
+    void Should_Not_Throw_Exception_When_ToString_Method_Contains_Value() {
         // given
         final ToStringWithoutField objectUnderAssert = new ToStringWithoutField();
         final ToStringAssertions toStringAssertions = new ToStringAssertions(objectUnderAssert);
@@ -51,7 +52,7 @@ public class ToStringAssertionsTest {
     }
 
     @Test
-    public void Should_Not_Throw_Exception_When_ToString_Method_Does_Not_Contain_Value() {
+    void Should_Not_Throw_Exception_When_ToString_Method_Does_Not_Contain_Value() {
         // given
         final ToStringWithoutField objectUnderAssert = new ToStringWithoutField();
         final ToStringAssertions toStringAssertions = new ToStringAssertions(objectUnderAssert);

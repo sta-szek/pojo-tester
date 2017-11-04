@@ -20,10 +20,10 @@ import static pl.pojo.tester.api.FieldPredicate.exclude;
 import static pl.pojo.tester.api.FieldPredicate.include;
 
 
-public class HashCodeTesterTest {
+class HashCodeTesterTest {
 
     @Test
-    public void Should_Pass_All_HashCode_Tests() {
+    void Should_Pass_All_HashCode_Tests() {
         // given
         final Class[] classesToTest = {GoodPojo_Equals_HashCode_ToString.class};
         final HashCodeTester hashCodeTester = new HashCodeTester(DefaultFieldValueChanger.INSTANCE);
@@ -36,7 +36,7 @@ public class HashCodeTesterTest {
     }
 
     @Test
-    public void Should_Pass_All_HashCode_Tests_Excluding_Fields() {
+    void Should_Pass_All_HashCode_Tests_Excluding_Fields() {
         // given
         final HashCodeTester hashCodeTester = new HashCodeTester();
         final Class<?> clazz = BadPojoHashCode.class;
@@ -50,7 +50,7 @@ public class HashCodeTesterTest {
     }
 
     @Test
-    public void Should_Pass_All_HashCode_Tests_Including_Fields() {
+    void Should_Pass_All_HashCode_Tests_Including_Fields() {
         // given
         final HashCodeTester hashCodeTester = new HashCodeTester();
         final Class<?> clazz = BadPojoHashCode.class;
@@ -64,7 +64,7 @@ public class HashCodeTesterTest {
     }
 
     @Test
-    public void Should_Fail_Itself_Test() {
+    void Should_Fail_Itself_Test() {
         // given
         final Class[] classesToTest = {BadPojoHashCodeItself.class};
         final HashCodeTester hashCodeTester = new HashCodeTester();
@@ -77,11 +77,11 @@ public class HashCodeTesterTest {
     }
 
     @Test
-    public void Should_Fail_Multiple_Classes() {
+    void Should_Fail_Multiple_Classes() {
         // given
         final Class[] classesToTest = {BadPojoHashCodeItself.class,
-                                       BadPojoHashCodeDifferentObjectSameType.class,
-                                       BadPojoHashCodeItself.class};
+                BadPojoHashCodeDifferentObjectSameType.class,
+                BadPojoHashCodeItself.class};
         final HashCodeTester hashCodeTester = new HashCodeTester();
 
         // when
@@ -92,7 +92,7 @@ public class HashCodeTesterTest {
     }
 
     @Test
-    public void Should_Fail_Different_Object_With_Same_Type() {
+    void Should_Fail_Different_Object_With_Same_Type() {
         // given
         final Class[] classesToTest = {BadPojoHashCodeDifferentObjectSameType.class};
         final HashCodeTester hashCodeTester = new HashCodeTester();
@@ -105,7 +105,7 @@ public class HashCodeTesterTest {
     }
 
     @Test
-    public void Should_Fail_When_HashCode_Implementation_Depends_On_Excluded_Field() {
+    void Should_Fail_When_HashCode_Implementation_Depends_On_Excluded_Field() {
         // given
         final HashCodeTester hashCodeTester = new HashCodeTester();
         final Class<?> classToTest = GoodPojo_Equals_HashCode_ToString.class;
@@ -129,18 +129,18 @@ public class HashCodeTesterTest {
     }
 
     private class GoodPojo_Equals_HashCode_ToString {
-        public long random;
-        public byte byteField;
-        public short shortType;
-        public int intType;
-        public long longType;
-        public double doubleType;
-        public boolean booleanType;
-        public float floatType;
-        public char charType;
-        public TestEnum1 testEnum1;
+        long random;
+        byte byteField;
+        short shortType;
+        int intType;
+        long longType;
+        double doubleType;
+        boolean booleanType;
+        float floatType;
+        char charType;
+        TestEnum1 testEnum1;
 
-        public GoodPojo_Equals_HashCode_ToString() {
+        GoodPojo_Equals_HashCode_ToString() {
             final Random random = new Random();
             this.random = random.nextLong();
         }

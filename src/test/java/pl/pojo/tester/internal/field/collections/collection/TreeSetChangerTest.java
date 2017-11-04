@@ -8,10 +8,10 @@ import java.util.TreeSet;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class TreeSetChangerTest {
+class TreeSetChangerTest {
 
     @Test
-    public void Should_Return_Null_When_Value_Is_Not_Null_And_Not_Empty() {
+    void Should_Return_Null_When_Value_Is_Not_Null_And_Not_Empty() {
         // given
         final TreeSet<String> value = new TreeSet<>();
         value.add("test");
@@ -27,7 +27,7 @@ public class TreeSetChangerTest {
     }
 
     @Test
-    public void Should_Return_Any_Instance_When_Value_Is_Null() {
+    void Should_Return_Any_Instance_When_Value_Is_Null() {
         // given
         final TreeSet<String> value = null;
         final Class<TreeSet> type = TreeSet.class;
@@ -42,7 +42,7 @@ public class TreeSetChangerTest {
     }
 
     @Test
-    public void Should_Return_Any_Instance_When_Value_Is_Empty() {
+    void Should_Return_Any_Instance_When_Value_Is_Empty() {
         // given
         final TreeSet<String> value = new TreeSet<>();
         final Class<TreeSet> type = TreeSet.class;

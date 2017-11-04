@@ -15,12 +15,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 
-public class AbstractIteratorsFieldValueChangerTest {
+class AbstractIteratorsFieldValueChangerTest {
 
     @TestFactory
-    public Stream<DynamicTest> Should_Return_True_Or_False_Whether_Can_Change_Or_Not() throws NoSuchFieldException {
-        return Stream.of(new CanChangeCase(new IteratorValueChanger(), Iterators.class.getDeclaredField("iterator"), true),
-                         new CanChangeCase(new IterableValueChanger(), Iterators.class.getDeclaredField("iterable"), true))
+    Stream<DynamicTest> Should_Return_True_Or_False_Whether_Can_Change_Or_Not() throws NoSuchFieldException {
+        return Stream.of(new CanChangeCase(new IteratorValueChanger(),
+                                           Iterators.class.getDeclaredField("iterator"),
+                                           true),
+                         new CanChangeCase(new IterableValueChanger(),
+                                           Iterators.class.getDeclaredField("iterable"),
+                                           true))
                      .map(value -> dynamicTest(getDefaultDisplayName(value.field.getName()),
                                                Should_Return_True_Or_False_Whether_Can_Change_Or_Not(value)));
     }

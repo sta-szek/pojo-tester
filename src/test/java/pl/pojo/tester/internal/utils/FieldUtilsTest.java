@@ -23,12 +23,13 @@ import static org.assertj.core.util.Lists.newArrayList;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 
-public class FieldUtilsTest {
+class FieldUtilsTest {
 
     @Test
-    public void Should_Return_All_Fields() {
+    void Should_Return_All_Fields() {
         // given
-        final List<Field> expectedFields = TestHelper.getAllFieldsExceptDummyJacocoField(ClassWithAllAvailableFieldModifiers.class);
+        final List<Field> expectedFields = TestHelper.getAllFieldsExceptDummyJacocoField(
+                ClassWithAllAvailableFieldModifiers.class);
 
         // when
         final List<Field> result = FieldUtils.getAllFields(ClassWithAllAvailableFieldModifiers.class);
@@ -38,13 +39,14 @@ public class FieldUtilsTest {
     }
 
     @Test
-    public void Should_Return_Specified_Fields() throws java.lang.NoSuchFieldException {
+    void Should_Return_Specified_Fields() throws java.lang.NoSuchFieldException {
         // given
         final String fieldName = "a";
         final Field expectedField = ClassWithAllAvailableFieldModifiers.class.getDeclaredField(fieldName);
 
         // when
-        final List<Field> result = FieldUtils.getSpecifiedFields(ClassWithAllAvailableFieldModifiers.class, newArrayList(fieldName));
+        final List<Field> result = FieldUtils.getSpecifiedFields(ClassWithAllAvailableFieldModifiers.class,
+                                                                 newArrayList(fieldName));
 
         // then
         assertThat(result).hasSize(1)
@@ -52,21 +54,23 @@ public class FieldUtilsTest {
     }
 
     @Test
-    public void Should_Return_Fields_Except_Fields_With_Given_Names() {
+    void Should_Return_Fields_Except_Fields_With_Given_Names() {
         // given
         final String fieldName = "a";
 
         // when
-        final List<Field> result = FieldUtils.getAllFieldsExcluding(ClassWithAllAvailableFieldModifiers.class, newArrayList(fieldName));
+        final List<Field> result = FieldUtils.getAllFieldsExcluding(ClassWithAllAvailableFieldModifiers.class,
+                                                                    newArrayList(fieldName));
 
         // then
         assertThat(result).hasSize(7);
     }
 
     @Test
-    public void Should_Return_All_Fields_Names() {
+    void Should_Return_All_Fields_Names() {
         // given
-        final List<String> expectedFields = TestHelper.getAllFieldsExceptDummyJacocoField(ClassWithAllAvailableFieldModifiers.class)
+        final List<String> expectedFields = TestHelper.getAllFieldsExceptDummyJacocoField(
+                ClassWithAllAvailableFieldModifiers.class)
                                                       .stream()
                                                       .map(Field::getName)
                                                       .collect(Collectors.toList());
@@ -79,7 +83,7 @@ public class FieldUtilsTest {
     }
 
     @TestFactory
-    public Stream<DynamicTest> Should_Return_All_Permutations() throws NoSuchFieldException {
+    Stream<DynamicTest> Should_Return_All_Permutations() throws NoSuchFieldException {
         final Field perm1A = fieldFromPermutation1Class("a");
         final Field perm1B = fieldFromPermutation1Class("b");
         final Field perm2A = fieldFromPermutation2Class("a");
@@ -87,7 +91,9 @@ public class FieldUtilsTest {
         final Field perm2C = fieldFromPermutation2Class("c");
 
         final TestCase testCase1 = new TestCase(Permutation1.class,
-                                                newArrayList(newArrayList(perm1A), newArrayList(perm1B), newArrayList(perm1A, perm1B)));
+                                                newArrayList(newArrayList(perm1A),
+                                                             newArrayList(perm1B),
+                                                             newArrayList(perm1A, perm1B)));
         final TestCase testCase2 = new TestCase(Permutation2.class, newArrayList(newArrayList(perm2A),
                                                                                  newArrayList(perm2B),
                                                                                  newArrayList(perm2C),
@@ -99,7 +105,7 @@ public class FieldUtilsTest {
                      .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Return_All_Permutations(value)));
     }
 
-    public Executable Should_Return_All_Permutations(final TestCase testCase) {
+    private Executable Should_Return_All_Permutations(final TestCase testCase) {
         return () -> {
             // given
             final List<Field> fields = TestHelper.getAllFieldsExceptDummyJacocoField(testCase.clazz);
@@ -114,7 +120,7 @@ public class FieldUtilsTest {
     }
 
     @Test
-    public void Should_Return_True_If_Field_Is_Final() throws NoSuchFieldException {
+    void Should_Return_True_If_Field_Is_Final() throws NoSuchFieldException {
         // given
 
         // when
@@ -125,7 +131,7 @@ public class FieldUtilsTest {
     }
 
     @Test
-    public void Should_Return_False_If_Field_Is_Not_Final() throws NoSuchFieldException {
+    void Should_Return_False_If_Field_Is_Not_Final() throws NoSuchFieldException {
         // given
 
         // when
@@ -136,7 +142,7 @@ public class FieldUtilsTest {
     }
 
     @Test
-    public void Should_Return_All_Fields_Except_Static() throws NoSuchFieldException {
+    void Should_Return_All_Fields_Except_Static() throws NoSuchFieldException {
         // given
         final List<Field> expectedResult = new ArrayList<>();
         expectedResult.add(B.class.getDeclaredField("b"));

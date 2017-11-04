@@ -7,10 +7,10 @@ import static pl.pojo.tester.api.FieldPredicate.exclude;
 import static pl.pojo.tester.api.FieldPredicate.include;
 import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
 
-public class StaticFieldTest {
+class StaticFieldTest {
 
     @Test
-    public void Should_Test_Class_With_Static_Fields() {
+    void Should_Test_Class_With_Static_Fields() {
         // given
 
         // when
@@ -20,7 +20,7 @@ public class StaticFieldTest {
     }
 
     @Test
-    public void Should_Test_Class_With_Excluded_Static_Fields() {
+    void Should_Test_Class_With_Excluded_Static_Fields() {
         // given
 
         // when
@@ -30,7 +30,7 @@ public class StaticFieldTest {
     }
 
     @Test
-    public void Should_Test_Class_With_Included_Non_Static_Fields() {
+    void Should_Test_Class_With_Included_Non_Static_Fields() {
         // given
 
         // when

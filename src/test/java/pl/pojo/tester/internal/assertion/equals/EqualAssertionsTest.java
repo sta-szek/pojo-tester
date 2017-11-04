@@ -13,10 +13,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
 
-public class EqualAssertionsTest {
+class EqualAssertionsTest {
 
     @Test
-    public void Should_Throw_Exception_When_Equals_Method_Is_Not_Reflexive() {
+    void Should_Throw_Exception_When_Equals_Method_Is_Not_Reflexive() {
         // given
         final BadPojoEqualsNull objectUnderAssert = new BadPojoEqualsNull();
         final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
@@ -29,7 +29,7 @@ public class EqualAssertionsTest {
     }
 
     @Test
-    public void Should_Throw_Exception_When_Equals_Method_Is_Not_Consistent_1() {
+    void Should_Throw_Exception_When_Equals_Method_Is_Not_Consistent_1() {
         // given
         final BadPojoEquals_NotConsistent objectUnderAssert = new BadPojoEquals_NotConsistent(true, false);
         final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
@@ -42,7 +42,7 @@ public class EqualAssertionsTest {
     }
 
     @Test
-    public void Should_Throw_Exception_When_Equals_Method_Is_Not_Consistent_2() {
+    void Should_Throw_Exception_When_Equals_Method_Is_Not_Consistent_2() {
         // given
         final BadPojoEquals_NotConsistent objectUnderAssert = new BadPojoEquals_NotConsistent(false, true);
         final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
@@ -55,7 +55,7 @@ public class EqualAssertionsTest {
     }
 
     @Test
-    public void Should_Throw_Exception_When_Equals_Method_Is_Not_Symmetric() {
+    void Should_Throw_Exception_When_Equals_Method_Is_Not_Symmetric() {
         // given
         final BadPojoEquals_NotSymmetric objectUnderAssert = new BadPojoEquals_NotSymmetric();
         final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
@@ -68,33 +68,35 @@ public class EqualAssertionsTest {
     }
 
     @Test
-    public void Should_Throw_Exception_When_Equals_Method_Is_Not_Transitive_Between_A_And_B() {
+    void Should_Throw_Exception_When_Equals_Method_Is_Not_Transitive_Between_A_And_B() {
         // given
         final BadPojoEquals_NotTransitive_A_B objectUnderAssert = new BadPojoEquals_NotTransitive_A_B();
         final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
 
         // when
-        final Throwable result = catchThrowable(() -> equalAssertions.isTransitive(objectUnderAssert, objectUnderAssert));
+        final Throwable result = catchThrowable(() -> equalAssertions.isTransitive(objectUnderAssert,
+                                                                                   objectUnderAssert));
 
         // then
         assertThat(result).isInstanceOf(TransitiveEqualsAssertionError.class);
     }
 
     @Test
-    public void Should_Throw_Exception_When_Equals_Method_Is_Not_Transitive_Between_B_And_C() {
+    void Should_Throw_Exception_When_Equals_Method_Is_Not_Transitive_Between_B_And_C() {
         // given
         final BadPojoEquals_NotTransitive_B_C objectUnderAssert = new BadPojoEquals_NotTransitive_B_C();
         final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
 
         // when
-        final Throwable result = catchThrowable(() -> equalAssertions.isTransitive(objectUnderAssert, objectUnderAssert));
+        final Throwable result = catchThrowable(() -> equalAssertions.isTransitive(objectUnderAssert,
+                                                                                   objectUnderAssert));
 
         // then
         assertThat(result).isInstanceOf(TransitiveEqualsAssertionError.class);
     }
 
     @Test
-    public void Should_Throw_Exception_When_Equals_Method_Return_True_Compared_To_Null() {
+    void Should_Throw_Exception_When_Equals_Method_Return_True_Compared_To_Null() {
         // given
         final BadPojoEqualsNull objectUnderAssert = new BadPojoEqualsNull();
         final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
@@ -107,7 +109,7 @@ public class EqualAssertionsTest {
     }
 
     @Test
-    public void Should_Throw_Exception_When_Equals_Method_Return_True_Compared_To_Different_Type() {
+    void Should_Throw_Exception_When_Equals_Method_Return_True_Compared_To_Different_Type() {
         // given
         final BadPojoEqualsDifferentType objectUnderAssert = new BadPojoEqualsDifferentType();
         final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
@@ -120,7 +122,7 @@ public class EqualAssertionsTest {
     }
 
     @Test
-    public void Should_Throw_Exception_When_Equals_Method_Return_True_Compared_To_Not_Equal_Object() {
+    void Should_Throw_Exception_When_Equals_Method_Return_True_Compared_To_Not_Equal_Object() {
         // given
         final BadPojoEqualsWithEqualObject objectUnderAssert = new BadPojoEqualsWithEqualObject();
         final BadPojoEqualsWithEqualObject otherObject = new BadPojoEqualsWithEqualObject();
@@ -135,7 +137,7 @@ public class EqualAssertionsTest {
     }
 
     @Test
-    public void Should_Throw_Exception_When_Equals_Method_Return_False_Compared_To_Equal_Object() {
+    void Should_Throw_Exception_When_Equals_Method_Return_False_Compared_To_Equal_Object() {
         // given
         final BadPojoEquals_NotConsistent objectUnderAssert = new BadPojoEquals_NotConsistent(false, false);
         final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
@@ -148,7 +150,7 @@ public class EqualAssertionsTest {
     }
 
     @Test
-    public void Should_Not_Throw_Exception_When_Equals_Method_Is_Reflexive() {
+    void Should_Not_Throw_Exception_When_Equals_Method_Is_Reflexive() {
         // given
         final GoodPojo_Equals_HashCode_ToString objectUnderAssert = new GoodPojo_Equals_HashCode_ToString();
         final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
@@ -161,7 +163,7 @@ public class EqualAssertionsTest {
     }
 
     @Test
-    public void Should_Not_Throw_Exception_When_Equals_Method_Is_Consistent() {
+    void Should_Not_Throw_Exception_When_Equals_Method_Is_Consistent() {
         // given
         final GoodPojo_Equals_HashCode_ToString objectUnderAssert = new GoodPojo_Equals_HashCode_ToString();
         final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
@@ -174,7 +176,7 @@ public class EqualAssertionsTest {
     }
 
     @Test
-    public void Should_Not_Throw_Exception_When_Equals_Method_Is_Symmetric() {
+    void Should_Not_Throw_Exception_When_Equals_Method_Is_Symmetric() {
         // given
         final GoodPojo_Equals_HashCode_ToString objectUnderAssert = new GoodPojo_Equals_HashCode_ToString();
         final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
@@ -187,20 +189,21 @@ public class EqualAssertionsTest {
     }
 
     @Test
-    public void Should_Not_Throw_Exception_When_Equals_Method_Is_Transitive() {
+    void Should_Not_Throw_Exception_When_Equals_Method_Is_Transitive() {
         // given
         final GoodPojo_Equals_HashCode_ToString objectUnderAssert = new GoodPojo_Equals_HashCode_ToString();
         final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
 
         // when
-        final Throwable result = catchThrowable(() -> equalAssertions.isTransitive(objectUnderAssert, objectUnderAssert));
+        final Throwable result = catchThrowable(() -> equalAssertions.isTransitive(objectUnderAssert,
+                                                                                   objectUnderAssert));
 
         // then
         assertThat(result).isNull();
     }
 
     @Test
-    public void Should_Not_Throw_Exception_When_Equals_Method_Return_False_Compared_To_Null() {
+    void Should_Not_Throw_Exception_When_Equals_Method_Return_False_Compared_To_Null() {
         // given
         final GoodPojo_Equals_HashCode_ToString objectUnderAssert = new GoodPojo_Equals_HashCode_ToString();
         final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
@@ -213,7 +216,7 @@ public class EqualAssertionsTest {
     }
 
     @Test
-    public void Should_Not_Throw_Exception_When_Equals_Method_Return_False_Compared_To_Different_Type() {
+    void Should_Not_Throw_Exception_When_Equals_Method_Return_False_Compared_To_Different_Type() {
         // given
         final GoodPojo_Equals_HashCode_ToString objectUnderAssert = new GoodPojo_Equals_HashCode_ToString();
         final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
@@ -226,7 +229,7 @@ public class EqualAssertionsTest {
     }
 
     @Test
-    public void Should_Not_Throw_Exception_When_Equals_Method_Return_False_Compared_To_Not_Equal_Object() {
+    void Should_Not_Throw_Exception_When_Equals_Method_Return_False_Compared_To_Not_Equal_Object() {
         // given
         final GoodPojo_Equals_HashCode_ToString objectUnderAssert = new GoodPojo_Equals_HashCode_ToString();
         final GoodPojo_Equals_HashCode_ToString otherObject = new GoodPojo_Equals_HashCode_ToString();
@@ -241,7 +244,7 @@ public class EqualAssertionsTest {
     }
 
     @Test
-    public void Should_Not_Throw_Exception_When_Equals_Method_Return_True_Compared_To_Equal_Object() {
+    void Should_Not_Throw_Exception_When_Equals_Method_Return_True_Compared_To_Equal_Object() {
         // given
         final BadPojoEquals_NotConsistent objectUnderAssert = new BadPojoEquals_NotConsistent(true, false);
         final EqualAssertions equalAssertions = new EqualAssertions(objectUnderAssert);
@@ -276,18 +279,18 @@ public class EqualAssertionsTest {
     }
 
     private class GoodPojo_Equals_HashCode_ToString {
-        public long random;
-        public byte byteField;
-        public short shortType;
-        public int intType;
-        public long longType;
-        public double doubleType;
-        public boolean booleanType;
-        public float floatType;
-        public char charType;
-        public TestEnum1 testEnum1;
+        long random;
+        byte byteField;
+        short shortType;
+        int intType;
+        long longType;
+        double doubleType;
+        boolean booleanType;
+        float floatType;
+        char charType;
+        TestEnum1 testEnum1;
 
-        public GoodPojo_Equals_HashCode_ToString() {
+        GoodPojo_Equals_HashCode_ToString() {
             final Random random = new Random();
             this.random = random.nextLong();
         }
@@ -433,7 +436,7 @@ public class EqualAssertionsTest {
         private final boolean[] equalReturnValues = new boolean[2];
         private int counter = -1;
 
-        public BadPojoEquals_NotConsistent(final boolean firstReturn, final boolean secondReturn) {
+        BadPojoEquals_NotConsistent(final boolean firstReturn, final boolean secondReturn) {
             this.equalReturnValues[0] = firstReturn;
             this.equalReturnValues[1] = secondReturn;
         }
@@ -549,14 +552,14 @@ public class EqualAssertionsTest {
     }
 
     private class BadPojoEqualsWithEqualObject {
-        public byte byteField;
-        public short shortType;
-        public int intType;
-        public long longType;
-        public double doubleType;
-        public boolean booleanType;
-        public char charType;
-        public float floatType;
+        byte byteField;
+        short shortType;
+        int intType;
+        long longType;
+        double doubleType;
+        boolean booleanType;
+        char charType;
+        float floatType;
 
         @Override
         public String toString() {

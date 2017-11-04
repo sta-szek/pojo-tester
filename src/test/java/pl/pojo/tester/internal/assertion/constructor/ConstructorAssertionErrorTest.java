@@ -7,20 +7,20 @@ import java.lang.reflect.Constructor;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class ConstructorAssertionErrorTest {
+class ConstructorAssertionErrorTest {
 
     @Test
-    public void Should_Return_Expected_Detailed_Message_Without_Parameters() throws NoSuchMethodException {
+    void Should_Return_Expected_Detailed_Message_Without_Parameters() throws NoSuchMethodException {
         // given
         final String expectedMessage =
                 "Constructor:\n" +
-                "private pl.pojo.tester.internal.assertion.constructor.ConstructorAssertionErrorTest$Pojo()\n" +
-                "of class:\n" +
-                "class pl.pojo.tester.internal.assertion.constructor.ConstructorAssertionErrorTest$Pojo\n" +
-                "could not create instance with parameters:\n" +
-                "<no parameters>\n" +
-                "Root cause is:\n" +
-                "test";
+                        "private pl.pojo.tester.internal.assertion.constructor.ConstructorAssertionErrorTest$Pojo()\n" +
+                        "of class:\n" +
+                        "class pl.pojo.tester.internal.assertion.constructor.ConstructorAssertionErrorTest$Pojo\n" +
+                        "could not create instance with parameters:\n" +
+                        "<no parameters>\n" +
+                        "Root cause is:\n" +
+                        "test";
         final Class<?> testedCass = Pojo.class;
         final Constructor<?> declaredConstructor = testedCass.getDeclaredConstructor();
         final Object[] constructorParameters = null;
@@ -38,17 +38,17 @@ public class ConstructorAssertionErrorTest {
     }
 
     @Test
-    public void Should_Return_Expected_Detailed_Message_With_Parameters() throws NoSuchMethodException {
+    void Should_Return_Expected_Detailed_Message_With_Parameters() throws NoSuchMethodException {
         // given
         final String expectedMessage =
                 "Constructor:\n" +
-                "private pl.pojo.tester.internal.assertion.constructor.ConstructorAssertionErrorTest$Pojo()\n" +
-                "of class:\n" +
-                "class pl.pojo.tester.internal.assertion.constructor.ConstructorAssertionErrorTest$Pojo\n" +
-                "could not create instance with parameters:\n" +
-                "[ test1, 1, test2 ]\n" +
-                "Root cause is:\n" +
-                "test";
+                        "private pl.pojo.tester.internal.assertion.constructor.ConstructorAssertionErrorTest$Pojo()\n" +
+                        "of class:\n" +
+                        "class pl.pojo.tester.internal.assertion.constructor.ConstructorAssertionErrorTest$Pojo\n" +
+                        "could not create instance with parameters:\n" +
+                        "[ test1, 1, test2 ]\n" +
+                        "Root cause is:\n" +
+                        "test";
         final Class<?> testedCass = Pojo.class;
         final Constructor<?> declaredConstructor = testedCass.getDeclaredConstructor();
         final Object[] constructorParameters = new Object[]{"test1", 1, "test2"};
@@ -66,11 +66,11 @@ public class ConstructorAssertionErrorTest {
     }
 
     @Test
-    public void Should_Return_Expected_Error_Prefix() throws NoSuchMethodException {
+    void Should_Return_Expected_Error_Prefix() throws NoSuchMethodException {
         // given
         final String expectedMessage = "Class pl.pojo.tester.internal.assertion.constructor" +
-                                       ".ConstructorAssertionErrorTest.Pojo has bad 'constructor' method " +
-                                       "implementation.";
+                ".ConstructorAssertionErrorTest.Pojo has bad 'constructor' method " +
+                "implementation.";
 
         final Class<?> testedCass = Pojo.class;
         final Constructor<?> declaredConstructor = testedCass.getDeclaredConstructor();
@@ -87,5 +87,6 @@ public class ConstructorAssertionErrorTest {
         assertThat(result).isEqualTo(expectedMessage);
     }
 
-    private static class Pojo {}
+    private static class Pojo {
+    }
 }

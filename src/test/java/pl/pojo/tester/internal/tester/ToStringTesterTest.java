@@ -17,10 +17,10 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.util.Lists.newArrayList;
 
 
-public class ToStringTesterTest {
+class ToStringTesterTest {
 
     @Test
-    public void Should_Pass_All_ToString_Tests() {
+    void Should_Pass_All_ToString_Tests() {
         // given
         final Class[] classesToTest = {GoodPojo_Equals_HashCode_ToString.class};
         final ToStringTester toStringTester = new ToStringTester(DefaultFieldValueChanger.INSTANCE);
@@ -33,7 +33,7 @@ public class ToStringTesterTest {
     }
 
     @Test
-    public void Should_Pass_All_ToString_Tests_Excluding_Fields() {
+    void Should_Pass_All_ToString_Tests_Excluding_Fields() {
         // given
         final ToStringTester toStringTester = new ToStringTester();
         final Class<?> clazz = ToStringWithoutField.class;
@@ -48,7 +48,7 @@ public class ToStringTesterTest {
     }
 
     @Test
-    public void Should_Pass_All_ToString_Tests_Including_Fields() {
+    void Should_Pass_All_ToString_Tests_Including_Fields() {
         // given
         final ToStringTester toStringTester = new ToStringTester();
         final Class<?> clazz = ToStringWithoutField.class;
@@ -63,7 +63,7 @@ public class ToStringTesterTest {
     }
 
     @Test
-    public void Should_Fail_All_ToString_Tests() {
+    void Should_Fail_All_ToString_Tests() {
         // given
         final Class[] classesToTest = {ToStringWithoutField.class};
         final ToStringTester toStringTester = new ToStringTester();
@@ -76,7 +76,7 @@ public class ToStringTesterTest {
     }
 
     @Test
-    public void Should_Fail_All_ToString_Tests_Excluding_Fields() {
+    void Should_Fail_All_ToString_Tests_Excluding_Fields() {
         // given
         final ToStringTester toStringTester = new ToStringTester();
         final Class<?> clazz = ToStringWithoutField.class;
@@ -91,7 +91,7 @@ public class ToStringTesterTest {
     }
 
     @Test
-    public void Should_Fail_All_ToString_Tests_Including_Fields() {
+    void Should_Fail_All_ToString_Tests_Including_Fields() {
         // given
         final ToStringTester toStringTester = new ToStringTester();
         final Class<?> clazz = ToStringWithoutField.class;
@@ -106,18 +106,18 @@ public class ToStringTesterTest {
     }
 
     private class GoodPojo_Equals_HashCode_ToString {
-        public long random;
-        public byte byteField;
-        public short shortType;
-        public int intType;
-        public long longType;
-        public double doubleType;
-        public boolean booleanType;
-        public float floatType;
-        public char charType;
-        public TestEnum1 testEnum1;
+        long random;
+        byte byteField;
+        short shortType;
+        int intType;
+        long longType;
+        double doubleType;
+        boolean booleanType;
+        float floatType;
+        char charType;
+        TestEnum1 testEnum1;
 
-        public GoodPojo_Equals_HashCode_ToString() {
+        GoodPojo_Equals_HashCode_ToString() {
             final Random random = new Random();
             this.random = random.nextLong();
         }

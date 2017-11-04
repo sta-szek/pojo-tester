@@ -17,10 +17,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 
-public class AbstractTesterTest {
+class AbstractTesterTest {
 
     @Test
-    public void Should_Call_Test_With_Expected_Predicate() {
+    void Should_Call_Test_With_Expected_Predicate() {
         // given
         final AbstractTester abstractTester = spy(AbstractTester.class);
         final Class<A> clazz = A.class;
@@ -33,7 +33,7 @@ public class AbstractTesterTest {
     }
 
     @Test
-    public void Should_Call_Test_With_Expected_Class_And_Field_Predicate_Pair() {
+    void Should_Call_Test_With_Expected_Class_And_Field_Predicate_Pair() {
         // given
         final AbstractTester abstractTester = spy(AbstractTester.class);
         final Class<A> clazz = A.class;
@@ -47,7 +47,7 @@ public class AbstractTesterTest {
     }
 
     @Test
-    public void Should_Call_Test_With_Expected_Class_And_Field_Predicate_Pairs() {
+    void Should_Call_Test_With_Expected_Class_And_Field_Predicate_Pairs() {
         // given
         final AbstractTester abstractTester = spy(AbstractTester.class);
         final Class<A> clazz = A.class;
@@ -62,7 +62,7 @@ public class AbstractTesterTest {
     }
 
     @Test
-    public void Should_Call_Test_With_Expected_Class_And_Field_Predicate_Pairs_Two_Times() {
+    void Should_Call_Test_With_Expected_Class_And_Field_Predicate_Pairs_Two_Times() {
         // given
         final AbstractTester abstractTester = spy(AbstractTester.class);
 
@@ -84,7 +84,7 @@ public class AbstractTesterTest {
     }
 
     @Test
-    public void Should_Create_New_Object_Generator_When_Set_Field_Value_Changer() {
+    void Should_Create_New_Object_Generator_When_Set_Field_Value_Changer() {
         // given
         final AbstractTester abstractTester = new AbstractTesterImplementation();
         final AbstractFieldValueChanger fieldValuesChanger = DefaultFieldValueChanger.INSTANCE;
@@ -99,7 +99,7 @@ public class AbstractTesterTest {
     }
 
     @Test
-    public void Should_Create_New_Object_Generator_When_User_Defined_Class_And_Constructor() {
+    void Should_Create_New_Object_Generator_When_User_Defined_Class_And_Constructor() {
         // given
         final AbstractTester abstractTester = new AbstractTesterImplementation();
         final ObjectGenerator beforeChange = abstractTester.objectGenerator;
@@ -114,7 +114,7 @@ public class AbstractTesterTest {
     }
 
     @Test
-    public void Should_Equal_Itself() {
+    void Should_Equal_Itself() {
         // given
         final AbstractTester abstractTester = new AbstractTesterImplementation();
 
@@ -126,7 +126,7 @@ public class AbstractTesterTest {
     }
 
     @Test
-    public void Should_Not_Equal_Other_Object_With_Same_Values() {
+    void Should_Not_Equal_Other_Object_With_Same_Values() {
         // given
         final AbstractTester abstractTester1 = new AbstractTesterImplementation();
         final AbstractTester abstractTester2 = new AbstractTesterImplementation();
@@ -139,7 +139,7 @@ public class AbstractTesterTest {
     }
 
     @Test
-    public void Should_Not_Equal_Null() {
+    void Should_Not_Equal_Null() {
         // given
         final AbstractTester abstractTester = new AbstractTesterImplementation();
 
@@ -151,7 +151,7 @@ public class AbstractTesterTest {
     }
 
     @Test
-    public void Should_Not_Equal_Other_Object_With_Different_Values() {
+    void Should_Not_Equal_Other_Object_With_Different_Values() {
         // given
         final AbstractTester abstractTester1 = new AbstractTesterImplementation();
         final AbstractTester abstractTester2 = new AbstractTesterImplementation(null);
@@ -164,7 +164,7 @@ public class AbstractTesterTest {
     }
 
     @Test
-    public void Should_Not_Equal_Other_Class() {
+    void Should_Not_Equal_Other_Class() {
         // given
         final AbstractTester abstractTester1 = new AbstractTesterImplementation();
 
@@ -176,7 +176,7 @@ public class AbstractTesterTest {
     }
 
     @Test
-    public void Should_Generate_Same_Hash_Codes() {
+    void Should_Generate_Same_Hash_Codes() {
         // given
         final AbstractTester abstractTester1 = new AbstractTesterImplementation();
 
@@ -189,7 +189,7 @@ public class AbstractTesterTest {
     }
 
     @Test
-    public void Should_Generate_Different_Hash_Codes_For_Every_New_Instance() {
+    void Should_Generate_Different_Hash_Codes_For_Every_New_Instance() {
         // given
         final AbstractTester abstractTester1 = new AbstractTesterImplementation();
         final AbstractTester abstractTester2 = new AbstractTesterImplementation();
@@ -214,7 +214,7 @@ public class AbstractTesterTest {
 
     class AbstractTesterImplementation extends AbstractTester {
 
-        public AbstractTesterImplementation() {
+        AbstractTesterImplementation() {
         }
 
         AbstractTesterImplementation(final AbstractFieldValueChanger o) {

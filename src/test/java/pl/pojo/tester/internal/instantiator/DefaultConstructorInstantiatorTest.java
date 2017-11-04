@@ -7,10 +7,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
 
-public class DefaultConstructorInstantiatorTest {
+class DefaultConstructorInstantiatorTest {
 
     @Test
-    public void Should_Create_Object_Using_Default_Constructor() {
+    void Should_Create_Object_Using_Default_Constructor() {
         // given
         final Class<String> classToInstantiate = String.class;
         final DefaultConstructorInstantiator instantiator = new DefaultConstructorInstantiator(classToInstantiate);
@@ -23,7 +23,7 @@ public class DefaultConstructorInstantiatorTest {
     }
 
     @Test
-    public void Should_Throw_Exception_When_Cannot_Instantiate_Object() {
+    void Should_Throw_Exception_When_Cannot_Instantiate_Object() {
         // given
         final Class<?> classToInstantiate = No_Args_Constructor_Throws_IllegalAccessException.class;
         final DefaultConstructorInstantiator instantiator = new DefaultConstructorInstantiator(classToInstantiate);
@@ -37,7 +37,7 @@ public class DefaultConstructorInstantiatorTest {
 
     private class No_Args_Constructor_Throws_IllegalAccessException {
 
-        public No_Args_Constructor_Throws_IllegalAccessException() throws IllegalAccessException {
+        No_Args_Constructor_Throws_IllegalAccessException() throws IllegalAccessException {
             throw new IllegalAccessException("test");
         }
     }

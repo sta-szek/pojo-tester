@@ -17,18 +17,19 @@ import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 import static org.powermock.reflect.Whitebox.getInternalState;
 
 
-public class StreamValueChangerTest {
+class StreamValueChangerTest {
 
     private final StreamValueChanger valueChanger = new StreamValueChanger();
 
     @TestFactory
-    public Stream<DynamicTest> Should_Change_Stream_Value() {
+    Stream<DynamicTest> Should_Change_Stream_Value() {
         return Stream.of("stream_String", "stream_Object", "stream_Integer", "stream_A", "stream")
-                     .map(fieldName -> dynamicTest(getDefaultDisplayName(fieldName), Should_Change_Stream_Value(fieldName)));
+                     .map(fieldName -> dynamicTest(getDefaultDisplayName(fieldName),
+                                                   Should_Change_Stream_Value(fieldName)));
     }
 
     @TestFactory
-    public Stream<DynamicTest> Should_Return_True_Or_False_Whether_Can_Change_Or_Not() throws NoSuchFieldException {
+    Stream<DynamicTest> Should_Return_True_Or_False_Whether_Can_Change_Or_Not() throws NoSuchFieldException {
         return Stream.of(new CanChangeCase(ClassContainingStream.class.getDeclaredField("stream_String"), true),
                          new CanChangeCase(ClassContainingStream.class.getDeclaredField("stream_Object"), true),
                          new CanChangeCase(ClassContainingStream.class.getDeclaredField("stream_Integer"), true),
@@ -40,7 +41,7 @@ public class StreamValueChangerTest {
     }
 
     @TestFactory
-    public Stream<DynamicTest> Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not() {
+    Stream<DynamicTest> Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not() {
         return Stream.of(new AreDifferentCase(null, null, false),
                          new AreDifferentCase(Stream.of(1), Stream.of(1), false),
                          new AreDifferentCase(Stream.of(new Pojo()), Stream.of(new Pojo()), false),
@@ -81,7 +82,9 @@ public class StreamValueChangerTest {
             final ClassContainingStream helpClass2 = new ClassContainingStream();
 
             // when
-            valueChanger.changeFieldsValues(helpClass1, helpClass2, newArrayList(ClassContainingStream.class.getDeclaredField(fieldName)));
+            valueChanger.changeFieldsValues(helpClass1,
+                                            helpClass2,
+                                            newArrayList(ClassContainingStream.class.getDeclaredField(fieldName)));
             final Stream result1 = getInternalState(helpClass2, fieldName);
             final Stream result2 = getInternalState(helpClass1, fieldName);
 

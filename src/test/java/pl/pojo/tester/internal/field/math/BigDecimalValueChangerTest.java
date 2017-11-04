@@ -17,17 +17,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 import static org.powermock.reflect.Whitebox.getInternalState;
 
-public class BigDecimalValueChangerTest {
+class BigDecimalValueChangerTest {
 
     private final BigDecimalValueChanger valueChanger = new BigDecimalValueChanger();
 
     @TestFactory
-    public Stream<DynamicTest> Should_Change_Value() {
+    Stream<DynamicTest> Should_Change_Value() {
         return Stream.of(BigDecimal.TEN, BigDecimal.ZERO, BigDecimal.ONE, BigDecimal.valueOf(999999999999999999L))
                      .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Change_Value(value)));
     }
 
-    public Executable Should_Change_Value(final BigDecimal value) {
+    private Executable Should_Change_Value(final BigDecimal value) {
         return () -> {
             // given
             final AllFiledTypes helpClass1 = new AllFiledTypes(value);
@@ -46,7 +46,7 @@ public class BigDecimalValueChangerTest {
     }
 
     @TestFactory
-    public Stream<DynamicTest> Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not() {
+    Stream<DynamicTest> Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not() {
         return Stream.of(
                 new TestCase(null, null, false),
                 new TestCase(BigDecimal.ZERO, BigDecimal.ZERO, false),
@@ -61,7 +61,7 @@ public class BigDecimalValueChangerTest {
                                                Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(value)));
     }
 
-    public Executable Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final TestCase value) {
+    private Executable Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final TestCase value) {
         return () -> {
             // when
             final boolean result = valueChanger.areDifferentValues(value.value1, value.value2);
@@ -72,7 +72,7 @@ public class BigDecimalValueChangerTest {
     }
 
     @Test
-    public void Should_Return_True_If_Can_Change() {
+    void Should_Return_True_If_Can_Change() {
         // given
         final Class<?> classToChange = BigDecimal.class;
 
@@ -84,7 +84,7 @@ public class BigDecimalValueChangerTest {
     }
 
     @Test
-    public void Should_Return_True_If_Can_Not_Change() {
+    void Should_Return_True_If_Can_Not_Change() {
         // given
         final Class<?> classToChange = String.class;
 

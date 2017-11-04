@@ -8,10 +8,10 @@ import java.util.Map;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class MapValueChangerTest {
+class MapValueChangerTest {
 
     @Test
-    public void Should_Return_Null_When_Value_Is_Not_Null() {
+    void Should_Return_Null_When_Value_Is_Not_Null() {
         // given
         final Map<String, String> value = new HashMap<>();
         final Class<? extends Map> type = value.getClass();
@@ -26,7 +26,7 @@ public class MapValueChangerTest {
     }
 
     @Test
-    public void Should_Return_Any_Instance_When_Value_Is_Null() {
+    void Should_Return_Any_Instance_When_Value_Is_Null() {
         // given
         final Map<String, String> value = null;
         final Class<Map> type = Map.class;

@@ -1,44 +1,44 @@
 package classesForTest;
 
 
-public class ClassContainingUnpublicClasses {
+class ClassContainingUnpublicClasses {
 
-    class Package_PublicConstructor {
+    private class Package_PublicConstructor {
         public Package_PublicConstructor() {
         }
     }
 
-    class Package_PackageConstructor {
+    private class Package_PackageConstructor {
         Package_PackageConstructor() {
         }
     }
 
-    class Package_ProtectedConstructor {
+    private class Package_ProtectedConstructor {
         protected Package_ProtectedConstructor() {
         }
     }
 
-    class Package_PrivateConstructor {
+    private class Package_PrivateConstructor {
         private Package_PrivateConstructor() {
         }
     }
 
-    protected class Protected_PublicConstructor {
+    private class Protected_PublicConstructor {
         public Protected_PublicConstructor() {
         }
     }
 
-    protected class Protected_PackageConstructor {
+    private class Protected_PackageConstructor {
         Protected_PackageConstructor() {
         }
     }
 
-    protected class Protected_ProtectedConstructor {
+    private class Protected_ProtectedConstructor {
         protected Protected_ProtectedConstructor() {
         }
     }
 
-    protected class Protected_PrivateConstructor {
+    private class Protected_PrivateConstructor {
         private Protected_PrivateConstructor() {
         }
     }

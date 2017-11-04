@@ -14,10 +14,10 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 
-public class CollectionInstantiatorTest {
+class CollectionInstantiatorTest {
 
     @TestFactory
-    public Stream<DynamicTest> Should_Return_Expected_Collection_Object() {
+    Stream<DynamicTest> Should_Return_Expected_Collection_Object() {
         return Stream.of(Stream.class,
                          Collection.class,
                          List.class,
@@ -42,10 +42,11 @@ public class CollectionInstantiatorTest {
                          SortedMap.class,
                          NavigableMap.class,
                          TreeMap.class)
-                     .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Return_Expected_Collection_Object(value)));
+                     .map(value -> dynamicTest(getDefaultDisplayName(value),
+                                               Should_Return_Expected_Collection_Object(value)));
     }
 
-    public Executable Should_Return_Expected_Collection_Object(final Class<?> classToInstantiate) {
+    private Executable Should_Return_Expected_Collection_Object(final Class<?> classToInstantiate) {
         return () -> {
             // given
             final CollectionInstantiator instantiator = new CollectionInstantiator(classToInstantiate);
@@ -59,7 +60,7 @@ public class CollectionInstantiatorTest {
     }
 
     @Test
-    public void Should_Throws_Exception_When_Prepared_Objects_Do_Not_Contain_Expected_Class() {
+    void Should_Throws_Exception_When_Prepared_Objects_Do_Not_Contain_Expected_Class() {
         // given
         final CollectionInstantiator instantiator = new CollectionInstantiator(String.class);
 

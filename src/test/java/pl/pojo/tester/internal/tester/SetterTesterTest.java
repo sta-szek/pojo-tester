@@ -13,10 +13,10 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.util.Lists.newArrayList;
 
 
-public class SetterTesterTest {
+class SetterTesterTest {
 
     @Test
-    public void Should_Pass_All_Setter_Tests() {
+    void Should_Pass_All_Setter_Tests() {
         // given
         final Class[] classesToTest = {GoodPojoSetter.class};
         final SetterTester setterTester = new SetterTester(DefaultFieldValueChanger.INSTANCE);
@@ -29,7 +29,7 @@ public class SetterTesterTest {
     }
 
     @Test
-    public void Should_Pass_All_Setter_Tests_Excluding_Fields() {
+    void Should_Pass_All_Setter_Tests_Excluding_Fields() {
         // given
         final SetterTester setterTester = new SetterTester();
         final Class<?> clazz = BadPojoSetter.class;
@@ -43,7 +43,7 @@ public class SetterTesterTest {
     }
 
     @Test
-    public void Should_Pass_All_Setter_Tests_Including_Fields() {
+    void Should_Pass_All_Setter_Tests_Including_Fields() {
         // given
         final SetterTester setterTester = new SetterTester();
         final Class<?> clazz = BadPojoSetter.class;
@@ -57,7 +57,7 @@ public class SetterTesterTest {
     }
 
     @Test
-    public void Should_Fail_Multiple_Classes() {
+    void Should_Fail_Multiple_Classes() {
         // given
         final Class[] classesToTest = {BadPojoSetter.class, Setters.class};
         final SetterTester setterTester = new SetterTester();
@@ -102,10 +102,10 @@ public class SetterTesterTest {
 
     private class Setters {
 
-        public int setter1;
-        public int setter2;
-        public Integer setter3;
-        public Integer setter4;
+        int setter1;
+        int setter2;
+        Integer setter3;
+        Integer setter4;
         private int a;
         private int b;
         private int c;

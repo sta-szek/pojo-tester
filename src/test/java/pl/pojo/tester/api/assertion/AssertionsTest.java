@@ -14,10 +14,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.powermock.reflect.Whitebox.getInternalState;
 
 
-public class AssertionsTest {
+class AssertionsTest {
 
     @Test
-    public void Should_Create_Expected_Single_Class_Assertion_Using_Class() {
+    void Should_Create_Expected_Single_Class_Assertion_Using_Class() {
         final Class<A> expectedClass = A.class;
         final SingleClassAssertion expectedResult = new SingleClassAssertion(new ClassAndFieldPredicatePair(
                 expectedClass),
@@ -30,7 +30,7 @@ public class AssertionsTest {
     }
 
     @Test
-    public void Should_Create_Expected_Single_Class_Assertion_Using_Class_Name() {
+    void Should_Create_Expected_Single_Class_Assertion_Using_Class_Name() {
         // given
         final Class<A> expectedClass = A.class;
         final String expectedClassName = expectedClass.getName();
@@ -45,7 +45,7 @@ public class AssertionsTest {
     }
 
     @Test
-    public void Should_Create_Expected_Single_Class_Assertion_Using_Class_Name_And_Field_Predicate() {
+    void Should_Create_Expected_Single_Class_Assertion_Using_Class_Name_And_Field_Predicate() {
         // given
         final Class<A> expectedClass = A.class;
         final String fieldName = "a";
@@ -62,7 +62,7 @@ public class AssertionsTest {
     }
 
     @Test
-    public void Should_Create_Expected_Single_Class_Assertion_Using_Class_And_Field_Predicate() {
+    void Should_Create_Expected_Single_Class_Assertion_Using_Class_And_Field_Predicate() {
         // given
         final Class<A> expectedClass = A.class;
         final String fieldName = "a";
@@ -78,9 +78,9 @@ public class AssertionsTest {
     }
 
     @Test
-    public void Should_Create_Expected_Single_Class_Assertion_Using_Class_And_Field_Predicates() {
+    void Should_Create_Expected_Single_Class_Assertion_Using_Class_And_Field_Predicates() {
         // given
-        final ClassAndFieldPredicatePair[] classAndFieldPredicatePairs = { new ClassAndFieldPredicatePair(A.class) };
+        final ClassAndFieldPredicatePair[] classAndFieldPredicatePairs = {new ClassAndFieldPredicatePair(A.class)};
         final SingleClassAssertion expectedResult = new SingleClassAssertion(classAndFieldPredicatePairs[0],
                                                                              classAndFieldPredicatePairs);
         // when
@@ -91,7 +91,7 @@ public class AssertionsTest {
     }
 
     @Test
-    public void Should_Create_Expected_Multi_Class_Assertion_Using_Package() {
+    void Should_Create_Expected_Multi_Class_Assertion_Using_Package() {
         // given
         final DefaultPackageFilter packageFilter = DefaultPackageFilter.forPackage("classesForTest.packageFilter.next");
 
@@ -106,7 +106,7 @@ public class AssertionsTest {
     }
 
     @Test
-    public void Should_Create_Expected_Multi_Class_Assertion_Using_Classes() {
+    void Should_Create_Expected_Multi_Class_Assertion_Using_Classes() {
         // given
         final Class<A> expectedClass1 = A.class;
         final Class<B> expectedClass2 = B.class;
@@ -122,7 +122,7 @@ public class AssertionsTest {
     }
 
     @Test
-    public void Should_Create_Expected_Multi_Class_Assertion_Using_Classes_Names() {
+    void Should_Create_Expected_Multi_Class_Assertion_Using_Classes_Names() {
         // given
         final String expectedClass1Name = A.class.getName();
         final String expectedClass2Name = B.class.getName();
@@ -138,7 +138,7 @@ public class AssertionsTest {
     }
 
     @Test
-    public void Should_Create_Expected_Multi_Class_Assertion_Using_Class_And_Field_Predicate_Pairs() {
+    void Should_Create_Expected_Multi_Class_Assertion_Using_Class_And_Field_Predicate_Pairs() {
         // given
         final Class<A> expectedClass1 = A.class;
         final Class<B> expectedClass2 = B.class;

@@ -6,7 +6,7 @@ import pl.pojo.tester.api.ConstructorParameters;
 import java.util.Arrays;
 import java.util.Map;
 
-public class MapMatcher implements ArgumentMatcher<Map<Class<?>, ConstructorParameters>> {
+class MapMatcher implements ArgumentMatcher<Map<Class<?>, ConstructorParameters>> {
 
     private final Class<?> expectedClass;
     private final ConstructorParameters expectedArguments;

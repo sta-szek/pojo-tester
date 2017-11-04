@@ -58,7 +58,16 @@ public final class Instantiable {
             return new ProxyInstantiator(clazz, constructorParameters);
         }
 
+        if (isJavaLangClass(clazz)) {
+            return new ClassInstantiator();
+        }
+
         return new BestConstructorInstantiator(clazz, constructorParameters);
+    }
+
+    private static boolean isJavaLangClass(final Class<?> clazz) {
+        return clazz.getName()
+                    .equals(Class.class.getName());
     }
 
     private static boolean isKindOfCollectionClass(final Class<?> clazz) {

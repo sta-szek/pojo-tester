@@ -17,24 +17,24 @@ import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 import static org.powermock.reflect.Whitebox.getInternalState;
 
 
-public class ShortValueChangerTest {
+class ShortValueChangerTest {
 
     private final AbstractFieldValueChanger<Short> valueChanger = new ShortValueChanger();
 
     @TestFactory
-    public Stream<DynamicTest> Should_Change_Primitive_Value() {
+    Stream<DynamicTest> Should_Change_Primitive_Value() {
         return Stream.of(Short.MAX_VALUE, Short.MIN_VALUE, (short) 0, (short) -1, (short) 1)
                      .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Change_Primitive_Value(value)));
     }
 
     @TestFactory
-    public Stream<DynamicTest> Should_Change_Wrapped_Value() {
+    Stream<DynamicTest> Should_Change_Wrapped_Value() {
         return Stream.of(Short.MAX_VALUE, Short.MIN_VALUE, (short) 0, (short) -1, (short) 1)
                      .map(value -> dynamicTest(getDefaultDisplayName(value), Should_Change_Wrapped_Value(value)));
     }
 
     @TestFactory
-    public Stream<DynamicTest> Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not() {
+    Stream<DynamicTest> Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not() {
         return Stream.of(new TestCase(null, null, false),
                          new TestCase((short) 0, (short) 0, false),
                          new TestCase(Short.MIN_VALUE, Short.MIN_VALUE, false),
@@ -55,7 +55,9 @@ public class ShortValueChangerTest {
             final AllFiledTypes helpClass2 = new AllFiledTypes(value);
 
             // when
-            valueChanger.changeFieldsValues(helpClass1, helpClass2, Lists.newArrayList(AllFiledTypes.class.getDeclaredFields()));
+            valueChanger.changeFieldsValues(helpClass1,
+                                            helpClass2,
+                                            Lists.newArrayList(AllFiledTypes.class.getDeclaredFields()));
             final Short result1 = getInternalState(helpClass1, "shortType");
             final Short result2 = getInternalState(helpClass2, "shortType");
 
@@ -71,7 +73,9 @@ public class ShortValueChangerTest {
             final AllFiledTypes_Wrapped helpClass2 = new AllFiledTypes_Wrapped(value);
 
             // when
-            valueChanger.changeFieldsValues(helpClass1, helpClass2, Lists.newArrayList(AllFiledTypes_Wrapped.class.getDeclaredFields()));
+            valueChanger.changeFieldsValues(helpClass1,
+                                            helpClass2,
+                                            Lists.newArrayList(AllFiledTypes_Wrapped.class.getDeclaredFields()));
             final Short result1 = getInternalState(helpClass1, "shortType");
             final Short result2 = getInternalState(helpClass2, "shortType");
 

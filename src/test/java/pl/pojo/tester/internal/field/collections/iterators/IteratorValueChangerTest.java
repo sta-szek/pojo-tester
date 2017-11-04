@@ -17,10 +17,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 
-public class IteratorValueChangerTest {
+class IteratorValueChangerTest {
 
     @TestFactory
-    public Stream<DynamicTest> Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not() {
+    Stream<DynamicTest> Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not() {
         final Collection<String> collectionABC = new ArrayList<>();
         collectionABC.add("A");
         collectionABC.add("B");
@@ -42,7 +42,7 @@ public class IteratorValueChangerTest {
                                                Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(value)));
     }
 
-    public Executable Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final AreDifferentCase testCase) {
+    private Executable Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(final AreDifferentCase testCase) {
         return () -> {
             // given
             final IteratorValueChanger valueChanger = new IteratorValueChanger();
@@ -56,7 +56,7 @@ public class IteratorValueChangerTest {
     }
 
     @Test
-    public void Should_Return_Null_When_Value_Is_Not_Null() {
+    void Should_Return_Null_When_Value_Is_Not_Null() {
         // given
         final Iterator<Object> value = new ArrayList<>().iterator();
         final Class<? extends Iterator> type = value.getClass();
@@ -71,7 +71,7 @@ public class IteratorValueChangerTest {
     }
 
     @Test
-    public void Should_Return_Any_Instance_When_Value_Is_Null() {
+    void Should_Return_Any_Instance_When_Value_Is_Null() {
         // given
         final Iterator<String> value = null;
         final Class<Iterator> type = Iterator.class;

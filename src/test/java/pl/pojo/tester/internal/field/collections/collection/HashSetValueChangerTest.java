@@ -8,10 +8,10 @@ import java.util.HashSet;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class HashSetValueChangerTest {
+class HashSetValueChangerTest {
 
     @Test
-    public void Should_Return_Null_When_Value_Is_Not_Null_And_Not_Empty() {
+    void Should_Return_Null_When_Value_Is_Not_Null_And_Not_Empty() {
         // given
         final HashSet<String> value = new HashSet<>();
         value.add("test");
@@ -27,7 +27,7 @@ public class HashSetValueChangerTest {
     }
 
     @Test
-    public void Should_Return_Any_Instance_When_Value_Is_Null() {
+    void Should_Return_Any_Instance_When_Value_Is_Null() {
         // given
         final HashSet<String> value = null;
         final Class<HashSet> type = HashSet.class;
@@ -42,7 +42,7 @@ public class HashSetValueChangerTest {
     }
 
     @Test
-    public void Should_Return_Any_Instance_When_Value_Is_Empty() {
+    void Should_Return_Any_Instance_When_Value_Is_Empty() {
         // given
         final HashSet<String> value = new HashSet<>();
         final Class<HashSet> type = HashSet.class;

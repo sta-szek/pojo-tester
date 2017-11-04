@@ -5,21 +5,21 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class NotEqualHashCodeAssertionErrorTest {
+class NotEqualHashCodeAssertionErrorTest {
 
     @Test
-    public void Should_Return_Expected_Detailed_Message() {
+    void Should_Return_Expected_Detailed_Message() {
         // given
         final String expectedMessage = "The hashCode method should return different hash codes for non equal objects.\n"
-                                       + "Current implementation returns same hash codes.\n"
-                                       + "Object:\n"
-                                       + "testedObject\n"
-                                       + "and\n"
-                                       + "otherObject\n"
-                                       + "should have different hash codes:\n"
-                                       + "1\n"
-                                       + "and\n"
-                                       + "2";
+                + "Current implementation returns same hash codes.\n"
+                + "Object:\n"
+                + "testedObject\n"
+                + "and\n"
+                + "otherObject\n"
+                + "should have different hash codes:\n"
+                + "1\n"
+                + "and\n"
+                + "2";
         final Class<String> testedCass = String.class;
         final String testedObject = "testedObject";
         final String otherObject = "otherObject";
