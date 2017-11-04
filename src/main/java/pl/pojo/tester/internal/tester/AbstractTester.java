@@ -11,6 +11,8 @@ import pl.pojo.tester.internal.assertion.TestAssertions;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
 import pl.pojo.tester.internal.instantiator.ObjectGenerator;
+import pl.pojo.tester.internal.instantiator.Permutator;
+import pl.pojo.tester.internal.instantiator.ThoroughFieldPermutator;
 
 import java.util.Arrays;
 import java.util.List;
@@ -23,14 +25,14 @@ public abstract class AbstractTester {
     ObjectGenerator objectGenerator;
     private MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters = new ArrayListValuedHashMap<>();
     private AbstractFieldValueChanger fieldValuesChanger = DefaultFieldValueChanger.INSTANCE;
-
+    private Permutator permutator = new ThoroughFieldPermutator();
 
     public AbstractTester() {
         this(DefaultFieldValueChanger.INSTANCE);
     }
 
     public AbstractTester(final AbstractFieldValueChanger abstractFieldValueChanger) {
-        objectGenerator = new ObjectGenerator(abstractFieldValueChanger, constructorParameters);
+        objectGenerator = new ObjectGenerator(abstractFieldValueChanger, constructorParameters, permutator);
     }
 
     public void test(final Class<?> clazz) {
@@ -62,12 +64,12 @@ public abstract class AbstractTester {
 
     public void setFieldValuesChanger(final AbstractFieldValueChanger fieldValuesChanger) {
         this.fieldValuesChanger = fieldValuesChanger;
-        objectGenerator = new ObjectGenerator(fieldValuesChanger, constructorParameters);
+        objectGenerator = new ObjectGenerator(fieldValuesChanger, constructorParameters, permutator);
     }
 
     public void setUserDefinedConstructors(final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
         this.constructorParameters = constructorParameters;
-        objectGenerator = new ObjectGenerator(fieldValuesChanger, constructorParameters);
+        objectGenerator = new ObjectGenerator(fieldValuesChanger, constructorParameters, permutator);
     }
 
     @Override
@@ -104,6 +106,11 @@ public abstract class AbstractTester {
 
     @Override
     public String toString() {
-        return this.getClass().getSimpleName();
+        return this.getClass()
+                   .getSimpleName();
+    }
+
+    public void setPermutator(final Permutator permutator) {
+        this.permutator = permutator;
     }
 }

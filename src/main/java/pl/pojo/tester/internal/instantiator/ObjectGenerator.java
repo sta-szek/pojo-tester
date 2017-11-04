@@ -22,11 +22,14 @@ public class ObjectGenerator {
 
     private final AbstractFieldValueChanger abstractFieldValueChanger;
     private final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters;
+    private final Permutator permutator;
 
     public ObjectGenerator(final AbstractFieldValueChanger abstractFieldValueChanger,
-                           final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
+                           final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters,
+                           final Permutator permutator) {
         this.abstractFieldValueChanger = abstractFieldValueChanger;
         this.constructorParameters = constructorParameters;
+        this.permutator = permutator;
     }
 
     public Object createNewInstance(final Class<?> clazz) {
@@ -66,14 +69,13 @@ public class ObjectGenerator {
         final Map<Class<?>, List<Field>> userDefinedClassAndFieldToChangePairsMap = convertToClassAndFieldsToChange(
                 userDefinedClassAndFieldPredicatePairsMap);
 
-        final List<List<Field>> baseObjectFieldsPermutations = FieldUtils.permutations(baseClassFieldsToChange);
+        final List<List<Field>> baseObjectFieldsPermutations = permutator.permute(baseClassFieldsToChange);
 
         final Object baseObject = createNewInstance(baseClass);
         final LinkedList<Object> result = new LinkedList<>();
         result.add(baseObject);
-        logWithLevel(level,
-                     "Start of generating different objects for base class {}. " +
-                     "Base object is {} -- others will be cloned from this one",
+        logWithLevel(level, "Start of generating different objects for base class {}. " +
+                             "Base object is {} -- others will be cloned from this one",
                      baseClassAndFieldPredicatePair,
                      baseObject);
 
@@ -152,7 +154,7 @@ public class ObjectGenerator {
 
     private List<Object> generateDifferentObjects(final Class<?> clazz, final List<Field> fieldsToChange) {
         final List<Object> differentObjects;
-        final List<List<Field>> permutationOfFields = FieldUtils.permutations(fieldsToChange);
+        final List<List<Field>> permutationOfFields = permutator.permute(fieldsToChange);
         final Object fieldObject = createNewInstance(clazz);
 
         differentObjects = permutationOfFields.stream()
@@ -244,5 +246,4 @@ public class ObjectGenerator {
         } while ((parent = parent.getSuperclass()) != null);
         return allFields;
     }
-
 }

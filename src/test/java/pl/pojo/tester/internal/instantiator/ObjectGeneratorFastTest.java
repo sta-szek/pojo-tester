@@ -29,7 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 
-class ObjectGeneratorTest {
+class ObjectGeneratorFastTest {
 
     private final AbstractFieldValueChanger abstractFieldValueChanger = DefaultFieldValueChanger.INSTANCE;
     private final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters = new
@@ -37,7 +37,7 @@ class ObjectGeneratorTest {
 
     private ObjectGenerator makeObjectGenerator(final AbstractFieldValueChanger abstractFieldValueChanger,
                                                 final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
-        return new ObjectGenerator(abstractFieldValueChanger, constructorParameters, new ThoroughFieldPermutator());
+        return new ObjectGenerator(abstractFieldValueChanger, constructorParameters, new SublistFieldPermutator());
     }
 
     @Test
@@ -66,7 +66,7 @@ class ObjectGeneratorTest {
         final List<Object> result = objectGenerator.generateDifferentObjects(classAndFieldPredicatePair);
 
         // then
-        assertThat(result).hasSize(16)
+        assertThat(result).hasSize(5)
                           .doesNotHaveDuplicates();
     }
 
@@ -108,16 +108,16 @@ class ObjectGeneratorTest {
 
     @TestFactory
     Stream<DynamicTest> Should_Generate_Different_Objects() {
-        return Stream.of(new DifferentObjectTestCase(A.class, 4),
-                         new DifferentObjectTestCase(B.class, 8),
-                         new DifferentObjectTestCase(C.class, 16),
+        return Stream.of(new DifferentObjectTestCase(A.class, 3),
+                         new DifferentObjectTestCase(B.class, 4),
+                         new DifferentObjectTestCase(C.class, 5),
                          new DifferentObjectTestCase(ObjectContainingArray.class, 2),
                          new DifferentObjectTestCase(ObjectContainingIterable.class, 2),
                          new DifferentObjectTestCase(ObjectContainingIterator.class, 2),
                          new DifferentObjectTestCase(ObjectContainingStream.class, 2),
-                         new DifferentObjectTestCase(Collections.class, 4096),
-                         new DifferentObjectTestCase(Maps.class, 64),
-                         new DifferentObjectTestCase(GoodPojo_Equals_HashCode_ToString.class, 1024),
+                         new DifferentObjectTestCase(Collections.class, 13),
+                         new DifferentObjectTestCase(Maps.class, 7),
+                         new DifferentObjectTestCase(GoodPojo_Equals_HashCode_ToString.class, 11),
                          new DifferentObjectTestCase(Arrays_Primitive_Boolean.class, 2),
                          new DifferentObjectTestCase(Arrays_Primitive_Byte.class, 2),
                          new DifferentObjectTestCase(Arrays_Primitive_Char.class, 2),
@@ -159,15 +159,15 @@ class ObjectGeneratorTest {
         final ClassAndFieldPredicatePair[] pair2 = {pair(F.class)};
         final ClassAndFieldPredicatePair[] pair3 = {pair(A.class), pair(B.class), pair(F.class), pair(G.class)};
 
-        final RecursivelyDifferentObjectTestCase case1 = new RecursivelyDifferentObjectTestCase(18,
+        final RecursivelyDifferentObjectTestCase case1 = new RecursivelyDifferentObjectTestCase(11,
                                                                                                 pair(D.class),
                                                                                                 pair1);
 
-        final RecursivelyDifferentObjectTestCase case2 = new RecursivelyDifferentObjectTestCase(6,
+        final RecursivelyDifferentObjectTestCase case2 = new RecursivelyDifferentObjectTestCase(5,
                                                                                                 pair(G.class),
                                                                                                 pair2);
 
-        final RecursivelyDifferentObjectTestCase case3 = new RecursivelyDifferentObjectTestCase(945,
+        final RecursivelyDifferentObjectTestCase case3 = new RecursivelyDifferentObjectTestCase(176,
                                                                                                 pair(H.class),
                                                                                                 pair3);
 
@@ -176,7 +176,7 @@ class ObjectGeneratorTest {
                                                Should_Generate_Different_Objects_Recursively(value)));
     }
 
-    private Executable Should_Generate_Different_Objects_Recursively(final RecursivelyDifferentObjectTestCase testCase) {
+    public Executable Should_Generate_Different_Objects_Recursively(final RecursivelyDifferentObjectTestCase testCase) {
         return () -> {
             // given
             final ObjectGenerator objectGenerator = makeObjectGenerator(abstractFieldValueChanger,
@@ -362,25 +362,25 @@ class ObjectGeneratorTest {
 
     @Data
     @AllArgsConstructor
-    private class RecursivelyDifferentObjectTestCase {
+    class RecursivelyDifferentObjectTestCase {
         private int expectedSize;
         private ClassAndFieldPredicatePair baseClass;
         private ClassAndFieldPredicatePair[] otherClasses;
     }
 
     private class GoodPojo_Equals_HashCode_ToString {
-        long random;
-        byte byteField;
-        short shortType;
-        int intType;
-        long longType;
-        double doubleType;
-        boolean booleanType;
-        float floatType;
-        char charType;
-        TestEnum1 testEnum1;
+        public long random;
+        public byte byteField;
+        public short shortType;
+        public int intType;
+        public long longType;
+        public double doubleType;
+        public boolean booleanType;
+        public float floatType;
+        public char charType;
+        public TestEnum1 testEnum1;
 
-        GoodPojo_Equals_HashCode_ToString() {
+        public GoodPojo_Equals_HashCode_ToString() {
             final Random random = new Random();
             this.random = random.nextLong();
         }

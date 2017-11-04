@@ -398,6 +398,20 @@ This method test all classes. If it encounters field of type from given classes,
 Imagine you are testing two classes, `A` and `B`. Class `A` has a field of type `B`. When you pass those classes to the `POJO-TESTER`, it will create instance of `B` class, change its value generating different objects, and finally will set all those objects into class `A`.
 
 
+## If testing time grows... {#testing-time}
+... then you can use switch which will generate less objects to tests.
+It may cause lower code coverage.
+
+Usage:
+```
+ assertPojoMethodsFor(classUnderTest).quickly()
+                                     .areWellImplemented();
+```
+By default it will perform full tests - with much more generated objects than using `AbstractAssertion#quickly` method.
+
+For more details see [#201](https://github.com/sta-szek/pojo-tester/issues/201)
+
+
 ## Debugging {#debugging}
 `pojo-tester` is not a perfect library. Sometimes you have to debug tests to see what happened.
 If you think that `pojo-tester` has a bug, just switch logging level to `DEBUG` and investigate.

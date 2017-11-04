@@ -1,5 +1,6 @@
 package pl.pojo.tester.api.assertion;
 
+
 import pl.pojo.tester.internal.tester.AbstractTester;
 import pl.pojo.tester.internal.tester.ConstructorTester;
 import pl.pojo.tester.internal.tester.EqualsTester;
@@ -17,20 +18,24 @@ import pl.pojo.tester.internal.tester.ToStringTester;
  * @since 0.1.0
  */
 public enum Method {
-    EQUALS(new EqualsTester()),
-    HASH_CODE(new HashCodeTester()),
-    SETTER(new SetterTester()),
-    GETTER(new GetterTester()),
-    TO_STRING(new ToStringTester()),
-    CONSTRUCTOR(new ConstructorTester());
+    EQUALS(EqualsTester.class),
+    HASH_CODE(HashCodeTester.class),
+    SETTER(SetterTester.class),
+    GETTER(GetterTester.class),
+    TO_STRING(ToStringTester.class),
+    CONSTRUCTOR(ConstructorTester.class);
 
-    private final AbstractTester tester;
+    private final Class<? extends AbstractTester> testerClass;
 
-    Method(final AbstractTester tester) {
-        this.tester = tester;
+    Method(final Class<? extends AbstractTester> tester) {
+        this.testerClass = tester;
     }
 
     public AbstractTester getTester() {
-        return tester;
+        try {
+            return testerClass.newInstance();
+        } catch (InstantiationException | IllegalAccessException e) {
+            throw new TesterInstantiationException(e);
+        }
     }
 }

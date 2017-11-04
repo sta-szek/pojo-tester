@@ -10,6 +10,7 @@ import pl.pojo.tester.api.ConstructorParameters;
 import pl.pojo.tester.internal.assertion.AbstractAssertionError;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
+import pl.pojo.tester.internal.instantiator.SublistFieldPermutator;
 import pl.pojo.tester.internal.tester.EqualsTester;
 import pl.pojo.tester.internal.tester.HashCodeTester;
 import pl.pojo.tester.internal.utils.CollectionUtils;
@@ -54,6 +55,23 @@ class AbstractAssertionTest {
     }
 
     @Test
+    void Should_Add_Equals_Fast_Tester() {
+        // given
+        final AbstractAssertion abstractAssertion = new AbstractAssertionImplementation();
+        final EqualsTester expectedTester = new EqualsTester();
+        expectedTester.setPermutator(new SublistFieldPermutator());
+
+        // when
+        abstractAssertion.testing(Method.EQUALS)
+                         .quickly();
+        abstractAssertion.testers.forEach(tester -> tester.setPermutator(new SublistFieldPermutator()));
+
+        //then
+        assertThat(abstractAssertion.testers).usingRecursiveFieldByFieldElementComparator()
+                                             .containsExactly(expectedTester);
+    }
+
+    @Test
     void Should_Add_Equals_And_Hash_Code_Testers() {
         // given
         final AbstractAssertion abstractAssertion = new AbstractAssertionImplementation();
@@ -62,6 +80,25 @@ class AbstractAssertionTest {
 
         // when
         abstractAssertion.testing(Method.EQUALS, Method.HASH_CODE);
+
+        // then
+        assertThat(abstractAssertion.testers).usingRecursiveFieldByFieldElementComparator()
+                                             .containsExactly(expectedTester1, expectedTester2);
+    }
+
+    @Test
+    void Should_Add_Equals_Fast_And_Hash_Code_Fast_Testers() {
+        // given
+        final AbstractAssertion abstractAssertion = new AbstractAssertionImplementation();
+        final EqualsTester expectedTester1 = new EqualsTester();
+        expectedTester1.setPermutator(new SublistFieldPermutator());
+        final HashCodeTester expectedTester2 = new HashCodeTester();
+        expectedTester2.setPermutator(new SublistFieldPermutator());
+
+        // when
+        abstractAssertion.testing(Method.EQUALS, Method.HASH_CODE)
+                         .quickly();
+        abstractAssertion.testers.forEach(tester -> tester.setPermutator(new SublistFieldPermutator()));
 
         // then
         assertThat(abstractAssertion.testers).usingRecursiveFieldByFieldElementComparator()
@@ -202,18 +239,18 @@ class AbstractAssertionTest {
     }
 
     private class GoodPojo_Equals_HashCode_ToString {
-        long random;
-        byte byteField;
-        short shortType;
-        int intType;
-        long longType;
-        double doubleType;
-        boolean booleanType;
-        float floatType;
-        char charType;
-        TestEnum1 testEnum1;
+        public long random;
+        public byte byteField;
+        public short shortType;
+        public int intType;
+        public long longType;
+        public double doubleType;
+        public boolean booleanType;
+        public float floatType;
+        public char charType;
+        public TestEnum1 testEnum1;
 
-        GoodPojo_Equals_HashCode_ToString() {
+        public GoodPojo_Equals_HashCode_ToString() {
             final Random random = new Random();
             this.random = random.nextLong();
         }
@@ -354,7 +391,7 @@ class AbstractAssertionTest {
         }
     }
 
-    private class BadPojoEqualsItself {
+    class BadPojoEqualsItself {
         private byte byteField;
         private short shortType;
         private int intType;
