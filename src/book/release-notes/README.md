@@ -6,6 +6,7 @@ Download latest version [ ![Download](https://api.bintray.com/packages/sta-szek/
 
 ### Features
 * Quick testing - generate less objects ([#201](https://github.com/sta-szek/pojo-tester/issues/201), [#203](https://github.com/sta-szek/pojo-tester/issues/203))
+* More java type instantiators - part of issue [#192](https://github.com/sta-szek/pojo-tester/issues/201)
 
 ### Others
 * Issue with one-value enum (out of range exception) ([#199](https://github.com/sta-szek/pojo-tester/issues/199))

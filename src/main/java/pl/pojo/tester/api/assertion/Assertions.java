@@ -4,7 +4,7 @@ package pl.pojo.tester.api.assertion;
 import pl.pojo.tester.api.ClassAndFieldPredicatePair;
 import pl.pojo.tester.api.FieldPredicate;
 import pl.pojo.tester.api.PackageFilter;
-import pl.pojo.tester.internal.instantiator.ClassLoader;
+import pl.pojo.tester.internal.utils.ClassLoader;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,15 +25,14 @@ import static pl.pojo.tester.internal.preconditions.ParameterPreconditions.check
  */
 public final class Assertions {
 
-    private Assertions() {}
+    private Assertions() {
+    }
 
     /**
      * Creates assertion for class, by qualified class name.
      *
      * @param qualifiedClassName class for assertion
-     *
      * @return assertion for given class
-     *
      * @see AbstractAssertion
      * @see MultiClassAssertion
      * @see SingleClassAssertion
@@ -49,9 +48,7 @@ public final class Assertions {
      * Creates assertion for class.
      *
      * @param clazz class for assertion
-     *
      * @return assertion for given class
-     *
      * @see AbstractAssertion
      * @see MultiClassAssertion
      * @see SingleClassAssertion
@@ -68,14 +65,13 @@ public final class Assertions {
      *
      * @param qualifiedClassName class for assertion
      * @param fieldPredicate     field predicate for given class
-     *
      * @return assertion for given class
-     *
      * @see AbstractAssertion
      * @see MultiClassAssertion
      * @see SingleClassAssertion
      */
-    public static AbstractAssertion assertPojoMethodsFor(final String qualifiedClassName, final Predicate<String> fieldPredicate) {
+    public static AbstractAssertion assertPojoMethodsFor(final String qualifiedClassName,
+                                                         final Predicate<String> fieldPredicate) {
         checkNotBlank("qualifiedClassName", qualifiedClassName);
         checkNotNull("fieldPredicate", fieldPredicate);
 
@@ -88,9 +84,7 @@ public final class Assertions {
      *
      * @param clazz          class for assertion
      * @param fieldPredicate field predicate for given class
-     *
      * @return assertion for given class
-     *
      * @see AbstractAssertion
      * @see MultiClassAssertion
      * @see SingleClassAssertion
@@ -109,9 +103,7 @@ public final class Assertions {
      *
      * @param baseClassAndFieldPredicatePair base class to test
      * @param classAndFieldPredicatePairs    nested classes, which are used as field types in base class
-     *
      * @return assertion for given base class
-     *
      * @see AbstractAssertion
      * @see MultiClassAssertion
      * @see SingleClassAssertion
@@ -126,9 +118,7 @@ public final class Assertions {
      * Creates assertion for all classes, by classes names.
      *
      * @param qualifiedClassNames classes to test
-     *
      * @return assertion for all classes
-     *
      * @see AbstractAssertion
      * @see MultiClassAssertion
      * @see SingleClassAssertion
@@ -146,9 +136,7 @@ public final class Assertions {
      * Creates assertion for all classes returned by {@link PackageFilter}.
      *
      * @param packageFilter package filter
-     *
      * @return assertion for all classes
-     *
      * @see PackageFilter
      */
     public static AbstractAssertion assertPojoMethodsForAll(final PackageFilter packageFilter) {
@@ -160,9 +148,7 @@ public final class Assertions {
      * Creates assertion for all classes.
      *
      * @param classes classes to test
-     *
      * @return assertion for all classes
-     *
      * @see AbstractAssertion
      * @see MultiClassAssertion
      * @see SingleClassAssertion
@@ -180,9 +166,7 @@ public final class Assertions {
      * Creates assertion for all classes declared as {@link ClassAndFieldPredicatePair} objects.
      *
      * @param classesAndFieldPredicatesPairs class and field predicate pairs to test
-     *
      * @return assertion for all classes
-     *
      * @see AbstractAssertion
      * @see MultiClassAssertion
      * @see SingleClassAssertion

@@ -1,12 +1,16 @@
 package pl.pojo.tester.internal.instantiator;
 
 
+import org.apache.commons.collections4.MultiValuedMap;
+import pl.pojo.tester.api.ConstructorParameters;
+
 import java.util.Random;
 
 class EnumInstantiator extends AbstractObjectInstantiator {
 
-    EnumInstantiator(final Class<?> clazz) {
-        super(clazz);
+    EnumInstantiator(final Class<?> clazz,
+                     final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
+        super(clazz, constructorParameters);
     }
 
     @Override
@@ -19,5 +23,10 @@ class EnumInstantiator extends AbstractObjectInstantiator {
             return enumConstants[random];
         }
         return null;
+    }
+
+    @Override
+    public boolean canInstantiate() {
+        return clazz.isEnum();
     }
 }

@@ -1,6 +1,4 @@
-package pl.pojo.tester.internal.instantiator;
-
-import pl.pojo.tester.internal.utils.FieldUtils;
+package pl.pojo.tester.internal.utils;
 
 import java.lang.reflect.Field;
 import java.util.List;

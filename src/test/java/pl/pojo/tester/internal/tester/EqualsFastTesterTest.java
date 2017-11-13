@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import pl.pojo.tester.api.FieldPredicate;
 import pl.pojo.tester.internal.assertion.equals.AbstractEqualsAssertionError;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
-import pl.pojo.tester.internal.instantiator.SublistFieldPermutator;
+import pl.pojo.tester.internal.utils.SublistFieldPermutator;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -19,10 +19,10 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.util.Lists.newArrayList;
 
 
-public class EqualsFastTesterTest {
+class EqualsFastTesterTest {
 
     @Test
-    public void Should_Pass_All_Equals_Tests() {
+    void Should_Pass_All_Equals_Tests() {
         // given
         final Class[] classesToTest = {GoodPojo_Equals_HashCode_ToString.class};
         final EqualsTester equalsTester = new EqualsTester(DefaultFieldValueChanger.INSTANCE);
@@ -36,7 +36,7 @@ public class EqualsFastTesterTest {
     }
 
     @Test
-    public void Should_Pass_All_Equals_Tests_Excluding_Fields() {
+    void Should_Pass_All_Equals_Tests_Excluding_Fields() {
         // given
         final EqualsTester equalsTester = new EqualsTester();
         equalsTester.setPermutator(new SublistFieldPermutator());
@@ -52,7 +52,7 @@ public class EqualsFastTesterTest {
     }
 
     @Test
-    public void Should_Pass_All_Equals_Tests_Including_Fields() {
+    void Should_Pass_All_Equals_Tests_Including_Fields() {
         // given
         final EqualsTester equalsTester = new EqualsTester();
         equalsTester.setPermutator(new SublistFieldPermutator());
@@ -67,7 +67,7 @@ public class EqualsFastTesterTest {
     }
 
     @Test
-    public void Should_Fail_Null_Test() {
+    void Should_Fail_Null_Test() {
         // given
         final Class[] classesToTest = {BadPojoEqualsNull.class};
         final EqualsTester equalsTester = new EqualsTester();
@@ -81,7 +81,7 @@ public class EqualsFastTesterTest {
     }
 
     @Test
-    public void Should_Fail_Itself_Test() {
+    void Should_Fail_Itself_Test() {
         // given
         final Class[] classesToTest = {BadPojoEqualsItself.class};
         final EqualsTester equalsTester = new EqualsTester();
@@ -95,7 +95,7 @@ public class EqualsFastTesterTest {
     }
 
     @Test
-    public void Should_Fail_Different_Type_Test() {
+    void Should_Fail_Different_Type_Test() {
         // given
         final Class[] classesToTest = {BadPojoEqualsDifferentType.class};
         final EqualsTester equalsTester = new EqualsTester();
@@ -109,7 +109,7 @@ public class EqualsFastTesterTest {
     }
 
     @Test
-    public void Should_Fail_Multiple_Classes() {
+    void Should_Fail_Multiple_Classes() {
         // given
         final Class[] classesToTest = {BadPojoEqualsNull.class,
                 BadPojoEqualsDifferentType.class,
@@ -125,7 +125,7 @@ public class EqualsFastTesterTest {
     }
 
     @Test
-    public void Should_Fail_Different_Object_With_Same_Type() {
+    void Should_Fail_Different_Object_With_Same_Type() {
         // given
         final Class[] classesToTest = {BadPojoEqualsDifferentObjectSameType.class};
         final EqualsTester equalsTester = new EqualsTester();
@@ -139,7 +139,7 @@ public class EqualsFastTesterTest {
     }
 
     @Test
-    public void Should_Fail_When_Equals_Implementation_Depends_On_Excluded_Field() {
+    void Should_Fail_When_Equals_Implementation_Depends_On_Excluded_Field() {
         // given
         final EqualsTester equalsTester = new EqualsTester();
         equalsTester.setPermutator(new SublistFieldPermutator());

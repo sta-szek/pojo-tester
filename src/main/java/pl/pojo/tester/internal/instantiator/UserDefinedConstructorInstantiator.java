@@ -16,12 +16,9 @@ class UserDefinedConstructorInstantiator extends AbstractObjectInstantiator {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BestConstructorInstantiator.class);
 
-    private final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters;
-
     UserDefinedConstructorInstantiator(final Class<?> clazz,
                                        final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
-        super(clazz);
-        this.constructorParameters = constructorParameters;
+        super(clazz, constructorParameters);
     }
 
     @Override
@@ -32,6 +29,19 @@ class UserDefinedConstructorInstantiator extends AbstractObjectInstantiator {
                                     .filter(Objects::nonNull)
                                     .findAny()
                                     .orElseThrow(this::createObjectInstantiationException);
+    }
+
+    @Override
+    public boolean canInstantiate() {
+        return userDefinedConstructorParameters() && !qualifiesForProxy(clazz);
+    }
+
+    private boolean userDefinedConstructorParameters() {
+        return constructorParameters.containsKey(clazz);
+    }
+
+    private boolean qualifiesForProxy(final Class<?> clazz) {
+        return clazz.isInterface() || clazz.isAnnotation() || Modifier.isAbstract(clazz.getModifiers());
     }
 
     private ObjectInstantiationException createObjectInstantiationException() {

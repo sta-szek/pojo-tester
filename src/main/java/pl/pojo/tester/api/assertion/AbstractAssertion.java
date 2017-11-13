@@ -6,11 +6,11 @@ import org.slf4j.Logger;
 import pl.pojo.tester.api.ClassAndFieldPredicatePair;
 import pl.pojo.tester.api.ConstructorParameters;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
-import pl.pojo.tester.internal.instantiator.ClassLoader;
-import pl.pojo.tester.internal.instantiator.Permutator;
-import pl.pojo.tester.internal.instantiator.SublistFieldPermutator;
-import pl.pojo.tester.internal.instantiator.ThoroughFieldPermutator;
+import pl.pojo.tester.internal.utils.Permutator;
+import pl.pojo.tester.internal.utils.SublistFieldPermutator;
+import pl.pojo.tester.internal.utils.ThoroughFieldPermutator;
 import pl.pojo.tester.internal.tester.AbstractTester;
+import pl.pojo.tester.internal.utils.ClassLoader;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -139,7 +139,9 @@ public abstract class AbstractAssertion {
      * @return itself
      * @see ConstructorParameters
      */
-    public AbstractAssertion create(final String qualifiedClassName, final Object[] constructorParameters, final Class<?>[] constructorParameterTypes) {
+    public AbstractAssertion create(final String qualifiedClassName,
+                                    final Object[] constructorParameters,
+                                    final Class<?>[] constructorParameterTypes) {
         checkNotBlank("qualifiedClassName", qualifiedClassName);
 
         final ConstructorParameters constructorParameter = new ConstructorParameters(constructorParameters,
@@ -156,7 +158,8 @@ public abstract class AbstractAssertion {
      * @return itself
      * @see ConstructorParameters
      */
-    public AbstractAssertion create(final String qualifiedClassName, final ConstructorParameters constructorParameters) {
+    public AbstractAssertion create(final String qualifiedClassName,
+                                    final ConstructorParameters constructorParameters) {
         checkNotBlank("qualifiedClassName", qualifiedClassName);
         checkNotNull("constructorParameters", constructorParameters);
 
@@ -175,7 +178,9 @@ public abstract class AbstractAssertion {
      * @return itself
      * @see ConstructorParameters
      */
-    public AbstractAssertion create(final Class<?> clazz, final Object[] constructorParameters, final Class<?>[] constructorParameterTypes) {
+    public AbstractAssertion create(final Class<?> clazz,
+                                    final Object[] constructorParameters,
+                                    final Class<?>[] constructorParameterTypes) {
         checkNotNull("clazz", clazz);
 
         final ConstructorParameters constructorParameter = new ConstructorParameters(constructorParameters,
@@ -203,7 +208,8 @@ public abstract class AbstractAssertion {
 
     protected abstract void runAssertions();
 
-    protected void logTestersAndClasses(final Logger logger, final ClassAndFieldPredicatePair... classAndFieldPredicatePairs) {
+    protected void logTestersAndClasses(final Logger logger,
+                                        final ClassAndFieldPredicatePair... classAndFieldPredicatePairs) {
         if (logger.isDebugEnabled()) {
             final String classes = Arrays.stream(classAndFieldPredicatePairs)
                                          .map(ClassAndFieldPredicatePair::toString)

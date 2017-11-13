@@ -1,8 +1,9 @@
-package pl.pojo.tester.internal.instantiator;
+package pl.pojo.tester.internal.utils;
 
 public final class ClassLoader {
 
-    private ClassLoader() {}
+    private ClassLoader() {
+    }
 
     public static Class<?> loadClass(final String qualifiedClassName) {
         try {
