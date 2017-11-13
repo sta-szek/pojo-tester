@@ -1,4 +1,4 @@
-package pl.pojo.tester.internal.instantiator;
+package pl.pojo.tester.internal.utils;
 
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package pl.pojo.tester.internal.instantiator;
+package pl.pojo.tester.internal.utils;
 
 class ClassLoadingException extends RuntimeException {
 

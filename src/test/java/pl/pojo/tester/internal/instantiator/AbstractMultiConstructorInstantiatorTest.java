@@ -19,7 +19,7 @@ class AbstractMultiConstructorInstantiatorTest {
         // given
         final ArrayListValuedHashMap<Class<?>, ConstructorParameters> constructorParameters = new ArrayListValuedHashMap<>();
         final Class<?> clazz = A.class;
-        constructorParameters.put(clazz, new ConstructorParameters(new Object[]{12345}, new Class[]{int.class}));
+        constructorParameters.put(clazz, new ConstructorParameters(new Object[]{ 12345 }, new Class[]{ int.class }));
         final AbstractMultiConstructorInstantiator instantiator = new MockMultiConstructorInstantiator(clazz,
                                                                                                        constructorParameters);
         final A expectedResult = new A(12345);
@@ -56,14 +56,15 @@ class AbstractMultiConstructorInstantiatorTest {
         final Throwable expectedResult = new ObjectInstantiationException(B.class, "msg", null);
 
         // when
-        final Throwable result = catchThrowable(() -> instantiator.createFindingBestConstructor());
+        final Throwable result = catchThrowable(instantiator::createFindingBestConstructor);
 
         // then
         assertThat(result).isEqualToComparingFieldByField(expectedResult);
     }
 
-    class MockMultiConstructorInstantiator extends AbstractMultiConstructorInstantiator {
-        MockMultiConstructorInstantiator(final Class<?> clazz, final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
+    static class MockMultiConstructorInstantiator extends AbstractMultiConstructorInstantiator {
+        MockMultiConstructorInstantiator(final Class<?> clazz,
+                                         final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
             super(clazz, constructorParameters);
         }
 
@@ -73,7 +74,13 @@ class AbstractMultiConstructorInstantiatorTest {
         }
 
         @Override
-        protected Object createObjectFromArgsConstructor(final Class<?>[] parameterTypes, final Object[] parameters) throws ObjectInstantiationException {
+        public boolean canInstantiate() {
+            return true;
+        }
+
+        @Override
+        protected Object createObjectFromArgsConstructor(final Class<?>[] parameterTypes,
+                                                         final Object[] parameters) throws ObjectInstantiationException {
             try {
                 final Constructor<?> declaredConstructor = clazz.getDeclaredConstructor(parameterTypes);
                 declaredConstructor.setAccessible(true);

@@ -11,8 +11,8 @@ import pl.pojo.tester.internal.assertion.TestAssertions;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
 import pl.pojo.tester.internal.instantiator.ObjectGenerator;
-import pl.pojo.tester.internal.instantiator.Permutator;
-import pl.pojo.tester.internal.instantiator.ThoroughFieldPermutator;
+import pl.pojo.tester.internal.utils.Permutator;
+import pl.pojo.tester.internal.utils.ThoroughFieldPermutator;
 
 import java.util.Arrays;
 import java.util.List;

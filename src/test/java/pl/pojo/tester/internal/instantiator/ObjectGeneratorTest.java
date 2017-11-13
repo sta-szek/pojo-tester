@@ -1,10 +1,19 @@
 package pl.pojo.tester.internal.instantiator;
 
-import classesForTest.*;
+import classesForTest.ClassContainingPrivateEnum;
+import classesForTest.ObjectContainingArray;
+import classesForTest.ObjectContainingIterable;
+import classesForTest.ObjectContainingIterator;
+import classesForTest.ObjectContainingStream;
 import classesForTest.fields.TestEnum1;
 import classesForTest.fields.collections.collection.Collections;
 import classesForTest.fields.collections.map.Maps;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -18,6 +27,7 @@ import pl.pojo.tester.api.ClassAndFieldPredicatePair;
 import pl.pojo.tester.api.ConstructorParameters;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
+import pl.pojo.tester.internal.utils.ThoroughFieldPermutator;
 
 import java.util.List;
 import java.util.Random;
@@ -155,9 +165,9 @@ class ObjectGeneratorTest {
 
     @TestFactory
     Stream<DynamicTest> Should_Generate_Different_Objects_Recursively() {
-        final ClassAndFieldPredicatePair[] pair1 = {pair(E.class), pair(F.class)};
-        final ClassAndFieldPredicatePair[] pair2 = {pair(F.class)};
-        final ClassAndFieldPredicatePair[] pair3 = {pair(A.class), pair(B.class), pair(F.class), pair(G.class)};
+        final ClassAndFieldPredicatePair[] pair1 = { pair(E.class), pair(F.class) };
+        final ClassAndFieldPredicatePair[] pair2 = { pair(F.class) };
+        final ClassAndFieldPredicatePair[] pair3 = { pair(A.class), pair(B.class), pair(F.class), pair(G.class) };
 
         final RecursivelyDifferentObjectTestCase case1 = new RecursivelyDifferentObjectTestCase(18,
                                                                                                 pair(D.class),

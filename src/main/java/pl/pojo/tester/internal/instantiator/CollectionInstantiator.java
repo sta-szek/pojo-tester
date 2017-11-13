@@ -1,6 +1,9 @@
 package pl.pojo.tester.internal.instantiator;
 
 
+import org.apache.commons.collections4.MultiValuedMap;
+import pl.pojo.tester.api.ConstructorParameters;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Deque;
@@ -55,8 +58,9 @@ class CollectionInstantiator extends AbstractObjectInstantiator {
         PREPARED_OBJECTS.put(Iterable.class, new ArrayList<>());
     }
 
-    CollectionInstantiator(final Class<?> clazz) {
-        super(clazz);
+    CollectionInstantiator(final Class<?> clazz,
+                           final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
+        super(clazz, constructorParameters);
     }
 
     @Override
@@ -69,14 +73,23 @@ class CollectionInstantiator extends AbstractObjectInstantiator {
                                .orElseThrow(this::createObjectInstantiationException);
     }
 
+    @Override
+    public boolean canInstantiate() {
+        return Iterator.class.isAssignableFrom(clazz)
+                || Iterable.class.isAssignableFrom(clazz)
+                || Map.class.isAssignableFrom(clazz)
+                || Stream.class.isAssignableFrom(clazz);
+    }
+
     private boolean clazzCanBeAssigned(final Map.Entry<Class<?>, Object> entry) {
         return entry.getKey()
                     .isAssignableFrom(clazz);
     }
 
     private ObjectInstantiationException createObjectInstantiationException() {
-        return new ObjectInstantiationException(clazz, "There is no declared object for that class. Please report an issue at "
-                                                       + "https://github.com/sta-szek/pojo-tester");
+        return new ObjectInstantiationException(clazz,
+                                                "There is no declared object for that class. Please report an issue at "
+                                                        + "https://github.com/sta-szek/pojo-tester");
 
     }
 

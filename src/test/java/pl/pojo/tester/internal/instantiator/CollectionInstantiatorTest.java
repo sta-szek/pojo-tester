@@ -1,11 +1,33 @@
 package pl.pojo.tester.internal.instantiator;
 
+import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.function.Executable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.NavigableMap;
+import java.util.NavigableSet;
+import java.util.Queue;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.SortedSet;
+import java.util.Stack;
+import java.util.TreeMap;
+import java.util.TreeSet;
+import java.util.Vector;
 import java.util.stream.Stream;
 
 import static helpers.TestHelper.getDefaultDisplayName;
@@ -49,7 +71,8 @@ class CollectionInstantiatorTest {
     private Executable Should_Return_Expected_Collection_Object(final Class<?> classToInstantiate) {
         return () -> {
             // given
-            final CollectionInstantiator instantiator = new CollectionInstantiator(classToInstantiate);
+            final CollectionInstantiator instantiator = new CollectionInstantiator(classToInstantiate,
+                                                                                   new ArrayListValuedHashMap<>());
 
             // when
             final Object result = instantiator.instantiate();
@@ -62,7 +85,8 @@ class CollectionInstantiatorTest {
     @Test
     void Should_Throws_Exception_When_Prepared_Objects_Do_Not_Contain_Expected_Class() {
         // given
-        final CollectionInstantiator instantiator = new CollectionInstantiator(String.class);
+        final CollectionInstantiator instantiator = new CollectionInstantiator(String.class,
+                                                                               new ArrayListValuedHashMap<>());
 
         // when
         final Throwable result = catchThrowable(instantiator::instantiate);

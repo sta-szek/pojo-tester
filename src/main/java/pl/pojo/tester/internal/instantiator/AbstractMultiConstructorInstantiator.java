@@ -19,12 +19,9 @@ abstract class AbstractMultiConstructorInstantiator extends AbstractObjectInstan
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractMultiConstructorInstantiator.class);
 
-    protected final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters;
-
     AbstractMultiConstructorInstantiator(final Class<?> clazz,
                                          final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
-        super(clazz);
-        this.constructorParameters = constructorParameters;
+        super(clazz, constructorParameters);
     }
 
     protected Object instantiateUsingUserParameters() {
@@ -35,16 +32,16 @@ abstract class AbstractMultiConstructorInstantiator extends AbstractObjectInstan
                 return result;
             }
             LOGGER.warn("Could not instantiate class {} with user defined parameters. "
-                        + "Trying create instance finding best constructor", clazz);
+                                + "Trying create instance finding best constructor", clazz);
         }
         return null;
     }
 
-    protected boolean userDefinedOwnParametersForThisClass(final Collection<ConstructorParameters> userConstructorParameters) {
+    private boolean userDefinedOwnParametersForThisClass(final Collection<ConstructorParameters> userConstructorParameters) {
         return CollectionUtils.isNotEmpty(userConstructorParameters);
     }
 
-    protected Object tryToInstantiateUsing(final Collection<ConstructorParameters> userConstructorParameters) {
+    private Object tryToInstantiateUsing(final Collection<ConstructorParameters> userConstructorParameters) {
         for (final ConstructorParameters param : userConstructorParameters) {
             Class<?>[] parameterTypes = param.getParametersTypes();
             try {

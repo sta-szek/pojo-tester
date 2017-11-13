@@ -10,6 +10,7 @@ import pl.pojo.tester.api.ConstructorParameters;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.Proxy;
 
 
@@ -36,6 +37,15 @@ class ProxyInstantiator extends AbstractMultiConstructorInstantiator {
             }
         }
         return result;
+    }
+
+    @Override
+    public boolean canInstantiate() {
+        return qualifiesForProxy(clazz);
+    }
+
+    private boolean qualifiesForProxy(final Class<?> clazz) {
+        return clazz.isInterface() || clazz.isAnnotation() || Modifier.isAbstract(clazz.getModifiers());
     }
 
     private Object proxyByJava() {

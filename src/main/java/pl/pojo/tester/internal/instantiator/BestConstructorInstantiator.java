@@ -28,6 +28,11 @@ class BestConstructorInstantiator extends AbstractMultiConstructorInstantiator {
     }
 
     @Override
+    public boolean canInstantiate() {
+        return true;
+    }
+
+    @Override
     protected ObjectInstantiationException createObjectInstantiationException() {
         return new ObjectInstantiationException(clazz,
                                                 "Class could not be created by any constructor (using BestConstructorInstantiator).");

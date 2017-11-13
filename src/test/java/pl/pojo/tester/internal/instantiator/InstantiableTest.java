@@ -1,6 +1,10 @@
 package pl.pojo.tester.internal.instantiator;
 
-import classesForTest.*;
+import classesForTest.ClassContainingStaticClasses;
+import classesForTest.Constructor_Field;
+import classesForTest.Constructor_Stream;
+import classesForTest.Constructor_Thread;
+import classesForTest.EmptyEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.apache.commons.collections4.MultiValuedMap;
@@ -14,7 +18,28 @@ import pl.pojo.tester.api.ConstructorParameters;
 import pl.pojo.tester.internal.field.date.DefaultDateAndTimeFieldValueChanger;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.NavigableMap;
+import java.util.NavigableSet;
+import java.util.Queue;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.SortedSet;
+import java.util.Stack;
+import java.util.TreeMap;
+import java.util.TreeSet;
+import java.util.Vector;
 import java.util.stream.Stream;
 
 import static helpers.TestHelper.getDefaultDisplayName;
@@ -43,7 +68,7 @@ class InstantiableTest {
                          new ClassInstantiator(Constructor_Field.class, BestConstructorInstantiator.class),
                          new ClassInstantiator(Constructor_Stream.class, BestConstructorInstantiator.class),
                          new ClassInstantiator(Constructor_Thread.class, BestConstructorInstantiator.class),
-                         new ClassInstantiator(String.class, StringClassInstantiator.class),
+                         new ClassInstantiator(String.class, JavaTypeInstantiator.class),
                          new ClassInstantiator(UserDefinedClass.class, UserDefinedConstructorInstantiator.class),
                          new ClassInstantiator(Boolean[].class, ArrayInstantiator.class),
                          new ClassInstantiator(Byte[].class, ArrayInstantiator.class),
@@ -61,22 +86,22 @@ class InstantiableTest {
                          new ClassInstantiator(int[].class, ArrayInstantiator.class),
                          new ClassInstantiator(long[].class, ArrayInstantiator.class),
                          new ClassInstantiator(short[].class, ArrayInstantiator.class),
-                         new ClassInstantiator(Boolean.class, PrimitiveInstantiator.class),
-                         new ClassInstantiator(Byte.class, PrimitiveInstantiator.class),
-                         new ClassInstantiator(Character.class, PrimitiveInstantiator.class),
-                         new ClassInstantiator(Double.class, PrimitiveInstantiator.class),
-                         new ClassInstantiator(Float.class, PrimitiveInstantiator.class),
-                         new ClassInstantiator(Integer.class, PrimitiveInstantiator.class),
-                         new ClassInstantiator(Long.class, PrimitiveInstantiator.class),
-                         new ClassInstantiator(Short.class, PrimitiveInstantiator.class),
-                         new ClassInstantiator(boolean.class, PrimitiveInstantiator.class),
-                         new ClassInstantiator(byte.class, PrimitiveInstantiator.class),
-                         new ClassInstantiator(char.class, PrimitiveInstantiator.class),
-                         new ClassInstantiator(double.class, PrimitiveInstantiator.class),
-                         new ClassInstantiator(float.class, PrimitiveInstantiator.class),
-                         new ClassInstantiator(int.class, PrimitiveInstantiator.class),
-                         new ClassInstantiator(long.class, PrimitiveInstantiator.class),
-                         new ClassInstantiator(short.class, PrimitiveInstantiator.class),
+                         new ClassInstantiator(Boolean.class, JavaTypeInstantiator.class),
+                         new ClassInstantiator(Byte.class, JavaTypeInstantiator.class),
+                         new ClassInstantiator(Character.class, JavaTypeInstantiator.class),
+                         new ClassInstantiator(Double.class, JavaTypeInstantiator.class),
+                         new ClassInstantiator(Float.class, JavaTypeInstantiator.class),
+                         new ClassInstantiator(Integer.class, JavaTypeInstantiator.class),
+                         new ClassInstantiator(Long.class, JavaTypeInstantiator.class),
+                         new ClassInstantiator(Short.class, JavaTypeInstantiator.class),
+                         new ClassInstantiator(boolean.class, JavaTypeInstantiator.class),
+                         new ClassInstantiator(byte.class, JavaTypeInstantiator.class),
+                         new ClassInstantiator(char.class, JavaTypeInstantiator.class),
+                         new ClassInstantiator(double.class, JavaTypeInstantiator.class),
+                         new ClassInstantiator(float.class, JavaTypeInstantiator.class),
+                         new ClassInstantiator(int.class, JavaTypeInstantiator.class),
+                         new ClassInstantiator(long.class, JavaTypeInstantiator.class),
+                         new ClassInstantiator(short.class, JavaTypeInstantiator.class),
 
                          new ClassInstantiator(Stream.class, CollectionInstantiator.class),
                          new ClassInstantiator(Stack.class, CollectionInstantiator.class),
@@ -131,7 +156,7 @@ class InstantiableTest {
     @Test
     void Should_Instantiate_Two_Classes() {
         // given
-        final Class[] classesToInstantiate = {A.class, B.class};
+        final Class[] classesToInstantiate = { A.class, B.class };
 
         // when
         final Object[] result = Instantiable.instantiateClasses(classesToInstantiate, new ArrayListValuedHashMap<>());

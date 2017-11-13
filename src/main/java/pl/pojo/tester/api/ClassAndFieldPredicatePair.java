@@ -1,6 +1,6 @@
 package pl.pojo.tester.api;
 
-import pl.pojo.tester.internal.instantiator.ClassLoader;
+import pl.pojo.tester.internal.utils.ClassLoader;
 
 import java.util.function.Predicate;
 
