@@ -94,6 +94,7 @@ dependencies {
     testCompile("org.assertj:assertj-core:${ASSERTJ_CORE_VERSION}")
     testCompile("org.mockito:mockito-core:${MOCKITO_VERSION}")
     testCompile("org.powermock.tests:powermock-tests-utils:${POWER_MOCK_UTILS_VERSION}")
+    testCompileOnly("org.apiguardian:apiguardian-api:1.0.0")
 }
 
 afterEvaluate {
@@ -116,7 +117,6 @@ afterEvaluate {
 }
 
 pitest {
-    pitestVersion = '1.1.10'
     exportLineCoverage = true
     timestampedReports = false
     targetClasses = ['pl.pojo.tester.*']
@@ -128,10 +128,58 @@ task wrapper(type: Wrapper) {
     gradleVersion = '3.4.1'
 }
 
+def pomConfig = {
+    licenses {
+        license {
+            name "GNU Lesser General Public License version 3"
+            url "https://opensource.org/licenses/lgpl-3.0.html"
+        }
+    }
+    developers {
+        developer {
+            id "sta-szek"
+            name "Piotr Joński"
+            email "p.jonski@pojo.pl"
+        }
+    }
+
+    scm {
+        url "https://github.com/sta-szek/pojo-tester"
+        connection "scm:git:git://github.com:sta-szek/pojo-tester.git"
+        developerConnection "scm:git:ssh://github.com:sta-szek/pojo-tester.git"
+    }
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from 'build/docs/javadoc'
+}
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
+            groupId 'pl.pojo'
+            artifactId 'pojo-tester'
+            version rootProject.version
             from components.java
+            artifact sourcesJar
+            artifact javadocJar
+            pom.withXml {
+                def root = asNode()
+                root.appendNode('description', 'Java pojo-methods testing library.')
+                root.appendNode('name', 'pojo-tester')
+                root.appendNode('url', 'http://www.pojo.pl')
+                root.children().last() + pomConfig
+            }
         }
     }
 }
@@ -157,7 +205,7 @@ bintray {
         websiteUrl = 'http://www.pojo.pl'
         issueTrackerUrl = 'https://github.com/sta-szek/pojo-tester/issues'
         vcsUrl = 'https://github.com/sta-szek/pojo-tester.git'
-        licenses = ['GPL-3.0']
+        licenses = ['LGPL-3.0']
         publications = ['mavenJava']
         version {
             name = rootProject.version
