@@ -1,9 +1,6 @@
 package pl.pojo.tester.internal.instantiator;
 
 
-import org.apache.commons.collections4.MultiValuedMap;
-import pl.pojo.tester.api.ConstructorParameters;
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.Clock;
@@ -26,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-class JavaTypeInstantiator extends AbstractObjectInstantiator {
+class JavaTypeInstantiator extends AbstractInternalInstantiator {
 
     private final Map<String, Object> preparedObjects = new HashMap<>();
 
@@ -76,9 +73,8 @@ class JavaTypeInstantiator extends AbstractObjectInstantiator {
         preparedObjects.put(ZoneOffset.class.getName(), ZoneOffset.UTC);
     }
 
-    JavaTypeInstantiator(final Class<?> clazz,
-                         final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
-        super(clazz, constructorParameters);
+    JavaTypeInstantiator(final Class<?> clazz) {
+        super(clazz);
     }
 
     @Override

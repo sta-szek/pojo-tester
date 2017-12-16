@@ -1,20 +1,24 @@
 package pl.pojo.tester.api.assertion;
 
-import org.apache.commons.collections4.MultiValuedMap;
-import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.slf4j.Logger;
+import pl.pojo.tester.api.AbstractObjectInstantiator;
 import pl.pojo.tester.api.ClassAndFieldPredicatePair;
 import pl.pojo.tester.api.ConstructorParameters;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
+import pl.pojo.tester.internal.instantiator.SupplierInstantiator;
+import pl.pojo.tester.internal.instantiator.UserDefinedConstructorInstantiator;
+import pl.pojo.tester.internal.tester.AbstractTester;
+import pl.pojo.tester.internal.utils.ClassLoader;
 import pl.pojo.tester.internal.utils.Permutator;
 import pl.pojo.tester.internal.utils.SublistFieldPermutator;
 import pl.pojo.tester.internal.utils.ThoroughFieldPermutator;
-import pl.pojo.tester.internal.tester.AbstractTester;
-import pl.pojo.tester.internal.utils.ClassLoader;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static pl.pojo.tester.internal.preconditions.ParameterPreconditions.checkNotBlank;
@@ -40,7 +44,7 @@ public abstract class AbstractAssertion {
               .forEach(DEFAULT_TESTERS::add);
     }
 
-    private final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters = new ArrayListValuedHashMap<>();
+    private final List<AbstractObjectInstantiator> instantiators = new LinkedList<>();
     Set<AbstractTester> testers = new HashSet<>();
     private AbstractFieldValueChanger abstractFieldValueChanger;
     private Permutator permutator = new ThoroughFieldPermutator();
@@ -110,26 +114,6 @@ public abstract class AbstractAssertion {
     }
 
     /**
-     * Performs specified tests on classes using declared field value changer.
-     *
-     * @see Method
-     * @see AbstractFieldValueChanger
-     */
-    public void areWellImplemented() {
-        if (testers.isEmpty()) {
-            testers = DEFAULT_TESTERS;
-        }
-        if (abstractFieldValueChanger != null) {
-            testers.forEach(tester -> tester.setFieldValuesChanger(abstractFieldValueChanger));
-        }
-
-        testers.forEach(tester -> tester.setPermutator(permutator));
-        testers.forEach(tester -> tester.setUserDefinedConstructors(constructorParameters));
-
-        runAssertions();
-    }
-
-    /**
      * Indicates, that class should be constructed using given constructor parameters. Constructor will be selected
      * based on constructor parameter's types.
      *
@@ -164,8 +148,8 @@ public abstract class AbstractAssertion {
         checkNotNull("constructorParameters", constructorParameters);
 
         final Class<?> clazz = ClassLoader.loadClass(qualifiedClassName);
-        this.constructorParameters.put(clazz, constructorParameters);
-        return this;
+
+        return create(clazz, constructorParameters);
     }
 
     /**
@@ -188,7 +172,6 @@ public abstract class AbstractAssertion {
         return create(clazz, constructorParameter);
     }
 
-
     /**
      * Indicates, that class should be constructed using given constructor parameters. Constructor will be selected
      * based on constructor parameter's types.
@@ -202,8 +185,74 @@ public abstract class AbstractAssertion {
         checkNotNull("clazz", clazz);
         checkNotNull("constructorParameters", constructorParameters);
 
-        this.constructorParameters.put(clazz, constructorParameters);
+        final UserDefinedConstructorInstantiator instantiator = new UserDefinedConstructorInstantiator(clazz,
+                                                                                                       constructorParameters);
+        return create(clazz, instantiator);
+    }
+
+    /**
+     * Indicates, that class should be constructed using given instantiator.
+     *
+     * @param instantiator instantiator which will create instance of given class
+     * @return itself
+     * @see ConstructorParameters
+     */
+    public AbstractAssertion create(final AbstractObjectInstantiator instantiator) {
+        checkNotNull("clazz", instantiator.getClazz());
+        checkNotNull("instantiator", instantiator);
+
+        return create(instantiator.getClazz(), instantiator::instantiate);
+    }
+
+    /**
+     * Indicates, that class should be constructed using given instantiator.
+     *
+     * @param clazz        class to instantiate
+     * @param instantiator instantiator which will create instance of given class
+     * @return itself
+     * @see ConstructorParameters
+     */
+    public AbstractAssertion create(final Class<?> clazz, final AbstractObjectInstantiator instantiator) {
+        checkNotNull("clazz", clazz);
+        checkNotNull("instantiator", instantiator);
+
+        return create(clazz, instantiator::instantiate);
+    }
+
+    /**
+     * Indicates, that class should be constructed using given supplier.
+     *
+     * @param clazz    class to instantiate
+     * @param supplier supplier that will create given class
+     * @return itself
+     * @see ConstructorParameters
+     */
+    public AbstractAssertion create(final Class<?> clazz, final Supplier<?> supplier) {
+        checkNotNull("clazz", clazz);
+        checkNotNull("supplier", supplier);
+
+        this.instantiators.add(new SupplierInstantiator(clazz, supplier));
         return this;
+    }
+
+    /**
+     * Performs specified tests on classes using declared field value changer.
+     *
+     * @see Method
+     * @see AbstractFieldValueChanger
+     */
+    public void areWellImplemented() {
+        if (testers.isEmpty()) {
+            testers = DEFAULT_TESTERS;
+        }
+        if (abstractFieldValueChanger != null) {
+            testers.forEach(tester -> tester.setFieldValuesChanger(abstractFieldValueChanger));
+        }
+
+        testers.forEach(tester -> tester.setPermutator(permutator));
+        testers.forEach(tester -> tester.setUserDefinedInstantiators(instantiators));
+
+        runAssertions();
     }
 
     protected abstract void runAssertions();
@@ -218,6 +267,7 @@ public abstract class AbstractAssertion {
             logger.debug("Running {} testers on {} classes", testers.size(), classAndFieldPredicatePairs.length);
             logger.debug("Testers: {}", testers);
             logger.debug("Classes: {}", classes);
+            logger.debug("Predefined instantiators: {}", instantiators);
         }
     }
 }

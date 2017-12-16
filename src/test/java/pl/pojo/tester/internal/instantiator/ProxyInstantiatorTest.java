@@ -6,14 +6,12 @@ import classesForTest.Abstract_PrivateConstructor;
 import classesForTest.Annotation;
 import classesForTest.Interface;
 import lombok.Data;
-import org.apache.commons.collections4.MultiValuedMap;
-import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.function.Executable;
-import pl.pojo.tester.api.ConstructorParameters;
 
+import java.util.LinkedList;
 import java.util.stream.Stream;
 
 import static helpers.TestHelper.getDefaultDisplayName;
@@ -23,7 +21,6 @@ import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 class ProxyInstantiatorTest {
 
-    private final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters = new ArrayListValuedHashMap<>();
 
     @TestFactory
     Stream<DynamicTest> Should_Instantiate_Abstract_Interface_Or_Annotation_Classes() {
@@ -35,7 +32,7 @@ class ProxyInstantiatorTest {
     private Executable Should_Instantiate_Abstract_Interface_Or_Annotation_Classes(final Class<?> classToInstantiate) {
         return () -> {
             // given
-            final ProxyInstantiator instantiator = new ProxyInstantiator(classToInstantiate, constructorParameters);
+            final ProxyInstantiator instantiator = new ProxyInstantiator(classToInstantiate, new LinkedList<>());
 
             // when
             final Object result = instantiator.instantiate();
@@ -48,7 +45,7 @@ class ProxyInstantiatorTest {
     @Test
     void Should_Create_Java_Proxy_Which_Returns_Expected_Values() {
         // given
-        final ProxyInstantiator instantiator = new ProxyInstantiator(Interface.class, constructorParameters);
+        final ProxyInstantiator instantiator = new ProxyInstantiator(Interface.class, new LinkedList<>());
 
         // when
         final Object result = instantiator.instantiate();
@@ -70,7 +67,7 @@ class ProxyInstantiatorTest {
         return () -> {
             // given
 
-            final ProxyInstantiator instantiator = new ProxyInstantiator(classToInstantiate, constructorParameters);
+            final ProxyInstantiator instantiator = new ProxyInstantiator(classToInstantiate, new LinkedList<>());
 
             // when
             final Object result = instantiator.instantiate();

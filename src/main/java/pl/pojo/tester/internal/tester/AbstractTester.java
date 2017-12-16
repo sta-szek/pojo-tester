@@ -1,11 +1,9 @@
 package pl.pojo.tester.internal.tester;
 
-import org.apache.commons.collections4.MultiValuedMap;
-import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import pl.pojo.tester.api.AbstractObjectInstantiator;
 import pl.pojo.tester.api.ClassAndFieldPredicatePair;
-import pl.pojo.tester.api.ConstructorParameters;
 import pl.pojo.tester.api.FieldPredicate;
 import pl.pojo.tester.internal.assertion.TestAssertions;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
@@ -15,6 +13,7 @@ import pl.pojo.tester.internal.utils.Permutator;
 import pl.pojo.tester.internal.utils.ThoroughFieldPermutator;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -23,7 +22,7 @@ public abstract class AbstractTester {
 
     final TestAssertions testAssertions = new TestAssertions();
     ObjectGenerator objectGenerator;
-    private MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters = new ArrayListValuedHashMap<>();
+    private List<AbstractObjectInstantiator> instantiators = new LinkedList<>();
     private AbstractFieldValueChanger fieldValuesChanger = DefaultFieldValueChanger.INSTANCE;
     private Permutator permutator = new ThoroughFieldPermutator();
 
@@ -32,7 +31,7 @@ public abstract class AbstractTester {
     }
 
     public AbstractTester(final AbstractFieldValueChanger abstractFieldValueChanger) {
-        objectGenerator = new ObjectGenerator(abstractFieldValueChanger, constructorParameters, permutator);
+        objectGenerator = new ObjectGenerator(abstractFieldValueChanger, instantiators, permutator);
     }
 
     public void test(final Class<?> clazz) {
@@ -46,7 +45,8 @@ public abstract class AbstractTester {
         test(classAndFieldPredicatePair);
     }
 
-    public abstract void test(final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair, final ClassAndFieldPredicatePair... classAndFieldPredicatePairs);
+    public abstract void test(final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair,
+                              final ClassAndFieldPredicatePair... classAndFieldPredicatePairs);
 
     public void testAll(final Class... classes) {
         final ClassAndFieldPredicatePair[] classesAndFieldPredicatesPairs = Arrays.stream(classes)
@@ -64,12 +64,12 @@ public abstract class AbstractTester {
 
     public void setFieldValuesChanger(final AbstractFieldValueChanger fieldValuesChanger) {
         this.fieldValuesChanger = fieldValuesChanger;
-        objectGenerator = new ObjectGenerator(fieldValuesChanger, constructorParameters, permutator);
+        objectGenerator = new ObjectGenerator(fieldValuesChanger, instantiators, permutator);
     }
 
-    public void setUserDefinedConstructors(final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
-        this.constructorParameters = constructorParameters;
-        objectGenerator = new ObjectGenerator(fieldValuesChanger, constructorParameters, permutator);
+    public void setUserDefinedInstantiators(final List<AbstractObjectInstantiator> instantiators) {
+        this.instantiators = instantiators;
+        objectGenerator = new ObjectGenerator(fieldValuesChanger, instantiators, permutator);
     }
 
     @Override
@@ -86,7 +86,7 @@ public abstract class AbstractTester {
 
         return new EqualsBuilder().append(objectGenerator, that.objectGenerator)
                                   .append(testAssertions, that.testAssertions)
-                                  .append(constructorParameters, that.constructorParameters)
+                                  .append(instantiators, that.instantiators)
                                   .append(fieldValuesChanger, that.fieldValuesChanger)
                                   .isEquals();
     }
@@ -95,13 +95,9 @@ public abstract class AbstractTester {
     public int hashCode() {
         return new HashCodeBuilder().append(objectGenerator)
                                     .append(testAssertions)
-                                    .append(constructorParameters)
+                                    .append(instantiators)
                                     .append(fieldValuesChanger)
                                     .toHashCode();
-    }
-
-    protected MultiValuedMap<Class<?>, ConstructorParameters> getConstructorParameters() {
-        return constructorParameters;
     }
 
     @Override

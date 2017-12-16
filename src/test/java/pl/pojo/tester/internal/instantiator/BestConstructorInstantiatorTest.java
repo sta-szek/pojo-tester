@@ -1,19 +1,27 @@
 package pl.pojo.tester.internal.instantiator;
 
-import classesForTest.*;
+import classesForTest.ClassContainingStaticClasses;
+import classesForTest.Constructor_Stream;
+import classesForTest.Constructor_Thread;
+import classesForTest.Constructors_First_Throws_Exception;
+import classesForTest.PackageConstructor;
+import classesForTest.Person;
+import classesForTest.PrivateConstructor;
+import classesForTest.ProtectedConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.apache.commons.collections4.MultiValuedMap;
-import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.function.Executable;
+import pl.pojo.tester.api.AbstractObjectInstantiator;
 import pl.pojo.tester.api.ConstructorParameters;
 import pl.pojo.tester.api.FieldPredicate;
 import pl.pojo.tester.internal.utils.FieldUtils;
 import pl.pojo.tester.internal.utils.MethodUtils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static helpers.TestHelper.getDefaultDisplayName;
@@ -23,8 +31,6 @@ import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 
 class BestConstructorInstantiatorTest {
-
-    private final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters = new ArrayListValuedHashMap<>();
 
     @TestFactory
     Stream<DynamicTest> Should_Instantiate_Non_Public_Classes() {
@@ -62,7 +68,7 @@ class BestConstructorInstantiatorTest {
             // given
             final Class<?> classUnderTest = Class.forName(className);
             final BestConstructorInstantiator instantiator = new BestConstructorInstantiator(classUnderTest,
-                                                                                             constructorParameters);
+                                                                                             new ArrayList<>());
 
             // when
             final Object result = instantiator.instantiate();
@@ -113,7 +119,7 @@ class BestConstructorInstantiatorTest {
         return () -> {
             // given
             final BestConstructorInstantiator instantiator = new BestConstructorInstantiator(classToInstantiate,
-                                                                                             constructorParameters);
+                                                                                             new ArrayList<>());
 
             // when
             final Object result = instantiator.instantiate();
@@ -135,7 +141,7 @@ class BestConstructorInstantiatorTest {
         return () -> {
             // given
             final BestConstructorInstantiator instantiator = new BestConstructorInstantiator(classToInstantiate,
-                                                                                             constructorParameters);
+                                                                                             new ArrayList<>());
 
             // when
             final Throwable result = catchThrowable(instantiator::instantiate);
@@ -150,7 +156,7 @@ class BestConstructorInstantiatorTest {
         // given
         final Class<?> classToInstantiate = PrivateConstructor.class;
         final BestConstructorInstantiator instantiator = new BestConstructorInstantiator(classToInstantiate,
-                                                                                         constructorParameters);
+                                                                                         new ArrayList<>());
 
         // when
         final Object result = instantiator.instantiate();
@@ -164,7 +170,7 @@ class BestConstructorInstantiatorTest {
         // given
         final Class<?> classToInstantiate = Constructors_First_Throws_Exception.class;
         final BestConstructorInstantiator instantiator = new BestConstructorInstantiator(classToInstantiate,
-                                                                                         constructorParameters);
+                                                                                         new ArrayList<>());
 
         // when
         final Object result = instantiator.instantiate();
@@ -176,12 +182,12 @@ class BestConstructorInstantiatorTest {
     @Test
     void Should_Create_Object_With_User_Defined_Constructor_Parameters() {
         // given
-        final ArrayListValuedHashMap<Class<?>, ConstructorParameters> constructorParameters = new ArrayListValuedHashMap<>();
-        final ConstructorParameters parameters = new ConstructorParameters(new Object[]{"expectedString"},
-                                                                           new Class[]{Object.class});
-        constructorParameters.put(NoDefaultConstructor.class, parameters);
+        final List<AbstractObjectInstantiator> instantiators = new ArrayList<>();
+        final ConstructorParameters parameters = new ConstructorParameters(new Object[]{ "expectedString" },
+                                                                           new Class[]{ Object.class });
+        instantiators.add(new UserDefinedConstructorInstantiator(NoDefaultConstructor.class, parameters));
         final BestConstructorInstantiator instantiator = new BestConstructorInstantiator(NoDefaultConstructor.class,
-                                                                                         constructorParameters);
+                                                                                         instantiators);
 
         final NoDefaultConstructor expectedResult = new NoDefaultConstructor("expectedString");
 

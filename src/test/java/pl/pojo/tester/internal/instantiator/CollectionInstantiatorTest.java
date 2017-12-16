@@ -1,6 +1,5 @@
 package pl.pojo.tester.internal.instantiator;
 
-import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
@@ -71,8 +70,7 @@ class CollectionInstantiatorTest {
     private Executable Should_Return_Expected_Collection_Object(final Class<?> classToInstantiate) {
         return () -> {
             // given
-            final CollectionInstantiator instantiator = new CollectionInstantiator(classToInstantiate,
-                                                                                   new ArrayListValuedHashMap<>());
+            final CollectionInstantiator instantiator = new CollectionInstantiator(classToInstantiate);
 
             // when
             final Object result = instantiator.instantiate();
@@ -85,8 +83,7 @@ class CollectionInstantiatorTest {
     @Test
     void Should_Throws_Exception_When_Prepared_Objects_Do_Not_Contain_Expected_Class() {
         // given
-        final CollectionInstantiator instantiator = new CollectionInstantiator(String.class,
-                                                                               new ArrayListValuedHashMap<>());
+        final CollectionInstantiator instantiator = new CollectionInstantiator(String.class);
 
         // when
         final Throwable result = catchThrowable(instantiator::instantiate);

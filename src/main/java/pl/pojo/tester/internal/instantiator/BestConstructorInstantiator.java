@@ -1,30 +1,25 @@
 package pl.pojo.tester.internal.instantiator;
 
 
-import org.apache.commons.collections4.MultiValuedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pl.pojo.tester.api.ConstructorParameters;
+import pl.pojo.tester.api.AbstractObjectInstantiator;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 class BestConstructorInstantiator extends AbstractMultiConstructorInstantiator {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BestConstructorInstantiator.class);
 
-    BestConstructorInstantiator(final Class<?> clazz,
-                                final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
-        super(clazz, constructorParameters);
+    BestConstructorInstantiator(final Class<?> clazz, final List<AbstractObjectInstantiator> instantiators) {
+        super(clazz, instantiators);
     }
 
     @Override
     public Object instantiate() {
-        Object result = instantiateUsingUserParameters();
-        if (result == null) {
-            result = createFindingBestConstructor();
-        }
-        return result;
+        return createFindingBestConstructor();
     }
 
     @Override
