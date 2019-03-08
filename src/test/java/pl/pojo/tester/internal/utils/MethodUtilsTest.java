@@ -211,6 +211,12 @@ class MethodUtilsTest {
         private int otherId;
         private String name;
         private String otherName;
+        private Object object;
+
+        public Setters setObject(Object object) {
+            this.object = object;
+            return this;
+        }
 
         public void setOtherId(final int otherId) {
             this.otherId = otherId;
