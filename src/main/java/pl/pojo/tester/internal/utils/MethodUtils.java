@@ -16,7 +16,7 @@ public final class MethodUtils {
         return Arrays.stream(clazz.getMethods())
                      .filter(methodHasOnlyOneParameter())
                      .filter(areParameterAndFieldTypeAssignable(field))
-                     .filter(returnTypeIsVoid())
+                     .filter(returnTypeIsVoidOrClass())
                      .filter(method -> prefixMatchesSettersPrefixAndHasExpectedLength(method, field.getName()))
                      .findAny()
                      .orElseThrow(() -> new SetterNotFoundException(clazz, field));
@@ -31,8 +31,8 @@ public final class MethodUtils {
                      .orElseThrow(() -> new GetterNotFoundException(clazz, field));
     }
 
-    private static Predicate<Method> returnTypeIsVoid() {
-        return method -> method.getReturnType() == void.class;
+    private static Predicate<Method> returnTypeIsVoidOrClass() {
+        return method -> Arrays.asList(method.getDeclaringClass(), void.class).contains(method.getReturnType());
     }
 
     private static Predicate<Method> areParameterAndFieldTypeAssignable(final Field field) {

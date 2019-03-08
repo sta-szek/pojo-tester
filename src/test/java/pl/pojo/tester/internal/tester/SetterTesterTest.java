@@ -47,7 +47,7 @@ class SetterTesterTest {
         // given
         final SetterTester setterTester = new SetterTester();
         final Class<?> clazz = BadPojoSetter.class;
-        final List<String> includedFields = newArrayList("a", "b");
+        final List<String> includedFields = newArrayList("a", "b", "e");
 
         // when
         final Throwable result = catchThrowable(() -> setterTester.test(clazz, FieldPredicate.include(includedFields)));
@@ -76,6 +76,7 @@ class SetterTesterTest {
         private int b;
         private int c;
         private int d;
+        private int e;
 
         public void setA(final int a) {
             this.a = a;
@@ -88,6 +89,10 @@ class SetterTesterTest {
         public void setX(final char x) {
         }
 
+        public BadPojoSetter setE(int e) {
+            this.e = e;
+            return this;
+        }
     }
 
     @Setter
@@ -97,7 +102,12 @@ class SetterTesterTest {
         private int b;
         private int c;
         private int d;
+        private int e;
 
+        public GoodPojoSetter setE(int e) {
+            this.e = e;
+            return this;
+        }
     }
 
     private class Setters {
