@@ -96,6 +96,7 @@ dependencies {
     testCompile("org.powermock.tests:powermock-tests-utils:${POWER_MOCK_UTILS_VERSION}")
     testCompileOnly("org.apiguardian:apiguardian-api:1.0.0")
     testRuntime("org.junit.jupiter:junit-jupiter-engine:${JUNIT_JUPITER_VERSION}") { changing = true }
+    testRuntime("org.slf4j:slf4j-nop:1.7.26")
 }
 
 afterEvaluate {
