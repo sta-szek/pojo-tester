@@ -7,7 +7,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.junit.platform:junit-platform-gradle-plugin:1.0.2")
+        classpath("org.junit.platform:junit-platform-gradle-plugin:1.2.0")
     }
 }
 
@@ -36,8 +36,6 @@ apply plugin: 'org.junit.platform.gradle.plugin'
 apply plugin: 'maven-publish'
 
 buildScan {
-    //licenseAgreementUrl = 'https://gradle.com/terms-of-service'
-    //licenseAgree = 'yes'
     //publishAlways()
 }
 
@@ -100,7 +98,6 @@ dependencies {
 }
 
 afterEvaluate {
-
     jacoco {
         toolVersion JACOCO_VERSION
         applyTo junitPlatformTest
@@ -126,10 +123,6 @@ pitest {
     outputFormats = ['XML', 'HTML']
 }
 
-/*task wrapper(type: Wrapper) {
-    gradleVersion = '4.8'
-}*/
-
 def pomConfig = {
     licenses {
         license {
@@ -139,16 +132,16 @@ def pomConfig = {
     }
     developers {
         developer {
-            id "sta-szek"
-            name "Piotr Joński"
-            email "p.jonski@pojo.pl"
+            id "ekoutanov"
+            name "Emil Koutanov"
+            email "ekoutanov@gmail.com"
         }
     }
 
     scm {
-        url "https://github.com/sta-szek/pojo-tester"
-        connection "scm:git:git://github.com:sta-szek/pojo-tester.git"
-        developerConnection "scm:git:ssh://github.com:sta-szek/pojo-tester.git"
+        url "https://github.com/obsidiandynamics/pojo-tester"
+        connection "scm:git:git://github.com:obsidiandynamics/pojo-tester.git"
+        developerConnection "scm:git:ssh://github.com:obsidiandynamics/pojo-tester.git"
     }
 }
 
@@ -169,7 +162,7 @@ artifacts {
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            groupId 'pl.pojo'
+            groupId 'com.obsidiandynamics'
             artifactId 'pojo-tester'
             version rootProject.version
             from components.java
@@ -197,22 +190,23 @@ publishing.publications.all {
 }
 
 bintray {
-    user = 'sta-szek'
-    key = System.getenv('BINTRAY_API_KEY')
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_KEY')
     publish = true
     pkg {
-        repo = 'maven'
+        repo = 'pojo-tester'
         name = 'pojo-tester'
-        desc = 'Java pojo-methods testing library.'
-        websiteUrl = 'http://www.pojo.pl'
-        issueTrackerUrl = 'https://github.com/sta-szek/pojo-tester/issues'
-        vcsUrl = 'https://github.com/sta-szek/pojo-tester.git'
+        userOrg = "obsidiandynamics"
+        desc = 'POJO testing library'
+        websiteUrl = 'https://github.com/obsidiandynamics/pojo-tester'
+        issueTrackerUrl = 'https://github.com/obsidiandynamics/pojo-tester/issues'
+        vcsUrl = 'https://github.com/obsidiandynamics/pojo-tester.git'
         licenses = ['LGPL-3.0']
         publications = ['mavenJava']
         version {
             name = rootProject.version
-            desc = 'Java pojo-methods testing library.'
-            released = new Date();
+            desc = 'POJO testing library'
+            released = new Date()
             vcsTag = rootProject.version
         }
     }

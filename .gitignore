@@ -15,3 +15,4 @@ src/book/javadoc
 out
 .java-version
 lombok.config
+.DS_Store
