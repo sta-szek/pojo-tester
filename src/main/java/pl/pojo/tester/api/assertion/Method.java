@@ -9,6 +9,8 @@ import pl.pojo.tester.internal.tester.HashCodeTester;
 import pl.pojo.tester.internal.tester.SetterTester;
 import pl.pojo.tester.internal.tester.ToStringTester;
 
+import java.lang.reflect.InvocationTargetException;
+
 /**
  * Declares methods that can be tested using POJO-TESTER.
  * <p>
@@ -33,8 +35,8 @@ public enum Method {
 
     public AbstractTester getTester() {
         try {
-            return testerClass.newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
+            return testerClass.getDeclaredConstructor().newInstance();
+        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             throw new TesterInstantiationException(e);
         }
     }
