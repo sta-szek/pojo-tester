@@ -166,7 +166,7 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             groupId 'com.obsidiandynamics.pojotester'
-            artifactId 'pojo-tester'
+            artifactId 'pojotester'
             version rootProject.version
             from components.java
             artifact sourcesJar
