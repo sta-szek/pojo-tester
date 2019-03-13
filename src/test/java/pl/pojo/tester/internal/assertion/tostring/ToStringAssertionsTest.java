@@ -4,6 +4,8 @@ import classesForTest.fields.TestEnum1;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
@@ -51,6 +53,20 @@ class ToStringAssertionsTest {
         assertThat(result).isNull();
     }
 
+
+    @Test
+    void Should_Not_Throw_Exception_When_ToString_Method_Contains_Array_Value() {
+        // given
+        final ToStringWithoutField objectUnderAssert = new ToStringWithoutField();
+        final ToStringAssertions toStringAssertions = new ToStringAssertions(objectUnderAssert);
+
+        // when
+        final Throwable result = catchThrowable(() -> toStringAssertions.contains("array", ToStringWithoutField.ARRAY_TO_TEST));
+
+        // then
+        assertThat(result).isNull();
+    }
+
     @Test
     void Should_Not_Throw_Exception_When_ToString_Method_Does_Not_Contain_Value() {
         // given
@@ -64,11 +80,13 @@ class ToStringAssertionsTest {
         assertThat(result).isNull();
     }
 
-    private class ToStringWithoutField {
+    private static class ToStringWithoutField {
+        static final String[][] ARRAY_TO_TEST = { {"a"}, {"b"}, null, {"c", "d"} };
 
         private final int a = 1;
         private final float b = 1.43F;
         private final Object obj = null;
+        private final String[][] array = ARRAY_TO_TEST;
         private TestEnum1 testEnum;
 
         @Override
@@ -76,6 +94,7 @@ class ToStringAssertionsTest {
             return new ToStringBuilder(this).append("a", a)
                                             .append("b", b)
                                             .append("obj", obj)
+                                            .append("array", Arrays.toString(array))
                                             .toString();
         }
     }

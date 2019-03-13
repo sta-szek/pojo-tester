@@ -13,9 +13,6 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public final class FieldUtils {
-
-    private static final String MODIFIERS_FIELD_NAME_IN_FIELD_CLASS = "modifiers";
-
     private FieldUtils() {
     }
 
@@ -50,7 +47,7 @@ public final class FieldUtils {
 
     public static Object getValue(final Object targetObject, final Field field) {
         try {
-            makeModifiable(field);
+            makeAccessible(field);
             return field.get(targetObject);
         } catch (final IllegalAccessException e) {
             throw new GetOrSetValueException(field.getName(), targetObject.getClass(), e);
@@ -59,7 +56,7 @@ public final class FieldUtils {
 
     public static void setValue(final Object targetObject, final Field field, final Object value) {
         try {
-            makeModifiable(field);
+            makeAccessible(field);
             field.set(targetObject, value);
         } catch (final IllegalAccessException e) {
             throw new GetOrSetValueException(field.getName(), targetObject.getClass(), e);
@@ -83,18 +80,8 @@ public final class FieldUtils {
                     .collect(Collectors.toList());
     }
 
-    private static void makeModifiable(final Field field) {
-        final Class<? extends Field> clazz = field.getClass();
-        try {
-            field.setAccessible(true);
-            final Field modifierField = clazz.getDeclaredField(MODIFIERS_FIELD_NAME_IN_FIELD_CLASS);
-            modifierField.setAccessible(true);
-
-            final int modifiers = field.getModifiers() & ~Modifier.FINAL;
-            modifierField.setInt(field, modifiers);
-        } catch (IllegalAccessException | NoSuchFieldException e) {
-            throw new GetOrSetValueException(MODIFIERS_FIELD_NAME_IN_FIELD_CLASS, clazz, e);
-        }
+    private static void makeAccessible(final Field field) {
+        field.setAccessible(true);
     }
 
     private static boolean excludeEmptySet(final List<Field> fields) {

@@ -3,6 +3,11 @@ package pl.pojo.tester.internal.assertion.tostring;
 
 import org.apache.commons.lang3.ObjectUtils;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class ToStringAssertions {
 
     private final Object objectUnderAssert;
@@ -31,10 +36,19 @@ public class ToStringAssertions {
     }
 
     private String getStringOf(final Object value) {
-        final Object notNullObject = ObjectUtils.defaultIfNull(value, "");
-        return notNullObject.toString();
+        if (value == null) {
+            return "";
+        } else if (value.getClass().isArray()) {
+            final int length = Array.getLength(value);
+            final Object[] array = new Object[length];
+            for (int i = 0; i < length; i++) {
+                array[i] = Array.get(value, i);
+            }
+            return Arrays.toString(array);
+        } else {
+            return value.toString();
+        }
     }
-
 
     private void checkResult(final boolean pass, final AbstractToStringAssertionError errorToThrow) {
         if (!pass) {

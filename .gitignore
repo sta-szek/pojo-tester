@@ -13,3 +13,6 @@ src/book/javadoc
 
 !.idea/codeStyleSettings.xml
 out
+.java-version
+lombok.config
+.DS_Store
