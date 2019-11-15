@@ -1,8 +1,9 @@
 package pl.pojo.tester.internal.utils;
 
-import org.paukov.combinatorics.Factory;
+import org.paukov.combinatorics.CombinatoricsVector;
 import org.paukov.combinatorics.Generator;
 import org.paukov.combinatorics.ICombinatoricsVector;
+import org.paukov.combinatorics.subsets.SubSetGenerator;
 import pl.pojo.tester.internal.GetOrSetValueException;
 
 import java.lang.reflect.Field;
@@ -33,8 +34,8 @@ public final class FieldUtils {
     }
 
     public static List<List<Field>> permutations(final List<Field> fields) {
-        final ICombinatoricsVector<Field> vector = Factory.createVector(fields);
-        final Generator<Field> subSetGenerator = Factory.createSubSetGenerator(vector);
+        final ICombinatoricsVector<Field> vector = new CombinatoricsVector(fields);
+        final Generator<Field> subSetGenerator = new SubSetGenerator(vector);
         return subSetGenerator.generateAllObjects()
                               .stream()
                               .map(ICombinatoricsVector::getVector)
