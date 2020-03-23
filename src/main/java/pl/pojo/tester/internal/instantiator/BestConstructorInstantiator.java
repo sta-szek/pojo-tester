@@ -9,12 +9,12 @@ import pl.pojo.tester.api.ConstructorParameters;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-class BestConstructorInstantiator extends AbstractMultiConstructorInstantiator {
+public class BestConstructorInstantiator extends AbstractMultiConstructorInstantiator {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BestConstructorInstantiator.class);
 
-    BestConstructorInstantiator(final Class<?> clazz,
-                                final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
+    public BestConstructorInstantiator(final Class<?> clazz,
+                                       final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
         super(clazz, constructorParameters);
     }
 

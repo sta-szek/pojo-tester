@@ -97,7 +97,7 @@ abstract class AbstractMultiConstructorInstantiator extends AbstractObjectInstan
                      .toArray(Object[]::new);
     }
 
-    private Object createObjectFromConstructor(final Constructor<?> constructor) {
+    protected Object createObjectFromConstructor(final Constructor<?> constructor) {
         makeAccessible(constructor);
         if (constructor.getParameterCount() == 0) {
             return createObjectFromNoArgsConstructor(constructor);
