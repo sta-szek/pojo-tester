@@ -11,6 +11,8 @@ import java.lang.reflect.Method;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static pl.pojo.tester.internal.utils.FieldUtils.isFinal;
+
 public class SetterTester extends AbstractTester {
 
     public SetterTester() {
@@ -46,6 +48,7 @@ public class SetterTester extends AbstractTester {
     private List<SetterAndFieldPair> findSetterAndGetterPairsForFields(final Class<?> testedClass,
                                                                        final List<Field> fields) {
         return fields.stream()
+                     .filter(field -> ! isFinal(field))
                      .map(fieldName -> findSetterAndGetterPairForField(testedClass, fieldName))
                      .collect(Collectors.toList());
     }
