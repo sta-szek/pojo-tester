@@ -13,7 +13,7 @@ class AbstractPrimitiveValueChangerTest {
     @Test
     void Should_Return_False_When_Field_Is_Not_Primitive() throws Exception {
         // given
-        final Field field = Thread.class.getDeclaredField("threadQ");
+        final Field field = Thread.class.getDeclaredField("name");
         final AbstractPrimitiveValueChanger<Object> changerMock = new ImplementationForTest();
 
         // when
