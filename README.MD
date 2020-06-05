@@ -1,5 +1,8 @@
 # `POJO-TESTER` - Java framework for pojo-testing
 
+# PROJECT IS ON HOLD
+I have no time to invest more in this project. See https://github.com/sta-szek/pojo-tester/issues/247
+
 `POJO-TESTER` is a java testing library, which makes your `pojo-tests` much easier. You can test your `pojo` against `equals`, `hashCode`, `toString`, `getters`, `setters` and `constructors`.
 
 Get more information at [pojo-tester documentation site](http://pojo.pl)
