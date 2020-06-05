@@ -2,6 +2,7 @@
 
 # PROJECT IS ON HOLD
 ## I have no time to invest more in this project. See https://github.com/sta-szek/pojo-tester/issues/247
+## Thank you for using pojo-tester! It has 131 019 downloads total! I was not expecting such popularity :rocket:
 
 
 ----
