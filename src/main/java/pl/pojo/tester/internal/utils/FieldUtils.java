@@ -84,17 +84,7 @@ public final class FieldUtils {
     }
 
     private static void makeModifiable(final Field field) {
-        final Class<? extends Field> clazz = field.getClass();
-        try {
-            field.setAccessible(true);
-            final Field modifierField = clazz.getDeclaredField(MODIFIERS_FIELD_NAME_IN_FIELD_CLASS);
-            modifierField.setAccessible(true);
-
-            final int modifiers = field.getModifiers() & ~Modifier.FINAL;
-            modifierField.setInt(field, modifiers);
-        } catch (IllegalAccessException | NoSuchFieldException e) {
-            throw new GetOrSetValueException(MODIFIERS_FIELD_NAME_IN_FIELD_CLASS, clazz, e);
-        }
+        field.setAccessible(true);
     }
 
     private static boolean excludeEmptySet(final List<Field> fields) {
