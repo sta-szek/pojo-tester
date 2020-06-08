@@ -30,7 +30,7 @@ class AbstractFieldValueChangerTest {
     }
 
     @Test
-    void Should_Not_Change_If_No_Matching_Changer() {
+    void Should_Be_Null_If_No_Matching_Changer() {
         // given
         final AbstractFieldValueChanger abstractFieldValueChanger = new ImplementationForTest();
         final String expectedValue = "string";
@@ -39,7 +39,7 @@ class AbstractFieldValueChangerTest {
         final Object result = abstractFieldValueChanger.increaseValue(expectedValue);
 
         // then
-        assertThat(result).isEqualTo(expectedValue);
+        assertThat(result).isNull();
     }
 
     @Test

@@ -53,7 +53,7 @@ public abstract class AbstractFieldValueChanger<T> {
                 return (T) next.increaseValue(value);
             }
             LOGGER.debug("Could not change value '{}' ot type {} by any field value changer", value, value.getClass());
-            return value;
+            return null;
         }
     }
 

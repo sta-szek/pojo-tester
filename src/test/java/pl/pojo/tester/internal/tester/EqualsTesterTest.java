@@ -34,6 +34,19 @@ class EqualsTesterTest {
     }
 
     @Test
+    void Should_Pass_All_Equals_Tests_On_Embedded_Classes() {
+        // given
+        final Class[] classesToTest = {GoodPojo_Equals_HashCode_Inner_Class.class};
+        final EqualsTester equalsTester = new EqualsTester(DefaultFieldValueChanger.INSTANCE);
+
+        // when
+        final Throwable result = catchThrowable(() -> equalsTester.testAll(classesToTest));
+
+        // then
+        assertThat(result).isNull();
+    }
+
+    @Test
     void Should_Pass_All_Equals_Tests_Excluding_Fields() {
         // given
         final EqualsTester equalsTester = new EqualsTester();
