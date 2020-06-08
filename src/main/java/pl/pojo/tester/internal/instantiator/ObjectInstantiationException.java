@@ -3,7 +3,7 @@ package pl.pojo.tester.internal.instantiator;
 
 import java.util.Arrays;
 
-class ObjectInstantiationException extends RuntimeException {
+public class ObjectInstantiationException extends RuntimeException {
 
     ObjectInstantiationException(final Class<?> clazz, final String message, final Throwable cause) {
         super(createMessage(clazz) + " " + message, cause);
