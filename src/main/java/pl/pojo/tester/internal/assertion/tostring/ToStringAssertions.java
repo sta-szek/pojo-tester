@@ -1,7 +1,8 @@
 package pl.pojo.tester.internal.assertion.tostring;
 
 
-import org.apache.commons.lang3.ObjectUtils;
+import java.util.Arrays;
+import java.util.Objects;
 
 public class ToStringAssertions {
 
@@ -31,8 +32,13 @@ public class ToStringAssertions {
     }
 
     private String getStringOf(final Object value) {
-        final Object notNullObject = ObjectUtils.defaultIfNull(value, "");
-        return notNullObject.toString();
+        if(Objects.isNull(value)) {
+            return ""; //empty string as default
+        } else if(value.getClass().isArray()){
+            return Arrays.toString((Object[])value);
+        } else {
+            return value.toString();
+        }
     }
 
 
