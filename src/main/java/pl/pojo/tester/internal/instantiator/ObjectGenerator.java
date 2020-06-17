@@ -1,11 +1,10 @@
 package pl.pojo.tester.internal.instantiator;
 
 
-import org.apache.commons.collections4.MultiValuedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pl.pojo.tester.api.AbstractObjectInstantiator;
 import pl.pojo.tester.api.ClassAndFieldPredicatePair;
-import pl.pojo.tester.api.ConstructorParameters;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 import pl.pojo.tester.internal.utils.FieldUtils;
 import pl.pojo.tester.internal.utils.Permutator;
@@ -27,19 +26,19 @@ public class ObjectGenerator {
     private static final Logger LOGGER = LoggerFactory.getLogger(ObjectGenerator.class);
 
     private final AbstractFieldValueChanger abstractFieldValueChanger;
-    private final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters;
+    private final List<AbstractObjectInstantiator> additionalInstantiators;
     private final Permutator permutator;
 
     public ObjectGenerator(final AbstractFieldValueChanger abstractFieldValueChanger,
-                           final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters,
+                           final List<AbstractObjectInstantiator> additionalInstantiators,
                            final Permutator permutator) {
         this.abstractFieldValueChanger = abstractFieldValueChanger;
-        this.constructorParameters = constructorParameters;
+        this.additionalInstantiators = additionalInstantiators;
         this.permutator = permutator;
     }
 
     public Object createNewInstance(final Class<?> clazz) {
-        return Instantiable.forClass(clazz, constructorParameters)
+        return Instantiable.forClass(clazz, additionalInstantiators)
                            .instantiate();
     }
 

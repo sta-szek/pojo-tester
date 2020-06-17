@@ -1,7 +1,6 @@
 package pl.pojo.tester.internal.instantiator;
 
 
-import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.function.Executable;
@@ -39,8 +38,7 @@ class ArrayInstantiatorTest {
     private Executable Should_Create_Array(final Class<?> classToInstantiate) {
         return () -> {
             // given
-            final ArrayInstantiator instantiator = new ArrayInstantiator(classToInstantiate,
-                                                                         new ArrayListValuedHashMap<>());
+            final ArrayInstantiator instantiator = new ArrayInstantiator(classToInstantiate);
 
             // when
             final Object result = instantiator.instantiate();

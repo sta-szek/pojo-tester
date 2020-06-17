@@ -1,6 +1,5 @@
 package pl.pojo.tester.internal.instantiator;
 
-import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.function.Executable;
@@ -57,8 +56,7 @@ class JavaTypeInstantiatorTest {
     private Executable Should_Instantiate_Primitive(final Class<?> classToInstantiate) {
         return () -> {
             // given
-            final JavaTypeInstantiator instantiator = new JavaTypeInstantiator(classToInstantiate,
-                                                                               new ArrayListValuedHashMap<>());
+            final JavaTypeInstantiator instantiator = new JavaTypeInstantiator(classToInstantiate);
 
             // when
             final Object result = instantiator.instantiate();
@@ -107,8 +105,7 @@ class JavaTypeInstantiatorTest {
     private Executable Should_Instantiate_Java_Type_Classes(final Class<?> classToInstantiate) {
         return () -> {
             // given
-            final JavaTypeInstantiator instantiator = new JavaTypeInstantiator(classToInstantiate,
-                                                                               new ArrayListValuedHashMap<>());
+            final JavaTypeInstantiator instantiator = new JavaTypeInstantiator(classToInstantiate);
 
             // when
             final Object result = instantiator.instantiate();

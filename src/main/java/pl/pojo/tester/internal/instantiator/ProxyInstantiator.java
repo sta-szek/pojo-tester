@@ -2,16 +2,16 @@ package pl.pojo.tester.internal.instantiator;
 
 
 import javassist.util.proxy.ProxyFactory;
-import org.apache.commons.collections4.MultiValuedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pl.pojo.tester.api.ConstructorParameters;
+import pl.pojo.tester.api.AbstractObjectInstantiator;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Proxy;
+import java.util.List;
 
 
 class ProxyInstantiator extends AbstractMultiConstructorInstantiator {
@@ -20,22 +20,21 @@ class ProxyInstantiator extends AbstractMultiConstructorInstantiator {
 
     private final ProxyFactory proxyFactory = new ProxyFactory();
 
-    ProxyInstantiator(final Class<?> clazz,
-                      final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
-        super(clazz, constructorParameters);
+    ProxyInstantiator(final Class<?> clazz, final List<AbstractObjectInstantiator> instantiators) {
+        super(clazz, instantiators);
     }
 
     @Override
     public Object instantiate() {
-        Object result = instantiateUsingUserParameters();
-        if (result == null) {
-            if (clazz.isAnnotation() || clazz.isInterface()) {
-                result = proxyByJava();
-            } else {
-                proxyFactory.setSuperclass(clazz);
-                result = createFindingBestConstructor();
-            }
+        final Object result;
+
+        if (clazz.isAnnotation() || clazz.isInterface()) {
+            result = proxyByJava();
+        } else {
+            proxyFactory.setSuperclass(clazz);
+            result = createFindingBestConstructor();
         }
+
         return result;
     }
 

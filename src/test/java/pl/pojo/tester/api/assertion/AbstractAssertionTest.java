@@ -1,7 +1,6 @@
 package pl.pojo.tester.api.assertion;
 
 import classesForTest.fields.TestEnum1;
-import helpers.MultiValuedMapMatcher;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -10,16 +9,22 @@ import pl.pojo.tester.api.ConstructorParameters;
 import pl.pojo.tester.internal.assertion.AbstractAssertionError;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
-import pl.pojo.tester.internal.utils.SublistFieldPermutator;
+import pl.pojo.tester.internal.instantiator.UserDefinedConstructorInstantiator;
 import pl.pojo.tester.internal.tester.EqualsTester;
 import pl.pojo.tester.internal.tester.HashCodeTester;
 import pl.pojo.tester.internal.utils.CollectionUtils;
+import pl.pojo.tester.internal.utils.SublistFieldPermutator;
 
 import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.powermock.reflect.Whitebox.getInternalState;
 import static org.powermock.reflect.Whitebox.setInternalState;
 
@@ -149,24 +154,25 @@ class AbstractAssertionTest {
     }
 
     @Test
-    void Should_Set_User_Defined_Class_And_Constructor_Parameters_To_Tester() {
+    void Should_Set_Instantiators_To_Tester() {
         // given
         final AbstractAssertion abstractAssertion = new AbstractAssertionImplementation();
         final EqualsTester equalsTester = mock(EqualsTester.class);
         setInternalState(abstractAssertion, "testers", CollectionUtils.asSet(equalsTester));
         final Class<String> expectedClass = String.class;
-        final Object[] expectedArguments = {'c', 'h', 'a', 'r'};
-        final Class[] expectedTypes = {char.class, char.class, char.class, char.class};
-        final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments,
-                                                                                              expectedTypes);
-        abstractAssertion.create(expectedClass, expectedConstructorParameters);
+        final Object[] expectedArguments = { 'c', 'h', 'a', 'r' };
+        final Class[] expectedTypes = { char.class, char.class, char.class, char.class };
+        final ConstructorParameters constructorParameters = new ConstructorParameters(expectedArguments,
+                                                                                      expectedTypes);
+        final UserDefinedConstructorInstantiator instantiator = new UserDefinedConstructorInstantiator(expectedClass,
+                                                                                                       constructorParameters);
+        abstractAssertion.create(expectedClass, instantiator::instantiate);
 
         // when
         abstractAssertion.areWellImplemented();
 
         // then
-        verify(equalsTester, times(1)).setUserDefinedConstructors(argThat(new MultiValuedMapMatcher(expectedClass,
-                                                                                                    expectedConstructorParameters)));
+        verify(equalsTester, times(1)).setUserDefinedInstantiators(any());
     }
 
     @Test
@@ -176,8 +182,8 @@ class AbstractAssertionTest {
         final EqualsTester equalsTester = mock(EqualsTester.class);
         setInternalState(abstractAssertion, "testers", CollectionUtils.asSet(equalsTester));
         final Class<String> expectedClass = String.class;
-        final Object[] expectedArguments = {'c', 'h', 'a', 'r'};
-        final Class[] expectedTypes = {char.class, char.class, char.class, char.class};
+        final Object[] expectedArguments = { 'c', 'h', 'a', 'r' };
+        final Class[] expectedTypes = { char.class, char.class, char.class, char.class };
         final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments,
                                                                                               expectedTypes);
         abstractAssertion.create(expectedClass, expectedArguments, expectedTypes);
@@ -190,34 +196,13 @@ class AbstractAssertionTest {
     }
 
     @Test
-    void Should_Set_User_Defined_Class_And_Constructor_Parameters_To_Tester_Using_Class_Name() {
-        // given
-        final AbstractAssertion abstractAssertion = new AbstractAssertionImplementation();
-        final EqualsTester equalsTester = mock(EqualsTester.class);
-        setInternalState(abstractAssertion, "testers", CollectionUtils.asSet(equalsTester));
-        final Class<?> expectedClass = String.class;
-        final Object[] expectedArguments = {'c', 'h', 'a', 'r'};
-        final Class[] expectedTypes = {char.class, char.class, char.class, char.class};
-        final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments,
-                                                                                              expectedTypes);
-        abstractAssertion.create("java.lang.String", expectedConstructorParameters);
-
-        // when
-        abstractAssertion.areWellImplemented();
-
-        // then
-        verify(equalsTester, times(1)).setUserDefinedConstructors(argThat(new MultiValuedMapMatcher(expectedClass,
-                                                                                                    expectedConstructorParameters)));
-    }
-
-    @Test
     void Should_Call_Next_Create_Method_Using_Class_Name() {
         // given
         final AbstractAssertion abstractAssertion = spy(new AbstractAssertionImplementation());
         final EqualsTester equalsTester = mock(EqualsTester.class);
         setInternalState(abstractAssertion, "testers", CollectionUtils.asSet(equalsTester));
-        final Object[] expectedArguments = {'c', 'h', 'a', 'r'};
-        final Class[] expectedTypes = {char.class, char.class, char.class, char.class};
+        final Object[] expectedArguments = { 'c', 'h', 'a', 'r' };
+        final Class[] expectedTypes = { char.class, char.class, char.class, char.class };
         final ConstructorParameters expectedConstructorParameters = new ConstructorParameters(expectedArguments,
                                                                                               expectedTypes);
         final String expectedClassName = "java.lang.String";

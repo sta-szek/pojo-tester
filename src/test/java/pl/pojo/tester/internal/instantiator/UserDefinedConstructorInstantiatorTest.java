@@ -2,8 +2,6 @@ package pl.pojo.tester.internal.instantiator;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.apache.commons.collections4.MultiValuedMap;
-import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
@@ -20,30 +18,13 @@ import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 class UserDefinedConstructorInstantiatorTest {
 
-    private final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters = new ArrayListValuedHashMap<>();
-
-    {
-        constructorParameters.put(UserDefinedClass.class,
-                                  new ConstructorParameters(new Object[]{1, 2}, new Class<?>[]{int.class, int.class}));
-        constructorParameters.put(ClassWithPrivateConstructor.class,
-                                  new ConstructorParameters(new Object[]{1}, new Class<?>[]{int.class}));
-        constructorParameters.put(One_Arg_Constructor_Throws_NPE.class,
-                                  new ConstructorParameters(new Object[]{1}, new Class<?>[]{Object.class}));
-        constructorParameters.put(No_Args_Constructor_Throws_NPE.class,
-                                  new ConstructorParameters(new Object[0], new Class<?>[0]));
-        constructorParameters.put(InnerClass.class,
-                                  new ConstructorParameters(new Object[]{1}, new Class<?>[]{int.class}));
-        constructorParameters.put(NestedClass.class,
-                                  new ConstructorParameters(new Object[]{1}, new Class<?>[]{int.class}));
-    }
-
     @Test
     void Should_Create_Object_Using_Private_Constructor() {
         // given
         final Class<ClassWithPrivateConstructor> classToInstantiate = ClassWithPrivateConstructor.class;
         final UserDefinedConstructorInstantiator instantiator = new UserDefinedConstructorInstantiator(
                 classToInstantiate,
-                constructorParameters);
+                new ConstructorParameters(new Object[]{ 1 }, new Class<?>[]{ int.class }));
 
         // when
         final Object result = instantiator.instantiate();
@@ -58,7 +39,7 @@ class UserDefinedConstructorInstantiatorTest {
         final Class<InnerClass> classToInstantiate = InnerClass.class;
         final UserDefinedConstructorInstantiator instantiator = new UserDefinedConstructorInstantiator(
                 classToInstantiate,
-                constructorParameters);
+                new ConstructorParameters(new Object[]{ 1 }, new Class<?>[]{ int.class }));
 
         // when
         final Object result = instantiator.instantiate();
@@ -73,7 +54,7 @@ class UserDefinedConstructorInstantiatorTest {
         final Class<NestedClass> classToInstantiate = NestedClass.class;
         final UserDefinedConstructorInstantiator instantiator = new UserDefinedConstructorInstantiator(
                 classToInstantiate,
-                constructorParameters);
+                new ConstructorParameters(new Object[]{ 1 }, new Class<?>[]{ int.class }));
 
         // when
         final Object result = instantiator.instantiate();
@@ -95,7 +76,7 @@ class UserDefinedConstructorInstantiatorTest {
             // given
             final UserDefinedConstructorInstantiator instantiator = new UserDefinedConstructorInstantiator(
                     classToInstantiate,
-                    constructorParameters);
+                    new ConstructorParameters(new Object[0], new Class[0]));
 
             // when
             final Throwable result = catchThrowable(instantiator::instantiate);

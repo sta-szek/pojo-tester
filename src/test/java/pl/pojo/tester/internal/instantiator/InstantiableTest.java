@@ -7,14 +7,12 @@ import classesForTest.Constructor_Thread;
 import classesForTest.EmptyEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.apache.commons.collections4.MultiValuedMap;
-import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.function.Executable;
-import pl.pojo.tester.api.ConstructorParameters;
+import pl.pojo.tester.api.AbstractObjectInstantiator;
 import pl.pojo.tester.internal.field.date.DefaultDateAndTimeFieldValueChanger;
 
 import java.io.Serializable;
@@ -49,11 +47,11 @@ import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
 class InstantiableTest {
 
-    private static final MultiValuedMap<Class<?>, ConstructorParameters> CLASS_AND_CONSTRUCTOR_PARAMETERS = new ArrayListValuedHashMap<>();
+    private static final List<AbstractObjectInstantiator> INSTANTIATORS = new LinkedList<>();
 
     @BeforeAll
     static void beforeAll() {
-        CLASS_AND_CONSTRUCTOR_PARAMETERS.put(UserDefinedClass.class, null);
+        INSTANTIATORS.add(new SupplierInstantiator(UserDefinedClass.class, () -> null));
     }
 
     @TestFactory
@@ -69,7 +67,7 @@ class InstantiableTest {
                          new ClassInstantiator(Constructor_Stream.class, BestConstructorInstantiator.class),
                          new ClassInstantiator(Constructor_Thread.class, BestConstructorInstantiator.class),
                          new ClassInstantiator(String.class, JavaTypeInstantiator.class),
-                         new ClassInstantiator(UserDefinedClass.class, UserDefinedConstructorInstantiator.class),
+                         new ClassInstantiator(UserDefinedClass.class, SupplierInstantiator.class),
                          new ClassInstantiator(Boolean[].class, ArrayInstantiator.class),
                          new ClassInstantiator(Byte[].class, ArrayInstantiator.class),
                          new ClassInstantiator(Character[].class, ArrayInstantiator.class),
@@ -146,7 +144,7 @@ class InstantiableTest {
     private Executable Should_Return_Expected_Instantiator_For_Class(final ClassInstantiator testCase) {
         return () -> {
             // when
-            final Object result = Instantiable.forClass(testCase.clazz, CLASS_AND_CONSTRUCTOR_PARAMETERS);
+            final Object result = Instantiable.forClass(testCase.clazz, INSTANTIATORS);
 
             // then
             assertThat(result).isInstanceOf(testCase.instantiator);
@@ -159,7 +157,7 @@ class InstantiableTest {
         final Class[] classesToInstantiate = { A.class, B.class };
 
         // when
-        final Object[] result = Instantiable.instantiateClasses(classesToInstantiate, new ArrayListValuedHashMap<>());
+        final Object[] result = Instantiable.instantiateClasses(classesToInstantiate, new ArrayList<>());
 
         // then
         assertThat(result).extracting(Object::getClass)
@@ -167,28 +165,27 @@ class InstantiableTest {
     }
 
     @Test
-    void Should_Return_User_Defined_Constructor_Instantiator_If_Class_Does_Not_Qualifies_For_Proxy_And() {
+    void Should_Return_Instantiator_Defined_By_User() {
         // given
-        final ArrayListValuedHashMap<Class<?>, ConstructorParameters> constructorParameters = new ArrayListValuedHashMap<>();
+        final List<AbstractObjectInstantiator> instantiators = new ArrayList<>();
         final Class<?> clazz = A.class;
-        constructorParameters.put(clazz, new ConstructorParameters(new Object[0], new Class[0]));
+        final SupplierInstantiator expectedInstantiator = new SupplierInstantiator(clazz, () -> new Object[0]);
+        instantiators.add(expectedInstantiator);
 
         // when
-        final AbstractObjectInstantiator result = Instantiable.forClass(clazz, constructorParameters);
+        final AbstractObjectInstantiator result = Instantiable.forClass(clazz, instantiators);
 
         // then
-        assertThat(result).isInstanceOf(UserDefinedConstructorInstantiator.class);
+        assertThat(result).isEqualTo(expectedInstantiator);
     }
 
     @Test
-    void Should_Return_Proxy_Instantiator_If_Class_Qualifies_For_Proxy_And_User_Defined_Constructor_Parameters() {
+    void Should_Return_Proxy_Instantiator_If_Class_Qualifies_For_Proxy() {
         // given
-        final ArrayListValuedHashMap<Class<?>, ConstructorParameters> constructorParameters = new ArrayListValuedHashMap<>();
         final Class<?> clazz = Abstract.class;
-        constructorParameters.put(clazz, new ConstructorParameters(new Object[0], new Class[0]));
 
         // when
-        final AbstractObjectInstantiator result = Instantiable.forClass(clazz, constructorParameters);
+        final AbstractObjectInstantiator result = Instantiable.forClass(clazz, new ArrayList<>());
 
         // then
         assertThat(result).isInstanceOf(ProxyInstantiator.class);

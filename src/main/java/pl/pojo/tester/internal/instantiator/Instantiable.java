@@ -1,14 +1,14 @@
 package pl.pojo.tester.internal.instantiator;
 
 
-import org.apache.commons.collections4.MultiValuedMap;
-import pl.pojo.tester.api.ConstructorParameters;
+import pl.pojo.tester.api.AbstractObjectInstantiator;
 
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Supplier;
 
 public final class Instantiable {
 
@@ -16,7 +16,6 @@ public final class Instantiable {
 
     static {
         INSTANTIATORS = new LinkedList<>();
-        INSTANTIATORS.add(UserDefinedConstructorInstantiator.class);
         INSTANTIATORS.add(JavaTypeInstantiator.class);
         INSTANTIATORS.add(CollectionInstantiator.class);
         INSTANTIATORS.add(DefaultConstructorInstantiator.class);
@@ -30,38 +29,46 @@ public final class Instantiable {
     }
 
     static Object[] instantiateClasses(final Class<?>[] classes,
-                                       final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
+                                       final List<AbstractObjectInstantiator> predefinedInstantiators) {
         return Arrays.stream(classes)
-                     .map(clazz -> Instantiable.forClass(clazz, constructorParameters))
+                     .map(clazz -> Instantiable.forClass(clazz, predefinedInstantiators))
                      .map(AbstractObjectInstantiator::instantiate)
                      .toArray();
     }
 
     static AbstractObjectInstantiator forClass(final Class<?> clazz,
-                                               final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
-        return instantiateInstantiators(clazz, constructorParameters).stream()
-                                                                     .filter(AbstractObjectInstantiator::canInstantiate)
-                                                                     .findAny()
-                                                                     .get();
+                                               final List<AbstractObjectInstantiator> predefinedInstantiators) {
+        return findPredefinedInstantiator(clazz, predefinedInstantiators)
+                .orElseGet(findFirstMatchingInstantiator(clazz, predefinedInstantiators));
     }
 
-    private static List<AbstractObjectInstantiator> instantiateInstantiators(final Class<?> clazz,
-                                                                             final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
-        final List<AbstractObjectInstantiator> instantiators = new ArrayList<>();
-        try {
-            for (final Class<? extends AbstractObjectInstantiator> instantiator : INSTANTIATORS) {
-                final Constructor<? extends AbstractObjectInstantiator> constructor =
-                        instantiator.getDeclaredConstructor(Class.class, MultiValuedMap.class);
-                constructor.setAccessible(true);
-                final AbstractObjectInstantiator abstractObjectInstantiator = constructor.newInstance(clazz,
-                                                                                                      constructorParameters);
-                instantiators.add(abstractObjectInstantiator);
-            }
-        } catch (final Exception e) {
-            throw new RuntimeException("Cannot load instantiators form pl.pojo.tester.internal.instantiator package.",
-                                       e);
-        }
+    private static Supplier<AbstractObjectInstantiator> findFirstMatchingInstantiator(final Class<?> clazz,
+                                                                                      final List<AbstractObjectInstantiator> predefinedInstantiators) {
+        return () -> instantiateInstantiators(clazz, predefinedInstantiators).stream()
+                                                                             .filter(AbstractInternalInstantiator::canInstantiate)
+                                                                             .findFirst()
+                                                                             .get();
+    }
+
+    private static Optional<AbstractObjectInstantiator> findPredefinedInstantiator(final Class<?> clazz,
+                                                                                   final List<AbstractObjectInstantiator> predefinedInstantiators) {
+        return predefinedInstantiators.stream()
+                                      .filter(instantiator -> clazz.equals(instantiator.getClazz()))
+                                      .findFirst();
+    }
+
+    private static List<AbstractInternalInstantiator> instantiateInstantiators(final Class<?> clazz,
+                                                                               final List<AbstractObjectInstantiator> predefinedInstantiators) {
+        final List<AbstractInternalInstantiator> instantiators = new ArrayList<>();
+
+        instantiators.add(new JavaTypeInstantiator(clazz));
+        instantiators.add(new CollectionInstantiator(clazz));
+        instantiators.add(new DefaultConstructorInstantiator(clazz));
+        instantiators.add(new EnumInstantiator(clazz));
+        instantiators.add(new ArrayInstantiator(clazz));
+        instantiators.add(new ProxyInstantiator(clazz, predefinedInstantiators));
+        instantiators.add(new BestConstructorInstantiator(clazz, predefinedInstantiators));
+
         return instantiators;
     }
-
 }

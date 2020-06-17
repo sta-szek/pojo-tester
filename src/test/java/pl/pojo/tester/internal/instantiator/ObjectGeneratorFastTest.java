@@ -14,8 +14,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.apache.commons.collections4.MultiValuedMap;
-import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -24,11 +22,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.function.Executable;
 import pl.pojo.tester.api.ClassAndFieldPredicatePair;
-import pl.pojo.tester.api.ConstructorParameters;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
 import pl.pojo.tester.internal.utils.SublistFieldPermutator;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -42,18 +40,15 @@ import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 class ObjectGeneratorFastTest {
 
     private final AbstractFieldValueChanger abstractFieldValueChanger = DefaultFieldValueChanger.INSTANCE;
-    private final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters = new
-            ArrayListValuedHashMap<>();
 
-    private ObjectGenerator makeObjectGenerator(final AbstractFieldValueChanger abstractFieldValueChanger,
-                                                final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
-        return new ObjectGenerator(abstractFieldValueChanger, constructorParameters, new SublistFieldPermutator());
+    private ObjectGenerator makeObjectGenerator(final AbstractFieldValueChanger abstractFieldValueChanger) {
+        return new ObjectGenerator(abstractFieldValueChanger, new LinkedList<>(), new SublistFieldPermutator());
     }
 
     @Test
     void Should_Generate_Different_Objects_For_Class_Containing_Boolean_Type() {
         // given
-        final ObjectGenerator objectGenerator = makeObjectGenerator(abstractFieldValueChanger, constructorParameters);
+        final ObjectGenerator objectGenerator = makeObjectGenerator(abstractFieldValueChanger);
         final ClassAndFieldPredicatePair classAndFieldPredicatePair = new ClassAndFieldPredicatePair(
                 ClassWithBooleanField.class);
 
@@ -68,7 +63,7 @@ class ObjectGeneratorFastTest {
     @Test
     void Should_Generate_Different_Objects_For_Class_With_Private_Enum() {
         // given
-        final ObjectGenerator objectGenerator = makeObjectGenerator(abstractFieldValueChanger, constructorParameters);
+        final ObjectGenerator objectGenerator = makeObjectGenerator(abstractFieldValueChanger);
         final ClassAndFieldPredicatePair classAndFieldPredicatePair = new ClassAndFieldPredicatePair(
                 ClassContainingPrivateEnum.class);
 
@@ -83,7 +78,7 @@ class ObjectGeneratorFastTest {
     @Test
     void Should_Create_Any_Instance() {
         // given
-        final ObjectGenerator objectGenerator = makeObjectGenerator(abstractFieldValueChanger, constructorParameters);
+        final ObjectGenerator objectGenerator = makeObjectGenerator(abstractFieldValueChanger);
         final Class<?> expectedClass = GoodPojo_Equals_HashCode_ToString.class;
 
         // when
@@ -105,8 +100,7 @@ class ObjectGeneratorFastTest {
     private Executable Should_Create_Same_Instance(final Object objectToCreateSameInstance) {
         return () -> {
             // given
-            final ObjectGenerator objectGenerator = makeObjectGenerator(abstractFieldValueChanger,
-                                                                        constructorParameters);
+            final ObjectGenerator objectGenerator = makeObjectGenerator(abstractFieldValueChanger);
 
             // when
             final Object result = objectGenerator.generateSameInstance(objectToCreateSameInstance);
@@ -150,8 +144,7 @@ class ObjectGeneratorFastTest {
     private Executable Should_Generate_Different_Objects(final DifferentObjectTestCase testCase) {
         return () -> {
             // given
-            final ObjectGenerator objectGenerator = makeObjectGenerator(abstractFieldValueChanger,
-                                                                        constructorParameters);
+            final ObjectGenerator objectGenerator = makeObjectGenerator(abstractFieldValueChanger);
             final ClassAndFieldPredicatePair classAndFieldPredicatePair = new ClassAndFieldPredicatePair(testCase.clazz);
 
             // when
@@ -189,8 +182,7 @@ class ObjectGeneratorFastTest {
     public Executable Should_Generate_Different_Objects_Recursively(final RecursivelyDifferentObjectTestCase testCase) {
         return () -> {
             // given
-            final ObjectGenerator objectGenerator = makeObjectGenerator(abstractFieldValueChanger,
-                                                                        constructorParameters);
+            final ObjectGenerator objectGenerator = makeObjectGenerator(abstractFieldValueChanger);
 
             // when
             final List<Object> result = objectGenerator.generateDifferentObjects(testCase.baseClass,
@@ -205,7 +197,7 @@ class ObjectGeneratorFastTest {
     @Test
     void Should_Not_Fall_In_Endless_Loop() {
         // given
-        final ObjectGenerator objectGenerator = makeObjectGenerator(abstractFieldValueChanger, constructorParameters);
+        final ObjectGenerator objectGenerator = makeObjectGenerator(abstractFieldValueChanger);
         final ClassAndFieldPredicatePair iClass = new ClassAndFieldPredicatePair(R.class);
         final int expectedSize = 2;
 

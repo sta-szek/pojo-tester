@@ -1,17 +1,13 @@
 package pl.pojo.tester.internal.instantiator;
 
-import org.apache.commons.collections4.MultiValuedMap;
-import pl.pojo.tester.api.ConstructorParameters;
-
 import java.lang.reflect.Array;
 
-class ArrayInstantiator extends AbstractObjectInstantiator {
+class ArrayInstantiator extends AbstractInternalInstantiator {
 
     private static final int DEFAULT_ARRAY_LENGTH = 0;
 
-    ArrayInstantiator(final Class<?> clazz,
-                      final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
-        super(clazz, constructorParameters);
+    ArrayInstantiator(final Class<?> clazz) {
+        super(clazz);
     }
 
     @Override

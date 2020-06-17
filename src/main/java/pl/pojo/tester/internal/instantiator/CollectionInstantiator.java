@@ -1,9 +1,6 @@
 package pl.pojo.tester.internal.instantiator;
 
 
-import org.apache.commons.collections4.MultiValuedMap;
-import pl.pojo.tester.api.ConstructorParameters;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Deque;
@@ -28,7 +25,7 @@ import java.util.TreeSet;
 import java.util.Vector;
 import java.util.stream.Stream;
 
-class CollectionInstantiator extends AbstractObjectInstantiator {
+class CollectionInstantiator extends AbstractInternalInstantiator {
     private static final Map<Class<?>, Object> PREPARED_OBJECTS = new LinkedHashMap<>();
 
     static {
@@ -58,9 +55,8 @@ class CollectionInstantiator extends AbstractObjectInstantiator {
         PREPARED_OBJECTS.put(Iterable.class, new ArrayList<>());
     }
 
-    CollectionInstantiator(final Class<?> clazz,
-                           final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
-        super(clazz, constructorParameters);
+    CollectionInstantiator(final Class<?> clazz) {
+        super(clazz);
     }
 
     @Override
