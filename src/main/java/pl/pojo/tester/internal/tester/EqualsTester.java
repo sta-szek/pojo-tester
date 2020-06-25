@@ -46,6 +46,8 @@ public class EqualsTester extends AbstractTester {
     private void shouldEqualDifferentInstance(final Object object) {
         final Object otherObject = objectGenerator.generateSameInstance(object);
         testAssertions.assertThatEqualsMethodFor(object)
+                      .isEqualTo(otherObject);
+        testAssertions.assertThatEqualsMethodFor(object)
                       .isSymmetric(otherObject);
     }
 
