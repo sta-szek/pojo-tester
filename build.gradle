@@ -224,6 +224,10 @@ javadoc {
 
 jar {
     manifest.attributes(createManifestAttributes())
+
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }
 
 def createManifestAttributes() {
