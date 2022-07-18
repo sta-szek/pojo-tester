@@ -1,7 +1,5 @@
-Java framework for testing POJOs
+Java library for testing POJOs
 ===
-[![Download](https://api.bintray.com/packages/obsidiandynamics/pojo-tester/pojo-tester/images/download.svg) ](https://bintray.com/obsidiandynamics/pojo-tester/pojo-tester/_latestVersion)
+`pojo-tester` is a Java POJO testing library, which makes your POJO tests much easier. You can test objects against `equals`, `hashCode`, `toString`, getters, setters and constructors.
 
-`POJO-TESTER` is a Java testing library, which makes your `pojo-tests` much easier. You can test your `pojo` against `equals`, `hashCode`, `toString`, `getters`, `setters` and `constructors`.
-
-Get more information at the [pojo-tester documentation site](http://pojo.pl)
+This is a fork of the now defunct [pojo-tester](https://github.com/sta-szek/pojo-tester) project, by Piotr Joński.
