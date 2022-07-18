@@ -1,8 +1,20 @@
-buildscript {
+plugins {
+    id 'io.github.gradle-nexus.publish-plugin' version '1.1.0'
+}
+
+nexusPublishing {
     repositories {
-        mavenCentral()
+        sonatype {
+            nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
+            snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
+            username = findProperty('sonatype.username')
+            password = findProperty('sonatype.password')
+        }
     }
 }
+
+group 'com.obsidiandynamics.pojotester'
+version '0.9.0'
 
 ext {
     JUNIT_JUPITER_VERSION = "5.4.0"
@@ -45,4 +57,56 @@ dependencies {
     testImplementation("org.apiguardian:apiguardian-api:1.0.0")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:${JUNIT_JUPITER_VERSION}") { changing = true }
     testImplementation("org.slf4j:slf4j-nop:1.7.26")
+}
+
+//TODO reinstate
+//test {
+//    useJUnitPlatform()
+//}
+
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
+
+//TODO remove when Javadoc errors have been resolved
+javadoc.options.addStringOption('Xdoclint:none', '-quiet')
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+signing {
+    sign publishing.publications
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = 'core'
+            from components.java
+            pom {
+                name = 'pojo-tester'
+                description = 'POJO testing library'
+                url = 'https://github.com/obsidiandynamics/pojo-tester'
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'https://opensource.org/licenses/MIT'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'ekoutanov'
+                        name = 'Emil Koutanov'
+                        email = 'ekoutanov@gmail.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/obsidiandynamics/pojo-tester.git'
+                    developerConnection = 'scm:git:ssh://github.com/obsidiandynamics/pojo-tester.git'
+                    url = 'https://github.com/obsidiandynamics/pojo-tester'
+                }
+            }
+        }
+    }
 }
