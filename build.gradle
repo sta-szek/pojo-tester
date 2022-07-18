@@ -14,7 +14,7 @@ nexusPublishing {
 }
 
 group 'com.obsidiandynamics.pojotester'
-version '0.9.0'
+version '0.10.0-SNAPSHOT'
 
 ext {
     JUNIT_JUPITER_VERSION = "5.4.0"
