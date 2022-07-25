@@ -1,0 +1,6 @@
+extraction:
+  java:
+    index:
+      java_version: "9"
+queries:
+  - include: "*"
