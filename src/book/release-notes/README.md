@@ -1,6 +1,15 @@
 # Release Notes
 
-Download latest version [ ![Download](https://api.bintray.com/packages/sta-szek/maven/pojo-tester/images/download.svg) ](https://bintray.com/sta-szek/maven/pojo-tester/_latestVersion)
+## Release version 0.9.0 {#release-090}
+
+### Features
+* Fork of the project from [github.com/sta-szek/pojo-tester](https://github.com/sta-szek/pojo-tester).
+
+### Others
+\-
+
+
+---
 
 ## Release version 0.7.6 {#release-076}
 

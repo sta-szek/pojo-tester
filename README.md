@@ -49,6 +49,8 @@ dependencies {
     * [Coverage src/book/comparison](src/book/comparison/README.md#coverage-src/book/comparison)
     * [Conclusions](src/book/comparison/README.md#conclusions)
 * [Release Notes](src/book/release-notes/README.md)
+    * [Release 0.9.0](src/book/release-notes/README.md#release-090)
+    * Release 0.8.0 — skipped
     * [Release 0.7.6](src/book/release-notes/README.md#release-076)
     * [Release 0.7.5](src/book/release-notes/README.md#release-075)
     * [Release 0.7.4](src/book/release-notes/README.md#release-074)
