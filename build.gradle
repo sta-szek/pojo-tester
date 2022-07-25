@@ -64,7 +64,6 @@ dependencies {
     testImplementation("org.slf4j:slf4j-nop:1.7.26")
 }
 
-//TODO reinstate
 test {
     useJUnitPlatform()
     jvmArgs += baseJvmArgs
@@ -79,6 +78,25 @@ javadoc.options.addStringOption('Xdoclint:none', '-quiet')
 java {
     withJavadocJar()
     withSourcesJar()
+}
+
+jacoco {
+    toolVersion = "0.8.8"
+}
+
+jacocoTestReport {
+    additionalSourceDirs.from = files(sourceSets.main.allSource.srcDirs)
+    sourceDirectories.from = files(sourceSets.main.allSource.srcDirs)
+    classDirectories.from = files(sourceSets.main.output)
+    reports {
+        html.required = true
+        xml.required = true
+        csv.required = false
+    }
+}
+
+jar {
+    finalizedBy jacocoTestReport
 }
 
 signing {
