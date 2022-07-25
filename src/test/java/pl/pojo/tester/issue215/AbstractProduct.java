@@ -11,11 +11,9 @@ public abstract class AbstractProduct implements Taxable {
     @NonNull
     private String name;
 
-    @NonNull
-    private double prixHT;
+    private final double prixHT;
 
-    @NonNull
-    private boolean imported;
+    private final boolean imported;
 
     @Setter
     private double prixTTC;

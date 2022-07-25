@@ -14,6 +14,7 @@ nexusPublishing {
 }
 
 def baseJvmArgs = [
+    "--add-opens=java.base/java.time=ALL-UNNAMED",
     "--add-opens=java.base/java.util.function=ALL-UNNAMED",
 ]
 
