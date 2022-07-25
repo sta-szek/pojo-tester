@@ -13,6 +13,10 @@ nexusPublishing {
     }
 }
 
+def baseJvmArgs = [
+    "--add-opens=java.base/java.util.function=ALL-UNNAMED",
+]
+
 group 'com.obsidiandynamics.pojotester'
 version '0.10.0-SNAPSHOT'
 
@@ -60,9 +64,10 @@ dependencies {
 }
 
 //TODO reinstate
-//test {
-//    useJUnitPlatform()
-//}
+test {
+    useJUnitPlatform()
+    jvmArgs += baseJvmArgs
+}
 
 apply plugin: 'maven-publish'
 apply plugin: 'signing'
