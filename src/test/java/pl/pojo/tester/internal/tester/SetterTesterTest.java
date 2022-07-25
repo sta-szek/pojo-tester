@@ -75,7 +75,7 @@ class SetterTesterTest {
         private int a;
         private int b;
         private int c;
-        private int d;
+        private int d = 0;
 
         public void setA(final int a) {
             this.a = a;
@@ -96,7 +96,7 @@ class SetterTesterTest {
         private int a;
         private int b;
         private int c;
-        private int d;
+        private final int d = 0;
 
     }
 
