@@ -1,4 +1,4 @@
-#Writing tests
+# Writing tests
 Writing `pojo-methods` tests was never so easy. Using `POJO-TESTER` you just have to declare what class or classes you want to test and pass it to magic `pojo-assertions`. That's all!
 
 ##### Features
@@ -14,11 +14,11 @@ Writing `pojo-methods` tests was never so easy. Using `POJO-TESTER` you just hav
 ##### Known limitations
 - Custom class creator (using your constructor and parameters) does not work with abstract classes
 
-
 ## Basic pojo test {#basic-test}
 
 ### Basic tests for Pojo class
 The simplest pojo test may look like this:
+
 ```java
 import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
 
@@ -36,10 +36,11 @@ public void Should_Pass_All_Pojo_Tests() {
 
 It will test a `Pojo` class against `equals`, `hashCode`, `toString`, `getters` and `setters` which is a default test.
 
-If your `pojo-methods` are well implemented the test will pass. Otherwise exception will be thrown.
+If your `pojo-methods` are well implemented the test will pass. Otherwise, exception will be thrown.
 
 ### Testing with AssertJ catchThrowable()
-If you would rather have strict `given-when-then` convention, you can use [AssertJ](http://joel-costigliola.github.io/assertj/) and test may look a little bit better.
+If you would rather have strict `given-when-then` convention, you can use [AssertJ](http://joel-costigliola.github.io/assertj/) and test may look a bit better.
+
 ```java
 import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
 
@@ -55,10 +56,11 @@ public void Should_Pass_All_Pojo_Tests() {
     assertThat(result).isNull();
 }
 ```
-But remember, with this solution you will not get precise exception message and you may not know why your `pojo-methods` are not well implemented.
+But remember, with this solution you will not get precise exception message, and you may not know why your `pojo-methods` are not well implemented.
 
 ### Testing by class name
 If your class is not public, you cannot access it. Solution for this problem is testing classes via their names:
+
 ```java
 import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
 
@@ -76,7 +78,8 @@ public void Should_Pass_All_Pojo_Tests_When_Testing_By_Name() {
 When testing by class name you need to pass fully qualified class name.
 
 ### Testing with `ClassAndFieldPredicatePair`
-You can pair classes and fields that should be tested in a given class in `ClassAndFieldPredicatePair`. This objects is just a facilitation to you:
+You can pair classes and fields that should be tested in a given class in `ClassAndFieldPredicatePair`.
+
 ```java
 import pl.pojo.tester.api.ClassAndFieldPredicatePair;
 import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
@@ -99,6 +102,7 @@ The code above tests `pojo-methods` in the `org.pojo.playground.Pojo` class only
 By default `Assertions::assertPojoMethodsFor` performs tests on a given object with changed field values. It uses field value changers to do that (see [fields values changer](#configure-fvc)). When it encounters a field that cannot be changed (e.g. `CustomPojo` type), it will create a new instance of that type and not perform any changes in this instance. If you want `POJO-TESTER` to recursively change values of such a field, you have to pass all classes with their field predicates.
 
 For classes:
+
 ```java
 class Pojo {
     private CustomPojo customPojo;
@@ -110,6 +114,7 @@ class CustomPojo {
 ```
 
 you have to define test as follows:
+
 ```java
 @Test
 public void Should_Pass_All_Pojo_Tests_Changing_Fields_Recursively() {
@@ -156,7 +161,7 @@ public void Should_Pass_All_Pojo_Tests_Using_All_Testers() {
 
 ## Set fields for testing {#choosing-fields}
 
-Next step is `excluding` or `including` fields which should be tested. By default all the fields are tested.
+Next step is `excluding` or `including` fields which should be tested. By default, all the fields are tested.
 
 You can include or exclude fields using `pl.pojo.tester.api.FieldPredicate` which creates Java 8 `Predicate` that accepts given field names.
 
@@ -196,7 +201,7 @@ public void Should_Pass_All_Pojo_Tests_Including_Specified_Fields() {
 }
 ```
 
-### Exclude spcified fields
+### Exclude specified fields
 
 ```java
 import static pl.pojo.tester.api.FieldPredicate.exclude;
@@ -240,15 +245,15 @@ public void Should_Pass_All_Pojo_Tests_Using_Custom_Fields_Values_Changer() {
 To define your own `fields values changer` you have to extend `pl.pojo.tester.internal.field.AbstractFieldValueChanger` class.
 
 `AbstractFieldValueChanger` defines two methods that you have to override:
-* `boolean canChange(final Class<?> type)` - this methods should perform compatibility checks e.g. if class is equal to your changer type `T`. If you decide that value cannot be changed, no further steps are taken. Methods `areDifferentValues` and `increaseValue` are not invoked.
+* `boolean canChange(final Class<?> type)` - this method should perform compatibility checks; e.g., if class is equal to your changer type `T`. If you decide that value cannot be changed, no further steps are taken. Methods `areDifferentValues` and `increaseValue` are not invoked.
 * `T increaseValue(T value, final Class<?> type)` - this method should change given `value` and return new one. `type` is given as little help, when your field type is e.g. interface and the value is its implementation.
 
 Custom fields values changer may look like this:
+
 ```java
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 
 public class CustomFieldsValuesChanger extends AbstractFieldValueChanger<String> {
-
     @Override
     protected boolean canChange(final Class<?> type) {
         return type.equals(String.class);
@@ -276,7 +281,8 @@ final AbstractFieldValueChanger valueChanger = DefaultFieldValueChanger.INSTANCE
 
 ### Default fields values changer
 Default field value changer (`DefaultFieldValueChanger.INSTANCE`) is a composition of listed changers:
-######Collections
+
+###### Collections
 * `ArrayListValueChanger`
 * `DequeValueChanger`
 * `HashSetValueChanger`
@@ -300,7 +306,7 @@ Default field value changer (`DefaultFieldValueChanger.INSTANCE`) is a compositi
 * `ArrayValueChanger`
 * `StreamValueChanger`
 
-######Date and time
+###### Date and time
 * `DateFieldValueChanger`
 * `InstantFieldValueChanger`
 * `LocalDateFieldValueChanger`
@@ -309,11 +315,11 @@ Default field value changer (`DefaultFieldValueChanger.INSTANCE`) is a compositi
 * `SqlDateFieldValueChanger`
 * `ZonedDateTimeFieldValueChanger`
 
-######Math
+###### Math
 * `BigDecimalValueChanger`
 * `BigIntegerValueChanger`
 
-######Primitives and wrappers
+###### Primitives and wrappers
 * `BooleanValueChanger`
 * `ByteValueChanger`
 * `CharacterValueChanger`
@@ -323,7 +329,7 @@ Default field value changer (`DefaultFieldValueChanger.INSTANCE`) is a compositi
 * `LongValueChanger`
 * `ShortValueChanger`
 
-######Others
+###### Others
 * `EnumValueChanger`
 * `StringValueChanger`
 * `UUIDValueChanger`
@@ -332,11 +338,13 @@ Default field value changer (`DefaultFieldValueChanger.INSTANCE`) is a compositi
 Sometimes you want to choose which constructor is used to instantiate your class or what parameters are passed. Common example is when constructor validates parameters and throws exceptions.
 
 To indicate what constructor to choose, `POJO-TESTER` needs to know three things:
+
 * a class, which constructor will be chosen
 * constructor's parameters types
 * constructor's parameters
 
 And again, defining this in `POJO-TESTER` is a piece of cake:
+
 ```java
 import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
 
@@ -355,7 +363,8 @@ public void Should_Pass_All_Pojo_Tests() {
 }
 ```
 
-Here `POJO-TESTER` provides additional class, which groups constructor's parameters types and constructor parameters:
+Here `POJO-TESTER` provides additional class, which groups constructor's parameter types and constructor parameters:
+
 ```java
 import pl.pojo.tester.api.ConstructorParameters;
 import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
@@ -376,8 +385,9 @@ public void Should_Pass_All_Pojo_Tests() {
 }
 ```
 
-## Bulk pojos testing {#bulk-testing}
-Sometimes you want to test all pojos in one test, e.g. testing `toString` method. `POJO-TESTER` has feature for testing multiple classes. In order to do that, you have to use `Assertions::assertPojoMethodsForAll` instead of `Assertions::assertPojoMethodsFor` method:
+## Bulk POJO testing {#bulk-testing}
+
+Sometimes you want to test all POJOs in one test, e.g. testing `toString` method. `POJO-TESTER` has features for testing multiple classes. In order to do that, you have to use `Assertions::assertPojoMethodsForAll` instead of `Assertions::assertPojoMethodsFor` method:
 ```java
 import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsForAll;
 
@@ -392,22 +402,24 @@ public void Should_Pass_All_Pojo_Tests_For_All_Classes() {
     assertPojoMethodsForAll(classUnderTest, classUnderTest, classUnderTest, classUnderTest).areWellImplemented();
 }
 ```
-Method `assertPojoMethodsForAll` works a little bit differently than `assertPojoMethodsFor`.
+Method `assertPojoMethodsForAll` works a bit differently to `assertPojoMethodsFor`.
 This method test all classes. If it encounters field of type from given classes, it will create an instance of that class and change its value recursively.
 
 Imagine you are testing two classes, `A` and `B`. Class `A` has a field of type `B`. When you pass those classes to the `POJO-TESTER`, it will create instance of `B` class, change its value generating different objects, and finally will set all those objects into class `A`.
 
 
 ## If testing time grows... {#testing-time}
-... then you can use switch which will generate less objects to tests.
+... then you can use switch which will generate fewer objects to test.
 It may cause lower code coverage.
 
 Usage:
-```
+
+```java
  assertPojoMethodsFor(classUnderTest).quickly()
                                      .areWellImplemented();
 ```
-By default it will perform full tests - with much more generated objects than using `AbstractAssertion#quickly` method.
+
+By default, it will perform full tests - with much more generated objects compared to using `AbstractAssertion#quickly` method.
 
 For more details see [#201](https://github.com/sta-szek/pojo-tester/issues/201)
 
@@ -418,9 +430,9 @@ If you think that `pojo-tester` has a bug, just switch logging level to `DEBUG` 
 
 ### Switching to debug level
 
-E.g. log4j.properties file:
+E.g., `log4j.properties` file:
 
-```log4j.properties
+```properties
 # Root logger option
 log4j.rootLogger=DEBUG, stdout
 # Direct log messages to stdout
@@ -430,13 +442,14 @@ log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
 log4j.appender.stdout.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss} %-5p - %m%n
 ```
 
-Place it in test resources directory:
+Place it in the `src/test/resources` directory:
 
 ![](log4jproperties.png)
 
-### Log analyses
+### Log analysis
 
 List of field value changers:
+
 ```
 (...) Attaching pl.pojo.tester.internal.field.primitive.ByteValueChangerto pl.pojo.tester.internal.field.primitive.BooleanValueChanger
 (...) Attaching pl.pojo.tester.internal.field.primitive.CharacterValueChangerto pl.pojo.tester.internal.field.primitive.ByteValueChanger
@@ -446,17 +459,20 @@ List of field value changers:
 ```
 
 Testers that were used:
+
 ```
 (...) Testers: [EqualsTester, ToStringTester, GetterTester, HashCodeTester, SetterTester, ConstructorTester]
 ```
 
 Changing field value:
+
 ```
 (...) Changing value of type class java.lang.String from 'www.pojo.pl' to 'www.pojo.pl++increased' (pl.pojo.tester.internal.field.StringValueChanger@21a947fe)
 (...) Changing value of type int from '1' to '2' (pl.pojo.tester.internal.field.primitive.IntegerValueChanger@69a10787)
 ```
 
 Generating objects:
+
 ```
 (..1) Classes: [pl.pojo.tester.model.Pojo2(a,b,c,pojo,pojo3), pl.pojo.tester.model.Pojo(a,b,c), pl.pojo.tester.model.Pojo3(a,b,c,pojo)]
 (..2) Start of generating different objects for base class pl.pojo.tester.model.Pojo2(a,b,c,pojo,pojo3). Base object is Pojo2(a=0, b=0, c=0, pojo=null, pojo3=null) -- others will be cloned from this one

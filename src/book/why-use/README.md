@@ -177,7 +177,7 @@ Would you maintain all the broken tests?
 
 Not really, just use `POJO-TESTER`
 
-## <a id="avoid-boiler-plate-code">Don't write boiler plate tests</a>
+## Don't write boilerplate tests {#avoid-boiler-plate-code}
 Ok, lets assume you write `pojo-methods` tests by yourself. You even maintain your implementation-depending tests (really wrong tests).
 
 How about `getters`, `setters` and `toString` tests? Will you write them all again? Really?

@@ -32,7 +32,7 @@ dependencies {
     * [Improve your coverage](src/book/why-use/README.md#improve-coverage)
     * [Be resistant to bugs](src/book/why-use/README.md#resistant-bugs)
     * [Be resistant to changes](src/book/why-use/README.md#resistant-changes)
-    * [Avoid boiler-plate tests](src/book/why-use/README.md#avoid-boiler-plate-code)
+    * [Avoid boilerplate tests](src/book/why-use/README.md#avoid-boiler-plate-code)
 * [Writing Tests](src/book/writing-tests/README.md)
     * [Basic pojo test](src/book/writing-tests/README.md#basic-test)
     * [Choose kind of tests](src/book/writing-tests/README.md#choosing-testers)
