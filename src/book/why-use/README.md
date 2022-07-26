@@ -1,9 +1,9 @@
 # Why Should I Use `POJO-TESTER`? {#why-use-it}
-There are numbers of reasons you should use it.
+There are several reasons you should use it.
 
 
 ## `POJO-TESTER` makes you more productive {#productivity}
-Before `POJO-TESTER` you had to write number of tests to check that you implemented your `pojo-methods` well. Let's see. 
+Before `POJO-TESTER`, you had to write number of tests to check that you implemented your `pojo-methods` well. Let's see. 
 
 For simple `Pojo` class:
 ```java
@@ -133,9 +133,11 @@ Not really, just use `POJO-TESTER`
 In example above, you made it! You wrote 8 tedious tests! Or just copied them from another test class and changed the class name. You changed it, didn't you?
 
 But still, this gives you coverage at low level.
+
 ![](coverage-without-pojo.png)
 
 `POJO-TESTER` gives you **100% coverage**!
+
 ![](coverage-with-pojo-tester.png)
 
 Will you improve your coverage with hand-written tests?
@@ -166,7 +168,7 @@ All tests will pass, because you didn't write your tests for all the fields (of 
 
 Do you want to be responsible for it?
 
-Not really, just use `POJO-TESTER`
+Not really, just use `POJO-TESTER`.
 
 ## Be resistant to changes {#resistant-changes}
 Yeah, we don't forget to write an additional test for each extra field. But what happens if you have to remove fields, getters or setters?
@@ -175,15 +177,14 @@ Would you maintain all the broken tests?
 
 Not really, just use `POJO-TESTER`
 
-## Don't write boiler plate tests {#avoid-boiler-plate-code}
+## <a id="avoid-boiler-plate-code"/> Don't write boiler plate tests
 Ok, lets assume you write `pojo-methods` tests by yourself. You even maintain your implementation-depending tests (really wrong tests).
 
 How about `getters`, `setters` and `toString` tests? Will you write them all again? Really?
 
 Do you still want to be copy-pasting all `pojo-methods` tests?
 
-
-No matter how much fields you have, no matter if you write `pojo-methods` for your own or generate them. With `POJO-TESTER` you will have **100% coverage**!
+No matter how many fields you have, no matter if you write `pojo-methods` for your own or generate them. With `POJO-TESTER` you will have **100% coverage**!
 
 Just use `POJO-TESTER`:
 
