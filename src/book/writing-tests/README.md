@@ -7,7 +7,7 @@ Writing `pojo-methods` tests was never so easy. Using `POJO-TESTER` you just hav
 - Test `toString`
 - Test `constructor` - including private and non-default (with arguments)
 - Custom fields value changer
-- Custom class creator (using your constructor and parameters)
+- Custom class creator (using your constructor and parameters, or a supplier)
 - Test whole package at once
 - Include / exclude fields from testing
 
@@ -373,6 +373,32 @@ public void Should_Pass_All_Pojo_Tests() {
     // then
     assertPojoMethodsFor(qualifiedClassName).create(qualifiedClassName, constructorParameters)
                                             .areWellImplemented();
+}
+```
+
+## Create class using a supplier {#supplier}
+
+A constructor that validates its arguments, or a class that should be built with a builder, cannot be created from generated values. Pass a supplier. It is used for that class only in this assertion, and it must return a new instance on every call.
+
+```java
+import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
+import static pl.pojo.tester.api.assertion.Method.EQUALS;
+import static pl.pojo.tester.api.assertion.Method.HASH_CODE;
+
+@Test
+public void Should_Pass_When_Dependency_Rejects_Generated_Values() {
+    assertPojoMethodsFor(Order.class)
+            .create(Code.class, () -> new Code("accepted"))
+            .testing(EQUALS, HASH_CODE)
+            .areWellImplemented();
+}
+
+@Test
+public void Should_Pass_When_Class_Is_Created_By_A_Builder() {
+    assertPojoMethodsFor(Person.class)
+            .create(Person.class, () -> Person.builder().name("Ada").build())
+            .testing(EQUALS, HASH_CODE)
+            .areWellImplemented();
 }
 ```
 

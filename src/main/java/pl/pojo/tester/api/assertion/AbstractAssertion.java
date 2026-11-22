@@ -14,7 +14,10 @@ import pl.pojo.tester.internal.utils.ClassLoader;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Set;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static pl.pojo.tester.internal.preconditions.ParameterPreconditions.checkNotBlank;
@@ -41,6 +44,7 @@ public abstract class AbstractAssertion {
     }
 
     private final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters = new ArrayListValuedHashMap<>();
+    private final Map<Class<?>, Supplier<?>> instantiators = new LinkedHashMap<>();
     Set<AbstractTester> testers = new HashSet<>();
     private AbstractFieldValueChanger abstractFieldValueChanger;
     private Permutator permutator = new ThoroughFieldPermutator();
@@ -125,6 +129,7 @@ public abstract class AbstractAssertion {
 
         testers.forEach(tester -> tester.setPermutator(permutator));
         testers.forEach(tester -> tester.setUserDefinedConstructors(constructorParameters));
+        testers.forEach(tester -> tester.setUserDefinedInstantiators(instantiators));
 
         runAssertions();
     }
@@ -203,6 +208,23 @@ public abstract class AbstractAssertion {
         checkNotNull("constructorParameters", constructorParameters);
 
         this.constructorParameters.put(clazz, constructorParameters);
+        return this;
+    }
+
+    /**
+     * Instantiates {@code clazz} with {@code supplier} instead of the built-in instantiators.
+     * The supplier must return a new instance on every call. Use this for builders and for
+     * constructors that reject the values the library would otherwise generate.
+     *
+     * @param clazz    class to instantiate
+     * @param supplier creates instances of {@code clazz}
+     * @return itself
+     */
+    public AbstractAssertion create(final Class<?> clazz, final Supplier<?> supplier) {
+        checkNotNull("clazz", clazz);
+        checkNotNull("supplier", supplier);
+
+        this.instantiators.put(clazz, supplier);
         return this;
     }
 

@@ -15,8 +15,11 @@ import pl.pojo.tester.internal.utils.Permutator;
 import pl.pojo.tester.internal.utils.ThoroughFieldPermutator;
 
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 
 public abstract class AbstractTester {
@@ -26,13 +29,15 @@ public abstract class AbstractTester {
     private MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters = new ArrayListValuedHashMap<>();
     private AbstractFieldValueChanger fieldValuesChanger = DefaultFieldValueChanger.INSTANCE;
     private Permutator permutator = new ThoroughFieldPermutator();
+    private Map<Class<?>, Supplier<?>> instantiators = new LinkedHashMap<>();
 
     public AbstractTester() {
         this(DefaultFieldValueChanger.INSTANCE);
     }
 
     public AbstractTester(final AbstractFieldValueChanger abstractFieldValueChanger) {
-        objectGenerator = new ObjectGenerator(abstractFieldValueChanger, constructorParameters, permutator);
+        this.fieldValuesChanger = abstractFieldValueChanger;
+        objectGenerator = recreateObjectGenerator();
     }
 
     public void test(final Class<?> clazz) {
@@ -64,12 +69,21 @@ public abstract class AbstractTester {
 
     public void setFieldValuesChanger(final AbstractFieldValueChanger fieldValuesChanger) {
         this.fieldValuesChanger = fieldValuesChanger;
-        objectGenerator = new ObjectGenerator(fieldValuesChanger, constructorParameters, permutator);
+        objectGenerator = recreateObjectGenerator();
     }
 
     public void setUserDefinedConstructors(final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
         this.constructorParameters = constructorParameters;
-        objectGenerator = new ObjectGenerator(fieldValuesChanger, constructorParameters, permutator);
+        objectGenerator = recreateObjectGenerator();
+    }
+
+    public void setUserDefinedInstantiators(final Map<Class<?>, Supplier<?>> instantiators) {
+        this.instantiators = instantiators == null ? new LinkedHashMap<>() : instantiators;
+        objectGenerator = recreateObjectGenerator();
+    }
+
+    private ObjectGenerator recreateObjectGenerator() {
+        return new ObjectGenerator(fieldValuesChanger, constructorParameters, permutator, instantiators);
     }
 
     @Override
