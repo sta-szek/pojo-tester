@@ -27,6 +27,7 @@
   * [Coverage comparison](comparison/README.md#coverage-comparison)
   * [Conclusions](comparison/README.md#conclusions)
 * [Contributors](contributors/README.md)
+* [Fork survey](forks/README.md)
 * [Release Notes](release-notes/README.md)
   * [Release 0.7.6](release-notes/README.md#release-076)
   * [Release 0.7.5](release-notes/README.md#release-075)

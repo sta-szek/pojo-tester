@@ -15,7 +15,7 @@ The project was paused in 2020. It is being brought back so the same Java 8 byte
 | Maven Central | last published release is `0.7.6` (2017). Snapshots publish after CI on `master`. Releases publish from a `vX.Y.Z` tag. |
 | Version in this branch | `0.8.0-SNAPSHOT` |
 
-Documentation site: [pojo.pl](http://pojo.pl) (may be stale).
+Documentation site: [pojo.pl](http://pojo.pl) (may be stale). The user guide in this repository has a [fork survey](src/book/forks/README.md) (23 November 2026). No fork should be merged back as a whole.
 
 ## Build
 
