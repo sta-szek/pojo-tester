@@ -12,12 +12,14 @@ import pl.pojo.tester.internal.utils.Permutator;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -29,16 +31,32 @@ public class ObjectGenerator {
     private final AbstractFieldValueChanger abstractFieldValueChanger;
     private final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters;
     private final Permutator permutator;
+    private final Map<Class<?>, Supplier<?>> instantiators;
 
     public ObjectGenerator(final AbstractFieldValueChanger abstractFieldValueChanger,
                            final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters,
                            final Permutator permutator) {
+        this(abstractFieldValueChanger, constructorParameters, permutator, Collections.emptyMap());
+    }
+
+    public ObjectGenerator(final AbstractFieldValueChanger abstractFieldValueChanger,
+                           final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters,
+                           final Permutator permutator,
+                           final Map<Class<?>, Supplier<?>> instantiators) {
         this.abstractFieldValueChanger = abstractFieldValueChanger;
         this.constructorParameters = constructorParameters;
         this.permutator = permutator;
+        this.instantiators = instantiators == null ? Collections.emptyMap() : instantiators;
     }
 
     public Object createNewInstance(final Class<?> clazz) {
+        if (InstantiatorSuppliers.isActive()) {
+            return newInstance(clazz);
+        }
+        return InstantiatorSuppliers.call(instantiators, () -> newInstance(clazz));
+    }
+
+    private Object newInstance(final Class<?> clazz) {
         return Instantiable.forClass(clazz, constructorParameters)
                            .instantiate();
     }

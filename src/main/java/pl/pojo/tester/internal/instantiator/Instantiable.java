@@ -8,6 +8,7 @@ import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Supplier;
 
 import static pl.pojo.tester.internal.instantiator.Instantiator.snapshot;
 
@@ -26,6 +27,10 @@ public final class Instantiable {
 
     static AbstractObjectInstantiator forClass(final Class<?> clazz,
                                                final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
+        final Supplier<?> supplier = InstantiatorSuppliers.forClass(clazz);
+        if (supplier != null) {
+            return new SupplierInstantiator(clazz, constructorParameters, supplier);
+        }
         return instantiateInstantiators(clazz, constructorParameters).stream()
                                                                      .filter(AbstractObjectInstantiator::canInstantiate)
                                                                      .findFirst()
