@@ -1,7 +1,9 @@
 package pl.pojo.tester.internal.assertion.tostring;
 
 
-import org.apache.commons.lang3.ObjectUtils;
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.Objects;
 
 public class ToStringAssertions {
 
@@ -31,8 +33,21 @@ public class ToStringAssertions {
     }
 
     private String getStringOf(final Object value) {
-        final Object notNullObject = ObjectUtils.defaultIfNull(value, "");
-        return notNullObject.toString();
+        if (Objects.isNull(value)) {
+            return "";
+        }
+        if (!value.getClass().isArray()) {
+            return value.toString();
+        }
+        if (value instanceof Object[]) {
+            return Arrays.toString((Object[]) value);
+        }
+        final int length = Array.getLength(value);
+        final Object[] boxed = new Object[length];
+        for (int i = 0; i < length; i++) {
+            boxed[i] = Array.get(value, i);
+        }
+        return Arrays.toString(boxed);
     }
 
 
