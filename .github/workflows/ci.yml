@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Java ${{ matrix.java }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        java: [8, 11, 17, 21, 25]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21 to run Gradle
+        id: gradle-java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Set up JDK ${{ matrix.java }} to run tests
+        id: test-java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: ${{ matrix.java }}
+
+      - name: Test on Java ${{ matrix.java }}
+        env:
+          JAVA_HOME: ${{ steps.gradle-java.outputs.path }}
+        run: ./gradlew test integrationTest --no-daemon --stacktrace -PtestJavaVersion=${{ matrix.java }} -Dorg.gradle.java.installations.paths=${{ steps.test-java.outputs.path }}:${{ steps.gradle-java.outputs.path }}
