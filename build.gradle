@@ -7,8 +7,6 @@ plugins {
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
-    withSourcesJar()
-    withJavadocJar()
 }
 
 repositories {
@@ -136,6 +134,11 @@ publishing {
                     developerConnection = 'scm:git:ssh://git@github.com/sta-szek/pojo-tester.git'
                 }
             }
+        }
+        scm {
+            url = 'https://github.com/sta-szek/pojo-tester'
+            connection = 'scm:git:https://github.com/sta-szek/pojo-tester.git'
+            developerConnection = 'scm:git:ssh://git@github.com/sta-szek/pojo-tester.git'
         }
     }
 }
