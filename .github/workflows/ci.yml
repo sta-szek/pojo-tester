@@ -35,4 +35,4 @@ jobs:
       - name: Test on Java ${{ matrix.java }}
         env:
           JAVA_HOME: ${{ steps.gradle-java.outputs.path }}
-        run: ./gradlew test integrationTest --no-daemon --stacktrace -PtestJavaVersion=${{ matrix.java }} -Dorg.gradle.java.installations.paths=${{ steps.test-java.outputs.path }}:${{ steps.gradle-java.outputs.path }}
+        run: ./gradlew build --no-daemon --stacktrace -PtestJavaVersion=${{ matrix.java }} -Dorg.gradle.java.installations.paths=${{ steps.test-java.outputs.path }}:${{ steps.gradle-java.outputs.path }}
