@@ -1,13 +1,11 @@
 plugins {
     id 'java-library'
-    id 'maven-publish'
+    id 'com.vanniktech.maven.publish' version '0.37.0'
 }
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
-    withSourcesJar()
-    withJavadocJar()
 }
 
 repositories {
@@ -91,33 +89,33 @@ tasks.named('integrationTest') {
     mustRunAfter tasks.named('test')
 }
 
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-            pom {
-                name = 'pojo-tester'
-                description = 'Java pojo-methods testing library.'
-                url = 'https://github.com/sta-szek/pojo-tester'
-                licenses {
-                    license {
-                        name = 'GNU Lesser General Public License version 3'
-                        url = 'https://opensource.org/licenses/lgpl-3.0.html'
-                    }
-                }
-                developers {
-                    developer {
-                        id = 'sta-szek'
-                        name = 'Piotr Joński'
-                        email = 'p.jonski@pojo.pl'
-                    }
-                }
-                scm {
-                    url = 'https://github.com/sta-szek/pojo-tester'
-                    connection = 'scm:git:https://github.com/sta-szek/pojo-tester.git'
-                    developerConnection = 'scm:git:ssh://git@github.com/sta-szek/pojo-tester.git'
-                }
+mavenPublishing {
+    publishToMavenCentral()
+    if (findProperty('signingInMemoryKey')) {
+        signAllPublications()
+    }
+    pom {
+        name = 'pojo-tester'
+        description = 'Java pojo-methods testing library.'
+        url = 'https://github.com/sta-szek/pojo-tester'
+        licenses {
+            license {
+                name = 'GNU Lesser General Public License version 3'
+                url = 'https://opensource.org/licenses/lgpl-3.0.html'
+                distribution = 'repo'
             }
+        }
+        developers {
+            developer {
+                id = 'sta-szek'
+                name = 'Piotr Joński'
+                email = 'p.jonski@pojo.pl'
+            }
+        }
+        scm {
+            url = 'https://github.com/sta-szek/pojo-tester'
+            connection = 'scm:git:https://github.com/sta-szek/pojo-tester.git'
+            developerConnection = 'scm:git:ssh://git@github.com/sta-szek/pojo-tester.git'
         }
     }
 }
