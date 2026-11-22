@@ -26,6 +26,7 @@ dependencies {
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.34'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.11.4'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.11.4'
+    testRuntimeOnly 'org.slf4j:slf4j-nop:1.7.36'
     testImplementation 'org.assertj:assertj-core:3.26.3'
     testImplementation 'org.powermock:powermock-reflect:2.0.9'
 
@@ -47,6 +48,7 @@ testing {
                 compileOnly 'org.projectlombok:lombok:1.18.34'
                 annotationProcessor 'org.projectlombok:lombok:1.18.34'
                 runtimeOnly 'org.junit.platform:junit-platform-launcher:1.11.4'
+                runtimeOnly 'org.slf4j:slf4j-nop:1.7.36'
             }
         }
     }
