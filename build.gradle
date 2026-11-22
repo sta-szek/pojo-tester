@@ -16,18 +16,18 @@ repositories {
 def testJavaVersion = (findProperty('testJavaVersion') ?: '8') as Integer
 
 dependencies {
-    api 'org.slf4j:slf4j-api:1.7.36'
-    implementation 'org.apache.commons:commons-lang3:3.14.0'
-    implementation 'org.apache.commons:commons-collections4:4.4'
-    implementation 'com.googlecode.combinatoricslib:combinatoricslib:2.1'
-    implementation 'org.javassist:javassist:3.30.2-GA'
+    api 'org.slf4j:slf4j-api:2.0.20'
+    implementation 'org.apache.commons:commons-lang3:3.22.0'
+    implementation 'org.apache.commons:commons-collections4:4.6.0'
+    implementation 'com.googlecode.combinatoricslib:combinatoricslib:2.3'
+    implementation 'org.javassist:javassist:3.33.0-GA'
 
-    testCompileOnly 'org.projectlombok:lombok:1.18.34'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.34'
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.11.4'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.11.4'
-    testRuntimeOnly 'org.slf4j:slf4j-nop:1.7.36'
-    testImplementation 'org.assertj:assertj-core:3.26.3'
+    testCompileOnly 'org.projectlombok:lombok:1.18.48'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.48'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.14.4'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.14.4'
+    testRuntimeOnly 'org.slf4j:slf4j-nop:2.0.20'
+    testImplementation 'org.assertj:assertj-core:3.27.7'
     testImplementation 'org.powermock:powermock-reflect:2.0.9'
 
     // Mockito 5 does not run on Java 8. Each CI job compiles tests against the version it executes.
@@ -41,14 +41,14 @@ dependencies {
 testing {
     suites {
         integrationTest(JvmTestSuite) {
-            useJUnitJupiter()
+            useJUnitJupiter('5.14.4')
             dependencies {
                 implementation project()
-                implementation 'org.apache.commons:commons-lang3:3.14.0'
-                compileOnly 'org.projectlombok:lombok:1.18.34'
-                annotationProcessor 'org.projectlombok:lombok:1.18.34'
-                runtimeOnly 'org.junit.platform:junit-platform-launcher:1.11.4'
-                runtimeOnly 'org.slf4j:slf4j-nop:1.7.36'
+                implementation 'org.apache.commons:commons-lang3:3.22.0'
+                compileOnly 'org.projectlombok:lombok:1.18.48'
+                annotationProcessor 'org.projectlombok:lombok:1.18.48'
+                runtimeOnly 'org.junit.platform:junit-platform-launcher:1.14.4'
+                runtimeOnly 'org.slf4j:slf4j-nop:2.0.20'
             }
         }
     }
@@ -94,8 +94,8 @@ tasks.named('integrationTest') {
 
 pitest {
     targetClasses = ['pl.pojo.tester.*']
-    pitestVersion = '1.19.4'
-    junit5PluginVersion = '1.2.2'
+    pitestVersion = '1.30.2'
+    junit5PluginVersion = '1.2.3'
     threads = 4
     timestampedReports = false
     outputFormats = ['XML', 'HTML']

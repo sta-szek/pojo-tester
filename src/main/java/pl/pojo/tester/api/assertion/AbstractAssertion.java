@@ -48,6 +48,7 @@ public abstract class AbstractAssertion {
     Set<AbstractTester> testers = new HashSet<>();
     private AbstractFieldValueChanger abstractFieldValueChanger;
     private Permutator permutator = new ThoroughFieldPermutator();
+    private boolean changeFinalFields;
 
     /**
      * Specifies what field values changer will be used for testing.
@@ -80,6 +81,19 @@ public abstract class AbstractAssertion {
      */
     public AbstractAssertion quickly() {
         this.permutator = new SublistFieldPermutator();
+        return this;
+    }
+
+    /**
+     * Also assigns new values to {@code final} fields when proving that {@code equals},
+     * {@code hashCode} and {@code toString} see them. Off by default: those fields keep the
+     * value they were constructed with. Turn this on only when the class under test has to be
+     * checked through a final field and the JDK can still change it.
+     *
+     * @return itself
+     */
+    public AbstractAssertion changingFinalFields() {
+        this.changeFinalFields = true;
         return this;
     }
 
@@ -129,6 +143,7 @@ public abstract class AbstractAssertion {
 
         testers.forEach(tester -> tester.setPermutator(permutator));
         testers.forEach(tester -> tester.setUserDefinedConstructors(constructorParameters));
+        testers.forEach(tester -> tester.setChangeFinalFields(changeFinalFields));
         testers.forEach(tester -> tester.setUserDefinedInstantiators(instantiators));
 
         runAssertions();

@@ -9,7 +9,8 @@ class NullOrEmptyCollectionsTest {
 
     @Test
     void shouldPojoBeWellImplemented() {
-        assertPojoMethodsFor(Message.class).testing(TO_STRING, EQUALS, CONSTRUCTOR, HASH_CODE)
+        assertPojoMethodsFor(Message.class).changingFinalFields()
+                                           .testing(TO_STRING, EQUALS, CONSTRUCTOR, HASH_CODE)
                                            .areWellImplemented();
     }
 }
