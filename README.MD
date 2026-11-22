@@ -62,8 +62,9 @@ Repository secrets (Settings, Secrets and variables, Actions). Do not commit the
 
 | Secret | Value |
 | --- | --- |
-| `CENTRAL_TOKEN` | Central user token as `username:password`, or the base64 of that pair. The portal shows both values when the token is generated. |
+| `CENTRAL_TOKEN` | User token from the portal: Account, Generate User Token. Store `username:password`, or the base64 of that pair (the Copy user token button). Not the portal login password. |
+| `CENTRAL_USERNAME` | Optional. Set it only when `CENTRAL_TOKEN` is the password by itself. |
 | `SIGNING_KEY` | ASCII-armored private key, or that block encoded as base64. Required for a release, not for a snapshot. |
 | `SIGNING_PASSWORD` | Passphrase of that key. Required for a release. |
 
-The namespace on the portal has to be `pl.pojo`. That group already has `pl.pojo:pojo-tester:0.7.6`, so a new account must claim the existing namespace. An old OSSRH token returns 401. Publish the public GPG key, for example to [keys.openpgp.org](https://keys.openpgp.org/), before the first release. Snapshots are not signed.
+The namespace on the portal has to be `pl.pojo`. That group already has `pl.pojo:pojo-tester:0.7.6`, so a new account must claim the existing namespace. An old OSSRH token returns 401. Before the first snapshot, open [Namespaces](https://central.sonatype.com/publishing/namespaces), open the menu on `pl.pojo`, and choose **Enable SNAPSHOTs**. Without that the snapshot repository answers 403. Publish the public GPG key, for example to [keys.openpgp.org](https://keys.openpgp.org/), before the first release. Snapshots are not signed.

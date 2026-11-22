@@ -55,7 +55,21 @@ jobs:
             exit 0
           fi
           . .github/workflows/central-credentials.sh
+          set +e
           ./gradlew publishToMavenCentral --no-daemon --stacktrace -PtestJavaVersion=21
+          status=$?
+          set -e
+          if [ "$status" -ne 0 ]; then
+            echo ""
+            echo "Snapshot publish failed."
+            echo "HTTP 403 from central.sonatype.com/repository/maven-snapshots means one of:"
+            echo "  1. SNAPSHOTs are not enabled for the namespace pl.pojo."
+            echo "     Open https://central.sonatype.com/publishing/namespaces,"
+            echo "     open the menu on pl.pojo, and choose Enable SNAPSHOTs."
+            echo "  2. CENTRAL_TOKEN is not the user token from Account, Generate User Token."
+            echo "     The login password and an old OSSRH token are both rejected."
+            exit "$status"
+          fi
 
   release:
     name: Publish release
