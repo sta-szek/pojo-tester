@@ -376,6 +376,18 @@ public void Should_Pass_All_Pojo_Tests() {
 }
 ```
 
+## Final fields {#final-fields}
+
+`final` fields keep the value they were constructed with. The library does not assign a new value to them, so `equals`, `hashCode` and `toString` are checked through the other fields.
+
+Call `changingFinalFields()` when a final field has to take part in that check. The assignment uses reflection and is not available for every final field on every JDK.
+
+```java
+assertPojoMethodsFor(ImmutablePojo.class)
+        .changingFinalFields()
+        .areWellImplemented();
+```
+
 ## Create class using a supplier {#supplier}
 
 A constructor that validates its arguments, or a class that should be built with a builder, cannot be created from generated values. Pass a supplier. It is used for that class only in this assertion, and it must return a new instance on every call.

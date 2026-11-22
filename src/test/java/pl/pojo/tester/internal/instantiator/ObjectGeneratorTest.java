@@ -47,7 +47,7 @@ class ObjectGeneratorTest {
 
     private ObjectGenerator makeObjectGenerator(final AbstractFieldValueChanger abstractFieldValueChanger,
                                                 final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
-        return new ObjectGenerator(abstractFieldValueChanger, constructorParameters, new ThoroughFieldPermutator());
+        return new ObjectGenerator(abstractFieldValueChanger, constructorParameters, new ThoroughFieldPermutator(), true);
     }
 
     @Test

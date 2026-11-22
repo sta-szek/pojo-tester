@@ -30,6 +30,7 @@ public abstract class AbstractTester {
     private AbstractFieldValueChanger fieldValuesChanger = DefaultFieldValueChanger.INSTANCE;
     private Permutator permutator = new ThoroughFieldPermutator();
     private Map<Class<?>, Supplier<?>> instantiators = new LinkedHashMap<>();
+    private boolean changeFinalFields;
 
     public AbstractTester() {
         this(DefaultFieldValueChanger.INSTANCE);
@@ -82,8 +83,18 @@ public abstract class AbstractTester {
         objectGenerator = recreateObjectGenerator();
     }
 
+    public void setChangeFinalFields(final boolean changeFinalFields) {
+        this.changeFinalFields = changeFinalFields;
+        objectGenerator = recreateObjectGenerator();
+    }
+
+    public void setPermutator(final Permutator permutator) {
+        this.permutator = permutator;
+        objectGenerator = recreateObjectGenerator();
+    }
+
     private ObjectGenerator recreateObjectGenerator() {
-        return new ObjectGenerator(fieldValuesChanger, constructorParameters, permutator, instantiators);
+        return new ObjectGenerator(fieldValuesChanger, constructorParameters, permutator, instantiators, changeFinalFields);
     }
 
     @Override
@@ -102,6 +113,7 @@ public abstract class AbstractTester {
                                   .append(testAssertions, that.testAssertions)
                                   .append(constructorParameters, that.constructorParameters)
                                   .append(fieldValuesChanger, that.fieldValuesChanger)
+                                  .append(changeFinalFields, that.changeFinalFields)
                                   .isEquals();
     }
 
@@ -111,6 +123,7 @@ public abstract class AbstractTester {
                                     .append(testAssertions)
                                     .append(constructorParameters)
                                     .append(fieldValuesChanger)
+                                    .append(changeFinalFields)
                                     .toHashCode();
     }
 
@@ -122,9 +135,5 @@ public abstract class AbstractTester {
     public String toString() {
         return this.getClass()
                    .getSimpleName();
-    }
-
-    public void setPermutator(final Permutator permutator) {
-        this.permutator = permutator;
     }
 }

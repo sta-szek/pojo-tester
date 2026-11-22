@@ -47,7 +47,7 @@ class ObjectGeneratorFastTest {
 
     private ObjectGenerator makeObjectGenerator(final AbstractFieldValueChanger abstractFieldValueChanger,
                                                 final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
-        return new ObjectGenerator(abstractFieldValueChanger, constructorParameters, new SublistFieldPermutator());
+        return new ObjectGenerator(abstractFieldValueChanger, constructorParameters, new SublistFieldPermutator(), true);
     }
 
     @Test

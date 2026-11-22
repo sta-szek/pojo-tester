@@ -32,21 +32,38 @@ public class ObjectGenerator {
     private final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters;
     private final Permutator permutator;
     private final Map<Class<?>, Supplier<?>> instantiators;
+    private final boolean changeFinalFields;
 
     public ObjectGenerator(final AbstractFieldValueChanger abstractFieldValueChanger,
                            final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters,
                            final Permutator permutator) {
-        this(abstractFieldValueChanger, constructorParameters, permutator, Collections.emptyMap());
+        this(abstractFieldValueChanger, constructorParameters, permutator, Collections.emptyMap(), false);
+    }
+
+    public ObjectGenerator(final AbstractFieldValueChanger abstractFieldValueChanger,
+                           final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters,
+                           final Permutator permutator,
+                           final boolean changeFinalFields) {
+        this(abstractFieldValueChanger, constructorParameters, permutator, Collections.emptyMap(), changeFinalFields);
     }
 
     public ObjectGenerator(final AbstractFieldValueChanger abstractFieldValueChanger,
                            final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters,
                            final Permutator permutator,
                            final Map<Class<?>, Supplier<?>> instantiators) {
+        this(abstractFieldValueChanger, constructorParameters, permutator, instantiators, false);
+    }
+
+    public ObjectGenerator(final AbstractFieldValueChanger abstractFieldValueChanger,
+                           final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters,
+                           final Permutator permutator,
+                           final Map<Class<?>, Supplier<?>> instantiators,
+                           final boolean changeFinalFields) {
         this.abstractFieldValueChanger = abstractFieldValueChanger;
         this.constructorParameters = constructorParameters;
         this.permutator = permutator;
         this.instantiators = instantiators == null ? Collections.emptyMap() : instantiators;
+        this.changeFinalFields = changeFinalFields;
     }
 
     public Object createNewInstance(final Class<?> clazz) {
@@ -87,7 +104,7 @@ public class ObjectGenerator {
         final Class baseClass = baseClassAndFieldPredicatePair.getClazz();
         final Predicate<String> baseClassFieldPredicate = baseClassAndFieldPredicatePair.getFieldsPredicate();
 
-        final List<Field> baseClassFieldsToChange = FieldUtils.getFields(baseClass, baseClassFieldPredicate);
+        final List<Field> baseClassFieldsToChange = fieldsToChange(baseClass, baseClassFieldPredicate);
         userDefinedClassAndFieldPredicatePairsMap.put(baseClass, baseClassFieldPredicate);
 
         final Map<Class<?>, List<Field>> userDefinedClassAndFieldToChangePairsMap = convertToClassAndFieldsToChange(
@@ -134,7 +151,7 @@ public class ObjectGenerator {
                     } else {
                         final Predicate<String> fieldPredicate = userDefinedClassAndFieldPredicatePairsMap.get(
                                 permutationFieldType);
-                        final List<Field> fieldClassFields = FieldUtils.getFields(permutationFieldType, fieldPredicate);
+                        final List<Field> fieldClassFields = fieldsToChange(permutationFieldType, fieldPredicate);
 
                         if (hasNestedFieldsToChange(fieldClassFields, userDefinedClassAndFieldPredicatePairsMap)) {
                             final ClassAndFieldPredicatePair classAndFieldPredicatePair = new ClassAndFieldPredicatePair(
@@ -243,8 +260,8 @@ public class ObjectGenerator {
         return classAndFieldPredicatePairMap.entrySet()
                                             .stream()
                                             .collect(Collectors.toMap(Map.Entry::getKey,
-                                                                      entry -> FieldUtils.getFields(entry.getKey(),
-                                                                                                    entry.getValue())));
+                                                                      entry -> fieldsToChange(entry.getKey(),
+                                                                                               entry.getValue())));
     }
 
     private Map<Class<?>, Predicate<String>> convertToMap(final ClassAndFieldPredicatePair[] classAndFieldPredicatePairs) {
@@ -260,6 +277,13 @@ public class ObjectGenerator {
             FieldUtils.setValue(newInstance, field, value);
         }
         return newInstance;
+    }
+
+    private List<Field> fieldsToChange(final Class<?> clazz, final Predicate<String> predicate) {
+        return FieldUtils.getFields(clazz, predicate)
+                         .stream()
+                         .filter(field -> changeFinalFields || !FieldUtils.isFinal(field))
+                         .collect(Collectors.toList());
     }
 
     private List<Field> getAllFields(final Object object) {
