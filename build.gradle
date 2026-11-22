@@ -1,6 +1,7 @@
 plugins {
     id 'java-library'
     id 'com.vanniktech.maven.publish' version '0.37.0'
+    id 'info.solidsoft.pitest' version '1.19.0'
 }
 
 java {
@@ -87,6 +88,23 @@ tasks.named('check') {
 
 tasks.named('integrationTest') {
     mustRunAfter tasks.named('test')
+}
+
+pitest {
+    targetClasses = ['pl.pojo.tester.*']
+    pitestVersion = '1.19.4'
+    junit5PluginVersion = '1.2.2'
+    threads = 4
+    timestampedReports = false
+    outputFormats = ['XML', 'HTML']
+    failWhenNoMutations = true
+    timeoutConstInMillis = 20000
+    timeoutFactor = 1.5
+    jvmArgs = ['--add-opens=java.base/java.lang=ALL-UNNAMED',
+               '--add-opens=java.base/java.lang.reflect=ALL-UNNAMED',
+               '--add-opens=java.base/java.util=ALL-UNNAMED',
+               '--add-opens=java.base/java.util.function=ALL-UNNAMED',
+               '--add-opens=java.base/java.time=ALL-UNNAMED']
 }
 
 mavenPublishing {

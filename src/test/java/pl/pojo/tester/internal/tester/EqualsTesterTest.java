@@ -20,6 +20,20 @@ import static org.assertj.core.util.Lists.newArrayList;
 
 class EqualsTesterTest {
 
+    static class IdentityEquals {
+        private int value;
+
+        @Override
+        public boolean equals(final Object other) {
+            return this == other;
+        }
+
+        @Override
+        public int hashCode() {
+            return 1;
+        }
+    }
+
     @Test
     void Should_Pass_All_Equals_Tests() {
         // given
@@ -44,6 +58,18 @@ class EqualsTesterTest {
 
         // then
         assertThat(result).isNull();
+    }
+
+    @Test
+    void Should_Fail_When_Another_Instance_With_The_Same_Values_Is_Not_Equal() {
+        // given
+        final EqualsTester equalsTester = new EqualsTester();
+
+        // when
+        final Throwable result = catchThrowable(() -> equalsTester.test(IdentityEquals.class));
+
+        // then
+        assertThat(result).isInstanceOf(AbstractEqualsAssertionError.class);
     }
 
     @Test

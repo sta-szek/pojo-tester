@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static pl.pojo.tester.internal.instantiator.Instantiator.INSTANTIATORS;
+import static pl.pojo.tester.internal.instantiator.Instantiator.snapshot;
 
 public final class Instantiable {
 
@@ -36,7 +36,7 @@ public final class Instantiable {
                                                                              final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
         final List<AbstractObjectInstantiator> instantiators = new ArrayList<>();
         try {
-            for (final Class<? extends AbstractObjectInstantiator> instantiator : INSTANTIATORS) {
+            for (final Class<? extends AbstractObjectInstantiator> instantiator : snapshot()) {
                 final Constructor<? extends AbstractObjectInstantiator> constructor =
                         instantiator.getDeclaredConstructor(Class.class, MultiValuedMap.class);
                 constructor.setAccessible(true);
