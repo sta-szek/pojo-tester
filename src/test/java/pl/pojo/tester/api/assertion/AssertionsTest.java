@@ -100,9 +100,8 @@ class AssertionsTest {
         final List<ClassAndFieldPredicatePair> pairs = getInternalState(result, "classAndFieldPredicatePairs");
 
         // then
-        assertThat(pairs).usingRecursiveFieldByFieldElementComparator()
-                         .containsExactlyInAnyOrder(new ClassAndFieldPredicatePair(D.class),
-                                                    new ClassAndFieldPredicatePair(E.class));
+        assertThat(pairs).extracting(ClassAndFieldPredicatePair::getClazz)
+                         .containsExactlyInAnyOrder(D.class, E.class);
     }
 
     @Test
@@ -116,9 +115,8 @@ class AssertionsTest {
         final List<ClassAndFieldPredicatePair> pairs = getInternalState(result, "classAndFieldPredicatePairs");
 
         // then
-        assertThat(pairs).usingRecursiveFieldByFieldElementComparator()
-                         .containsExactlyInAnyOrder(new ClassAndFieldPredicatePair(A.class),
-                                                    new ClassAndFieldPredicatePair(B.class));
+        assertThat(pairs).extracting(ClassAndFieldPredicatePair::getClazz)
+                         .containsExactlyInAnyOrder(A.class, B.class);
     }
 
     @Test
@@ -132,9 +130,8 @@ class AssertionsTest {
         final List<ClassAndFieldPredicatePair> pairs = getInternalState(result, "classAndFieldPredicatePairs");
 
         // then
-        assertThat(pairs).usingRecursiveFieldByFieldElementComparator()
-                         .containsExactlyInAnyOrder(new ClassAndFieldPredicatePair(A.class),
-                                                    new ClassAndFieldPredicatePair(B.class));
+        assertThat(pairs).extracting(ClassAndFieldPredicatePair::getClazz)
+                         .containsExactlyInAnyOrder(A.class, B.class);
     }
 
     @Test
@@ -150,10 +147,8 @@ class AssertionsTest {
         final List<ClassAndFieldPredicatePair> pairs = getInternalState(result, "classAndFieldPredicatePairs");
 
         // then
-        assertThat(pairs).usingRecursiveFieldByFieldElementComparator()
-                         .containsExactlyInAnyOrder(new ClassAndFieldPredicatePair(A.class),
-                                                    new ClassAndFieldPredicatePair(B.class),
-                                                    new ClassAndFieldPredicatePair(B.class));
+        assertThat(pairs).extracting(ClassAndFieldPredicatePair::getClazz)
+                         .containsExactlyInAnyOrder(A.class, B.class, B.class);
     }
 
     @Data

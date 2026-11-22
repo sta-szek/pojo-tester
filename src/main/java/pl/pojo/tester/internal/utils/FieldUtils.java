@@ -6,6 +6,7 @@ import org.paukov.combinatorics.ICombinatoricsVector;
 import pl.pojo.tester.internal.GetOrSetValueException;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.List;
@@ -50,7 +51,7 @@ public final class FieldUtils {
 
     public static Object getValue(final Object targetObject, final Field field) {
         try {
-            makeModifiable(field);
+            field.setAccessible(true);
             return field.get(targetObject);
         } catch (final IllegalAccessException e) {
             throw new GetOrSetValueException(field.getName(), targetObject.getClass(), e);
@@ -61,8 +62,14 @@ public final class FieldUtils {
         try {
             makeModifiable(field);
             field.set(targetObject, value);
-        } catch (final IllegalAccessException e) {
-            throw new GetOrSetValueException(field.getName(), targetObject.getClass(), e);
+        } catch (final IllegalAccessException reflectiveSetFailed) {
+            try {
+                // Java 12+ removed Field.modifiers. VarHandle is called reflectively so this class
+                // still compiles as Java 8 bytecode.
+                setViaVarHandle(targetObject, field, value);
+            } catch (final Exception varHandleFailed) {
+                throw new GetOrSetValueException(field.getName(), targetObject.getClass(), reflectiveSetFailed);
+            }
         }
     }
 
@@ -84,17 +91,33 @@ public final class FieldUtils {
     }
 
     private static void makeModifiable(final Field field) {
-        final Class<? extends Field> clazz = field.getClass();
+        field.setAccessible(true);
+        if (!isFinal(field)) {
+            return;
+        }
         try {
-            field.setAccessible(true);
-            final Field modifierField = clazz.getDeclaredField(MODIFIERS_FIELD_NAME_IN_FIELD_CLASS);
+            final Field modifierField = Field.class.getDeclaredField(MODIFIERS_FIELD_NAME_IN_FIELD_CLASS);
             modifierField.setAccessible(true);
-
             final int modifiers = field.getModifiers() & ~Modifier.FINAL;
             modifierField.setInt(field, modifiers);
-        } catch (IllegalAccessException | NoSuchFieldException e) {
-            throw new GetOrSetValueException(MODIFIERS_FIELD_NAME_IN_FIELD_CLASS, clazz, e);
+        } catch (final Exception ignored) {
+            // Field.modifiers is gone on Java 12+. setValue falls back to VarHandle.
         }
+    }
+
+    private static void setViaVarHandle(final Object target, final Field field, final Object value) throws Exception {
+        final Class<?> methodHandles = Class.forName("java.lang.invoke.MethodHandles");
+        final Class<?> lookupType = Class.forName("java.lang.invoke.MethodHandles$Lookup");
+        final Object lookup = methodHandles.getMethod("lookup").invoke(null);
+        final Object privateLookup = methodHandles.getMethod("privateLookupIn", Class.class, lookupType)
+                                                  .invoke(null, field.getDeclaringClass(), lookup);
+        final Object varHandle = lookupType.getMethod("findVarHandle", Class.class, String.class, Class.class)
+                                           .invoke(privateLookup,
+                                                   field.getDeclaringClass(),
+                                                   field.getName(),
+                                                   field.getType());
+        final Method set = Class.forName("java.lang.invoke.VarHandle").getMethod("set", Object[].class);
+        set.invoke(varHandle, new Object[]{new Object[]{target, value}});
     }
 
     private static boolean excludeEmptySet(final List<Field> fields) {
