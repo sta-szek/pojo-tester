@@ -1,6 +1,8 @@
 package pl.pojo.tester.internal.instantiator;
 
 import org.apache.commons.collections4.MultiValuedMap;
+import org.apache.commons.collections4.multimap.HashSetValuedHashMap;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import pl.pojo.tester.api.ConstructorParameters;
 
@@ -10,6 +12,14 @@ import static java.util.Optional.empty;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class InstantiatorTest {
+
+    @AfterEach
+    public void detachUserInstantiators() {
+        Instantiator.INSTANCE
+                .detach(CustomInstantiator.class)
+                .detach(CustomInstantiator2.class)
+                .detach(StringInstantiator.class);
+    }
 
     @Test
     public void should_attach_instantiators() {
@@ -30,6 +40,25 @@ public class InstantiatorTest {
                         ProxyInstantiator.class,
                         BestConstructorInstantiator.class
                 );
+    }
+
+    @Test
+    public void should_select_attached_instantiator() {
+        Instantiator.INSTANCE.attach(StringInstantiator.class);
+
+        final AbstractObjectInstantiator instantiator = Instantiable.forClass(String.class, new HashSetValuedHashMap<>());
+
+        assertThat(instantiator).isInstanceOf(StringInstantiator.class);
+        assertThat(instantiator.instantiate()).isEqualTo("from-user");
+    }
+
+    @Test
+    public void should_not_detach_built_in_instantiators() {
+        final int before = Instantiator.INSTANTIATORS.size();
+
+        Instantiator.INSTANCE.detach(JavaTypeInstantiator.class);
+
+        assertThat(Instantiator.INSTANTIATORS).hasSize(before);
     }
 
     private static class CustomInstantiator extends UserObjectInstantiator {
@@ -67,6 +96,24 @@ public class InstantiatorTest {
         @Override
         public boolean canInstantiate() {
             return false;
+        }
+    }
+
+    private static class StringInstantiator extends UserObjectInstantiator {
+
+        StringInstantiator(final Class<?> clazz,
+                           final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
+            super(clazz, constructorParameters);
+        }
+
+        @Override
+        public Optional<Object> tryToInstantiate() {
+            return Optional.of("from-user");
+        }
+
+        @Override
+        public boolean canInstantiate() {
+            return clazz == String.class;
         }
     }
 

@@ -40,6 +40,9 @@ public abstract class AbstractFieldValueChanger<T> {
     }
 
     public T increaseValue(final T value) {
+        if (value == null) {
+            return null;
+        }
         if (canChange(value.getClass())) {
             final T increasedValue = increaseValue(value, value.getClass());
             LOGGER.debug("Changing value of type {} from '{}' to '{}' ({})",

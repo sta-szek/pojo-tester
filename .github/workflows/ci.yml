@@ -32,7 +32,21 @@ jobs:
           distribution: temurin
           java-version: ${{ matrix.java }}
 
-      - name: Test on Java ${{ matrix.java }}
+      - name: Build and test on Java ${{ matrix.java }}
         env:
           JAVA_HOME: ${{ steps.gradle-java.outputs.path }}
-        run: ./gradlew test integrationTest --no-daemon --stacktrace -PtestJavaVersion=${{ matrix.java }} -Dorg.gradle.java.installations.paths=${{ steps.test-java.outputs.path }}:${{ steps.gradle-java.outputs.path }}
+        run: ./gradlew build --no-daemon --stacktrace -PtestJavaVersion=${{ matrix.java }} -Dorg.gradle.java.installations.paths=${{ steps.test-java.outputs.path }}:${{ steps.gradle-java.outputs.path }}
+
+  mutation:
+    name: Mutation tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Run PIT
+        run: ./gradlew pitest --no-daemon --stacktrace -PtestJavaVersion=21

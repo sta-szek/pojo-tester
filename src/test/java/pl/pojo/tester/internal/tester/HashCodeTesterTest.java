@@ -36,6 +36,19 @@ class HashCodeTesterTest {
     }
 
     @Test
+    void Should_Pass_All_HashCode_Tests_On_Embedded_Classes() {
+        // given
+        final Class[] classesToTest = {GoodPojo_Equals_HashCode_Inner_Class.class};
+        final HashCodeTester hashCodeTester = new HashCodeTester(DefaultFieldValueChanger.INSTANCE);
+
+        // when
+        final Throwable result = catchThrowable(() -> hashCodeTester.testAll(classesToTest));
+
+        // then
+        assertThat(result).isNull();
+    }
+
+    @Test
     void Should_Pass_All_HashCode_Tests_Excluding_Fields() {
         // given
         final HashCodeTester hashCodeTester = new HashCodeTester();

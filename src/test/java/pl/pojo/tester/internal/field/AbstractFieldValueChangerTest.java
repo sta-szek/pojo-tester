@@ -43,6 +43,18 @@ class AbstractFieldValueChangerTest {
     }
 
     @Test
+    void Should_Return_Null_For_Null_Value() {
+        // given
+        final AbstractFieldValueChanger abstractFieldValueChanger = new ImplementationForTest();
+
+        // when
+        final Object result = abstractFieldValueChanger.increaseValue(null);
+
+        // then
+        assertThat(result).isNull();
+    }
+
+    @Test
     void Should_Register_Value_Changer_To_Already_Registered_One() {
         // given
         final AbstractFieldValueChanger abstractFieldValueChanger = new ImplementationForTest();

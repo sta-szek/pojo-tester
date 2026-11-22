@@ -4,6 +4,8 @@ import classesForTest.fields.TestEnum1;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
@@ -62,6 +64,52 @@ class ToStringAssertionsTest {
 
         // then
         assertThat(result).isNull();
+    }
+
+    @Test
+    void Should_Accept_Arrays_ToString_For_Primitive_Array() {
+        // given
+        final int[] values = {1, 2};
+        final ToStringAssertions toStringAssertions = new ToStringAssertions(new BracketArray(values));
+
+        // when
+        final Throwable result = catchThrowable(() -> toStringAssertions.contains("values", values));
+
+        // then
+        assertThat(result).isNull();
+    }
+
+    @Test
+    void Should_Accept_Commons_Lang_Array_Format() {
+        // given
+        final int[] values = {1, 2};
+        final ToStringAssertions toStringAssertions = new ToStringAssertions(new BraceArray());
+
+        // when
+        final Throwable result = catchThrowable(() -> toStringAssertions.contains("values", values));
+
+        // then
+        assertThat(result).isNull();
+    }
+
+    private static final class BracketArray {
+        private final int[] values;
+
+        private BracketArray(final int[] values) {
+            this.values = values;
+        }
+
+        @Override
+        public String toString() {
+            return "values=" + Arrays.toString(values);
+        }
+    }
+
+    private static final class BraceArray {
+        @Override
+        public String toString() {
+            return "values={1,2}";
+        }
     }
 
     private class ToStringWithoutField {
