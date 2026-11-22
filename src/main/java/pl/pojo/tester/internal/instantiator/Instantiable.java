@@ -7,24 +7,11 @@ import pl.pojo.tester.api.ConstructorParameters;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
+import static pl.pojo.tester.internal.instantiator.Instantiator.INSTANTIATORS;
+
 public final class Instantiable {
-
-    private static final List<Class<? extends AbstractObjectInstantiator>> INSTANTIATORS;
-
-    static {
-        INSTANTIATORS = new LinkedList<>();
-        INSTANTIATORS.add(UserDefinedConstructorInstantiator.class);
-        INSTANTIATORS.add(JavaTypeInstantiator.class);
-        INSTANTIATORS.add(CollectionInstantiator.class);
-        INSTANTIATORS.add(DefaultConstructorInstantiator.class);
-        INSTANTIATORS.add(EnumInstantiator.class);
-        INSTANTIATORS.add(ArrayInstantiator.class);
-        INSTANTIATORS.add(ProxyInstantiator.class);
-        INSTANTIATORS.add(BestConstructorInstantiator.class);
-    }
 
     private Instantiable() {
     }
@@ -41,8 +28,8 @@ public final class Instantiable {
                                                final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
         return instantiateInstantiators(clazz, constructorParameters).stream()
                                                                      .filter(AbstractObjectInstantiator::canInstantiate)
-                                                                     .findAny()
-                                                                     .get();
+                                                                     .findFirst()
+                                                                     .orElseThrow(() -> new RuntimeException("No instantiator found for class " + clazz.getName()));
     }
 
     private static List<AbstractObjectInstantiator> instantiateInstantiators(final Class<?> clazz,
