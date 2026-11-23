@@ -10,7 +10,7 @@ The project was paused in 2020. It is being brought back so the same Java 8 byte
 | --- | --- |
 | License | [LGPL-3.0](LICENSE.MD) (unchanged) |
 | Bytecode | Java 8 |
-| CI | GitHub Actions. `build` on Java 8, 11, 17, 21 and 25. Mutation tests on Java 21. |
+| CI | GitHub Actions. `build` on Java 8, 11, 17, 21 and 25. Mutation tests (PIT, threshold 80%), Spotless (changed files only) and SpotBugs (SARIF to code scanning) on Java 21. Coverage goes to Codecov. |
 | Coordinates | `pl.pojo:pojo-tester:0.8.0-SNAPSHOT` |
 | Maven Central | last published release is `0.7.6` (2017). The next version is the snapshot above. |
 
@@ -56,6 +56,9 @@ The snapshot repository is `https://central.sonatype.com/repository/maven-snapsh
 | `test` | unit tests |
 | `integrationTest` | integration tests |
 | `pitest` | mutation tests (PIT) of `pl.pojo.tester` |
+| `spotlessCheck` | formatting of files changed vs `origin/master` (`spotlessApply` fixes them) |
+| `spotbugsMain` | static analysis (reports in `build/reports/spotbugs`) |
+| `jacocoTestReport` | merged unit and integration coverage |
 
 `build` depends on `check`, and `check` depends on both test tasks. Mutation tests are a separate task because a full PIT run is much slower than the test suite. CI runs `build` on each JDK in the matrix and `pitest` once on Java 21.
 
