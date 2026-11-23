@@ -1,0 +1,96 @@
+name: Release
+
+# A release is a tag vX.Y.Z. The release-ga environment allows only those tags,
+# so this cannot run from a branch. master stays on a snapshot; the tag selects
+# the version with -Pversion and does not need a commit that removes -SNAPSHOT.
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: maven-central-release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Publish release
+    runs-on: ubuntu-latest
+    environment: release-ga
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Publish release
+        env:
+          CENTRAL_TOKEN: ${{ secrets.CENTRAL_TOKEN }}
+          CENTRAL_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
+          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+          SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
+        run: |
+          version=${GITHUB_REF_NAME#v}
+          if ! printf '%s' "$version" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+            echo "Tag must be vMAJOR.MINOR.PATCH, got ${GITHUB_REF_NAME}."
+            exit 1
+          fi
+          . .github/workflows/central-credentials.sh
+          . .github/workflows/signing-key.sh
+          ./gradlew build publishAndReleaseToMavenCentral --no-daemon --stacktrace -PtestJavaVersion=21 -Pversion="$version"
+          echo "version=$version" >> "$GITHUB_ENV"
+          echo "### Release" >> "$GITHUB_STEP_SUMMARY"
+          echo "Published \`pl.pojo:pojo-tester:${version}\`." >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ env.version }}
+        run: |
+          if gh release view "v${VERSION}" >/dev/null 2>&1; then
+            echo "GitHub release v${VERSION} already exists."
+          else
+            gh release create "v${VERSION}" \
+              --title "v${VERSION}" \
+              --notes "Published \`pl.pojo:pojo-tester:${VERSION}\` to Maven Central."
+          fi
+
+      - name: Open pull request for the next snapshot
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ env.version }}
+        run: |
+          major=${VERSION%%.*}
+          rest=${VERSION#*.}
+          minor=${rest%%.*}
+          patch=${rest#*.}
+          next="${major}.${minor}.$((patch + 1))-SNAPSHOT"
+          current=$(grep '^version=' gradle.properties | cut -d= -f2)
+          if [ "$current" != "$VERSION" ] && [ "$current" != "${VERSION}-SNAPSHOT" ]; then
+            echo "gradle.properties is already $current. Not opening a version pull request."
+            exit 0
+          fi
+          branch="chore/snapshot-after-${VERSION}"
+          if git ls-remote --exit-code --heads origin "$branch" >/dev/null 2>&1; then
+            echo "Branch $branch already exists."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$branch"
+          sed -i "s/^version=.*/version=${next}/" gradle.properties
+          git add gradle.properties
+          git commit -m "Set version to ${next}."
+          git push origin "$branch"
+          gh pr create --base master --head "$branch" \
+            --title "Set version to ${next}" \
+            --body "Published \`${VERSION}\` from tag \`v${VERSION}\`. This moves the snapshot line forward."

@@ -64,16 +64,14 @@ The snapshot repository is `https://central.sonatype.com/repository/maven-snapsh
 
 ## Publishing
 
-[Release](.github/workflows/release.yml) publishes to the [Central Portal](https://central.sonatype.com/). Bintray and the old OSSRH host are not used.
+Two workflows publish to the [Central Portal](https://central.sonatype.com/). Bintray and the old OSSRH host are not used.
 
-| Trigger | What is published |
-| --- | --- |
-| Push to `master`, after CI is green | The `-SNAPSHOT` version from `gradle.properties` |
-| Tag `vX.Y.Z` | Release `X.Y.Z`, then a pull request that bumps the snapshot patch |
-| Manual run with a version | That release version |
-| Manual run with an empty version | The current snapshot |
+| Workflow | When | Environment | What is published |
+| --- | --- | --- | --- |
+| [Release snapshot](.github/workflows/release-snapshot.yml) | CI is green on `master`, or a manual run from `master` | `release-snapshot` (protected branches) | The `-SNAPSHOT` version from `gradle.properties` |
+| [Release](.github/workflows/release-ga.yml) | Tag `vX.Y.Z` | `release-ga` (tags `v*` only) | Release `X.Y.Z`, a GitHub release, then a pull request that bumps the snapshot patch |
 
-`master` stays on a snapshot. Do not commit a release version there. Create the release by pushing a tag:
+`master` stays on a snapshot. Do not commit a release version there, and do not publish a release from a branch. The `release-ga` environment rejects every ref that is not a `v*` tag. Create the release by pushing a tag:
 
 ```bash
 git tag v0.8.0
@@ -82,13 +80,13 @@ git push origin v0.8.0
 
 The tag does not have to change `gradle.properties`. The workflow passes the tag as `-Pversion`.
 
-Repository secrets (Settings, Secrets and variables, Actions). Do not commit them.
+Each environment has its own secrets (Settings, Environments). A repository secret with the same name is only a fallback. Do not commit them.
 
-| Secret | Value |
-| --- | --- |
-| `CENTRAL_TOKEN` | User token from the portal: Account, Generate User Token. Store `username:password`, or the base64 of that pair (the Copy user token button). Not the portal login password. |
-| `CENTRAL_USERNAME` | Optional. Set it only when `CENTRAL_TOKEN` is the password by itself. |
-| `SIGNING_KEY` | ASCII-armored private key, or that block encoded as base64. Required for a release, not for a snapshot. |
-| `SIGNING_PASSWORD` | Passphrase of that key. Required for a release. |
+| Secret | Where | Value |
+| --- | --- | --- |
+| `CENTRAL_TOKEN` | both environments | User token from the portal: Account, Generate User Token. Store `username:password`, or the base64 of that pair (the Copy user token button). Not the portal login password. |
+| `CENTRAL_USERNAME` | both, optional | Set it only when `CENTRAL_TOKEN` is the password by itself. |
+| `SIGNING_KEY` | `release-ga` | ASCII-armored private key, or that block encoded as base64. |
+| `SIGNING_PASSWORD` | `release-ga` | Passphrase of that key. |
 
-The namespace on the portal has to be `pl.pojo`. That group already has `pl.pojo:pojo-tester:0.7.6`, so a new account must claim the existing namespace. An old OSSRH token returns 401. Before the first snapshot, open [Namespaces](https://central.sonatype.com/publishing/namespaces), open the menu on `pl.pojo`, and choose **Enable SNAPSHOTs**. Without that the snapshot repository answers 403. Publish the public GPG key, for example to [keys.openpgp.org](https://keys.openpgp.org/), before the first release. Snapshots are not signed.
+Snapshots are not signed, so `release-snapshot` does not read the signing secrets. The namespace on the portal has to be `pl.pojo`. That group already has `pl.pojo:pojo-tester:0.7.6`, so a new account must claim the existing namespace. An old OSSRH token returns 401. Before the first snapshot, open [Namespaces](https://central.sonatype.com/publishing/namespaces), open the menu on `pl.pojo`, and choose **Enable SNAPSHOTs**. Without that the snapshot repository answers 403. Publish the public GPG key, for example to [keys.openpgp.org](https://keys.openpgp.org/), before the first release.
