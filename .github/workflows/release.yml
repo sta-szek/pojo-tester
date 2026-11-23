@@ -78,8 +78,15 @@ jobs:
             java: 8
     steps:
       - uses: actions/checkout@v7
-        with:
-          ref: ${{ needs.prepare.outputs.sha }}
+
+      - name: Stay on the tested commit
+        env:
+          EXPECTED_SHA: ${{ needs.prepare.outputs.sha }}
+        run: |
+          if [ "$(git rev-parse HEAD)" != "$EXPECTED_SHA" ]; then
+            echo "Checked out $(git rev-parse HEAD), expected the tested commit $EXPECTED_SHA."
+            exit 1
+          fi
 
       - uses: actions/setup-java@v6
         id: gradle-java
@@ -108,8 +115,15 @@ jobs:
     environment: release-snapshot
     steps:
       - uses: actions/checkout@v7
-        with:
-          ref: ${{ needs.prepare.outputs.sha }}
+
+      - name: Stay on the tested commit
+        env:
+          EXPECTED_SHA: ${{ needs.prepare.outputs.sha }}
+        run: |
+          if [ "$(git rev-parse HEAD)" != "$EXPECTED_SHA" ]; then
+            echo "Checked out $(git rev-parse HEAD), expected the tested commit $EXPECTED_SHA."
+            exit 1
+          fi
 
       - uses: actions/setup-java@v6
         id: gradle-java
@@ -162,8 +176,15 @@ jobs:
             java: 8
     steps:
       - uses: actions/checkout@v7
-        with:
-          ref: ${{ needs.prepare.outputs.sha }}
+
+      - name: Stay on the tested commit
+        env:
+          EXPECTED_SHA: ${{ needs.prepare.outputs.sha }}
+        run: |
+          if [ "$(git rev-parse HEAD)" != "$EXPECTED_SHA" ]; then
+            echo "Checked out $(git rev-parse HEAD), expected the tested commit $EXPECTED_SHA."
+            exit 1
+          fi
 
       - uses: actions/setup-java@v6
         id: gradle-java
@@ -193,8 +214,16 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
-          ref: ${{ needs.prepare.outputs.sha }}
           fetch-depth: 0
+
+      - name: Stay on the tested commit
+        env:
+          EXPECTED_SHA: ${{ needs.prepare.outputs.sha }}
+        run: |
+          if [ "$(git rev-parse HEAD)" != "$EXPECTED_SHA" ]; then
+            echo "Checked out $(git rev-parse HEAD), expected the tested commit $EXPECTED_SHA."
+            exit 1
+          fi
 
       - uses: actions/setup-java@v6
         id: gradle-java
@@ -231,13 +260,13 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           VERSION: ${{ env.version }}
-          SHA: ${{ needs.prepare.outputs.sha }}
         run: |
+          sha=$(git rev-parse HEAD)
           if gh release view "$VERSION" >/dev/null 2>&1; then
             echo "GitHub release ${VERSION} already exists."
           else
             gh release create "$VERSION" \
-              --target "$SHA" \
+              --target "$sha" \
               --title "$VERSION" \
               --generate-notes
           fi
