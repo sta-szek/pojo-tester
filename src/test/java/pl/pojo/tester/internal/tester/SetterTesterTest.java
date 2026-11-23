@@ -69,6 +69,39 @@ class SetterTesterTest {
         assertThat(result).isInstanceOf(SetterNotFoundException.class);
     }
 
+    @Test
+    void Should_Accept_A_Fluent_Setter() {
+        final Throwable result = catchThrowable(() -> new SetterTester().test(FluentPojo.class));
+
+        assertThat(result).isNull();
+    }
+
+    @Test
+    void Should_Not_Test_Setters_Of_An_Enum() {
+        final Throwable result = catchThrowable(() -> new SetterTester().test(EnumWithBrokenSetter.class));
+
+        assertThat(result).isNull();
+    }
+
+    private static final class FluentPojo {
+
+        private int value;
+
+        public FluentPojo setValue(final int value) {
+            this.value = value;
+            return this;
+        }
+    }
+
+    private enum EnumWithBrokenSetter {
+        ONE;
+
+        private int value;
+
+        public void setValue(final int value) {
+        }
+    }
+
     private class BadPojoSetter {
 
         public char charY = 'y';

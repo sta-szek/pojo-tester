@@ -27,6 +27,9 @@ public class SetterTester extends AbstractTester {
     public void test(final ClassAndFieldPredicatePair baseClassAndFieldPredicatePair,
                      final ClassAndFieldPredicatePair... classAndFieldPredicatePairs) {
         final Class testedClass = baseClassAndFieldPredicatePair.getClazz();
+        if (testedClass.isEnum()) {
+            return;
+        }
         final List<Field> fields = FieldUtils.getFields(testedClass,
                                                         baseClassAndFieldPredicatePair.getFieldsPredicate());
         final List<SetterAndFieldPair> setterAndFieldPairs = findSetterAndGetterPairsForFields(testedClass, fields);

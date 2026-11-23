@@ -90,6 +90,8 @@ class MethodUtilsTest {
         final Field field9 = field(Getters.class, "otherId");
         final Field field10 = field(Getters.class, "name");
         final Field field11 = field(Getters.class, "otherName");
+        final Field field14 = field(Getters.class, "xCoordinate");
+        final Field field15 = field(Getters.class, "URL");
 
         final Field field12 = field(PojoWithNonStandardBooleanFieldNames_Standard_Generated_Setters_And_Getters.class,
                                     "isActive");
@@ -107,6 +109,8 @@ class MethodUtilsTest {
                          new GetterTestCase(field9, Getters.class.getMethod("getOtherId")),
                          new GetterTestCase(field10, Getters.class.getMethod("getName")),
                          new GetterTestCase(field11, Getters.class.getMethod("getOtherName")),
+                         new GetterTestCase(field14, Getters.class.getMethod("getxCoordinate")),
+                         new GetterTestCase(field15, Getters.class.getMethod("getURL")),
 
                          new GetterTestCase(field12,
                                             PojoWithNonStandardBooleanFieldNames_Standard_Generated_Setters_And_Getters.class.getMethod(
@@ -139,6 +143,9 @@ class MethodUtilsTest {
         final Field field6 = field(Setters.class, "otherId");
         final Field field7 = field(Setters.class, "name");
         final Field field8 = field(Setters.class, "otherName");
+        final Field field11 = field(Setters.class, "xCoordinate");
+        final Field field12 = field(Setters.class, "URL");
+        final Field field13 = field(Setters.class, "fluent");
 
         final Field field9 = field(PojoWithNonStandardBooleanFieldNames_Standard_Generated_Setters_And_Getters.class,
                                    "isActive");
@@ -153,6 +160,9 @@ class MethodUtilsTest {
                          new SetterTestCase(field6, Setters.class.getMethod("setOtherId", int.class)),
                          new SetterTestCase(field7, Setters.class.getMethod("setName", String.class)),
                          new SetterTestCase(field8, Setters.class.getMethod("setOtherName", String.class)),
+                         new SetterTestCase(field11, Setters.class.getMethod("setxCoordinate", Double.class)),
+                         new SetterTestCase(field12, Setters.class.getMethod("setURL", String.class)),
+                         new SetterTestCase(field13, Setters.class.getMethod("setFluent", int.class)),
 
                          new SetterTestCase(field9,
                                             PojoWithNonStandardBooleanFieldNames_Standard_Generated_Setters_And_Getters.class.getMethod(
@@ -211,6 +221,9 @@ class MethodUtilsTest {
         private int otherId;
         private String name;
         private String otherName;
+        private Double xCoordinate;
+        private String URL;
+        private int fluent;
 
         public void setOtherId(final int otherId) {
             this.otherId = otherId;
@@ -245,6 +258,19 @@ class MethodUtilsTest {
 
         public void setSetter4(final int setter4) {
             this.setter4 = setter4;
+        }
+
+        public void setxCoordinate(final Double xCoordinate) {
+            this.xCoordinate = xCoordinate;
+        }
+
+        public void setURL(final String url) {
+            this.URL = url;
+        }
+
+        public Setters setFluent(final int fluent) {
+            this.fluent = fluent;
+            return this;
         }
 
         public void B() {
@@ -285,6 +311,8 @@ class MethodUtilsTest {
         private int otherId;
         private String name;
         private String otherName;
+        private Double xCoordinate;
+        private String URL;
 
         public String getOtherName() {
             return otherName;
@@ -300,6 +328,14 @@ class MethodUtilsTest {
 
         public String getName() {
             return name;
+        }
+
+        public Double getxCoordinate() {
+            return xCoordinate;
+        }
+
+        public String getURL() {
+            return URL;
         }
 
         public Integer getGetter6() {
