@@ -51,7 +51,7 @@ class ConstructorAssertionErrorTest {
                         "test";
         final Class<?> testedCass = Pojo.class;
         final Constructor<?> declaredConstructor = testedCass.getDeclaredConstructor();
-        final Object[] constructorParameters = new Object[]{"test1", 1, "test2"};
+        final Object[] constructorParameters = {"test1", 1, "test2"};
         final ClassNotFoundException e = new ClassNotFoundException("test");
         final ConstructorAssertionError error = new ConstructorAssertionError(testedCass,
                                                                               declaredConstructor,

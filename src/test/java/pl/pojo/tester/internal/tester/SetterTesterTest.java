@@ -120,6 +120,7 @@ class SetterTesterTest {
         private int value;
 
         public void setValue(final int value) {
+            // intentionally empty
         }
     }
 
@@ -140,6 +141,7 @@ class SetterTesterTest {
         }
 
         public void setX(final char x) {
+            // intentionally empty
         }
 
     }
@@ -168,6 +170,7 @@ class SetterTesterTest {
         private int g;
 
         public void set() {
+            // intentionally empty
         }
 
         public void setSetter1(final int setter1) {
@@ -187,12 +190,15 @@ class SetterTesterTest {
         }
 
         public void B() {
+            // intentionally empty
         }
 
         public void setxxxC() {
+            // intentionally empty
         }
 
         public void setD() {
+            // intentionally empty
         }
 
         public Object setF(final int f) {

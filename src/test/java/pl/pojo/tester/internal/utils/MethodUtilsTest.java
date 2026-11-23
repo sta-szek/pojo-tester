@@ -242,6 +242,7 @@ class MethodUtilsTest {
         }
 
         public void set() {
+            // intentionally empty
         }
 
         public void setSetter1(final int setter1) {
@@ -274,12 +275,15 @@ class MethodUtilsTest {
         }
 
         public void B() {
+            // intentionally empty
         }
 
         public void setxxxC() {
+            // intentionally empty
         }
 
         public void setD() {
+            // intentionally empty
         }
 
 

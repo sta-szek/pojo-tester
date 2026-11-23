@@ -1,21 +1,21 @@
 package classesForTest;
 
 class UnpublicClass {
-    final static private class PrivateStaticFinalNestedClass {
-        final static private class PrivateStaticFinalNestedClass2 {
+    private static final class PrivateStaticFinalNestedClass {
+        private static final class PrivateStaticFinalNestedClass2 {
         }
     }
 
-    private final static class ProtectedStaticFinalNestedClass {
+    private static final class ProtectedStaticFinalNestedClass {
     }
 
-    private final static class PackageStaticFinalNestedClass {
+    private static final class PackageStaticFinalNestedClass {
     }
 
-    private final static class PublicStaticFinalNestedClass {
+    private static final class PublicStaticFinalNestedClass {
     }
 
-    static private class PrivateStaticNestedClass {
+    private static class PrivateStaticNestedClass {
     }
 
     private static class ProtectedStaticNestedClass {
@@ -27,7 +27,7 @@ class UnpublicClass {
     private static class PublicStaticNestedClass {
     }
 
-    final private class PrivateFinalNestedClass {
+    private final class PrivateFinalNestedClass {
     }
 
     private final class ProtectedFinalNestedClass {

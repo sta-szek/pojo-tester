@@ -223,82 +223,82 @@ class ObjectGeneratorTest {
 
     @Data
     private class Arrays_Primitive_Boolean {
-        private final boolean[] a = new boolean[]{};
+        private final boolean[] a = {};
     }
 
     @Data
     private class Arrays_Primitive_Byte {
-        private final byte[] b = new byte[]{};
+        private final byte[] b = {};
     }
 
     @Data
     private class Arrays_Primitive_Char {
-        private final char[] c = new char[]{};
+        private final char[] c = {};
     }
 
     @Data
     private class Arrays_Primitive_Double {
-        private final double[] d = new double[]{};
+        private final double[] d = {};
     }
 
     @Data
     private class Arrays_Primitive_Float {
-        private final float[] e = new float[]{};
+        private final float[] e = {};
     }
 
     @Data
     private class Arrays_Primitive_Int {
-        private final int[] f = new int[]{};
+        private final int[] f = {};
     }
 
     @Data
     private class Arrays_Primitive_Long {
-        private final long[] g = new long[]{};
+        private final long[] g = {};
     }
 
     @Data
     private class Arrays_Primitive_Short {
-        private final short[] h = new short[]{};
+        private final short[] h = {};
     }
 
     @Data
     private class Arrays_Wrapped_Boolean {
-        private final Boolean[] i = new Boolean[]{};
+        private final Boolean[] i = {};
     }
 
     @Data
     private class Arrays_Wrapped_Byte {
-        private final Byte[] j = new Byte[]{};
+        private final Byte[] j = {};
     }
 
     @Data
     private class Arrays_Wrapped_Character {
-        private final Character[] k = new Character[]{};
+        private final Character[] k = {};
     }
 
     @Data
     private class Arrays_Wrapped_Double {
-        private final Double[] l = new Double[]{};
+        private final Double[] l = {};
     }
 
     @Data
     private class Arrays_Wrapped_Float {
-        private final Float[] m = new Float[]{};
+        private final Float[] m = {};
     }
 
     @Data
     private class Arrays_Wrapped_Integer {
-        private final Integer[] n = new Integer[]{};
+        private final Integer[] n = {};
     }
 
     @Data
     private class Arrays_Wrapped_Long {
-        private final Long[] o = new Long[]{};
+        private final Long[] o = {};
     }
 
     @Data
     private class Arrays_Wrapped_Short {
-        private final Short[] p = new Short[]{};
+        private final Short[] p = {};
     }
 
     @Data

@@ -229,6 +229,7 @@ class GetterAssertionsTest {
         }
 
         public void setX(final char x) {
+            // intentionally empty
         }
 
     }

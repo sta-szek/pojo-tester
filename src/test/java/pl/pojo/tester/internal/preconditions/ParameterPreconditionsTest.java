@@ -58,7 +58,7 @@ class ParameterPreconditionsTest {
     @Test
     void Should_Throw_Exception_When_At_Least_One_Parameter_Is_Empty_String() {
         // given
-        final String[] parameterValue = new String[]{"valid", ""};
+        final String[] parameterValue = {"valid", ""};
 
 
         // when
@@ -71,7 +71,7 @@ class ParameterPreconditionsTest {
     @Test
     void Should_Throw_Exception_When_At_Least_One_Parameter_Is_White_Char_String() {
         // given
-        final String[] parameterValue = new String[]{"valid", " "};
+        final String[] parameterValue = {"valid", " "};
 
         // when
         final Throwable result = catchThrowable(() -> checkNotBlank("parameterName", parameterValue));
@@ -83,7 +83,7 @@ class ParameterPreconditionsTest {
     @Test
     void Should_Not_Throw_Exception_When_All_Parameters_Are_Not_Blank() {
         // given
-        final String[] parameterValue = new String[]{"valid", "valid"};
+        final String[] parameterValue = {"valid", "valid"};
 
         // when
         final Throwable result = catchThrowable(() -> checkNotBlank("parameterName", parameterValue));
@@ -95,7 +95,7 @@ class ParameterPreconditionsTest {
     @Test
     void Should_Throw_Exception_When_At_Least_One_Parameter_Is_Null() {
         // given
-        final String[] parameterValue = new String[]{"valid", null};
+        final String[] parameterValue = {"valid", null};
 
         // when
         final Throwable result = catchThrowable(() -> checkNotBlank("parameterName", parameterValue));
