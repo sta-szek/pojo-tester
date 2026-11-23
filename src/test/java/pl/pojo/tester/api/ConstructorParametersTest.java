@@ -124,4 +124,39 @@ class ConstructorParametersTest {
         assertThat(result).isFalse();
     }
 
+    @Test
+    void Should_Not_Be_Affected_By_Modification_Of_Returned_Arrays() {
+        // given
+        final Object argument = new Object();
+        final ConstructorParameters constructorParameters = new ConstructorParameters(new Object[]{argument},
+                                                                                      new Class[]{Object.class});
+        final int hashCode = constructorParameters.hashCode();
+
+        // when
+        constructorParameters.getParameters()[0] = "changed";
+        constructorParameters.getParametersTypes()[0] = String.class;
+
+        // then
+        assertThat(constructorParameters.getParameters()).containsExactly(argument);
+        assertThat(constructorParameters.getParameters()[0]).isSameAs(argument);
+        assertThat(constructorParameters.getParametersTypes()).containsExactly(Object.class);
+        assertThat(constructorParameters.matches(new Class[]{Object.class})).isTrue();
+        assertThat(constructorParameters.hashCode()).isEqualTo(hashCode);
+    }
+
+    @Test
+    void Should_Not_Be_Affected_By_Modification_Of_Constructor_Arrays() {
+        // given
+        final Object[] parameters = {"a"};
+        final Class[] types = {String.class};
+        final ConstructorParameters constructorParameters = new ConstructorParameters(parameters, types);
+
+        // when
+        parameters[0] = "b";
+        types[0] = Object.class;
+
+        // then
+        assertThat(constructorParameters.getParameters()).containsExactly("a");
+        assertThat(constructorParameters.getParametersTypes()).containsExactly(String.class);
+    }
 }

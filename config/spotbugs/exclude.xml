@@ -11,4 +11,9 @@
         <Class name="~pl\.pojo\.tester\.internal\.assertion\..*AssertionError"/>
         <Bug pattern="VA_FORMAT_STRING_USES_NEWLINE"/>
     </Match>
+    <!-- Internal collaborators intentionally share the (mutable) objects passed in; they are not public API. -->
+    <Match>
+        <Class name="~pl\.pojo\.tester\.internal\..*"/>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+    </Match>
 </FindBugsFilter>
