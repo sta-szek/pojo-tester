@@ -16,7 +16,7 @@ import java.lang.reflect.Proxy;
 
 class ProxyInstantiator extends AbstractMultiConstructorInstantiator {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BestConstructorInstantiator.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProxyInstantiator.class);
 
     private final ProxyFactory proxyFactory = new ProxyFactory();
 

@@ -55,7 +55,7 @@ public final class ReflectionUtils {
     }
 
     private static File getFile(final String packageName) {
-        final String packagePath = packageName.replaceAll("\\" + PACKAGE_SEPARATOR, FILE_SEPARATOR);
+        final String packagePath = packageName.replace(PACKAGE_SEPARATOR, FILE_SEPARATOR);
 
         final URL fileUrl = Thread.currentThread()
                                   .getContextClassLoader()

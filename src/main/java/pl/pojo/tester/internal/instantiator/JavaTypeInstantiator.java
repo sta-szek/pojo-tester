@@ -55,23 +55,23 @@ class JavaTypeInstantiator extends AbstractObjectInstantiator {
         preparedObjects.put(BigDecimal.class.getName(), BigDecimal.ONE);
         preparedObjects.put(BigInteger.class.getName(), BigInteger.ONE);
 
-        preparedObjects.put(java.sql.Date.class.getName(), java.sql.Date.valueOf(LocalDate.now()));
+        preparedObjects.put(java.sql.Date.class.getName(), java.sql.Date.valueOf(LocalDate.now(ZoneId.systemDefault())));
         preparedObjects.put(Date.class.getName(), Date.from(Instant.now()));
 
 
         preparedObjects.put(Clock.class.getName(), Clock.systemDefaultZone());
         preparedObjects.put(Duration.class.getName(), Duration.ZERO);
         preparedObjects.put(Instant.class.getName(), Instant.now());
-        preparedObjects.put(LocalDate.class.getName(), LocalDate.now());
-        preparedObjects.put(LocalDateTime.class.getName(), LocalDateTime.now());
-        preparedObjects.put(LocalTime.class.getName(), LocalTime.now());
-        preparedObjects.put(MonthDay.class.getName(), MonthDay.now());
-        preparedObjects.put(OffsetDateTime.class.getName(), OffsetDateTime.now());
-        preparedObjects.put(OffsetTime.class.getName(), OffsetTime.now());
+        preparedObjects.put(LocalDate.class.getName(), LocalDate.now(ZoneId.systemDefault()));
+        preparedObjects.put(LocalDateTime.class.getName(), LocalDateTime.now(ZoneId.systemDefault()));
+        preparedObjects.put(LocalTime.class.getName(), LocalTime.now(ZoneId.systemDefault()));
+        preparedObjects.put(MonthDay.class.getName(), MonthDay.now(ZoneId.systemDefault()));
+        preparedObjects.put(OffsetDateTime.class.getName(), OffsetDateTime.now(ZoneId.systemDefault()));
+        preparedObjects.put(OffsetTime.class.getName(), OffsetTime.now(ZoneId.systemDefault()));
         preparedObjects.put(Period.class.getName(), Period.ZERO);
-        preparedObjects.put(Year.class.getName(), Year.now());
-        preparedObjects.put(YearMonth.class.getName(), YearMonth.now());
-        preparedObjects.put(ZonedDateTime.class.getName(), ZonedDateTime.now());
+        preparedObjects.put(Year.class.getName(), Year.now(ZoneId.systemDefault()));
+        preparedObjects.put(YearMonth.class.getName(), YearMonth.now(ZoneId.systemDefault()));
+        preparedObjects.put(ZonedDateTime.class.getName(), ZonedDateTime.now(ZoneId.systemDefault()));
         preparedObjects.put(ZoneId.class.getName(), ZoneId.systemDefault());
         preparedObjects.put(ZoneOffset.class.getName(), ZoneOffset.UTC);
     }
