@@ -48,7 +48,7 @@ jobs:
         run: ./gradlew build --no-daemon --stacktrace -PtestJavaVersion=${{ matrix.java }} -Dorg.gradle.java.installations.paths=${{ steps.test-java.outputs.path }}:${{ steps.gradle-java.outputs.path }}
 
       - name: Publish test results
-        if: always() && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
+        if: always() && github.actor != 'dependabot[bot]' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
         uses: EnricoMi/publish-unit-test-result-action@v2
         with:
           check_name: Test results (Java ${{ matrix.java }})
