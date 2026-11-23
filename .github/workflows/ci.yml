@@ -16,15 +16,29 @@ concurrency:
 
 jobs:
   test:
-    name: Java ${{ matrix.java }}
-    runs-on: ubuntu-latest
+    name: Java ${{ matrix.java }} (${{ matrix.runner }})
+    # A fork must not run on the private machine. Those cells move to GitHub instead.
+    runs-on: ${{ (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository && matrix.runner == 'self-hosted') && 'ubuntu-latest' || matrix.runner }}
+    timeout-minutes: 45
     permissions:
       contents: read
       checks: write
     strategy:
       fail-fast: false
       matrix:
-        java: [8, 11, 17, 21, 25]
+        include:
+          - runner: self-hosted
+            java: 8
+          - runner: self-hosted
+            java: 11
+          - runner: self-hosted
+            java: 17
+          - runner: self-hosted
+            java: 21
+          - runner: self-hosted
+            java: 25
+          - runner: ubuntu-latest
+            java: 8
     steps:
       - uses: actions/checkout@v7
 
@@ -41,6 +55,8 @@ jobs:
         with:
           distribution: temurin
           java-version: ${{ matrix.java }}
+
+      - uses: gradle/actions/setup-gradle@v6
 
       - name: Build and test on Java ${{ matrix.java }}
         env:
@@ -85,7 +101,8 @@ jobs:
 
   quality:
     name: Format and static analysis
-    runs-on: ubuntu-latest
+    runs-on: ${{ (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository) && 'ubuntu-latest' || 'self-hosted' }}
+    timeout-minutes: 30
     permissions:
       contents: read
       security-events: write
@@ -98,6 +115,8 @@ jobs:
         with:
           distribution: temurin
           java-version: 21
+
+      - uses: gradle/actions/setup-gradle@v6
 
       - name: Spotless (changed files only)
         run: ./gradlew spotlessCheck --no-daemon --stacktrace -PtestJavaVersion=21
@@ -123,7 +142,8 @@ jobs:
 
   mutation:
     name: Mutation tests
-    runs-on: ubuntu-latest
+    runs-on: ${{ (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository) && 'ubuntu-latest' || 'self-hosted' }}
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v7
 
@@ -131,6 +151,8 @@ jobs:
         with:
           distribution: temurin
           java-version: 21
+
+      - uses: gradle/actions/setup-gradle@v6
 
       - name: Run PIT
         run: ./gradlew pitest --no-daemon --stacktrace -PtestJavaVersion=21

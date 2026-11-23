@@ -60,25 +60,22 @@ The snapshot repository is `https://central.sonatype.com/repository/maven-snapsh
 | `spotbugsMain` | static analysis (reports in `build/reports/spotbugs`) |
 | `jacocoTestReport` | merged unit and integration coverage |
 
-`build` depends on `check`, and `check` depends on both test tasks. Mutation tests are a separate task because a full PIT run is much slower than the test suite. CI runs `build` on each JDK in the matrix and `pitest` once on Java 21.
+`build` depends on `check`, and `check` depends on both test tasks. Mutation tests are a separate task because a full PIT run is much slower than the test suite. CI runs the full JDK line (8, 11, 17, 21, 25) on the self-hosted runner and Java 8 on `ubuntu-latest`. Spotless, SpotBugs and PIT run on the self-hosted runner. A pull request from a fork runs those jobs on `ubuntu-latest` instead, so untrusted code stays off the private machine. Gradle dependency and build caches are restored on every Gradle job.
 
 ## Publishing
 
-Two workflows publish to the [Central Portal](https://central.sonatype.com/). Bintray and the old OSSRH host are not used.
+[Release](.github/workflows/release.yml) publishes to the [Central Portal](https://central.sonatype.com/) after CI is green on `master`. Bintray and the old OSSRH host are not used. A tag push does not publish anything.
 
-| Workflow | When | Environment | What is published |
-| --- | --- | --- | --- |
-| [Release snapshot](.github/workflows/release-snapshot.yml) | CI is green on `master`, or a manual run from `master` | `release-snapshot` (protected branches) | The `-SNAPSHOT` version from `gradle.properties` |
-| [Release](.github/workflows/release-ga.yml) | Tag `X.Y.Z` | `release-ga` (tags `*.*.*` only) | Release `X.Y.Z`, a GitHub release, then an auto-merged pull request that bumps the snapshot patch |
+| Step | Where it waits | What it does |
+| --- | --- | --- |
+| Build | nowhere | `./gradlew build` on `self-hosted` (Java 21) and on `ubuntu-latest` (Java 8) |
+| Snapshot | environment `release-snapshot` | waits for a reviewer, then builds again and publishes the `-SNAPSHOT` |
+| Release build | nowhere | the same two builds, after the snapshot exists |
+| Release | environment `release-ga` | waits for a reviewer, then builds, signs and publishes `X.Y.Z`, opens a GitHub release, and opens an auto-merged pull request for `X.Y.(Z+1)-SNAPSHOT` |
 
-`master` stays on a snapshot. Do not commit a release version there, and do not publish a release from a branch. The `release-ga` environment rejects every ref that is not a `*.*.*` tag. The tag has no `v` prefix:
+`master` stays on a snapshot. Do not commit a release version there. The workflow reads `X.Y.Z-SNAPSHOT` from `gradle.properties` and passes `X.Y.Z` as `-Pversion`. Rejecting the GA review leaves the snapshot published and does not release.
 
-```bash
-git tag 0.8.0
-git push origin 0.8.0
-```
-
-The tag does not have to change `gradle.properties`. The workflow passes the tag as `-Pversion`.
+Both environments allow protected branches and have a required reviewer. Run a manual dispatch from `master` only.
 
 Each environment has its own secrets (Settings, Environments). A repository secret with the same name is only a fallback. Do not commit them.
 
