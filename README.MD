@@ -17,6 +17,17 @@ The project was paused in 2020. It is being brought back so the same Java 8 byte
 
 Documentation site: [pojo.pl](http://pojo.pl) (may be stale). The user guide in this repository has a [fork survey](src/book/forks/README.md) (23 November 2026). No fork should be merged back as a whole.
 
+## What a test accepts
+
+This is the behavior on `master` (`0.8.0-SNAPSHOT`). Release `0.7.6` does not include it.
+
+- A final field is copied, not given a different value. Call `changingFinalFields()` to opt in. On Java 12 and newer that write goes through `VarHandle`, so the old `Field.modifiers` failure does not happen.
+- `create(Class, Supplier)` supplies the instance when the class has no usable constructor. That covers a builder and a constructor that rejects the library's default arguments.
+- A setter may return the class under test (`return this`). A method that returns `Object` is not treated as a setter.
+- JavaBeans spelling is kept when the second letter is already uppercase: `xCoordinate` matches `getxCoordinate` and `setxCoordinate`, and `URL` matches `getURL`.
+- An enum is not tested for setters. A setter of an enum-typed field on an ordinary class still is.
+- A package scan loads only `*.class` files. A `mapper.xml` sitting next to the classes is ignored.
+
 ## Build
 
 `./gradlew build` compiles with `--release 8`, runs the unit tests and the integration tests, and builds the library, sources and Javadoc jars. Gradle itself needs JDK 17 or newer. The produced bytecode still runs on Java 8.
