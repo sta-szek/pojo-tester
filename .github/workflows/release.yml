@@ -34,17 +34,32 @@ jobs:
        github.event.workflow_run.head_branch == 'master') ||
       (github.event_name == 'workflow_dispatch' && github.event.inputs.version == '')
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
+      # Checks out the default branch, never a ref taken from the triggering run.
       - uses: actions/checkout@v7
-        with:
-          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
 
-      - uses: actions/setup-java@v6
+      - name: Skip if master moved past the tested commit
+        id: tested
+        env:
+          TESTED_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          if [ -n "$TESTED_SHA" ] && [ "$(git rev-parse HEAD)" != "$TESTED_SHA" ]; then
+            echo "master is no longer at the tested commit $TESTED_SHA. The newer commit publishes its own snapshot."
+            echo "publish=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "publish=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - if: steps.tested.outputs.publish == 'true'
+        uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: 21
 
       - name: Publish snapshot
+        if: steps.tested.outputs.publish == 'true'
         env:
           CENTRAL_TOKEN: ${{ secrets.CENTRAL_TOKEN }}
           CENTRAL_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
