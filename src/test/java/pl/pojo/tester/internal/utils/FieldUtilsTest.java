@@ -9,7 +9,10 @@ import lombok.ToString;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
+import org.junit.jupiter.api.condition.EnabledForJreRange;
+import org.junit.jupiter.api.condition.JRE;
 import org.junit.jupiter.api.function.Executable;
+import pl.pojo.tester.internal.GetOrSetValueException;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -19,6 +22,7 @@ import java.util.stream.Stream;
 
 import static helpers.TestHelper.getDefaultDisplayName;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.util.Lists.newArrayList;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
@@ -154,6 +158,43 @@ class FieldUtilsTest {
         assertThat(result).isEqualTo(expectedResult);
     }
 
+    @Test
+    void Should_Set_Value_Of_Final_Field() throws java.lang.NoSuchFieldException {
+        // given
+        final WithFinalFields target = new WithFinalFields();
+        final Field field = WithFinalFields.class.getDeclaredField("instanceValue");
+
+        // when
+        FieldUtils.setValue(target, field, "changed");
+
+        // then
+        assertThat(FieldUtils.getValue(target, field)).isEqualTo("changed");
+    }
+
+    // Before Java 12 the modifiers hack makes static final fields writable.
+    @Test
+    @EnabledForJreRange(min = JRE.JAVA_17)
+    void Should_Throw_Exception_When_Static_Final_Field_Cannot_Be_Set() throws java.lang.NoSuchFieldException {
+        // given
+        final Field field = WithFinalFields.class.getDeclaredField("STATIC_VALUE");
+
+        // when
+        final Throwable result = catchThrowable(() -> FieldUtils.setValue(new WithFinalFields(), field, new Object()));
+
+        // then
+        assertThat(result).isInstanceOf(GetOrSetValueException.class);
+    }
+
+    @Test
+    void Should_Throw_Exception_When_Specified_Field_Does_Not_Exist() {
+        // when
+        final Throwable result = catchThrowable(() -> FieldUtils.getSpecifiedFields(B.class,
+                                                                                    newArrayList("missing")));
+
+        // then
+        assertThat(result).isInstanceOf(GetOrSetValueException.class);
+    }
+
     private Field fieldFromPermutation1Class(final String name) throws java.lang.NoSuchFieldException {
         return Permutation1.class.getDeclaredField(name);
     }
@@ -172,6 +213,11 @@ class FieldUtilsTest {
     private class TestCase {
         private Class<?> clazz;
         private List<List<Field>> fields;
+    }
+
+    private static class WithFinalFields {
+        private static final Object STATIC_VALUE = new Object();
+        private final Object instanceValue = "initial";
     }
 
     private class A {
