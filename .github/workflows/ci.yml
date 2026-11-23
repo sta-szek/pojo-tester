@@ -99,7 +99,7 @@ jobs:
 
       - name: Upload SpotBugs SARIF to code scanning
         if: always() && hashFiles('build/reports/spotbugs/main.sarif') != '' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: build/reports/spotbugs/main.sarif
           category: spotbugs
