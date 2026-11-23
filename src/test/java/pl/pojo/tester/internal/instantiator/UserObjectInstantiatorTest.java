@@ -10,10 +10,10 @@ import static java.util.Optional.empty;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class UserObjectInstantiatorTest {
+class UserObjectInstantiatorTest {
 
     @Test
-    public void should_instantiate() {
+    void should_instantiate() {
         // Given
         UserObjectInstantiator instantiator = new UserObjectInstantiator(String.class, new HashSetValuedHashMap<>()) {
             @Override
@@ -35,7 +35,7 @@ public class UserObjectInstantiatorTest {
     }
 
     @Test
-    public void should_not_instantiate_and_throw_exception() {
+    void should_not_instantiate_and_throw_exception() {
         // Given
         UserObjectInstantiator instantiator = new UserObjectInstantiator(String.class, new HashSetValuedHashMap<>()) {
             @Override

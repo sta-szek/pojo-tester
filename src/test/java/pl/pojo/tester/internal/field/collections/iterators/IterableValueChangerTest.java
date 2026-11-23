@@ -25,13 +25,13 @@ class IterableValueChangerTest {
         collectionABC.add("B");
         collectionABC.add("C");
 
-        final Collection<String> collectionAB_1 = new ArrayList<>();
-        collectionAB_1.add("A");
-        collectionAB_1.add("B");
+        final Collection<String> collectionAb1 = new ArrayList<>();
+        collectionAb1.add("A");
+        collectionAb1.add("B");
 
-        final Collection<String> collectionAB_2 = new ArrayList<>();
-        collectionAB_2.add("A");
-        collectionAB_2.add("B");
+        final Collection<String> collectionAb2 = new ArrayList<>();
+        collectionAb2.add("A");
+        collectionAb2.add("B");
 
         final ArrayList<Object> emptyArrayList = new ArrayList<>();
 
@@ -40,8 +40,8 @@ class IterableValueChangerTest {
                          new AreDifferentCase(collectionABC, collectionABC, false),
                          new AreDifferentCase(null, emptyArrayList, true),
                          new AreDifferentCase(emptyArrayList, null, true),
-                         new AreDifferentCase(collectionAB_1, collectionABC, true),
-                         new AreDifferentCase(collectionAB_1, collectionAB_2, false))
+                         new AreDifferentCase(collectionAb1, collectionABC, true),
+                         new AreDifferentCase(collectionAb1, collectionAb2, false))
                      .map(value -> dynamicTest(getDefaultDisplayName(value.value1 + " " + value.value2),
                                                Should_Return_True_Or_False_Whether_Values_Are_Different_Or_Not(value)));
     }

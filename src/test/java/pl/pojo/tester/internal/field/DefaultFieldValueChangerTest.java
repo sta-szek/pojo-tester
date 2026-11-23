@@ -32,7 +32,7 @@ class DefaultFieldValueChangerTest {
 
         // then
         assertThat(result).containsOnly(expectedResult.toArray(new Class[]{}));
-        assertThat(result.size()).isEqualTo(expectedResult.size());
+        assertThat(result).hasSameSizeAs(expectedResult);
     }
 
     @Test
