@@ -108,9 +108,6 @@ public class EqualsTester extends AbstractTester {
         final Object alsoNull = objectGenerator.generateSameInstance(populated);
         FieldUtils.setValue(withNull, field, null);
         FieldUtils.setValue(alsoNull, field, null);
-        if (FieldUtils.getValue(withNull, field) != null || FieldUtils.getValue(alsoNull, field) != null) {
-            return;
-        }
         testAssertions.assertThatEqualsMethodFor(withNull)
                       .isEqualTo(alsoNull);
         testAssertions.assertThatEqualsMethodFor(withNull)
