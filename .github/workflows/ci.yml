@@ -16,29 +16,16 @@ concurrency:
 
 jobs:
   test:
-    name: Java ${{ matrix.java }} (${{ matrix.runner }})
-    # A fork must not run on the private machine. Those cells move to GitHub instead.
-    runs-on: ${{ (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository && matrix.runner == 'self-hosted') && 'ubuntu-latest' || matrix.runner }}
-    timeout-minutes: 45
+    name: Java ${{ matrix.java }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
     permissions:
       contents: read
       checks: write
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - runner: self-hosted
-            java: 8
-          - runner: self-hosted
-            java: 11
-          - runner: self-hosted
-            java: 17
-          - runner: self-hosted
-            java: 21
-          - runner: self-hosted
-            java: 25
-          - runner: ubuntu-latest
-            java: 8
+        java: [8, 11, 17, 21, 25]
     steps:
       - uses: actions/checkout@v7
 
@@ -64,7 +51,7 @@ jobs:
         run: ./gradlew build --no-daemon --stacktrace -PtestJavaVersion=${{ matrix.java }} -Dorg.gradle.java.installations.paths=${{ steps.test-java.outputs.path }}:${{ steps.gradle-java.outputs.path }}
 
       - name: Publish test results
-        if: always() && runner.os == 'Linux' && github.actor != 'dependabot[bot]' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
+        if: always() && github.actor != 'dependabot[bot]' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
         uses: EnricoMi/publish-unit-test-result-action@v2
         with:
           check_name: Test results (Java ${{ matrix.java }})
@@ -101,8 +88,8 @@ jobs:
 
   quality:
     name: Format and static analysis
-    runs-on: ${{ (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository) && 'ubuntu-latest' || 'self-hosted' }}
-    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
     permissions:
       contents: read
       security-events: write
@@ -142,8 +129,8 @@ jobs:
 
   mutation:
     name: Mutation tests
-    runs-on: ${{ (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository) && 'ubuntu-latest' || 'self-hosted' }}
-    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v7
 

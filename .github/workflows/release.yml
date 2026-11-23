@@ -62,55 +62,10 @@ jobs:
           echo "version=$version" >> "$GITHUB_OUTPUT"
           echo "release=$release" >> "$GITHUB_OUTPUT"
 
-  build:
-    name: Build (${{ matrix.runner }}, Java ${{ matrix.java }})
-    needs: prepare
-    if: needs.prepare.outputs.sha != ''
-    runs-on: ${{ matrix.runner }}
-    timeout-minutes: 45
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - runner: self-hosted
-            java: 21
-          - runner: ubuntu-latest
-            java: 8
-    steps:
-      - uses: actions/checkout@v7
-
-      - name: Stay on the tested commit
-        env:
-          EXPECTED_SHA: ${{ needs.prepare.outputs.sha }}
-        run: |
-          if [ "$(git rev-parse HEAD)" != "$EXPECTED_SHA" ]; then
-            echo "Checked out $(git rev-parse HEAD), expected the tested commit $EXPECTED_SHA."
-            exit 1
-          fi
-
-      - uses: actions/setup-java@v6
-        id: gradle-java
-        with:
-          distribution: temurin
-          java-version: 21
-
-      - uses: actions/setup-java@v6
-        id: test-java
-        with:
-          distribution: temurin
-          java-version: ${{ matrix.java }}
-
-      - uses: gradle/actions/setup-gradle@v6
-
-      - name: Build and test
-        env:
-          JAVA_HOME: ${{ steps.gradle-java.outputs.path }}
-        run: ./gradlew build --no-daemon --stacktrace -PtestJavaVersion=${{ matrix.java }} -Dorg.gradle.java.installations.paths=${{ steps.test-java.outputs.path }}:${{ steps.gradle-java.outputs.path }}
-
   snapshot:
     name: Publish snapshot
-    needs: [prepare, build]
-    if: needs.prepare.outputs.sha != '' && needs.build.result == 'success'
+    needs: prepare
+    if: needs.prepare.outputs.sha != ''
     runs-on: ubuntu-latest
     environment: release-snapshot
     steps:
@@ -160,55 +115,10 @@ jobs:
           echo "### Snapshot" >> "$GITHUB_STEP_SUMMARY"
           echo "Published \`pl.pojo:pojo-tester:${VERSION}\`." >> "$GITHUB_STEP_SUMMARY"
 
-  release-build:
-    name: Release build (${{ matrix.runner }}, Java ${{ matrix.java }})
-    needs: [prepare, snapshot]
-    if: needs.snapshot.result == 'success'
-    runs-on: ${{ matrix.runner }}
-    timeout-minutes: 45
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - runner: self-hosted
-            java: 21
-          - runner: ubuntu-latest
-            java: 8
-    steps:
-      - uses: actions/checkout@v7
-
-      - name: Stay on the tested commit
-        env:
-          EXPECTED_SHA: ${{ needs.prepare.outputs.sha }}
-        run: |
-          if [ "$(git rev-parse HEAD)" != "$EXPECTED_SHA" ]; then
-            echo "Checked out $(git rev-parse HEAD), expected the tested commit $EXPECTED_SHA."
-            exit 1
-          fi
-
-      - uses: actions/setup-java@v6
-        id: gradle-java
-        with:
-          distribution: temurin
-          java-version: 21
-
-      - uses: actions/setup-java@v6
-        id: test-java
-        with:
-          distribution: temurin
-          java-version: ${{ matrix.java }}
-
-      - uses: gradle/actions/setup-gradle@v6
-
-      - name: Build and test
-        env:
-          JAVA_HOME: ${{ steps.gradle-java.outputs.path }}
-        run: ./gradlew build --no-daemon --stacktrace -PtestJavaVersion=${{ matrix.java }} -Dorg.gradle.java.installations.paths=${{ steps.test-java.outputs.path }}:${{ steps.gradle-java.outputs.path }}
-
   release:
     name: Publish release
-    needs: [prepare, snapshot, release-build]
-    if: needs.snapshot.result == 'success' && needs.release-build.result == 'success'
+    needs: [prepare, snapshot]
+    if: needs.snapshot.result == 'success'
     runs-on: ubuntu-latest
     environment: release-ga
     steps:
