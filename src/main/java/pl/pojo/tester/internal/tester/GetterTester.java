@@ -8,6 +8,7 @@ import pl.pojo.tester.internal.utils.MethodUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,8 +30,19 @@ public class GetterTester extends AbstractTester {
                                                         baseClassAndFieldPredicatePair.getFieldsPredicate());
         final List<GetterAndFieldPair> getterAndFieldPairs = findGettersForFields(testedClass, fields);
         final Object instance = objectGenerator.createNewInstance(testedClass);
+        giveEachFieldItsOwnValue(instance, fields);
 
         getterAndFieldPairs.forEach(eachPair -> testGetter(eachPair, instance));
+    }
+
+    private void giveEachFieldItsOwnValue(final Object instance, final List<Field> fields) {
+        final List<Object> used = new ArrayList<>();
+        for (final Field field : fields) {
+            final Object seed = objectGenerator.createNewInstance(field.getType());
+            final Object value = valueUnlike(seed, used);
+            FieldUtils.setValue(instance, field, value);
+            used.add(value);
+        }
     }
 
     private void testGetter(final GetterAndFieldPair eachPair, final Object instance) {

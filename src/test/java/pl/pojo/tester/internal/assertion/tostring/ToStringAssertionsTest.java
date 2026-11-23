@@ -92,6 +92,45 @@ class ToStringAssertionsTest {
         assertThat(result).isNull();
     }
 
+    @Test
+    void Should_Accept_IntelliJ_Quotes_Around_A_String() {
+        final ToStringAssertions toStringAssertions = new ToStringAssertions(new QuotedString());
+
+        final Throwable result = catchThrowable(() -> toStringAssertions.contains("message", "www.pojo.pl"));
+
+        assertThat(result).isNull();
+    }
+
+    @Test
+    void Should_Accept_Arrays_ToString_For_Object_Array() {
+        final Object[] values = {"a", "b"};
+        final ToStringAssertions toStringAssertions = new ToStringAssertions(new ObjectArray(values));
+
+        final Throwable result = catchThrowable(() -> toStringAssertions.contains("values", values));
+
+        assertThat(result).isNull();
+    }
+
+    private static final class QuotedString {
+        @Override
+        public String toString() {
+            return "message='www.pojo.pl'";
+        }
+    }
+
+    private static final class ObjectArray {
+        private final Object[] values;
+
+        private ObjectArray(final Object[] values) {
+            this.values = values;
+        }
+
+        @Override
+        public String toString() {
+            return "values=" + Arrays.toString(values);
+        }
+    }
+
     private static final class BracketArray {
         private final int[] values;
 

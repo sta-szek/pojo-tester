@@ -49,6 +49,12 @@ public class ToStringAssertions {
             return Collections.singletonList("");
         }
         if (!value.getClass().isArray()) {
+            if (value instanceof CharSequence || value instanceof Character) {
+                final List<String> renderings = new ArrayList<>(2);
+                renderings.add(value.toString());
+                renderings.add("'" + value + "'");
+                return renderings;
+            }
             return Collections.singletonList(value.toString());
         }
         final List<String> renderings = new ArrayList<>(2);

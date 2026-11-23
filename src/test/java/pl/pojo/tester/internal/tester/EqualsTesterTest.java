@@ -182,6 +182,58 @@ class EqualsTesterTest {
         assertThat(result).isInstanceOf(AbstractEqualsAssertionError.class);
     }
 
+    @Test
+    void Should_Pass_When_Equals_Accepts_A_Null_Field() {
+        final Throwable result = catchThrowable(() -> new EqualsTester().test(NullSafeName.class));
+
+        assertThat(result).isNull();
+    }
+
+    @Test
+    void Should_Fail_When_A_Null_Field_Equals_A_Value() {
+        final Throwable result = catchThrowable(() -> new EqualsTester().test(NullMatchesAnyValue.class));
+
+        assertThat(result).isInstanceOf(AbstractEqualsAssertionError.class);
+    }
+
+    private static final class NullSafeName {
+        private String name;
+
+        @Override
+        public boolean equals(final Object other) {
+            if (this == other) {
+                return true;
+            }
+            if (other == null || getClass() != other.getClass()) {
+                return false;
+            }
+            return java.util.Objects.equals(name, ((NullSafeName) other).name);
+        }
+
+        @Override
+        public int hashCode() {
+            return java.util.Objects.hash(name);
+        }
+    }
+
+    private static final class NullMatchesAnyValue {
+        private String name;
+
+        @Override
+        public boolean equals(final Object other) {
+            if (!(other instanceof NullMatchesAnyValue)) {
+                return false;
+            }
+            final String otherName = ((NullMatchesAnyValue) other).name;
+            return name == null || name.equals(otherName);
+        }
+
+        @Override
+        public int hashCode() {
+            return 1;
+        }
+    }
+
     private class GoodPojo_Equals_HashCode_ToString {
         long random;
         byte byteField;

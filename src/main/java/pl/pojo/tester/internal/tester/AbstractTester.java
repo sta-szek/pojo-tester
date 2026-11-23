@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
@@ -95,6 +96,41 @@ public abstract class AbstractTester {
 
     private ObjectGenerator recreateObjectGenerator() {
         return new ObjectGenerator(fieldValuesChanger, constructorParameters, permutator, instantiators, changeFinalFields);
+    }
+
+    Object valueUnlike(final Object seed, final List<Object> blocked) {
+        Object candidate = seed;
+        for (int attempt = 0; attempt < 32; attempt++) {
+            if (!isBlocked(candidate, blocked)) {
+                return candidate;
+            }
+            final Object next = nextDistinctValue(candidate);
+            if (next == null || Objects.deepEquals(next, candidate)) {
+                return candidate;
+            }
+            candidate = next;
+        }
+        return candidate;
+    }
+
+    private Object nextDistinctValue(final Object candidate) {
+        if (candidate == null) {
+            return null;
+        }
+        try {
+            return fieldValuesChanger.increaseValue(candidate);
+        } catch (final ClassCastException incompatibleChanger) {
+            return null;
+        }
+    }
+
+    private boolean isBlocked(final Object candidate, final List<Object> blocked) {
+        for (final Object existing : blocked) {
+            if (Objects.deepEquals(candidate, existing)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

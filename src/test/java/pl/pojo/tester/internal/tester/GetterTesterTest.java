@@ -3,6 +3,7 @@ package pl.pojo.tester.internal.tester;
 import lombok.Getter;
 import org.junit.jupiter.api.Test;
 import pl.pojo.tester.api.FieldPredicate;
+import pl.pojo.tester.internal.assertion.AbstractAssertionError;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
 import pl.pojo.tester.internal.utils.GetterNotFoundException;
 
@@ -67,6 +68,26 @@ class GetterTesterTest {
 
         // then
         assertThat(result).isInstanceOf(GetterNotFoundException.class);
+    }
+
+    @Test
+    void Should_Fail_When_Getter_Returns_Another_Field() {
+        final Throwable result = catchThrowable(() -> new GetterTester().test(SwappedGetters.class));
+
+        assertThat(result).isInstanceOf(AbstractAssertionError.class);
+    }
+
+    private static final class SwappedGetters {
+        private int qp;
+        private int db;
+
+        public int getQp() {
+            return db;
+        }
+
+        public int getDb() {
+            return qp;
+        }
     }
 
     @Getter
