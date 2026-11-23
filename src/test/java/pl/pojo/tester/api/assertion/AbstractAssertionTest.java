@@ -15,6 +15,10 @@ import pl.pojo.tester.internal.tester.EqualsTester;
 import pl.pojo.tester.internal.tester.HashCodeTester;
 import pl.pojo.tester.internal.utils.CollectionUtils;
 
+import org.slf4j.Logger;
+import pl.pojo.tester.api.ClassAndFieldPredicatePair;
+import pl.pojo.tester.internal.utils.ThoroughFieldPermutator;
+
 import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -38,6 +42,34 @@ class AbstractAssertionTest {
 
         // then
         assertThat(result).isEqualTo(expectedFieldsValuesChanger);
+    }
+
+    @Test
+    void Should_Use_Thorough_Permutator() {
+        // given
+        final AbstractAssertion abstractAssertion = new AbstractAssertionImplementation();
+
+        // when
+        abstractAssertion.quickly()
+                         .thoroughly();
+
+        // then
+        assertThat((Object) getInternalState(abstractAssertion, "permutator")).isInstanceOf(ThoroughFieldPermutator.class);
+    }
+
+    @Test
+    void Should_Log_Testers_And_Classes_When_Debug_Is_Enabled() {
+        // given
+        final AbstractAssertion abstractAssertion = new AbstractAssertionImplementation();
+        final Logger logger = mock(Logger.class);
+        when(logger.isDebugEnabled()).thenReturn(true);
+
+        // when
+        abstractAssertion.logTestersAndClasses(logger, new ClassAndFieldPredicatePair(String.class));
+
+        // then
+        verify(logger).debug(anyString(), any(Object.class), any(Object.class));
+        verify(logger, times(2)).debug(anyString(), any(Object.class));
     }
 
     @Test
