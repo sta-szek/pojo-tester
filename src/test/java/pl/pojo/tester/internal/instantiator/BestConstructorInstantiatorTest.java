@@ -176,12 +176,12 @@ class BestConstructorInstantiatorTest {
     @Test
     void Should_Create_Object_With_User_Defined_Constructor_Parameters() {
         // given
-        final ArrayListValuedHashMap<Class<?>, ConstructorParameters> constructorParameters = new ArrayListValuedHashMap<>();
+        final ArrayListValuedHashMap<Class<?>, ConstructorParameters> userParameters = new ArrayListValuedHashMap<>();
         final ConstructorParameters parameters = new ConstructorParameters(new Object[]{"expectedString"},
                                                                            new Class[]{Object.class});
-        constructorParameters.put(NoDefaultConstructor.class, parameters);
+        userParameters.put(NoDefaultConstructor.class, parameters);
         final BestConstructorInstantiator instantiator = new BestConstructorInstantiator(NoDefaultConstructor.class,
-                                                                                         constructorParameters);
+                                                                                         userParameters);
 
         final NoDefaultConstructor expectedResult = new NoDefaultConstructor("expectedString");
 

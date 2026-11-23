@@ -77,8 +77,8 @@ class EqualsTesterTest {
         // given
         final EqualsTester equalsTester = new EqualsTester();
         final Class<?> clazz = BadPojoEqualsDifferentObjectSameType.class;
-        final ArrayList<String> excludedFields = newArrayList("notIncludedToEqual_byteField",
-                                                              "notIncludedToEqual_shortType");
+        final ArrayList<String> excludedFields = newArrayList("notIncludedToEqualByteField",
+                                                              "notIncludedToEqualShortType");
 
         // when
         final Throwable result = catchThrowable(() -> equalsTester.test(clazz, FieldPredicate.exclude(excludedFields)));
@@ -247,8 +247,7 @@ class EqualsTesterTest {
         TestEnum1 testEnum1;
 
         GoodPojo_Equals_HashCode_ToString() {
-            final Random random = new Random();
-            this.random = random.nextLong();
+            this.random = new Random().nextLong();
         }
 
         @Override
@@ -390,15 +389,15 @@ class EqualsTesterTest {
     class BadPojoEqualsDifferentObjectSameType {
         private byte byteField;
         private short shortType;
-        private byte notIncludedToEqual_byteField;
-        private short notIncludedToEqual_shortType;
+        private byte notIncludedToEqualByteField;
+        private short notIncludedToEqualShortType;
 
         @Override
         public String toString() {
             return byteField + " " +
                     shortType + " " +
-                    notIncludedToEqual_byteField + " " +
-                    notIncludedToEqual_shortType;
+                    notIncludedToEqualByteField + " " +
+                    notIncludedToEqualShortType;
         }
 
         @Override
