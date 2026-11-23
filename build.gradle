@@ -2,6 +2,7 @@ plugins {
     id 'java-library'
     id 'com.vanniktech.maven.publish' version '0.37.0'
     id 'info.solidsoft.pitest' version '1.19.0'
+    id 'jacoco'
 }
 
 java {
@@ -90,6 +91,24 @@ tasks.named('check') {
 
 tasks.named('integrationTest') {
     mustRunAfter tasks.named('test')
+}
+
+jacoco {
+    toolVersion = '0.8.14'
+}
+
+// Unit and integration test coverage merged into one report .
+tasks.named('jacocoTestReport') {
+    dependsOn tasks.named('test'), tasks.named('integrationTest')
+    executionData.setFrom(fileTree(layout.buildDirectory.dir('jacoco')).include('*.exec'))
+    reports {
+        xml.required = true
+        html.required = true
+    }
+}
+
+tasks.named('check') {
+    finalizedBy tasks.named('jacocoTestReport')
 }
 
 pitest {
