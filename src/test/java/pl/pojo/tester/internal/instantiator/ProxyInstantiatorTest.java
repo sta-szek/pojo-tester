@@ -54,9 +54,9 @@ class ProxyInstantiatorTest {
         final Object result = instantiator.instantiate();
 
         // then
-        assertThat(result.toString()).isEqualTo("string");
-        assertThat(result.equals(null)).isTrue();
-        assertThat(result.hashCode()).isZero();
+        assertThat(result).hasToString("string")
+                          .hasSameHashCodeAs(0);
+        assertThat(result.equals(null)).isTrue(); // NOSONAR the proxy is expected to return true for equals(null)
     }
 
     @TestFactory

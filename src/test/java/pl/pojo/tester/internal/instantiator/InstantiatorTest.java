@@ -11,10 +11,10 @@ import java.util.Optional;
 import static java.util.Optional.empty;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class InstantiatorTest {
+class InstantiatorTest {
 
     @AfterEach
-    public void detachUserInstantiators() {
+    void detachUserInstantiators() {
         Instantiator.INSTANCE
                 .detach(CustomInstantiator.class)
                 .detach(CustomInstantiator2.class)
@@ -22,7 +22,7 @@ public class InstantiatorTest {
     }
 
     @Test
-    public void should_attach_instantiators() {
+    void should_attach_instantiators() {
         Instantiator.INSTANCE
                 .attach(CustomInstantiator.class)
                 .attach(CustomInstantiator2.class);
@@ -43,7 +43,7 @@ public class InstantiatorTest {
     }
 
     @Test
-    public void should_select_attached_instantiator() {
+    void should_select_attached_instantiator() {
         Instantiator.INSTANCE.attach(StringInstantiator.class);
 
         final AbstractObjectInstantiator instantiator = Instantiable.forClass(String.class, new HashSetValuedHashMap<>());
@@ -53,7 +53,7 @@ public class InstantiatorTest {
     }
 
     @Test
-    public void should_not_detach_built_in_instantiators() {
+    void should_not_detach_built_in_instantiators() {
         final int before = Instantiator.INSTANTIATORS.size();
 
         Instantiator.INSTANCE.detach(JavaTypeInstantiator.class);

@@ -218,7 +218,7 @@ class AbstractAssertionTest {
         abstractAssertion.areWellImplemented();
 
         // then
-        verify(abstractAssertion).create(eq(expectedClass), eq(expectedConstructorParameters));
+        verify(abstractAssertion).create(expectedClass, expectedConstructorParameters);
     }
 
     @Test
@@ -259,7 +259,7 @@ class AbstractAssertionTest {
         abstractAssertion.areWellImplemented();
 
         // then
-        verify(abstractAssertion).create(eq(expectedClassName), eq(expectedConstructorParameters));
+        verify(abstractAssertion).create(expectedClassName, expectedConstructorParameters);
     }
 
     private class AbstractAssertionImplementation extends AbstractAssertion {
