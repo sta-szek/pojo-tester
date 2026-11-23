@@ -33,7 +33,7 @@ dependencies {
 
     // Mockito 5 does not run on Java 8. Each CI job compiles tests against the version it executes.
     if (testJavaVersion <= 8) {
-        testImplementation 'org.mockito:mockito-core:4.11.0'
+        testImplementation 'org.mockito:mockito-core:5.24.0'
     } else {
         testImplementation 'org.mockito:mockito-core:5.24.0'
     }
