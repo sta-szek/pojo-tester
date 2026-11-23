@@ -13,6 +13,11 @@ updates:
       # build.gradle pins Mockito 4.x for Java 8 (Mockito 5 needs Java 11+) and 5.x for newer JDKs.
       - dependency-name: "org.mockito:mockito-core"
         update-types: ["version-update:semver-major"]
+      # JUnit 6 requires Java 17, while tests run on Java 8 and 11 too.
+      - dependency-name: "org.junit.jupiter:*"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "org.junit.platform:*"
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
