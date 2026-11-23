@@ -66,10 +66,10 @@ public class ConstructorParameters {
     }
 
     public Class<?>[] getParametersTypes() {
-        return parametersTypes;
+        return Arrays.copyOf(parametersTypes, parametersTypes.length);
     }
 
     public Object[] getParameters() {
-        return parameters;
+        return Arrays.copyOf(parameters, parameters.length);
     }
 }
