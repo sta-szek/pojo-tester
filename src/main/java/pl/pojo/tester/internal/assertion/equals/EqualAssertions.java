@@ -8,17 +8,17 @@ public class EqualAssertions {
 
     public EqualAssertions(final Object objectUnderAssert) {
         this.objectUnderAssert = objectUnderAssert;
-        this.classUnderTest = objectUnderAssert.getClass();
+        this.classUnderTest = objectUnderAssert.getClass(); // NOSONAR - null is rejected with an NPE
     }
 
     public void isReflexive() {
-        final boolean result = objectUnderAssert.equals(objectUnderAssert);
+        final boolean result = objectUnderAssert.equals(objectUnderAssert); // NOSONAR - reflexivity is what is being verified
         checkResult(result, new ReflexiveEqualsAssertionError(classUnderTest, objectUnderAssert));
     }
 
     public void isConsistent() {
-        final boolean result1 = objectUnderAssert.equals(objectUnderAssert);
-        final boolean result2 = objectUnderAssert.equals(objectUnderAssert);
+        final boolean result1 = objectUnderAssert.equals(objectUnderAssert); // NOSONAR - consistency is what is being verified
+        final boolean result2 = objectUnderAssert.equals(objectUnderAssert); // NOSONAR
         final boolean result = result1 && result2;
         checkResult(result, new ConsistentEqualsAssertionError(classUnderTest, objectUnderAssert, result1, result2));
     }
