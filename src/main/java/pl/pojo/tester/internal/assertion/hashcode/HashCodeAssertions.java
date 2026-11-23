@@ -8,7 +8,7 @@ public class HashCodeAssertions {
 
     public HashCodeAssertions(final Object objectUnderAssert) {
         this.objectUnderAssert = objectUnderAssert;
-        this.classUnderTest = objectUnderAssert.getClass();
+        this.classUnderTest = objectUnderAssert.getClass(); // NOSONAR - null is rejected with an NPE
     }
 
     public void isConsistent() {

@@ -33,11 +33,11 @@ public abstract class AbstractTester {
     private Map<Class<?>, Supplier<?>> instantiators = new LinkedHashMap<>();
     private boolean changeFinalFields;
 
-    public AbstractTester() {
+    protected AbstractTester() {
         this(DefaultFieldValueChanger.INSTANCE);
     }
 
-    public AbstractTester(final AbstractFieldValueChanger abstractFieldValueChanger) {
+    protected AbstractTester(final AbstractFieldValueChanger abstractFieldValueChanger) {
         this.fieldValuesChanger = abstractFieldValueChanger;
         objectGenerator = recreateObjectGenerator();
     }

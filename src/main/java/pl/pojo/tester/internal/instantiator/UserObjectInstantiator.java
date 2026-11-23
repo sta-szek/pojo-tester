@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public abstract class UserObjectInstantiator extends AbstractObjectInstantiator {
 
-    public UserObjectInstantiator(final Class<?> clazz,
+    protected UserObjectInstantiator(final Class<?> clazz,
                            final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
         super(clazz, constructorParameters);
     }
