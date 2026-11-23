@@ -67,7 +67,7 @@ public final class FieldUtils {
                 // Java 12+ removed Field.modifiers. VarHandle is called reflectively so this class
                 // still compiles as Java 8 bytecode.
                 setViaVarHandle(targetObject, field, value);
-            } catch (final Exception varHandleFailed) {
+            } catch (final ReflectiveOperationException varHandleFailed) {
                 throw new GetOrSetValueException(field.getName(), targetObject.getClass(), reflectiveSetFailed);
             }
         }
@@ -105,7 +105,8 @@ public final class FieldUtils {
         }
     }
 
-    private static void setViaVarHandle(final Object target, final Field field, final Object value) throws Exception {
+    private static void setViaVarHandle(final Object target, final Field field, final Object value)
+            throws ReflectiveOperationException {
         final Class<?> methodHandles = Class.forName("java.lang.invoke.MethodHandles");
         final Class<?> lookupType = Class.forName("java.lang.invoke.MethodHandles$Lookup");
         final Object lookup = methodHandles.getMethod("lookup").invoke(null);
