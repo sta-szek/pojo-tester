@@ -66,7 +66,7 @@ public class SetterTester extends AbstractTester {
         return new SetterAndFieldPair(setter, field);
     }
 
-    private class SetterAndFieldPair {
+    private static class SetterAndFieldPair {
         private final Method setter;
         private final Field field;
 

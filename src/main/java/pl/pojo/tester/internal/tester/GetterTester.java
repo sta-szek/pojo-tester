@@ -63,7 +63,7 @@ public class GetterTester extends AbstractTester {
         return new GetterAndFieldPair(getter, field);
     }
 
-    private class GetterAndFieldPair {
+    private static class GetterAndFieldPair {
         private final Method getter;
         private final Field field;
 
