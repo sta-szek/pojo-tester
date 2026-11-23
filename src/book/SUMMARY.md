@@ -31,6 +31,7 @@
 * [Contributors](contributors/README.md)
 * [Fork survey](forks/README.md)
 * [Release Notes](release-notes/README.md)
+  * [Next version 0.8.0-SNAPSHOT](release-notes/README.md#next)
   * [Release 0.7.6](release-notes/README.md#release-076)
   * [Release 0.7.5](release-notes/README.md#release-075)
   * [Release 0.7.4](release-notes/README.md#release-074)

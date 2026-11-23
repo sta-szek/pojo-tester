@@ -11,9 +11,8 @@ The project was paused in 2020. It is being brought back so the same Java 8 byte
 | License | [LGPL-3.0](LICENSE.MD) (unchanged) |
 | Bytecode | Java 8 |
 | CI | GitHub Actions. `build` on Java 8, 11, 17, 21 and 25. Mutation tests on Java 21. |
-| Coordinates | `pl.pojo:pojo-tester` |
-| Maven Central | last published release is `0.7.6` (2017). Snapshots publish after CI on `master`. Releases publish from a `vX.Y.Z` tag. |
-| Version in this branch | `0.8.0-SNAPSHOT` |
+| Coordinates | `pl.pojo:pojo-tester:0.8.0-SNAPSHOT` |
+| Maven Central | last published release is `0.7.6` (2017). The next version is the snapshot above. |
 
 Documentation site: [pojo.pl](http://pojo.pl) (may be stale). The user guide in this repository has a [fork survey](src/book/forks/README.md) (23 November 2026). No fork should be merged back as a whole.
 
@@ -27,6 +26,17 @@ This is the behavior on `master` (`0.8.0-SNAPSHOT`). Release `0.7.6` does not in
 - JavaBeans spelling is kept when the second letter is already uppercase: `xCoordinate` matches `getxCoordinate` and `setxCoordinate`, and `URL` matches `getURL`.
 - An enum is not tested for setters. A setter of an enum-typed field on an ordinary class still is.
 - A package scan loads only `*.class` files. A `mapper.xml` sitting next to the classes is ignored.
+- `toString` may wrap a `String` or `char` in single quotes. An `Object[]` printed with `Arrays.toString` is accepted.
+- Getters and setters are checked with a distinct value in every field.
+- `equals` is also checked with `null` in each included field that is not primitive and not `final`.
+
+```gradle
+dependencies {
+    testImplementation 'pl.pojo:pojo-tester:0.8.0-SNAPSHOT'
+}
+```
+
+The snapshot repository is `https://central.sonatype.com/repository/maven-snapshots/`. Release `0.7.6` does not need it.
 
 ## Build
 
