@@ -18,6 +18,7 @@ jobs:
   test:
     name: Java ${{ matrix.java }}
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     permissions:
       contents: read
       checks: write
@@ -41,6 +42,8 @@ jobs:
         with:
           distribution: temurin
           java-version: ${{ matrix.java }}
+
+      - uses: gradle/actions/setup-gradle@v6
 
       - name: Build and test on Java ${{ matrix.java }}
         env:
@@ -86,6 +89,7 @@ jobs:
   quality:
     name: Format and static analysis
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     permissions:
       contents: read
       security-events: write
@@ -98,6 +102,8 @@ jobs:
         with:
           distribution: temurin
           java-version: 21
+
+      - uses: gradle/actions/setup-gradle@v6
 
       - name: Spotless (changed files only)
         run: ./gradlew spotlessCheck --no-daemon --stacktrace -PtestJavaVersion=21
@@ -124,6 +130,7 @@ jobs:
   mutation:
     name: Mutation tests
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v7
 
@@ -131,6 +138,8 @@ jobs:
         with:
           distribution: temurin
           java-version: 21
+
+      - uses: gradle/actions/setup-gradle@v6
 
       - name: Run PIT
         run: ./gradlew pitest --no-daemon --stacktrace -PtestJavaVersion=21
