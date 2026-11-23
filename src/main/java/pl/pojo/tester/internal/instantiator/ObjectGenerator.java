@@ -74,8 +74,7 @@ public class ObjectGenerator {
     }
 
     private Object newInstance(final Class<?> clazz) {
-        return Instantiable.forClass(clazz, constructorParameters)
-                           .instantiate();
+        return Instantiable.instantiate(clazz, constructorParameters);
     }
 
     public Object generateSameInstance(final Object object) {

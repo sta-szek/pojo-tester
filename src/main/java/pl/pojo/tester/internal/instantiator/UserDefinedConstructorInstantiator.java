@@ -73,8 +73,7 @@ class UserDefinedConstructorInstantiator extends AbstractObjectInstantiator {
 
     private Object instantiateEnclosingClass() {
         final Class<?> enclosingClass = clazz.getEnclosingClass();
-        return Instantiable.forClass(enclosingClass, constructorParameters)
-                           .instantiate();
+        return Instantiable.instantiate(enclosingClass, constructorParameters);
     }
 
     private Object[] putEnclosingClassInstanceAsFirstParameter(final Object enclosingClassInstance,

@@ -77,8 +77,7 @@ abstract class AbstractMultiConstructorInstantiator extends AbstractObjectInstan
 
     private Object instantiateEnclosingClass() {
         final Class<?> enclosingClass = clazz.getEnclosingClass();
-        return Instantiable.forClass(enclosingClass, constructorParameters)
-                           .instantiate();
+        return Instantiable.instantiate(enclosingClass, constructorParameters);
     }
 
     private Class[] putEnclosingClassAsFirstParameterType(final Class<?> enclosingClass,
