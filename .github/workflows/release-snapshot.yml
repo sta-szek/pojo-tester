@@ -14,20 +14,29 @@ on:
 
 permissions:
   contents: read
+  administration: read
 
 concurrency:
   group: maven-central-snapshot
   cancel-in-progress: false
 
 jobs:
-  publish:
-    name: Publish snapshot
+  runner:
     if: >
       github.event_name == 'workflow_dispatch' ||
       (github.event.workflow_run.conclusion == 'success' &&
        github.event.workflow_run.event == 'push' &&
        github.event.workflow_run.head_branch == 'master')
-    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      administration: read
+    uses: ./.github/workflows/choose-runner.yml
+
+  publish:
+    name: Publish snapshot
+    needs: runner
+    if: needs.runner.result == 'success'
+    runs-on: ${{ needs.runner.outputs.runner }}
     environment: release-snapshot
     steps:
       - uses: actions/checkout@v7

@@ -1,0 +1,58 @@
+name: Choose runner
+
+# Picks self-hosted when at least one runner with that label is online and idle.
+# Otherwise the job uses a GitHub-hosted runner. The check itself always runs
+# on GitHub, so a switched-off machine cannot block the workflow.
+
+on:
+  workflow_call:
+    inputs:
+      allow_self_hosted:
+        description: Use an idle self-hosted runner when one exists.
+        type: boolean
+        default: true
+    outputs:
+      runner:
+        description: Value for runs-on.
+        value: ${{ jobs.pick.outputs.runner }}
+
+permissions:
+  contents: read
+
+jobs:
+  pick:
+    name: Choose runner
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      administration: read
+    outputs:
+      runner: ${{ steps.pick.outputs.runner }}
+    steps:
+      - id: pick
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ALLOW: ${{ inputs.allow_self_hosted }}
+        run: |
+          set -eu
+          use_hosted() {
+            echo "runner=ubuntu-latest" >> "$GITHUB_OUTPUT"
+            echo "$1" >> "$GITHUB_STEP_SUMMARY"
+          }
+          if [ "$ALLOW" != "true" ]; then
+            use_hosted "This event does not run on a self-hosted machine."
+            exit 0
+          fi
+          if ! json=$(gh api "repos/${GITHUB_REPOSITORY}/actions/runners" 2>runner-err); then
+            echo "Could not list runners:" >> "$GITHUB_STEP_SUMMARY"
+            cat runner-err >> "$GITHUB_STEP_SUMMARY"
+            use_hosted "Falling back to ubuntu-latest."
+            exit 0
+          fi
+          idle=$(printf '%s' "$json" | jq '[.runners[] | select(.status == "online" and .busy == false and ((.labels | map(.name)) | index("self-hosted")))] | length')
+          if [ "$idle" -gt 0 ]; then
+            echo "runner=self-hosted" >> "$GITHUB_OUTPUT"
+            echo "Idle self-hosted runners: ${idle}. Using self-hosted." >> "$GITHUB_STEP_SUMMARY"
+          else
+            use_hosted "No idle self-hosted runner. Using ubuntu-latest."
+          fi

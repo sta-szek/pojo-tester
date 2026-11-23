@@ -20,14 +20,23 @@ on:
     - cron: '37 2 * * 6'
 
 jobs:
+  runner:
+    permissions:
+      contents: read
+      administration: read
+    uses: ./.github/workflows/choose-runner.yml
+    with:
+      allow_self_hosted: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
+
   analyze:
     name: Analyze (${{ matrix.language }})
+    needs: runner
     # Runner size impacts CodeQL analysis time. To learn more, please see:
     #   - https://gh.io/recommended-hardware-resources-for-running-codeql
     #   - https://gh.io/supported-runners-and-hardware-resources
     #   - https://gh.io/using-larger-runners (GitHub.com only)
     # Consider using larger runners or machines with greater resources for possible analysis time improvements.
-    runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
+    runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || needs.runner.outputs.runner }}
     permissions:
       # required for all workflows
       security-events: write

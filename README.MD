@@ -62,6 +62,10 @@ The snapshot repository is `https://central.sonatype.com/repository/maven-snapsh
 
 `build` depends on `check`, and `check` depends on both test tasks. Mutation tests are a separate task because a full PIT run is much slower than the test suite. CI runs `build` on each JDK in the matrix and `pitest` once on Java 21.
 
+Every workflow asks [Choose runner](.github/workflows/choose-runner.yml) for a machine. An online, idle runner labelled `self-hosted` is used. If none is idle, the job runs on `ubuntu-latest`. Pull requests from forks always use `ubuntu-latest`, so untrusted code is not executed on a private machine. One runner executes one job at a time, so a matrix queues on it.
+
+To add capacity, register another runner with the same `self-hosted` label. That can be another computer, or a second runner process on the same computer (its own directory and its own name in Settings, Actions, Runners, New self-hosted runner). Do not put a unique label such as `maczek` into `runs-on`. `self-hosted` already matches every instance.
+
 ## Publishing
 
 Two workflows publish to the [Central Portal](https://central.sonatype.com/). Bintray and the old OSSRH host are not used.

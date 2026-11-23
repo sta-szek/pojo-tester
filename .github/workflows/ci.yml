@@ -9,15 +9,25 @@ on:
 
 permissions:
   contents: read
+  administration: read
 
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
+  runner:
+    permissions:
+      contents: read
+      administration: read
+    uses: ./.github/workflows/choose-runner.yml
+    with:
+      allow_self_hosted: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
+
   test:
     name: Java ${{ matrix.java }}
-    runs-on: ubuntu-latest
+    needs: runner
+    runs-on: ${{ needs.runner.outputs.runner }}
     permissions:
       contents: read
       checks: write
@@ -85,7 +95,8 @@ jobs:
 
   quality:
     name: Format and static analysis
-    runs-on: ubuntu-latest
+    needs: runner
+    runs-on: ${{ needs.runner.outputs.runner }}
     permissions:
       contents: read
       security-events: write
@@ -123,7 +134,8 @@ jobs:
 
   mutation:
     name: Mutation tests
-    runs-on: ubuntu-latest
+    needs: runner
+    runs-on: ${{ needs.runner.outputs.runner }}
     steps:
       - uses: actions/checkout@v7
 
