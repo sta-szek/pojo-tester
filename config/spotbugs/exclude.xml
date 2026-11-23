@@ -6,4 +6,9 @@
         <Method name="isNotEqualToNull"/>
         <Bug pattern="EC_NULL_ARG"/>
     </Match>
+    <!-- Assertion messages intentionally use a fixed "\n" so the text is identical on every platform. -->
+    <Match>
+        <Class name="~pl\.pojo\.tester\.internal\.assertion\..*AssertionError"/>
+        <Bug pattern="VA_FORMAT_STRING_USES_NEWLINE"/>
+    </Match>
 </FindBugsFilter>
