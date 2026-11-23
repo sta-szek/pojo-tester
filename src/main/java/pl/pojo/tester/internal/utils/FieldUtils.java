@@ -117,7 +117,7 @@ public final class FieldUtils {
                                                    field.getName(),
                                                    field.getType());
         final Method set = Class.forName("java.lang.invoke.VarHandle").getMethod("set", Object[].class);
-        set.invoke(varHandle, (Object) new Object[]{target, value});
+        set.invoke(varHandle, new Object[]{new Object[]{target, value}});
     }
 
     private static boolean excludeEmptySet(final List<Field> fields) {
