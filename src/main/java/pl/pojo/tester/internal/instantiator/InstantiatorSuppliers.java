@@ -29,7 +29,7 @@ final class InstantiatorSuppliers {
         return CURRENT.get() != null;
     }
 
-    static Supplier<?> forClass(final Class<?> clazz) {
+    static Supplier<?> forClass(final Class<?> clazz) { // NOSONAR the supplied type is unknown by design
         final Map<Class<?>, Supplier<?>> suppliers = CURRENT.get();
         if (suppliers == null) {
             return null;

@@ -58,7 +58,7 @@ class InstantiatorTest {
 
         Instantiator.INSTANCE.detach(JavaTypeInstantiator.class);
 
-        assertThat(Instantiator.INSTANTIATORS).hasSize(before);
+        assertThat(Instantiator.INSTANTIATORS).hasSize(before); // NOSONAR java:S3415 actual is the collection
     }
 
     private static class CustomInstantiator extends UserObjectInstantiator {
