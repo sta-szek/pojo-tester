@@ -32,6 +32,7 @@ public final class ReflectionUtils {
         return Files.walk(packagePath)
                     .map(Path::toFile)
                     .filter(onlyFiles)
+                    .filter(file -> file.getName().endsWith(CLASS_FILE_SUFFIX))
                     .map(ReflectionUtils::replaceSlashesWithDots)
                     .map(fullPath -> extractFullyQualifiedClassName(fullPath, packageName))
                     .map(ReflectionUtils::removeClassSuffix)

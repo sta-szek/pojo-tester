@@ -16,7 +16,7 @@ public final class MethodUtils {
         return Arrays.stream(clazz.getMethods())
                      .filter(methodHasOnlyOneParameter())
                      .filter(areParameterAndFieldTypeAssignable(field))
-                     .filter(returnTypeIsVoid())
+                     .filter(returnsVoidOrTheTestedClass(clazz))
                      .filter(method -> prefixMatchesSettersPrefixAndHasExpectedLength(method, field.getName()))
                      .findAny()
                      .orElseThrow(() -> new SetterNotFoundException(clazz, field));
@@ -31,8 +31,11 @@ public final class MethodUtils {
                      .orElseThrow(() -> new GetterNotFoundException(clazz, field));
     }
 
-    private static Predicate<Method> returnTypeIsVoid() {
-        return method -> method.getReturnType() == void.class;
+    private static Predicate<Method> returnsVoidOrTheTestedClass(final Class<?> clazz) {
+        return method -> {
+            final Class<?> returnType = method.getReturnType();
+            return returnType == void.class || (returnType != Object.class && returnType.isAssignableFrom(clazz));
+        };
     }
 
     private static Predicate<Method> areParameterAndFieldTypeAssignable(final Field field) {
@@ -55,11 +58,11 @@ public final class MethodUtils {
         final Class<?> returnType = method.getReturnType();
         final String methodName = method.getName();
         final int fieldNameLength = fieldName.length();
-        final String upperCaseFirstLetterFieldName = upperCaseFirstLetter(fieldName);
+        final String propertySuffix = beanPropertySuffix(fieldName);
 
         if (returnType.equals(boolean.class) || returnType.equals(Boolean.class)) {
             return (methodName.startsWith("is") && methodName.equals(fieldName))
-                    || (methodName.endsWith(upperCaseFirstLetterFieldName)
+                    || (methodName.endsWith(propertySuffix)
                        && ((methodName.startsWith("is") && (methodName.length() == (fieldNameLength + 2)))
                     || methodName.startsWith("has") && methodName.length() == fieldNameLength + 3
                     || methodName.startsWith("get") && methodName.length() == fieldNameLength + 3
@@ -68,7 +71,7 @@ public final class MethodUtils {
         } else {
             return methodName.startsWith("get")
                    && methodName.length() == fieldNameLength + 3
-                   && methodName.endsWith(upperCaseFirstLetterFieldName);
+                   && methodName.endsWith(propertySuffix);
         }
     }
 
@@ -76,7 +79,7 @@ public final class MethodUtils {
         final Class<?> parameterType = method.getParameterTypes()[0];
         final String methodName = method.getName();
         final int fieldNameLength = fieldName.length();
-        final String upperCaseFirstLetterFieldName = upperCaseFirstLetter(fieldName);
+        final String propertySuffix = beanPropertySuffix(fieldName);
 
         if ((parameterType.equals(boolean.class) || parameterType.equals(Boolean.class))
             && fieldName.startsWith("is")) {
@@ -86,8 +89,15 @@ public final class MethodUtils {
         } else {
             return methodName.startsWith("set")
                    && methodName.length() == fieldNameLength + 3
-                   && methodName.endsWith(upperCaseFirstLetterFieldName);
+                   && methodName.endsWith(propertySuffix);
         }
+    }
+
+    private static String beanPropertySuffix(final String fieldName) {
+        if (fieldName.length() > 1 && Character.isUpperCase(fieldName.charAt(1))) {
+            return fieldName;
+        }
+        return upperCaseFirstLetter(fieldName);
     }
 
     private static String upperCaseFirstLetter(final String string) {
