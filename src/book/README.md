@@ -3,19 +3,7 @@
 # Introduction
 This is a documentation for writing `pojo-tests` using [pojo-tester](https://github.com/sta-szek/pojo-tester) library.
 
-If you have any questions, we can chat on [![Rocket.Chat](https://demo.rocket.chat/images/join-chat.svg)](http://chat.pojo.pl/channel/pojo-tester)
-
-Build status is provided by [![Build Status](http://ci.pojo.pl/buildStatus/icon?job=pojo-tester/master)](http://ci.pojo.pl/job/pojo-tester/job/master/)
-
-Project quality [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f20e4ae366964fe4864179d26ed392c4)](https://www.codacy.com/app/sta-szek/pojo-tester?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=sta-szek/pojo-tester&amp;utm_campaign=Badge_Grade)
-
-Current coverage is [![codecov](https://codecov.io/gh/sta-szek/pojo-tester/branch/master/graph/badge.svg)](https://codecov.io/gh/sta-szek/pojo-tester)
-
-Download latest version [![Download](https://api.bintray.com/packages/sta-szek/maven/pojo-tester/images/download.svg) ](https://bintray.com/sta-szek/maven/pojo-tester/_latestVersion)
-
-Get automatic notifications about new `POJO-TESTER` versions
-<a href='https://bintray.com/sta-szek/maven/pojo-tester?source=watch' alt='Get automatic notifications about new "pojo-tester" versions'><img src='https://www.bintray.com/docs/images/bintray_badge_color.png'></a>
-
+The next version is `0.8.0-SNAPSHOT`. The last release on Maven Central is `0.7.6`.
 
 ## What is pojo-tester? {#what-is-pojo-tester}
 `POJO-TESTER` is a java testing library, which makes your `pojo-method` tests much easier. 
@@ -28,33 +16,39 @@ You can test your `pojo` against `equals`, `hashCode`, `toString`, `getters`, `s
 `POJO-TESTER` requires Java 8. 
 
 ## Installation {#installation}
-`POJO-TESTER` library can be found on `jCenter` repository.
+`POJO-TESTER` is `pl.pojo:pojo-tester`. Use `0.8.0-SNAPSHOT` for the version currently on `master`. Use `0.7.6` for the last release.
 
 ### Gradle
 ```
 repositories {
-    jcenter()
+    mavenCentral()
+    maven {
+        url = 'https://central.sonatype.com/repository/maven-snapshots/'
+        content { includeModule('pl.pojo', 'pojo-tester') }
+    }
 }
 
 dependencies {
-    testCompile 'pl.pojo:pojo-tester:${latest-version}'
+    testImplementation 'pl.pojo:pojo-tester:0.8.0-SNAPSHOT'
 }
 ```
 
 ### Maven
-```xm
+```xml
 <repositories>
-<repository>
-  <id>jcenter</id>
-  <url>http://jcenter.bintray.com/</url>
-</repository>
+    <repository>
+        <id>central-snapshots</id>
+        <url>https://central.sonatype.com/repository/maven-snapshots/</url>
+        <releases><enabled>false</enabled></releases>
+        <snapshots><enabled>true</enabled></snapshots>
+    </repository>
 </repositories>
-  
+
 <dependency>
-  <groupId>pl.pojo</groupId>
-  <artifactId>pojo-tester</artifactId>
-  <version>${latest-version}</version>
-  <type>pom</type>
+    <groupId>pl.pojo</groupId>
+    <artifactId>pojo-tester</artifactId>
+    <version>0.8.0-SNAPSHOT</version>
+    <scope>test</scope>
 </dependency>
 ```
 

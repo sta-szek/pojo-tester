@@ -1,6 +1,10 @@
 # Release Notes
 
-Download latest version [ ![Download](https://api.bintray.com/packages/sta-szek/maven/pojo-tester/images/download.svg) ](https://bintray.com/sta-szek/maven/pojo-tester/_latestVersion)
+The next version is `0.8.0-SNAPSHOT` (`pl.pojo:pojo-tester`). It is published to the Central Portal snapshot repository after a green build on `master`. It is not a release. The last release is `0.7.6`.
+
+## Next version 0.8.0-SNAPSHOT {#next}
+
+Not released. The release cut from this line will be `0.8.0`.
 
 ## Release version 0.7.6 {#release-076}
 
