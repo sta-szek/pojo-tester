@@ -2,7 +2,9 @@ package pl.pojo.tester.internal.tester;
 
 import pl.pojo.tester.api.ClassAndFieldPredicatePair;
 import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
+import pl.pojo.tester.internal.utils.FieldUtils;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -31,6 +33,7 @@ public class EqualsTester extends AbstractTester {
         shouldNotEqualDifferentType(instance);
         shouldNotEqualWithGivenFields(baseClassAndFieldPredicatePair, classAndFieldPredicatePairs);
         shouldEqualWithInvertedGivenFields(baseClassAndFieldPredicatePair, classAndFieldPredicatePairs);
+        shouldTreatNullAsAValue(baseClassAndFieldPredicatePair);
     }
 
     private void shouldEqualSameInstance(final Object object) {
@@ -88,6 +91,31 @@ public class EqualsTester extends AbstractTester {
         final List<Object> differentObjects = objectGenerator.generateDifferentObjects(baseWithInvertedFields, nested);
         final Object firstObject = differentObjects.remove(0);
         differentObjects.forEach(assertIsEqualTo(firstObject));
+    }
+
+    private void shouldTreatNullAsAValue(final ClassAndFieldPredicatePair base) {
+        final List<Field> fields = FieldUtils.getFields(base.getClazz(), base.getFieldsPredicate());
+        final Object populated = objectGenerator.createNewInstance(base.getClazz());
+        for (final Field field : fields) {
+            if (field.getType().isPrimitive() || FieldUtils.isFinal(field)) {
+                continue;
+            }
+            final Object withNull = objectGenerator.generateSameInstance(populated);
+            final Object alsoNull = objectGenerator.generateSameInstance(populated);
+            FieldUtils.setValue(withNull, field, null);
+            FieldUtils.setValue(alsoNull, field, null);
+            if (FieldUtils.getValue(withNull, field) != null || FieldUtils.getValue(alsoNull, field) != null) {
+                continue;
+            }
+            testAssertions.assertThatEqualsMethodFor(withNull)
+                          .isEqualTo(alsoNull);
+            testAssertions.assertThatEqualsMethodFor(withNull)
+                          .isSymmetric(alsoNull);
+            if (FieldUtils.getValue(populated, field) != null) {
+                testAssertions.assertThatEqualsMethodFor(withNull)
+                              .isNotEqualTo(populated);
+            }
+        }
     }
 
     private ClassAndFieldPredicatePair invertIncludedFields(final ClassAndFieldPredicatePair base) {

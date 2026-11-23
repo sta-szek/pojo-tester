@@ -3,6 +3,7 @@ package pl.pojo.tester.internal.tester;
 import lombok.Setter;
 import org.junit.jupiter.api.Test;
 import pl.pojo.tester.api.FieldPredicate;
+import pl.pojo.tester.internal.assertion.AbstractAssertionError;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
 import pl.pojo.tester.internal.utils.SetterNotFoundException;
 
@@ -81,6 +82,26 @@ class SetterTesterTest {
         final Throwable result = catchThrowable(() -> new SetterTester().test(EnumWithBrokenSetter.class));
 
         assertThat(result).isNull();
+    }
+
+    @Test
+    void Should_Fail_When_Setter_Copies_Another_Field() {
+        final Throwable result = catchThrowable(() -> new SetterTester().test(CopiedSetter.class));
+
+        assertThat(result).isInstanceOf(AbstractAssertionError.class);
+    }
+
+    private static final class CopiedSetter {
+        private int qp;
+        private int db;
+
+        public void setQp(final int qp) {
+            this.qp = qp;
+        }
+
+        public void setDb(final int db) {
+            this.db = qp;
+        }
     }
 
     private static final class FluentPojo {

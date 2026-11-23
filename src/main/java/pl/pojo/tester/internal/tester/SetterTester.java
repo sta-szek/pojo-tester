@@ -8,6 +8,7 @@ import pl.pojo.tester.internal.utils.MethodUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,14 +36,18 @@ public class SetterTester extends AbstractTester {
         final List<SetterAndFieldPair> setterAndFieldPairs = findSetterAndGetterPairsForFields(testedClass, fields);
         final Object instance = objectGenerator.createNewInstance(testedClass);
 
-        setterAndFieldPairs.forEach(eachPair -> testSetterAndGetter(eachPair, instance));
+        setterAndFieldPairs.forEach(eachPair -> testSetterAndGetter(eachPair, instance, fields));
     }
 
-    private void testSetterAndGetter(final SetterAndFieldPair eachPair, final Object instance) {
+    private void testSetterAndGetter(final SetterAndFieldPair eachPair, final Object instance, final List<Field> fields) {
         final Method setter = eachPair.getSetter();
         final Field field = eachPair.getField();
         final Class<?> fieldType = field.getType();
-        final Object newValue = objectGenerator.createNewInstance(fieldType);
+        final List<Object> blocked = new ArrayList<>();
+        for (final Field other : fields) {
+            blocked.add(FieldUtils.getValue(instance, other));
+        }
+        final Object newValue = valueUnlike(objectGenerator.createNewInstance(fieldType), blocked);
         testAssertions.assertThatSetMethodFor(instance)
                       .willSetValueOnField(setter, field, newValue);
     }
