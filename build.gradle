@@ -125,9 +125,9 @@ spotless {
     }
 }
 
-// Reported as SARIF (Code scanning) and does not fail the build yet; existing findings need triage first.
+// Reported as SARIF (Code scanning); any finding at medium level or above fails the build.
 spotbugs {
-    ignoreFailures = true
+    ignoreFailures = false
     effort = 'max'
     reportLevel = 'medium'
     excludeFilter = file('config/spotbugs/exclude.xml')
