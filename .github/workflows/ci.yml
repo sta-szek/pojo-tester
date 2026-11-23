@@ -63,6 +63,15 @@ jobs:
           files: build/reports/jacoco/test/jacocoTestReport.xml
           fail_ci_if_error: false
 
+      - name: Upload test results to Codecov
+        if: ${{ !cancelled() && matrix.java == 21 && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) }}
+        uses: codecov/codecov-action@v7
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          report_type: test_results
+          files: build/test-results/test/*.xml,build/test-results/integrationTest/*.xml
+          fail_ci_if_error: false
+
       - name: Upload test reports
         if: always()
         uses: actions/upload-artifact@v7
