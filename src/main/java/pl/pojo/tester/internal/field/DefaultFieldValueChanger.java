@@ -5,13 +5,13 @@ import pl.pojo.tester.internal.field.collections.CollectionsFieldValueChanger;
 import pl.pojo.tester.internal.field.date.DefaultDateAndTimeFieldValueChanger;
 import pl.pojo.tester.internal.field.math.BigDecimalValueChanger;
 import pl.pojo.tester.internal.field.math.BigIntegerValueChanger;
-import pl.pojo.tester.internal.field.primitive.AbstractPrimitiveValueChanger;
+import pl.pojo.tester.internal.field.primitive.PrimitiveValueChangers;
 
 
 public final class DefaultFieldValueChanger {
 
     public static final AbstractFieldValueChanger INSTANCE = new EnumValueChanger()
-            .attachNext(AbstractPrimitiveValueChanger.INSTANCE)
+            .attachNext(PrimitiveValueChangers.INSTANCE)
             .attachNext(CollectionsFieldValueChanger.INSTANCE)
             .attachNext(DefaultDateAndTimeFieldValueChanger.INSTANCE)
             .attachNext(new StringValueChanger())
