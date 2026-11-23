@@ -30,7 +30,7 @@ class JavaTypeInstantiator extends AbstractObjectInstantiator {
 
     private final Map<String, Object> preparedObjects = new HashMap<>();
 
-    {
+    private void prepareObjects() {
         preparedObjects.put("boolean", Boolean.TRUE);
         preparedObjects.put("byte", (byte) -1);
         preparedObjects.put("char", 'b');
@@ -79,6 +79,7 @@ class JavaTypeInstantiator extends AbstractObjectInstantiator {
     JavaTypeInstantiator(final Class<?> clazz,
                          final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
         super(clazz, constructorParameters);
+        prepareObjects();
     }
 
     @Override

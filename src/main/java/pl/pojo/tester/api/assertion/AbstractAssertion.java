@@ -34,6 +34,8 @@ import static pl.pojo.tester.internal.preconditions.ParameterPreconditions.check
  */
 public abstract class AbstractAssertion {
 
+    private static final String CLAZZ = "clazz";
+
     private static final Set<AbstractTester> DEFAULT_TESTERS;
 
     static {
@@ -201,7 +203,7 @@ public abstract class AbstractAssertion {
     public AbstractAssertion create(final Class<?> clazz,
                                     final Object[] constructorParameters,
                                     final Class<?>[] constructorParameterTypes) {
-        checkNotNull("clazz", clazz);
+        checkNotNull(CLAZZ, clazz);
 
         final ConstructorParameters constructorParameter = new ConstructorParameters(constructorParameters,
                                                                                      constructorParameterTypes);
@@ -219,7 +221,7 @@ public abstract class AbstractAssertion {
      * @see ConstructorParameters
      */
     public AbstractAssertion create(final Class<?> clazz, final ConstructorParameters constructorParameters) {
-        checkNotNull("clazz", clazz);
+        checkNotNull(CLAZZ, clazz);
         checkNotNull("constructorParameters", constructorParameters);
 
         this.constructorParameters.put(clazz, constructorParameters);
@@ -236,7 +238,7 @@ public abstract class AbstractAssertion {
      * @return itself
      */
     public AbstractAssertion create(final Class<?> clazz, final Supplier<?> supplier) {
-        checkNotNull("clazz", clazz);
+        checkNotNull(CLAZZ, clazz);
         checkNotNull("supplier", supplier);
 
         this.instantiators.put(clazz, supplier);

@@ -97,24 +97,24 @@ public class EqualsTester extends AbstractTester {
         final List<Field> fields = FieldUtils.getFields(base.getClazz(), base.getFieldsPredicate());
         final Object populated = objectGenerator.createNewInstance(base.getClazz());
         for (final Field field : fields) {
-            if (field.getType().isPrimitive() || FieldUtils.isFinal(field)) {
-                continue;
+            if (!field.getType().isPrimitive() && !FieldUtils.isFinal(field)) {
+                shouldTreatNullFieldAsAValue(populated, field);
             }
-            final Object withNull = objectGenerator.generateSameInstance(populated);
-            final Object alsoNull = objectGenerator.generateSameInstance(populated);
-            FieldUtils.setValue(withNull, field, null);
-            FieldUtils.setValue(alsoNull, field, null);
-            if (FieldUtils.getValue(withNull, field) != null || FieldUtils.getValue(alsoNull, field) != null) {
-                continue;
-            }
+        }
+    }
+
+    private void shouldTreatNullFieldAsAValue(final Object populated, final Field field) {
+        final Object withNull = objectGenerator.generateSameInstance(populated);
+        final Object alsoNull = objectGenerator.generateSameInstance(populated);
+        FieldUtils.setValue(withNull, field, null);
+        FieldUtils.setValue(alsoNull, field, null);
+        testAssertions.assertThatEqualsMethodFor(withNull)
+                      .isEqualTo(alsoNull);
+        testAssertions.assertThatEqualsMethodFor(withNull)
+                      .isSymmetric(alsoNull);
+        if (FieldUtils.getValue(populated, field) != null) {
             testAssertions.assertThatEqualsMethodFor(withNull)
-                          .isEqualTo(alsoNull);
-            testAssertions.assertThatEqualsMethodFor(withNull)
-                          .isSymmetric(alsoNull);
-            if (FieldUtils.getValue(populated, field) != null) {
-                testAssertions.assertThatEqualsMethodFor(withNull)
-                              .isNotEqualTo(populated);
-            }
+                          .isNotEqualTo(populated);
         }
     }
 
