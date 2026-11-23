@@ -17,7 +17,7 @@ class ClassAndFieldPredicatePairTest {
     void Should_Create_Predicate_That_Accepts_All_Fields() {
         // given
         final Class<?> clazz = GoodPojo_Equals_HashCode_ToString.class;
-        final String[] expectedFields = new String[]{"random",
+        final String[] expectedFields = {"random",
                 "byteField",
                 "shortType",
                 "intType",
@@ -38,7 +38,7 @@ class ClassAndFieldPredicatePairTest {
     void Should_Create_Predicate_That_Accepts_All_Fields_By_Class_Name() {
         // given
         final Class<?> expectedClass = GoodPojo_Equals_HashCode_ToString.class;
-        final String[] expectedFields = new String[]{"random",
+        final String[] expectedFields = {"random",
                 "byteField",
                 "shortType",
                 "intType",
@@ -61,7 +61,7 @@ class ClassAndFieldPredicatePairTest {
     void Should_Create_Predicate_That_Accepts_Given_Fields_By_Class_Name() {
         // given
         final Class<?> expectedClass = GoodPojo_Equals_HashCode_ToString.class;
-        final String[] expectedFields = new String[]{"random",
+        final String[] expectedFields = {"random",
                 "byteField",
                 "shortType",
                 "intType",
@@ -95,8 +95,7 @@ class ClassAndFieldPredicatePairTest {
         TestEnum1 testEnum1;
 
         GoodPojo_Equals_HashCode_ToString() {
-            final Random random = new Random();
-            this.random = random.nextLong();
+            this.random = new Random().nextLong();
         }
 
         @Override

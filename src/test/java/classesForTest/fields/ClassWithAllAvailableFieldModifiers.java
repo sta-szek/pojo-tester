@@ -3,20 +3,20 @@ package classesForTest.fields;
 
 public class ClassWithAllAvailableFieldModifiers {
 
-    final static public int m = 1;
-    final static protected int n = 1;
-    final static int o = 1;
-    final static private int p = 1;
+    public static final int m = 1;
+    protected static final int n = 1;
+    static final int o = 1;
+    private static final int p = 1;
 
-    static public int i;
-    static protected int j;
+    public static int i;
+    protected static int j;
     static int k;
-    static private int l;
+    private static int l;
 
-    final public int e = 1;
-    final protected int f = 1;
+    public final int e = 1;
+    protected final int f = 1;
     final int g = 1;
-    final private int h = 1;
+    private final int h = 1;
 
     public int a;
     protected int b;

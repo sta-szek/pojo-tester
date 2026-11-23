@@ -5,6 +5,7 @@ public class ClassContainingStaticClasses {
 
     public static class NestedStaticClass_PublicConstructor {
         public NestedStaticClass_PublicConstructor() {
+            // intentionally empty
         }
     }
 

@@ -5,6 +5,7 @@ class ClassContainingUnpublicClasses {
 
     private class Package_PublicConstructor {
         public Package_PublicConstructor() {
+            // intentionally empty
         }
     }
 
@@ -25,6 +26,7 @@ class ClassContainingUnpublicClasses {
 
     private class Protected_PublicConstructor {
         public Protected_PublicConstructor() {
+            // intentionally empty
         }
     }
 
@@ -45,6 +47,7 @@ class ClassContainingUnpublicClasses {
 
     private class Private_PublicConstructor {
         public Private_PublicConstructor() {
+            // intentionally empty
         }
     }
 

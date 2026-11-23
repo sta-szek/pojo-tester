@@ -11,7 +11,7 @@ class AbstractAssertionErrorTest {
     void Should_Set_Stack_Trace_To_Empty_Array() {
         // given
         final Class<String> testedCass = String.class;
-        final StackTraceElement[] expectedResult = new StackTraceElement[]{};
+        final StackTraceElement[] expectedResult = {};
         final AbstractAssertionError error = new MockOfAssertionError(testedCass);
 
         // when

@@ -291,8 +291,7 @@ class EqualAssertionsTest {
         TestEnum1 testEnum1;
 
         GoodPojo_Equals_HashCode_ToString() {
-            final Random random = new Random();
-            this.random = random.nextLong();
+            this.random = new Random().nextLong();
         }
 
         @Override

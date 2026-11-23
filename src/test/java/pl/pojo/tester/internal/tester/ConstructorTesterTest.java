@@ -144,9 +144,11 @@ class ConstructorTesterTest {
         }
 
         Pojo(final String x) {
+            // intentionally empty
         }
 
         Pojo(final int y) {
+            // intentionally empty
         }
     }
 

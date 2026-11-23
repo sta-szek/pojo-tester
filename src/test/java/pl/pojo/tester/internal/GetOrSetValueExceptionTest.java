@@ -12,7 +12,7 @@ class GetOrSetValueExceptionTest {
     void Should_Create_Message_Containing_Field_Name_And_Class_And_Cause_Message() {
         // given
         final String causeMessage = "cause-message";
-        final String fieldName = "class_a_field_name";
+        final String fieldName = "classAFieldName";
         final Class<A> clazz = A.class;
         final String className = clazz.getName();
         final Exception cause = new Exception(causeMessage);
@@ -29,7 +29,7 @@ class GetOrSetValueExceptionTest {
 
     @Data
     private class A {
-        private int class_a_field_name;
+        private int classAFieldName;
     }
 
 }
