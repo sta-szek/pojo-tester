@@ -7,21 +7,37 @@ import pl.pojo.tester.api.ConstructorParameters;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Supplier;
 
 import static pl.pojo.tester.internal.instantiator.Instantiator.snapshot;
 
 public final class Instantiable {
 
+    private static final ThreadLocal<Set<Class<?>>> IN_PROGRESS = ThreadLocal.withInitial(HashSet::new);
+
     private Instantiable() {
+    }
+
+    static Object instantiate(final Class<?> clazz,
+                              final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
+        final Set<Class<?>> inProgress = IN_PROGRESS.get();
+        if (!inProgress.add(clazz)) {
+            return null;
+        }
+        try {
+            return forClass(clazz, constructorParameters).instantiate();
+        } finally {
+            inProgress.remove(clazz);
+        }
     }
 
     static Object[] instantiateClasses(final Class<?>[] classes,
                                        final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {
         return Arrays.stream(classes)
-                     .map(clazz -> Instantiable.forClass(clazz, constructorParameters))
-                     .map(AbstractObjectInstantiator::instantiate)
+                     .map(clazz -> instantiate(clazz, constructorParameters))
                      .toArray();
     }
 
