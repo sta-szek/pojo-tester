@@ -1,0 +1,40 @@
+name: Self-hosted smoke
+
+# Proves the self-hosted runner can check out this repository and run Gradle.
+# CI and the release workflows stay on GitHub-hosted runners until this is green.
+# The only self-hosted runner today is maczek (macOS, label self-hosted).
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - self-hosted-smoke
+
+permissions:
+  contents: read
+
+concurrency:
+  group: self-hosted-smoke-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  smoke:
+    name: Runner smoke
+    runs-on: self-hosted
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Report the machine
+        run: |
+          {
+            echo "### Self-hosted runner"
+            echo "hostname: $(hostname)"
+            echo "uname: $(uname -a)"
+          } >> "$GITHUB_STEP_SUMMARY"
+          uname -a
+          java -version
+          ./gradlew --version --no-daemon
+
+      - name: Compile
+        run: ./gradlew classes --no-daemon --stacktrace
