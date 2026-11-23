@@ -7,10 +7,20 @@ on:
       - master
   workflow_dispatch:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   test:
     name: Java ${{ matrix.java }}
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
     strategy:
       fail-fast: false
       matrix:
@@ -37,6 +47,25 @@ jobs:
           JAVA_HOME: ${{ steps.gradle-java.outputs.path }}
         run: ./gradlew build --no-daemon --stacktrace -PtestJavaVersion=${{ matrix.java }} -Dorg.gradle.java.installations.paths=${{ steps.test-java.outputs.path }}:${{ steps.gradle-java.outputs.path }}
 
+      - name: Publish test results
+        if: always() && github.actor != 'dependabot[bot]' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        with:
+          check_name: Test results (Java ${{ matrix.java }})
+          files: build/test-results/**/*.xml
+          comment_mode: off
+
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports-java-${{ matrix.java }}
+          path: |
+            build/reports/tests
+            build/reports/jacoco
+            build/test-results
+          retention-days: 14
+
   mutation:
     name: Mutation tests
     runs-on: ubuntu-latest
@@ -50,3 +79,28 @@ jobs:
 
       - name: Run PIT
         run: ./gradlew pitest --no-daemon --stacktrace -PtestJavaVersion=21
+
+      - name: Mutation summary
+        if: always()
+        run: |
+          f=build/reports/pitest/mutations.xml
+          if [ -f "$f" ]; then
+            total=$(grep -c '<mutation ' "$f" || true)
+            killed=$(grep -c "status='KILLED'" "$f" || true)
+            survived=$(grep -c "status='SURVIVED'" "$f" || true)
+            nocov=$(grep -c "status='NO_COVERAGE'" "$f" || true)
+            {
+              echo "### Mutation testing (PIT)"
+              echo "| Total | Killed | Survived | No coverage |"
+              echo "|---|---|---|---|"
+              echo "| $total | $killed | $survived | $nocov |"
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload PIT report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pitest-report
+          path: build/reports/pitest
+          retention-days: 14
