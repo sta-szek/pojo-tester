@@ -10,13 +10,6 @@ import java.util.List;
 
 public abstract class AbstractPrimitiveValueChanger<T> extends AbstractFieldValueChanger<T> {
 
-    public static final AbstractFieldValueChanger INSTANCE = new BooleanValueChanger().attachNext(new ByteValueChanger())
-                                                                                      .attachNext(new CharacterValueChanger())
-                                                                                      .attachNext(new DoubleValueChanger())
-                                                                                      .attachNext(new IntegerValueChanger())
-                                                                                      .attachNext(new LongValueChanger())
-                                                                                      .attachNext(new ShortValueChanger())
-                                                                                      .attachNext(new FloatValueChanger());
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractPrimitiveValueChanger.class);
     private static final List<Class<?>> PRIMITIVE_CLASSES = CollectionUtils.asList(Float.class,
                                                                                    Integer.class,
