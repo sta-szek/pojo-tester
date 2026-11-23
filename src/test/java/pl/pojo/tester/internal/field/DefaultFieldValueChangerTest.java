@@ -31,8 +31,8 @@ class DefaultFieldValueChangerTest {
         final Set<Class> expectedResult = getClassesForPackage(aPackage.getName());
 
         // then
-        assertThat(result).containsOnly(expectedResult.toArray(new Class[]{}));
-        assertThat(result).hasSameSizeAs(expectedResult);
+        assertThat(result).containsOnly(expectedResult.toArray(new Class[]{}))
+                          .hasSameSizeAs(expectedResult);
     }
 
     @Test
