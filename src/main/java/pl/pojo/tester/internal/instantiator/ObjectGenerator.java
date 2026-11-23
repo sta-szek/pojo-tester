@@ -132,40 +132,13 @@ public class ObjectGenerator {
                         permutationFieldType);
 
                 if (nestedFieldsToChangeInFieldType == null || permutationFieldType.equals(baseClass)) {
-                    Object newFieldTypeInstance = createNewInstance(permutationFieldType);
-                    if (Objects.deepEquals(newFieldTypeInstance,
-                                           FieldUtils.getValue(baseObjectCopy, permutationField))) {
-                        newFieldTypeInstance = abstractFieldValueChanger.increaseValue(newFieldTypeInstance);
-                    }
-
-                    FieldUtils.setValue(baseObjectCopy, permutationField, newFieldTypeInstance);
+                    setNewValue(baseObjectCopy, permutationField);
                 } else {
-                    final List<Object> nestedObjectsOfFieldType;
-                    if (dejaVu.containsKey(permutationFieldType)) {
-                        nestedObjectsOfFieldType = new ArrayList<>(dejaVu.get(permutationFieldType));
-                        logWithLevel(level,
-                                     "Reusing {} objects from 'dejaVu' cache for {}",
-                                     nestedObjectsOfFieldType.size(),
-                                     permutationFieldType);
-                    } else {
-                        final Predicate<String> fieldPredicate = userDefinedClassAndFieldPredicatePairsMap.get(
-                                permutationFieldType);
-                        final List<Field> fieldClassFields = fieldsToChange(permutationFieldType, fieldPredicate);
-
-                        if (hasNestedFieldsToChange(fieldClassFields, userDefinedClassAndFieldPredicatePairsMap)) {
-                            final ClassAndFieldPredicatePair classAndFieldPredicatePair = new ClassAndFieldPredicatePair(
-                                    permutationFieldType,
-                                    fieldPredicate);
-                            nestedObjectsOfFieldType = generateDifferentObjects(level + 1,
-                                                                                dejaVu,
-                                                                                classAndFieldPredicatePair,
-                                                                                classAndFieldPredicatePairs);
-                        } else {
-                            nestedObjectsOfFieldType = generateDifferentObjects(permutationFieldType, fieldClassFields);
-                        }
-                        dejaVu.computeIfAbsent(permutationFieldType,
-                                               clazz -> logAndPut(level, clazz, nestedObjectsOfFieldType));
-                    }
+                    final List<Object> nestedObjectsOfFieldType = generateNestedObjects(level,
+                                                                                        dejaVu,
+                                                                                        permutationFieldType,
+                                                                                        userDefinedClassAndFieldPredicatePairsMap,
+                                                                                        classAndFieldPredicatePairs);
                     nestedObjectsThatAreWaitingForSetInBaseObjectCopy.put(permutationField, nestedObjectsOfFieldType);
                 }
             }
@@ -182,6 +155,47 @@ public class ObjectGenerator {
                      result.size(),
                      baseClassAndFieldPredicatePair);
         return result;
+    }
+
+    private void setNewValue(final Object baseObjectCopy, final Field permutationField) {
+        Object newFieldTypeInstance = createNewInstance(permutationField.getType());
+        if (Objects.deepEquals(newFieldTypeInstance, FieldUtils.getValue(baseObjectCopy, permutationField))) {
+            newFieldTypeInstance = abstractFieldValueChanger.increaseValue(newFieldTypeInstance);
+        }
+
+        FieldUtils.setValue(baseObjectCopy, permutationField, newFieldTypeInstance);
+    }
+
+    private List<Object> generateNestedObjects(final int level,
+                                               final Map<Class<?>, List<Object>> dejaVu,
+                                               final Class<?> permutationFieldType,
+                                               final Map<Class<?>, Predicate<String>> userDefinedPredicates,
+                                               final ClassAndFieldPredicatePair... classAndFieldPredicatePairs) {
+        if (dejaVu.containsKey(permutationFieldType)) {
+            final List<Object> cached = new ArrayList<>(dejaVu.get(permutationFieldType));
+            logWithLevel(level,
+                         "Reusing {} objects from 'dejaVu' cache for {}",
+                         cached.size(),
+                         permutationFieldType);
+            return cached;
+        }
+
+        final Predicate<String> fieldPredicate = userDefinedPredicates.get(permutationFieldType);
+        final List<Field> fieldClassFields = fieldsToChange(permutationFieldType, fieldPredicate);
+        final List<Object> nestedObjectsOfFieldType;
+        if (hasNestedFieldsToChange(fieldClassFields, userDefinedPredicates)) {
+            final ClassAndFieldPredicatePair classAndFieldPredicatePair = new ClassAndFieldPredicatePair(
+                    permutationFieldType,
+                    fieldPredicate);
+            nestedObjectsOfFieldType = generateDifferentObjects(level + 1,
+                                                                dejaVu,
+                                                                classAndFieldPredicatePair,
+                                                                classAndFieldPredicatePairs);
+        } else {
+            nestedObjectsOfFieldType = generateDifferentObjects(permutationFieldType, fieldClassFields);
+        }
+        dejaVu.computeIfAbsent(permutationFieldType, clazz -> logAndPut(level, clazz, nestedObjectsOfFieldType));
+        return nestedObjectsOfFieldType;
     }
 
     private List<Object> logAndPut(final int level, final Class<?> clazz, final List<Object> nestedObjectsOfFieldType) {

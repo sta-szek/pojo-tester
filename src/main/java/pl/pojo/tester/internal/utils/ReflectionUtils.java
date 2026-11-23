@@ -25,7 +25,7 @@ public final class ReflectionUtils {
         return getFilesFromPackage(packageName).toArray(Class[]::new);
     }
 
-    private static Stream<? extends Class<?>> getFilesFromPackage(final String packageName) throws IOException {
+    private static Stream<Class<?>> getFilesFromPackage(final String packageName) throws IOException {
         final Predicate<File> onlyFiles = file -> !file.isDirectory();
         final Path packagePath = ReflectionUtils.getFile(packageName)
                                                 .toPath();
