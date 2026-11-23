@@ -1,13 +1,13 @@
 name: Release
 
-# A release is a tag vX.Y.Z. The release-ga environment allows only those tags,
-# so this cannot run from a branch. master stays on a snapshot; the tag selects
-# the version with -Pversion and does not need a commit that removes -SNAPSHOT.
+# A release is a tag X.Y.Z, without a v prefix. The release-ga environment
+# allows only those tags, so this cannot run from a branch. master stays on a
+# snapshot; the tag selects the version with -Pversion.
 
 on:
   push:
     tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+'
+      - '[0-9]+.[0-9]+.[0-9]+'
 
 permissions:
   contents: write
@@ -39,9 +39,9 @@ jobs:
           SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
           SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
         run: |
-          version=${GITHUB_REF_NAME#v}
+          version=$GITHUB_REF_NAME
           if ! printf '%s' "$version" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'; then
-            echo "Tag must be vMAJOR.MINOR.PATCH, got ${GITHUB_REF_NAME}."
+            echo "Tag must be MAJOR.MINOR.PATCH, got ${GITHUB_REF_NAME}."
             exit 1
           fi
           . .github/workflows/central-credentials.sh
@@ -56,11 +56,11 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           VERSION: ${{ env.version }}
         run: |
-          if gh release view "v${VERSION}" >/dev/null 2>&1; then
-            echo "GitHub release v${VERSION} already exists."
+          if gh release view "$VERSION" >/dev/null 2>&1; then
+            echo "GitHub release ${VERSION} already exists."
           else
-            gh release create "v${VERSION}" \
-              --title "v${VERSION}" \
+            gh release create "$VERSION" \
+              --title "$VERSION" \
               --notes "Published \`pl.pojo:pojo-tester:${VERSION}\` to Maven Central."
           fi
 
@@ -91,6 +91,7 @@ jobs:
           git add gradle.properties
           git commit -m "Set version to ${next}."
           git push origin "$branch"
-          gh pr create --base master --head "$branch" \
+          pr=$(gh pr create --base master --head "$branch" \
             --title "Set version to ${next}" \
-            --body "Published \`${VERSION}\` from tag \`v${VERSION}\`. This moves the snapshot line forward."
+            --body "Published \`${VERSION}\` from tag \`${VERSION}\`. This moves the snapshot line forward.")
+          gh pr merge --auto --squash "$pr"

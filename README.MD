@@ -69,13 +69,13 @@ Two workflows publish to the [Central Portal](https://central.sonatype.com/). Bi
 | Workflow | When | Environment | What is published |
 | --- | --- | --- | --- |
 | [Release snapshot](.github/workflows/release-snapshot.yml) | CI is green on `master`, or a manual run from `master` | `release-snapshot` (protected branches) | The `-SNAPSHOT` version from `gradle.properties` |
-| [Release](.github/workflows/release-ga.yml) | Tag `vX.Y.Z` | `release-ga` (tags `v*` only) | Release `X.Y.Z`, a GitHub release, then a pull request that bumps the snapshot patch |
+| [Release](.github/workflows/release-ga.yml) | Tag `X.Y.Z` | `release-ga` (tags `*.*.*` only) | Release `X.Y.Z`, a GitHub release, then an auto-merged pull request that bumps the snapshot patch |
 
-`master` stays on a snapshot. Do not commit a release version there, and do not publish a release from a branch. The `release-ga` environment rejects every ref that is not a `v*` tag. Create the release by pushing a tag:
+`master` stays on a snapshot. Do not commit a release version there, and do not publish a release from a branch. The `release-ga` environment rejects every ref that is not a `*.*.*` tag. The tag has no `v` prefix:
 
 ```bash
-git tag v0.8.0
-git push origin v0.8.0
+git tag 0.8.0
+git push origin 0.8.0
 ```
 
 The tag does not have to change `gradle.properties`. The workflow passes the tag as `-Pversion`.
