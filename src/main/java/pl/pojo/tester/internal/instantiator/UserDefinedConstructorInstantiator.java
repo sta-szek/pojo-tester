@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 
 class UserDefinedConstructorInstantiator extends AbstractObjectInstantiator {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BestConstructorInstantiator.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserDefinedConstructorInstantiator.class);
 
     UserDefinedConstructorInstantiator(final Class<?> clazz,
                                        final MultiValuedMap<Class<?>, ConstructorParameters> constructorParameters) {

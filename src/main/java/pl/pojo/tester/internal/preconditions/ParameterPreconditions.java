@@ -31,6 +31,6 @@ public final class ParameterPreconditions {
 
     private static boolean hasZeroLength(final String parameterValue) {
         return parameterValue.trim()
-                             .length() == 0;
+                             .isEmpty();
     }
 }
