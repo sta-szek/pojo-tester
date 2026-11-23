@@ -3,6 +3,8 @@ plugins {
     id 'com.vanniktech.maven.publish' version '0.37.0'
     id 'info.solidsoft.pitest' version '1.19.0'
     id 'jacoco'
+    id 'com.diffplug.spotless' version '8.12.0'
+    id 'com.github.spotbugs' version '6.5.13'
 }
 
 java {
@@ -111,7 +113,36 @@ tasks.named('check') {
     finalizedBy tasks.named('jacocoTestReport')
 }
 
+// Only files changed relative to master are checked, so existing code is not reformatted.
+spotless {
+    ratchetFrom 'origin/master'
+    enforceCheck = false
+    java {
+        target 'src/**/*.java'
+        removeUnusedImports()
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+}
+
+// Reported as SARIF (Code scanning) and does not fail the build yet; existing findings need triage first.
+spotbugs {
+    ignoreFailures = true
+    effort = 'max'
+    reportLevel = 'medium'
+}
+
+tasks.withType(com.github.spotbugs.snom.SpotBugsTask).configureEach {
+    // Runs in the dedicated CI job; skipped when only reached through `check`.
+    onlyIf { gradle.startParameter.taskNames.any { it.contains('spotbugs') } }
+    reports {
+        html.required = true
+        sarif.required = true
+    }
+}
+
 pitest {
+    mutationThreshold = 80
     targetClasses = ['pl.pojo.tester.*']
     pitestVersion = '1.30.2'
     junit5PluginVersion = '1.2.3'
