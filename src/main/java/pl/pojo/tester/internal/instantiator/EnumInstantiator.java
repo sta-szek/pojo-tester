@@ -4,7 +4,7 @@ package pl.pojo.tester.internal.instantiator;
 import org.apache.commons.collections4.MultiValuedMap;
 import pl.pojo.tester.api.ConstructorParameters;
 
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 class EnumInstantiator extends AbstractObjectInstantiator {
 
@@ -19,7 +19,7 @@ class EnumInstantiator extends AbstractObjectInstantiator {
         final int length = enumConstants.length;
 
         if (length != 0) {
-            final int random = new Random().nextInt(length);
+            final int random = ThreadLocalRandom.current().nextInt(length);
             return enumConstants[random];
         }
         return null;

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+    <!-- The library verifies that equals(null) returns false, so passing null is intended. -->
+    <Match>
+        <Class name="pl.pojo.tester.internal.assertion.equals.EqualAssertions"/>
+        <Method name="isNotEqualToNull"/>
+        <Bug pattern="EC_NULL_ARG"/>
+    </Match>
+</FindBugsFilter>
