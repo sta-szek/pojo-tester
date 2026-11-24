@@ -71,4 +71,4 @@ dependencies {
 
 Records are not the target. A record already has these methods, and there is nothing useful to assert about a generated accessor.
 
-The [guide](/guide) covers field selection, nested types, constructors, suppliers and the switches that change the default. The [Javadoc](/javadoc/) is generated from the same commit as this site.
+The [guide](/guide) is how to write the assertion. [What is checked](/reference) is the full list of rules and switches. The [Javadoc](https://www.pojo.pl/javadoc/index.html) is generated from the same commit as this site. That link leaves this application on purpose: the Javadoc is a separate set of pages, and the guide's router would otherwise treat `/javadoc/` as a missing guide page.

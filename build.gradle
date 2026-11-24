@@ -96,7 +96,7 @@ tasks.named('integrationTest') {
 }
 
 jacoco {
-    toolVersion = '0.8.14'
+    toolVersion = '0.8.16'
 }
 
 // Unit and integration test coverage merged into one report .

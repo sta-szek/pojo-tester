@@ -28,6 +28,7 @@ All notable changes to `pl.pojo:pojo-tester` are recorded here. The format follo
 - An enum is not tested for setters. A setter of an enum-typed field on an ordinary class still is.
 - Publishing uses the Central Portal. Bintray and the old OSSRH host are not used. A release is signed and waits for the `release-ga` review. A snapshot waits for `release-snapshot`.
 - This site is built with VitePress from `docs/` and published to `gh-pages`.
+- Coverage reports use JaCoCo 0.8.16.
 
 ### Fixed
 
