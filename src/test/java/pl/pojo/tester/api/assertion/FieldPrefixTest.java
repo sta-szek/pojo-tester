@@ -2,11 +2,14 @@ package pl.pojo.tester.api.assertion;
 
 import org.junit.jupiter.api.Test;
 import pl.pojo.tester.internal.tester.GetterTester;
+import pl.pojo.tester.internal.utils.GetterNotFoundException;
 import pl.pojo.tester.internal.utils.MethodUtils;
+import pl.pojo.tester.internal.utils.SetterNotFoundException;
 
 import java.lang.reflect.Field;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
 import static pl.pojo.tester.api.assertion.Method.GETTER;
 import static pl.pojo.tester.api.assertion.Method.SETTER;
@@ -62,6 +65,22 @@ class FieldPrefixTest {
         final Field name = Plain.class.getDeclaredField("name");
         assertThat(MethodUtils.findGetterFor(Plain.class, name, null).getName()).isEqualTo("getName");
         assertThat(MethodUtils.findSetterFor(Plain.class, name, null).getName()).isEqualTo("setName");
+    }
+
+    @Test
+    void Should_Find_A_Fluent_Accessor_Through_The_Boolean_Overload() throws NoSuchFieldException {
+        final Field name = FluentName.class.getDeclaredField("name");
+        assertThat(MethodUtils.findGetterFor(FluentName.class, name, true).getName()).isEqualTo("name");
+        assertThat(MethodUtils.findSetterFor(FluentName.class, name, true).getName()).isEqualTo("name");
+    }
+
+    @Test
+    void Should_Fail_When_The_Fluent_Accessor_Is_Missing() throws NoSuchFieldException {
+        final Field name = NoAccessor.class.getDeclaredField("name");
+        assertThatThrownBy(() -> MethodUtils.findGetterFor(NoAccessor.class, name, true))
+                .isInstanceOf(GetterNotFoundException.class);
+        assertThatThrownBy(() -> MethodUtils.findSetterFor(NoAccessor.class, name, true))
+                .isInstanceOf(SetterNotFoundException.class);
     }
 
     static class Prefixed {
@@ -122,5 +141,21 @@ class FieldPrefixTest {
         public void setMname(final String value) {
             mname = value;
         }
+    }
+
+    static class FluentName {
+        private String name;
+
+        public String name() {
+            return name;
+        }
+
+        public void name(final String name) {
+            this.name = name;
+        }
+    }
+
+    static class NoAccessor {
+        private String name;
     }
 }
