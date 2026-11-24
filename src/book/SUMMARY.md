@@ -18,6 +18,7 @@
   * [Configure field value changer](writing-tests/README.md#configure-fvc)
   * [Create class using selected constructor](writing-tests/README.md#choose-constructor)
   * [Final fields](writing-tests/README.md#final-fields)
+  * [Field prefix](writing-tests/README.md#field-prefix)
   * [Same hash code](writing-tests/README.md#same-hash-code)
   * [Create class using a supplier](writing-tests/README.md#supplier)
   * [Bulk pojos testing](writing-tests/README.md#bulk-testing)

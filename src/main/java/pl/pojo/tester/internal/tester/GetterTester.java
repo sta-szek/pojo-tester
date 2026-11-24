@@ -59,7 +59,7 @@ public class GetterTester extends AbstractTester {
     }
 
     private GetterAndFieldPair findSetterAndGetterPairForField(final Class<?> testedClass, final Field field) {
-        final Method getter = MethodUtils.findGetterFor(testedClass, field, isFluentAccessors());
+        final Method getter = MethodUtils.findGetterFor(testedClass, field, getFieldPrefix(), isFluentAccessors());
         return new GetterAndFieldPair(getter, field);
     }
 

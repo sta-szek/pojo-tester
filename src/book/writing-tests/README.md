@@ -388,6 +388,16 @@ assertPojoMethodsFor(ImmutablePojo.class)
         .areWellImplemented();
 ```
 
+## Field prefix {#field-prefix}
+
+A field named `mName` or `m_name` is not a JavaBeans property called `mName`. Pass the prefix and the getter `getName` is used. A field that does not start with the prefix is matched as written.
+
+```java
+assertPojoMethodsFor(Prefixed.class)
+        .withFieldPrefix("m")
+        .areWellImplemented();
+```
+
 ## Same hash code {#same-hash-code}
 
 By default, two objects that are not equal must have different hash codes. `Object.hashCode` does not require that. A constant hash code is legal, and it is also what you get when a field was forgotten. Call `allowingSameHashCodeForUnequalObjects()` only when the collision is intentional.

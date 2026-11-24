@@ -15,60 +15,89 @@ public final class MethodUtils {
     }
 
     public static Method findSetterFor(final Class<?> clazz, final Field field) {
-        return findSetterFor(clazz, field, false);
+        return findSetterFor(clazz, field, "", false);
+    }
+
+    public static Method findSetterFor(final Class<?> clazz, final Field field, final String fieldPrefix) {
+        return findSetterFor(clazz, field, fieldPrefix, false);
     }
 
     public static Method findSetterFor(final Class<?> clazz, final Field field, final boolean fluent) {
+        return findSetterFor(clazz, field, "", fluent);
+    }
+
+    public static Method findSetterFor(final Class<?> clazz,
+                                       final Field field,
+                                       final String fieldPrefix,
+                                       final boolean fluent) {
+        final String property = propertyName(field.getName(), fieldPrefix);
         final List<Method> candidates = Arrays.stream(clazz.getMethods())
                                              .filter(methodHasOnlyOneParameter())
                                              .filter(areParameterAndFieldTypeAssignable(field))
                                              .filter(returnsVoidOrTheTestedClass(clazz))
                                              .collect(Collectors.toList());
         return candidates.stream()
-                         .filter(method -> prefixMatchesSettersPrefixAndHasExpectedLength(method, field.getName()))
+                         .filter(method -> prefixMatchesSettersPrefixAndHasExpectedLength(method, property))
                          .findAny()
-                         .orElseGet(() -> fluentSetter(clazz, field, candidates, fluent));
+                         .orElseGet(() -> fluentAccessor(clazz, field, candidates, property, fluent, false));
     }
 
     public static Method findGetterFor(final Class<?> clazz, final Field field) {
-        return findGetterFor(clazz, field, false);
+        return findGetterFor(clazz, field, "", false);
+    }
+
+    public static Method findGetterFor(final Class<?> clazz, final Field field, final String fieldPrefix) {
+        return findGetterFor(clazz, field, fieldPrefix, false);
     }
 
     public static Method findGetterFor(final Class<?> clazz, final Field field, final boolean fluent) {
+        return findGetterFor(clazz, field, "", fluent);
+    }
+
+    public static Method findGetterFor(final Class<?> clazz,
+                                       final Field field,
+                                       final String fieldPrefix,
+                                       final boolean fluent) {
+        final String property = propertyName(field.getName(), fieldPrefix);
         final List<Method> candidates = Arrays.stream(clazz.getMethods())
                                              .filter(hasZeroParameters())
                                              .filter(areReturnAndFieldTypeAssignable(field))
                                              .collect(Collectors.toList());
         return candidates.stream()
-                         .filter(method -> prefixMatchesGettersPrefixAndHasExpectedLength(method, field.getName()))
+                         .filter(method -> prefixMatchesGettersPrefixAndHasExpectedLength(method, property))
                          .findAny()
-                         .orElseGet(() -> fluentGetter(clazz, field, candidates, fluent));
+                         .orElseGet(() -> fluentAccessor(clazz, field, candidates, property, fluent, true));
     }
 
-    private static Method fluentGetter(final Class<?> clazz,
-                                       final Field field,
-                                       final List<Method> candidates,
-                                       final boolean fluent) {
+    private static Method fluentAccessor(final Class<?> clazz,
+                                         final Field field,
+                                         final List<Method> candidates,
+                                         final String property,
+                                         final boolean fluent,
+                                         final boolean getter) {
         if (!fluent) {
-            throw new GetterNotFoundException(clazz, field);
+            throw getter ? new GetterNotFoundException(clazz, field) : new SetterNotFoundException(clazz, field);
         }
         return candidates.stream()
-                         .filter(method -> method.getName().equals(field.getName()))
+                         .filter(method -> method.getName().equals(property))
                          .findAny()
-                         .orElseThrow(() -> new GetterNotFoundException(clazz, field));
+                         .orElseThrow(() -> getter
+                                            ? new GetterNotFoundException(clazz, field)
+                                            : new SetterNotFoundException(clazz, field));
     }
 
-    private static Method fluentSetter(final Class<?> clazz,
-                                       final Field field,
-                                       final List<Method> candidates,
-                                       final boolean fluent) {
-        if (!fluent) {
-            throw new SetterNotFoundException(clazz, field);
+    static String propertyName(final String fieldName, final String prefix) {
+        if (prefix == null || prefix.isEmpty() || !fieldName.startsWith(prefix) || fieldName.length() == prefix.length()) {
+            return fieldName;
         }
-        return candidates.stream()
-                         .filter(method -> method.getName().equals(field.getName()))
-                         .findAny()
-                         .orElseThrow(() -> new SetterNotFoundException(clazz, field));
+        final String rest = fieldName.substring(prefix.length());
+        if (prefix.endsWith("_")) {
+            return rest;
+        }
+        if (Character.isUpperCase(rest.charAt(0))) {
+            return Character.toLowerCase(rest.charAt(0)) + rest.substring(1);
+        }
+        return fieldName;
     }
 
     private static Predicate<Method> returnsVoidOrTheTestedClass(final Class<?> clazz) {
