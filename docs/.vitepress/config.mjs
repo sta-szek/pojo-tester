@@ -13,7 +13,7 @@ export default defineConfig({
       { text: 'Guide', link: '/guide' },
       { text: 'Comparison', link: '/comparison' },
       { text: 'Changelog', link: '/changelog' },
-      { text: 'Javadoc', link: '/javadoc/' }
+      { text: 'Javadoc', link: 'https://www.pojo.pl/javadoc/index.html' }
     ],
     sidebar: [
       {
@@ -21,6 +21,7 @@ export default defineConfig({
         items: [
           { text: 'Introduction', link: '/' },
           { text: 'Writing tests', link: '/guide' },
+          { text: 'What is checked', link: '/reference' },
           { text: 'Comparison', link: '/comparison' },
           { text: 'Changelog', link: '/changelog' },
           { text: 'Contributors', link: '/contributors' },
