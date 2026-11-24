@@ -7,7 +7,7 @@ import pl.pojo.tester.internal.tester.EqualsTester;
 import pl.pojo.tester.internal.utils.CollectionUtils;
 
 import static org.mockito.Mockito.*;
-import static org.powermock.reflect.Whitebox.setInternalState;
+import static helpers.Fields.setInternalState;
 
 
 class SingleClassAssetionTest {

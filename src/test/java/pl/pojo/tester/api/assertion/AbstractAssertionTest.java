@@ -24,8 +24,8 @@ import java.util.Random;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.Mockito.*;
-import static org.powermock.reflect.Whitebox.getInternalState;
-import static org.powermock.reflect.Whitebox.setInternalState;
+import static helpers.Fields.getInternalState;
+import static helpers.Fields.setInternalState;
 
 
 class AbstractAssertionTest {

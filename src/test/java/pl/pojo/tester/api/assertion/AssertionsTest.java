@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.powermock.reflect.Whitebox.getInternalState;
+import static helpers.Fields.getInternalState;
 
 
 class AssertionsTest {

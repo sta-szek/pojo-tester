@@ -29,6 +29,7 @@ All notable changes to `pl.pojo:pojo-tester` are recorded here. The format follo
 - Publishing uses the Central Portal. Bintray and the old OSSRH host are not used. A release is signed and waits for the `release-ga` review. A snapshot waits for `release-snapshot`.
 - This site is built with VitePress from `docs/` and published to `gh-pages`.
 - Coverage reports use JaCoCo 0.8.16.
+- Tests no longer use PowerMock. Field access in tests goes through `helpers.Fields`.
 
 ### Fixed
 
