@@ -70,7 +70,9 @@ public abstract class AbstractAssertion {
     }
 
     /**
-     * Specifies generation of O(2^N) test objects for N fields.
+     * Specifies generation of O(2^N) test objects for N fields. A class with more than
+     * {@link pl.pojo.tester.internal.utils.ThoroughFieldPermutator#MAX_FIELDS} fields, including a
+     * nested one, uses the linear strategy instead. A warning names that class.
      *
      * @return itself
      */

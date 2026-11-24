@@ -68,7 +68,7 @@ This form does not apply to an abstract class. An abstract class can still be te
 
 ## How many instances
 
-`thoroughly()` is the default. It combines the included fields. `quickly()` changes one field at a time. Use it when the combination is too large. The class under test is then covered less.
+`thoroughly()` is the default. It combines the included fields, up to 12 on one class (`ThoroughFieldPermutator.MAX_FIELDS`). A class with more fields, including a nested one, uses the same linear strategy as `quickly()`, and a warning names the class and the field count. `quickly()` uses that linear strategy for every class. A class checked that way is covered less.
 
 ## Final fields
 
