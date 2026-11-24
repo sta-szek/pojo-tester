@@ -1,6 +1,8 @@
 package pl.pojo.tester.internal.assertion.hashcode;
 
 
+import java.util.List;
+
 public class HashCodeAssertions {
 
     private final Object objectUnderAssert;
@@ -36,6 +38,19 @@ public class HashCodeAssertions {
                                                        otherObject,
                                                        result1,
                                                        result2));
+
+    }
+
+    public void returnsDifferentValueForAtLeastOneOf(final List<Object> otherObjects) {
+        final int result = objectUnderAssert.hashCode();
+        final boolean allSame = !otherObjects.isEmpty()
+                && otherObjects.stream()
+                               .allMatch(eachObject -> eachObject.hashCode() == result);
+        checkResult(!allSame,
+                    new IdenticalHashCodeAssertionError(classUnderTest,
+                                                        objectUnderAssert,
+                                                        otherObjects,
+                                                        result));
 
     }
 
