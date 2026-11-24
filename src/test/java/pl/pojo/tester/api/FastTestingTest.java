@@ -1,6 +1,9 @@
 package pl.pojo.tester.api;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledOnJre;
+import org.junit.jupiter.api.condition.EnabledOnJre;
+import org.junit.jupiter.api.condition.JRE;
 import pl.pojo.tester.api.assertion.Method;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -10,22 +13,25 @@ import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
 class FastTestingTest {
 
     @Test
+    @DisabledOnJre(JRE.JAVA_11)
     void ShouldCompleteInReasonableTime() {
+        assertCompletesWithin(500L);
+    }
+
+    @Test
+    @EnabledOnJre(JRE.JAVA_11)
+    void ShouldCompleteInReasonableTimeOnJava11() {
+        // The Java 11 runner has been slower than the bound that holds on the other jobs.
+        assertCompletesWithin(2_000L);
+    }
+
+    private static void assertCompletesWithin(final long limitMillis) {
         final long start = System.currentTimeMillis();
-        {
-            // given
-            final Class<?> classUnderTest = Medium.class;
-
-            // when
-
-            // then
-            assertPojoMethodsFor(classUnderTest)
-                    .testing(Method.EQUALS, Method.HASH_CODE)
-                    .quickly()
-                    .areWellImplemented();
-        }
-        final long end = System.currentTimeMillis();
-        assertThat(end - start).isLessThan(2_000L);
+        assertPojoMethodsFor(Medium.class)
+                .testing(Method.EQUALS, Method.HASH_CODE)
+                .quickly()
+                .areWellImplemented();
+        assertThat(System.currentTimeMillis() - start).isLessThan(limitMillis);
     }
 }
 

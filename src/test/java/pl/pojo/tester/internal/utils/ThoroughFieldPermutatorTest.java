@@ -41,7 +41,9 @@ class ThoroughFieldPermutatorTest {
         final ThoroughFieldPermutator permutator = new ThoroughFieldPermutator();
 
         assertThat(fields).hasSize(ThoroughFieldPermutator.MAX_FIELDS);
-        assertThat(permutator.permute(fields)).isEqualTo(FieldUtils.permutations(fields));
+        // 2^n - 1: every non-empty subset. At this limit that is 4095.
+        assertThat(permutator.permute(fields)).isEqualTo(FieldUtils.permutations(fields))
+                                               .hasSize((1 << ThoroughFieldPermutator.MAX_FIELDS) - 1);
     }
 
     @Test
