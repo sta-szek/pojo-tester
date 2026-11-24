@@ -51,6 +51,7 @@ public abstract class AbstractAssertion {
     private AbstractFieldValueChanger abstractFieldValueChanger;
     private Permutator permutator = new ThoroughFieldPermutator();
     private boolean changeFinalFields;
+    private boolean fluentAccessors;
 
     /**
      * Specifies what field values changer will be used for testing.
@@ -96,6 +97,18 @@ public abstract class AbstractAssertion {
      */
     public AbstractAssertion changingFinalFields() {
         this.changeFinalFields = true;
+        return this;
+    }
+
+    /**
+     * Also accepts a getter or setter whose name is the field name.
+     * That is the shape of Lombok {@code @Accessors(fluent = true)}.
+     * Off by default, so a method that happens to share a field's name is not a getter.
+     *
+     * @return itself
+     */
+    public AbstractAssertion usingFluentAccessors() {
+        this.fluentAccessors = true;
         return this;
     }
 
@@ -146,6 +159,7 @@ public abstract class AbstractAssertion {
         testers.forEach(tester -> tester.setPermutator(permutator));
         testers.forEach(tester -> tester.setUserDefinedConstructors(constructorParameters));
         testers.forEach(tester -> tester.setChangeFinalFields(changeFinalFields));
+        testers.forEach(tester -> tester.setFluentAccessors(fluentAccessors));
         testers.forEach(tester -> tester.setUserDefinedInstantiators(instantiators));
 
         runAssertions();

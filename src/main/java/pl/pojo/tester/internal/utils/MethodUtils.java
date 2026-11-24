@@ -5,7 +5,9 @@ import org.apache.commons.lang3.reflect.TypeUtils;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public final class MethodUtils {
 
@@ -13,22 +15,60 @@ public final class MethodUtils {
     }
 
     public static Method findSetterFor(final Class<?> clazz, final Field field) {
-        return Arrays.stream(clazz.getMethods())
-                     .filter(methodHasOnlyOneParameter())
-                     .filter(areParameterAndFieldTypeAssignable(field))
-                     .filter(returnsVoidOrTheTestedClass(clazz))
-                     .filter(method -> prefixMatchesSettersPrefixAndHasExpectedLength(method, field.getName()))
-                     .findAny()
-                     .orElseThrow(() -> new SetterNotFoundException(clazz, field));
+        return findSetterFor(clazz, field, false);
+    }
+
+    public static Method findSetterFor(final Class<?> clazz, final Field field, final boolean fluent) {
+        final List<Method> candidates = Arrays.stream(clazz.getMethods())
+                                             .filter(methodHasOnlyOneParameter())
+                                             .filter(areParameterAndFieldTypeAssignable(field))
+                                             .filter(returnsVoidOrTheTestedClass(clazz))
+                                             .collect(Collectors.toList());
+        return candidates.stream()
+                         .filter(method -> prefixMatchesSettersPrefixAndHasExpectedLength(method, field.getName()))
+                         .findAny()
+                         .orElseGet(() -> fluentSetter(clazz, field, candidates, fluent));
     }
 
     public static Method findGetterFor(final Class<?> clazz, final Field field) {
-        return Arrays.stream(clazz.getMethods())
-                     .filter(hasZeroParameters())
-                     .filter(areReturnAndFieldTypeAssignable(field))
-                     .filter(method -> prefixMatchesGettersPrefixAndHasExpectedLength(method, field.getName()))
-                     .findAny()
-                     .orElseThrow(() -> new GetterNotFoundException(clazz, field));
+        return findGetterFor(clazz, field, false);
+    }
+
+    public static Method findGetterFor(final Class<?> clazz, final Field field, final boolean fluent) {
+        final List<Method> candidates = Arrays.stream(clazz.getMethods())
+                                             .filter(hasZeroParameters())
+                                             .filter(areReturnAndFieldTypeAssignable(field))
+                                             .collect(Collectors.toList());
+        return candidates.stream()
+                         .filter(method -> prefixMatchesGettersPrefixAndHasExpectedLength(method, field.getName()))
+                         .findAny()
+                         .orElseGet(() -> fluentGetter(clazz, field, candidates, fluent));
+    }
+
+    private static Method fluentGetter(final Class<?> clazz,
+                                       final Field field,
+                                       final List<Method> candidates,
+                                       final boolean fluent) {
+        if (!fluent) {
+            throw new GetterNotFoundException(clazz, field);
+        }
+        return candidates.stream()
+                         .filter(method -> method.getName().equals(field.getName()))
+                         .findAny()
+                         .orElseThrow(() -> new GetterNotFoundException(clazz, field));
+    }
+
+    private static Method fluentSetter(final Class<?> clazz,
+                                       final Field field,
+                                       final List<Method> candidates,
+                                       final boolean fluent) {
+        if (!fluent) {
+            throw new SetterNotFoundException(clazz, field);
+        }
+        return candidates.stream()
+                         .filter(method -> method.getName().equals(field.getName()))
+                         .findAny()
+                         .orElseThrow(() -> new SetterNotFoundException(clazz, field));
     }
 
     private static Predicate<Method> returnsVoidOrTheTestedClass(final Class<?> clazz) {
