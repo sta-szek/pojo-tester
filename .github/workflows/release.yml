@@ -220,6 +220,4 @@ jobs:
     uses: ./.github/workflows/docs.yml
     permissions:
       contents: write
-    with:
-      sha: ${{ needs.prepare.outputs.sha }}
 
