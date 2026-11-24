@@ -205,8 +205,15 @@ jobs:
 
       - name: Turn off Automatic Analysis
         run: |
+          echo "Token can see the project:"
+          curl -sS -o /tmp/sonar-component.txt -w " HTTP %{http_code}\n" \
+            -H "Authorization: Bearer ${SONAR_TOKEN}" \
+            "https://sonarcloud.io/api/components/show?component=sta-szek_pojo-tester"
+          head -c 500 /tmp/sonar-component.txt
+          echo
           http=$(curl -sS -o /tmp/autoscan-body.txt -w "%{http_code}" \
-            -u "${SONAR_TOKEN}:" \
+            -H "Authorization: Bearer ${SONAR_TOKEN}" \
+            -H "Content-Type: application/x-www-form-urlencoded" \
             -X POST "https://sonarcloud.io/api/autoscan/activation" \
             --data-urlencode "enable=false" \
             --data-urlencode "projectKey=sta-szek_pojo-tester")
