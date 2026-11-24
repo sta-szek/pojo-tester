@@ -7,4 +7,9 @@ class LongValueChanger extends AbstractPrimitiveValueChanger<Long> {
     protected Long increase(final Long value) {
         return value + 1;
     }
+
+    @Override
+    protected Long nullReplacement() {
+        return 1L;
+    }
 }

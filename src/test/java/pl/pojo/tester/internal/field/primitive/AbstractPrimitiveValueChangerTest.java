@@ -31,5 +31,10 @@ class AbstractPrimitiveValueChangerTest {
         protected Object increase(final Object value) {
             return null;
         }
+
+        @Override
+        protected Object nullReplacement() {
+            return new Object();
+        }
     }
 }

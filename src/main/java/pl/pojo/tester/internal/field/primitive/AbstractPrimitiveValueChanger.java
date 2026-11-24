@@ -24,10 +24,16 @@ public abstract class AbstractPrimitiveValueChanger<T> extends AbstractFieldValu
 
     @Override
     protected T increaseValue(final T value, final Class<?> type) {
-        return increase(value);
+        return value == null ? nullReplacement() : increase(value);
     }
 
     protected abstract T increase(T value);
+
+    /**
+     * Value used when a boxed field is {@code null}. It must be non-null so the changed instance
+     * differs from the one that still holds {@code null}.
+     */
+    protected abstract T nullReplacement();
 
 
     @Override
