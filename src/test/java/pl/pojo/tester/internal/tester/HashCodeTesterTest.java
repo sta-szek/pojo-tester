@@ -7,9 +7,11 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.junit.jupiter.api.Test;
 import pl.pojo.tester.api.FieldPredicate;
 import pl.pojo.tester.internal.assertion.hashcode.AbstractHashCodeAssertionError;
+import pl.pojo.tester.internal.assertion.hashcode.IdenticalHashCodeAssertionError;
 import pl.pojo.tester.internal.field.DefaultFieldValueChanger;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.function.Predicate;
 
@@ -74,6 +76,32 @@ class HashCodeTesterTest {
 
         // then
         assertThat(result).isNull();
+    }
+
+    @Test
+    void Should_Pass_When_HashCode_Uses_Subset_Of_Equals_Fields() {
+        // given
+        final Class[] classesToTest = {GoodPojoHashCodeSubsetOfFields.class};
+        final HashCodeTester hashCodeTester = new HashCodeTester();
+
+        // when
+        final Throwable result = catchThrowable(() -> hashCodeTester.testAll(classesToTest));
+
+        // then
+        assertThat(result).isNull();
+    }
+
+    @Test
+    void Should_Fail_When_HashCode_Is_The_Same_For_All_Objects() {
+        // given
+        final Class[] classesToTest = {BadPojoHashCodeConstant.class};
+        final HashCodeTester hashCodeTester = new HashCodeTester();
+
+        // when
+        final Throwable result = catchThrowable(() -> hashCodeTester.testAll(classesToTest));
+
+        // then
+        assertThat(result).isInstanceOf(IdenticalHashCodeAssertionError.class);
     }
 
     @Test
@@ -315,6 +343,39 @@ class HashCodeTesterTest {
         @Override
         public int hashCode() {
             return increment++;
+        }
+    }
+
+    private class GoodPojoHashCodeSubsetOfFields {
+
+        private String name;
+        private int age;
+
+        @Override
+        public boolean equals(final Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            final GoodPojoHashCodeSubsetOfFields that = (GoodPojoHashCodeSubsetOfFields) o;
+            return age == that.age && Objects.equals(name, that.name);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(name);
+        }
+    }
+
+    private class BadPojoHashCodeConstant {
+
+        private int increment;
+
+        @Override
+        public int hashCode() {
+            return 1;
         }
     }
 }
