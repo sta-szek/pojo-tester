@@ -380,7 +380,7 @@ public void Should_Pass_All_Pojo_Tests() {
 
 `final` fields keep the value they were constructed with. The library does not assign a new value to them, so `equals`, `hashCode` and `toString` are checked through the other fields.
 
-Call `changingFinalFields()` when a final field has to take part in that check. The assignment uses reflection and is not available for every final field on every JDK.
+Call `changingFinalFields()` when a final field has to take part in that check. The assignment uses reflection and is not available for every final field on every JDK. On JDK 9, 10 and 11 that option prints an illegal reflective access warning for `Field.modifiers`. The default path does not read that field, so the warning is not printed.
 
 ```java
 assertPojoMethodsFor(ImmutablePojo.class)
