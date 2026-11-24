@@ -390,7 +390,15 @@ assertPojoMethodsFor(ImmutablePojo.class)
 
 ## Create class using a supplier {#supplier}
 
-A constructor that validates its arguments, or a class that should be built with a builder, cannot be created from generated values. Pass a supplier. It is used for that class only in this assertion, and it must return a new instance on every call.
+A constructor that validates its arguments, or a class that should be built with a builder, cannot be created from generated values. Pass a supplier. It is used for that class only in this assertion, and it must return a new instance on every call. A Lombok `@Builder` class is this case: the supplier calls the builder.
+
+A static nested class is an ordinary class. Test it on its own, or let the outer class replace the nested value as a whole. You do not have to register the nested type for `equals` and `hashCode` to see a difference.
+
+```java
+assertPojoMethodsFor(Questionnaire.class).areWellImplemented();
+assertPojoMethodsFor(Questionnaire.Answer.class).areWellImplemented();
+```
+
 
 ```java
 import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
