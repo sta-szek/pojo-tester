@@ -17,6 +17,32 @@ import static pl.pojo.tester.api.assertion.Method.SETTER;
 class FieldPrefixTest {
 
     @Test
+    void Should_Fail_When_The_Prefix_Is_Not_Applied() {
+        assertThatThrownBy(() -> assertPojoMethodsFor(Prefixed.class).testing(GETTER).areWellImplemented())
+                .isInstanceOf(GetterNotFoundException.class);
+        assertThatThrownBy(() -> assertPojoMethodsFor(Prefixed.class).testing(SETTER).areWellImplemented())
+                .isInstanceOf(SetterNotFoundException.class);
+    }
+
+    @Test
+    void Should_Fail_When_The_Getter_Still_Uses_The_Prefix() {
+        assertThatThrownBy(() -> assertPojoMethodsFor(GetterKeepsPrefix.class)
+                .testing(GETTER)
+                .withFieldPrefix("m")
+                .areWellImplemented())
+                .isInstanceOf(GetterNotFoundException.class);
+    }
+
+    @Test
+    void Should_Fail_When_The_Setter_Still_Uses_The_Prefix() {
+        assertThatThrownBy(() -> assertPojoMethodsFor(SetterKeepsPrefix.class)
+                .testing(SETTER)
+                .withFieldPrefix("m")
+                .areWellImplemented())
+                .isInstanceOf(SetterNotFoundException.class);
+    }
+
+    @Test
     void Should_Match_Getters_And_Setters_After_An_M_Prefix() {
         assertPojoMethodsFor(Prefixed.class)
                 .testing(GETTER, SETTER)
@@ -95,8 +121,32 @@ class FieldPrefixTest {
         }
     }
 
+    static class GetterKeepsPrefix {
+        private String mName;
+
+        public String getMName() {
+            return mName;
+        }
+
+        public void setName(final String name) {
+            mName = name;
+        }
+    }
+
+    static class SetterKeepsPrefix {
+        private String mName;
+
+        public String getName() {
+            return mName;
+        }
+
+        public void setMName(final String name) {
+            mName = name;
+        }
+    }
+
     static class Underscore {
-        private String m_name;
+        private String m_name; // NOSONAR java:S116 the underscore is the prefix under test
 
         public String getName() {
             return m_name;
