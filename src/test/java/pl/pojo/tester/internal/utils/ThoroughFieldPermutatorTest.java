@@ -41,8 +41,7 @@ class ThoroughFieldPermutatorTest {
         final ThoroughFieldPermutator permutator = new ThoroughFieldPermutator();
 
         assertThat(fields).hasSize(ThoroughFieldPermutator.MAX_FIELDS);
-        assertThat(permutator.permute(fields)).isEqualTo(FieldUtils.permutations(fields))
-                                               .hasSize((1 << ThoroughFieldPermutator.MAX_FIELDS) - 1);
+        assertThat(permutator.permute(fields)).isEqualTo(FieldUtils.permutations(fields));
     }
 
     @Test

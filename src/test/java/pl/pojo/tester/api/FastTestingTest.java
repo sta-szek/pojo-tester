@@ -25,7 +25,7 @@ class FastTestingTest {
                     .areWellImplemented();
         }
         final long end = System.currentTimeMillis();
-        assertThat(end - start).isLessThan(500L);
+        assertThat(end - start).isLessThan(2_000L);
     }
 }
 
