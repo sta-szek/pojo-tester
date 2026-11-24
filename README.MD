@@ -1,46 +1,74 @@
-# POJO-TESTER
+# pojo-tester
 
-Java testing library for POJO methods: `equals`, `hashCode`, `toString`, getters, setters and constructors.
+pojo-tester checks the methods a plain Java object is expected to get right: `equals`, `hashCode`, `toString`, getters, setters and constructors. One assertion replaces the hand-written cases that only repeat the fields.
 
-The project was paused in 2020. It is being brought back so the same Java 8 bytecode still runs on current JDKs.
+The project stopped in 2020, at release `0.7.6`. Work resumed in November 2026 on the same coordinates and the same license. The bytecode is still Java 8, and that bytecode is tested on Java 8, 11, 17, 21 and 25.
 
-## Status
+## Use it
 
-| | |
-| --- | --- |
-| License | [LGPL-3.0](LICENSE.MD) (unchanged) |
-| Bytecode | Java 8 |
-| CI | GitHub Actions. `build` on Java 8, 11, 17, 21 and 25. Mutation tests (PIT, threshold 80%), Spotless (changed files only) and SpotBugs (SARIF to code scanning) on Java 21. Coverage goes to Codecov. |
-| Coordinates | `pl.pojo:pojo-tester:0.8.0-SNAPSHOT` |
-| Maven Central | last published release is `0.7.6` (2017). The next version is the snapshot above. |
+The development line is `0.8.0-SNAPSHOT`. It is published to the Central Portal snapshot repository. `0.7.6` is the last release and comes from Maven Central with no extra repository.
 
-Documentation site: [pojo.pl](http://pojo.pl) (may be stale). The user guide in this repository has a [fork survey](src/book/forks/README.md) (23 November 2026). No fork should be merged back as a whole.
-
-## What a test accepts
-
-This is the behavior on `master` (`0.8.0-SNAPSHOT`). Release `0.7.6` does not include it.
-
-- A final field is copied, not given a different value. Call `changingFinalFields()` to opt in. On Java 12 and newer that write goes through `VarHandle`, so the old `Field.modifiers` failure does not happen.
-- `create(Class, Supplier)` supplies the instance when the class has no usable constructor. That covers a builder and a constructor that rejects the library's default arguments.
-- A setter may return the class under test (`return this`). A method that returns `Object` is not treated as a setter.
-- JavaBeans spelling is kept when the second letter is already uppercase: `xCoordinate` matches `getxCoordinate` and `setxCoordinate`, and `URL` matches `getURL`.
-- An enum is not tested for setters. A setter of an enum-typed field on an ordinary class still is.
-- A package scan loads only `*.class` files. A `mapper.xml` sitting next to the classes is ignored.
-- `toString` may wrap a `String` or `char` in single quotes. An `Object[]` printed with `Arrays.toString` is accepted.
-- Getters and setters are checked with a distinct value in every field.
-- `equals` is also checked with `null` in each included field that is not primitive and not `final`.
+### Gradle
 
 ```gradle
+repositories {
+    mavenCentral()
+    maven {
+        url = 'https://central.sonatype.com/repository/maven-snapshots/'
+        content { includeModule('pl.pojo', 'pojo-tester') }
+    }
+}
+
 dependencies {
     testImplementation 'pl.pojo:pojo-tester:0.8.0-SNAPSHOT'
 }
 ```
 
-The snapshot repository is `https://central.sonatype.com/repository/maven-snapshots/`. Release `0.7.6` does not need it.
+### Maven
+
+```xml
+<repositories>
+    <repository>
+        <id>central-snapshots</id>
+        <url>https://central.sonatype.com/repository/maven-snapshots/</url>
+        <releases><enabled>false</enabled></releases>
+        <snapshots><enabled>true</enabled></snapshots>
+    </repository>
+</repositories>
+
+<dependency>
+    <groupId>pl.pojo</groupId>
+    <artifactId>pojo-tester</artifactId>
+    <version>0.8.0-SNAPSHOT</version>
+    <scope>test</scope>
+</dependency>
+```
+
+```java
+import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
+
+assertPojoMethodsFor(Order.class).areWellImplemented();
+```
+
+The user guide in this repository describes the current line. [pojo.pl](http://pojo.pl) still documents `0.7.6`.
+
+## What `0.8.0-SNAPSHOT` accepts
+
+Release `0.7.6` does not include this.
+
+- A final field is copied, not given a different value. Call `changingFinalFields()` to opt in. On Java 12 and newer that write goes through `VarHandle`.
+- `create(Class, Supplier)` supplies the instance when the class has no usable constructor.
+- A setter may return the class under test (`return this`). A method that returns `Object` is not a setter.
+- JavaBeans spelling is kept when the second letter is already uppercase: `xCoordinate` matches `getxCoordinate`, and `URL` matches `getURL`.
+- An enum is not tested for setters. A setter of an enum-typed field on an ordinary class still is.
+- A package scan loads only `*.class` files.
+- `toString` may wrap a `String` or `char` in single quotes. An `Object[]` printed with `Arrays.toString` is accepted.
+- Getters and setters are checked with a distinct value in every field.
+- `equals` is also checked with `null` in each included field that is not primitive and not `final`.
 
 ## Build
 
-`./gradlew build` compiles with `--release 8`, runs the unit tests and the integration tests, and builds the library, sources and Javadoc jars. Gradle itself needs JDK 17 or newer. The produced bytecode still runs on Java 8.
+`./gradlew build` compiles with `--release 8`, runs the unit tests and the integration tests, and builds the library, sources and Javadoc jars. Gradle needs JDK 17 or newer. The produced bytecode still runs on Java 8.
 
 ```bash
 ./gradlew build
@@ -48,40 +76,42 @@ The snapshot repository is `https://central.sonatype.com/repository/maven-snapsh
 ./gradlew pitest -PtestJavaVersion=21
 ```
 
-`-PtestJavaVersion` accepts `8`, `11`, `17`, `21` or `25`. The default is `8`. On JDK 16+ the test task opens `java.base` packages the library still reflects into (`java.lang`, `java.time`, and a few others).
+`-PtestJavaVersion` accepts `8`, `11`, `17`, `21` or `25`. The default is `8`. On JDK 16 and newer the test task opens the `java.base` packages the library still reflects into.
 
 | Task | What it runs |
 | --- | --- |
 | `build` | compile, unit tests, integration tests, jars |
 | `test` | unit tests |
 | `integrationTest` | integration tests |
-| `pitest` | mutation tests (PIT) of `pl.pojo.tester` |
-| `spotlessCheck` | formatting of files changed vs `origin/master` (`spotlessApply` fixes them) |
-| `spotbugsMain` | static analysis (reports in `build/reports/spotbugs`) |
+| `pitest` | mutation tests of `pl.pojo.tester`, threshold 80% |
+| `spotlessCheck` | formatting of files changed against `origin/master` |
+| `spotbugsMain` | static analysis, report in `build/reports/spotbugs` |
 | `jacocoTestReport` | merged unit and integration coverage |
 
-`build` depends on `check`, and `check` depends on both test tasks. Mutation tests are a separate task because a full PIT run is much slower than the test suite. CI runs `build` on Java 8, 11, 17, 21 and 25, all on `ubuntu-latest`. Spotless, SpotBugs and PIT run there too. Gradle dependency and build caches are restored on every Gradle job.
+CI runs `build` on Java 8, 11, 17, 21 and 25. Spotless, SpotBugs and PIT run on Java 21. Every job uses `ubuntu-latest`, and Gradle restores its dependency and build caches.
 
 ## Publishing
 
-[Release](.github/workflows/release.yml) publishes to the [Central Portal](https://central.sonatype.com/) after CI is green on `master`. Every job runs on `ubuntu-latest`. Bintray and the old OSSRH host are not used. A tag push does not publish anything.
+[Release](.github/workflows/release.yml) publishes to the [Central Portal](https://central.sonatype.com/) after CI is green on `master`. A tag does not publish anything. Bintray and the old OSSRH host are not used.
 
-| Step | Where it waits | What it does |
+| Step | Gate | Result |
 | --- | --- | --- |
-| Snapshot | environment `release-snapshot` | waits for a reviewer, then runs `./gradlew build` and publishes the `-SNAPSHOT` |
-| Release | environment `release-ga` | waits for a reviewer, then runs `./gradlew build`, signs and publishes `X.Y.Z`, opens a GitHub release, and opens an auto-merged pull request for `X.Y.(Z+1)-SNAPSHOT` |
+| Snapshot | review on `release-snapshot` | `./gradlew build`, then the `-SNAPSHOT` from `gradle.properties` |
+| Release | review on `release-ga` | `./gradlew build`, then signed `X.Y.Z`, a GitHub release, and a pull request that sets `X.Y.(Z+1)-SNAPSHOT` |
 
-`master` stays on a snapshot. Do not commit a release version there. The workflow reads `X.Y.Z-SNAPSHOT` from `gradle.properties` and passes `X.Y.Z` as `-Pversion`. Rejecting the GA review leaves the snapshot published and does not release.
+`master` stays on a snapshot. The release version is passed as `-Pversion` and is not committed. Rejecting the second review leaves the snapshot published and does not release.
 
-Both environments allow protected branches and have a required reviewer. Run a manual dispatch from `master` only.
+Both environments allow protected branches and require a reviewer. A manual run has to start from `master`. Secrets live on the environments. A repository secret of the same name is only a fallback.
 
-Each environment has its own secrets (Settings, Environments). A repository secret with the same name is only a fallback. Do not commit them.
-
-| Secret | Where | Value |
+| Secret | Environment | Value |
 | --- | --- | --- |
-| `CENTRAL_TOKEN` | both environments | User token from the portal: Account, Generate User Token. Store `username:password`, or the base64 of that pair (the Copy user token button). Not the portal login password. |
-| `CENTRAL_USERNAME` | both, optional | Set it only when `CENTRAL_TOKEN` is the password by itself. |
-| `SIGNING_KEY` | `release-ga` | ASCII-armored private key, or that block encoded as base64. |
+| `CENTRAL_TOKEN` | both | Portal user token, `username:password` or the base64 of that pair. Not the portal password. |
+| `CENTRAL_USERNAME` | both, optional | Only when `CENTRAL_TOKEN` is the password alone. |
+| `SIGNING_KEY` | `release-ga` | Armored private key, or that block in base64. |
 | `SIGNING_PASSWORD` | `release-ga` | Passphrase of that key. |
 
-Snapshots are not signed, so `release-snapshot` does not read the signing secrets. The namespace on the portal has to be `pl.pojo`. That group already has `pl.pojo:pojo-tester:0.7.6`, so a new account must claim the existing namespace. An old OSSRH token returns 401. Before the first snapshot, open [Namespaces](https://central.sonatype.com/publishing/namespaces), open the menu on `pl.pojo`, and choose **Enable SNAPSHOTs**. Without that the snapshot repository answers 403. Publish the public GPG key, for example to [keys.openpgp.org](https://keys.openpgp.org/), before the first release.
+Snapshots are not signed. The namespace is `pl.pojo`. Publish the public key before the first release, for example to [keys.openpgp.org](https://keys.openpgp.org/).
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md). Changes go through a pull request. The license is [LGPL-3.0](LICENSE.MD).
