@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Objects;
 
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
 import static pl.pojo.tester.api.assertion.Method.EQUALS;
 import static pl.pojo.tester.api.assertion.Method.HASH_CODE;
@@ -12,7 +13,8 @@ class FinalFieldDefaultPathTest {
 
     @Test
     void Should_Test_Equals_And_Hash_Code_Without_Writing_A_Final_Field() {
-        assertPojoMethodsFor(WithFinal.class).testing(EQUALS, HASH_CODE).areWellImplemented();
+        assertThatCode(() -> assertPojoMethodsFor(WithFinal.class).testing(EQUALS, HASH_CODE).areWellImplemented())
+                .doesNotThrowAnyException();
     }
 
     static class WithFinal {
@@ -21,6 +23,7 @@ class FinalFieldDefaultPathTest {
 
         @Override
         public boolean equals(final Object other) {
+            requireUntouched();
             if (this == other) {
                 return true;
             }
@@ -28,12 +31,20 @@ class FinalFieldDefaultPathTest {
                 return false;
             }
             final WithFinal that = (WithFinal) other;
-            return Objects.equals(id, that.id) && Objects.equals(name, that.name);
+            that.requireUntouched();
+            return Objects.equals(name, that.name);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(id, name);
+            requireUntouched();
+            return Objects.hash(name);
+        }
+
+        private void requireUntouched() {
+            if (!"fixed".equals(id)) {
+                throw new IllegalStateException("final field was changed: " + id);
+            }
         }
     }
 }
