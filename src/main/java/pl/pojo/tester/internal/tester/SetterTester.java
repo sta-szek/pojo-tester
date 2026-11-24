@@ -62,7 +62,7 @@ public class SetterTester extends AbstractTester {
     }
 
     private SetterAndFieldPair findSetterAndGetterPairForField(final Class<?> testedClass, final Field field) {
-        final Method setter = MethodUtils.findSetterFor(testedClass, field, getFieldPrefix());
+        final Method setter = MethodUtils.findSetterFor(testedClass, field, getFieldPrefix(), isFluentAccessors());
         return new SetterAndFieldPair(setter, field);
     }
 

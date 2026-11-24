@@ -380,7 +380,7 @@ public void Should_Pass_All_Pojo_Tests() {
 
 `final` fields keep the value they were constructed with. The library does not assign a new value to them, so `equals`, `hashCode` and `toString` are checked through the other fields.
 
-Call `changingFinalFields()` when a final field has to take part in that check. The assignment uses reflection and is not available for every final field on every JDK.
+Call `changingFinalFields()` when a final field has to take part in that check. The assignment uses reflection and is not available for every final field on every JDK. On JDK 9, 10 and 11 that option prints an illegal reflective access warning for `Field.modifiers`. The default path does not read that field, so the warning is not printed.
 
 ```java
 assertPojoMethodsFor(ImmutablePojo.class)
@@ -398,9 +398,27 @@ assertPojoMethodsFor(Prefixed.class)
         .areWellImplemented();
 ```
 
+## Same hash code {#same-hash-code}
+
+By default, two objects that are not equal must have different hash codes. `Object.hashCode` does not require that. A constant hash code is legal, and it is also what you get when a field was forgotten. Call `allowingSameHashCodeForUnequalObjects()` only when the collision is intentional.
+
+```java
+assertPojoMethodsFor(ConstantHash.class)
+        .allowingSameHashCodeForUnequalObjects()
+        .areWellImplemented();
+```
+
 ## Create class using a supplier {#supplier}
 
-A constructor that validates its arguments, or a class that should be built with a builder, cannot be created from generated values. Pass a supplier. It is used for that class only in this assertion, and it must return a new instance on every call.
+A constructor that validates its arguments, or a class that only has a builder, cannot be created from generated values. Pass a supplier. It is used for that class only in this assertion, and it must return a new instance on every call. Lombok `@Data` with `@Builder` still has a constructor, so no supplier is required. `@SuperBuilder` does need one. `@Accessors(fluent = true)` names the getter after the field; call `usingFluentAccessors()` for that shape.
+
+A static nested class is an ordinary class. Test it on its own, or let the outer class replace the nested value as a whole. You do not have to register the nested type for `equals` and `hashCode` to see a difference. A broken `equals` or `hashCode` still fails.
+
+```java
+assertPojoMethodsFor(Questionnaire.class).areWellImplemented();
+assertPojoMethodsFor(Questionnaire.Answer.class).areWellImplemented();
+```
+
 
 ```java
 import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;

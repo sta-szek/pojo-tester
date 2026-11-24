@@ -5,7 +5,9 @@ import org.apache.commons.lang3.reflect.TypeUtils;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public final class MethodUtils {
 
@@ -13,32 +15,75 @@ public final class MethodUtils {
     }
 
     public static Method findSetterFor(final Class<?> clazz, final Field field) {
-        return findSetterFor(clazz, field, "");
+        return findSetterFor(clazz, field, "", false);
     }
 
     public static Method findSetterFor(final Class<?> clazz, final Field field, final String fieldPrefix) {
+        return findSetterFor(clazz, field, fieldPrefix, false);
+    }
+
+    public static Method findSetterFor(final Class<?> clazz, final Field field, final boolean fluent) {
+        return findSetterFor(clazz, field, "", fluent);
+    }
+
+    public static Method findSetterFor(final Class<?> clazz,
+                                       final Field field,
+                                       final String fieldPrefix,
+                                       final boolean fluent) {
         final String property = propertyName(field.getName(), fieldPrefix);
-        return Arrays.stream(clazz.getMethods())
-                     .filter(methodHasOnlyOneParameter())
-                     .filter(areParameterAndFieldTypeAssignable(field))
-                     .filter(returnsVoidOrTheTestedClass(clazz))
-                     .filter(method -> prefixMatchesSettersPrefixAndHasExpectedLength(method, property))
-                     .findAny()
-                     .orElseThrow(() -> new SetterNotFoundException(clazz, field));
+        final List<Method> candidates = Arrays.stream(clazz.getMethods())
+                                             .filter(methodHasOnlyOneParameter())
+                                             .filter(areParameterAndFieldTypeAssignable(field))
+                                             .filter(returnsVoidOrTheTestedClass(clazz))
+                                             .collect(Collectors.toList());
+        return candidates.stream()
+                         .filter(method -> prefixMatchesSettersPrefixAndHasExpectedLength(method, property))
+                         .findAny()
+                         .orElseGet(() -> fluentAccessor(clazz, field, candidates, property, fluent, false));
     }
 
     public static Method findGetterFor(final Class<?> clazz, final Field field) {
-        return findGetterFor(clazz, field, "");
+        return findGetterFor(clazz, field, "", false);
     }
 
     public static Method findGetterFor(final Class<?> clazz, final Field field, final String fieldPrefix) {
+        return findGetterFor(clazz, field, fieldPrefix, false);
+    }
+
+    public static Method findGetterFor(final Class<?> clazz, final Field field, final boolean fluent) {
+        return findGetterFor(clazz, field, "", fluent);
+    }
+
+    public static Method findGetterFor(final Class<?> clazz,
+                                       final Field field,
+                                       final String fieldPrefix,
+                                       final boolean fluent) {
         final String property = propertyName(field.getName(), fieldPrefix);
-        return Arrays.stream(clazz.getMethods())
-                     .filter(hasZeroParameters())
-                     .filter(areReturnAndFieldTypeAssignable(field))
-                     .filter(method -> prefixMatchesGettersPrefixAndHasExpectedLength(method, property))
-                     .findAny()
-                     .orElseThrow(() -> new GetterNotFoundException(clazz, field));
+        final List<Method> candidates = Arrays.stream(clazz.getMethods())
+                                             .filter(hasZeroParameters())
+                                             .filter(areReturnAndFieldTypeAssignable(field))
+                                             .collect(Collectors.toList());
+        return candidates.stream()
+                         .filter(method -> prefixMatchesGettersPrefixAndHasExpectedLength(method, property))
+                         .findAny()
+                         .orElseGet(() -> fluentAccessor(clazz, field, candidates, property, fluent, true));
+    }
+
+    private static Method fluentAccessor(final Class<?> clazz,
+                                         final Field field,
+                                         final List<Method> candidates,
+                                         final String property,
+                                         final boolean fluent,
+                                         final boolean getter) {
+        if (!fluent) {
+            throw getter ? new GetterNotFoundException(clazz, field) : new SetterNotFoundException(clazz, field);
+        }
+        return candidates.stream()
+                         .filter(method -> method.getName().equals(property))
+                         .findAny()
+                         .orElseThrow(() -> getter
+                                            ? new GetterNotFoundException(clazz, field)
+                                            : new SetterNotFoundException(clazz, field));
     }
 
     static String propertyName(final String fieldName, final String prefix) {

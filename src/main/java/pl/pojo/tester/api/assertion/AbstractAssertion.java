@@ -52,6 +52,8 @@ public abstract class AbstractAssertion {
     private Permutator permutator = new ThoroughFieldPermutator();
     private boolean changeFinalFields;
     private String fieldPrefix = "";
+    private boolean fluentAccessors;
+    private boolean allowSameHashCodeForUnequalObjects;
 
     /**
      * Specifies what field values changer will be used for testing.
@@ -116,6 +118,30 @@ public abstract class AbstractAssertion {
     }
 
     /**
+     * Also accepts a getter or setter whose name is the field name.
+     * That is the shape of Lombok {@code @Accessors(fluent = true)}.
+     * Off by default, so a method that happens to share a field's name is not a getter.
+     *
+     * @return itself
+     */
+    public AbstractAssertion usingFluentAccessors() {
+        this.fluentAccessors = true;
+        return this;
+    }
+
+    /**
+     * Skips the check that unequal objects have different hash codes.
+     * {@link Object#hashCode()} does not require that. Off by default, because
+     * a collision here usually means a field was left out of {@code hashCode}.
+     *
+     * @return itself
+     */
+    public AbstractAssertion allowingSameHashCodeForUnequalObjects() {
+        this.allowSameHashCodeForUnequalObjects = true;
+        return this;
+    }
+
+    /**
      * Specifies what tests will be performed.
      *
      * @param methods methods to test
@@ -163,6 +189,8 @@ public abstract class AbstractAssertion {
         testers.forEach(tester -> tester.setUserDefinedConstructors(constructorParameters));
         testers.forEach(tester -> tester.setChangeFinalFields(changeFinalFields));
         testers.forEach(tester -> tester.setFieldPrefix(fieldPrefix));
+        testers.forEach(tester -> tester.setFluentAccessors(fluentAccessors));
+        testers.forEach(tester -> tester.setAllowSameHashCodeForUnequalObjects(allowSameHashCodeForUnequalObjects));
         testers.forEach(tester -> tester.setUserDefinedInstantiators(instantiators));
 
         runAssertions();
