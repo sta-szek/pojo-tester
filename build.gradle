@@ -99,10 +99,11 @@ jacoco {
     toolVersion = '0.8.14'
 }
 
-// Unit and integration test coverage merged into one report .
+// Unit and integration test coverage merged into one report. SonarQube Cloud reads the XML.
 tasks.named('jacocoTestReport') {
     dependsOn tasks.named('test'), tasks.named('integrationTest')
-    executionData.setFrom(fileTree(layout.buildDirectory.dir('jacoco')).include('*.exec'))
+    executionData.setFrom(fileTree(layout.buildDirectory.dir('jacoco')).include('**/*.exec'))
+    classDirectories.setFrom(sourceSets.main.output)
     reports {
         xml.required = true
         html.required = true

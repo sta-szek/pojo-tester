@@ -168,3 +168,34 @@ jobs:
           name: pitest-report
           path: build/reports/pitest
           retention-days: 14
+
+  sonar:
+    name: SonarQube Cloud
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    permissions:
+      contents: read
+      id-token: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - uses: gradle/actions/setup-gradle@v6
+
+      - name: Unit tests, integration tests and JaCoCo
+        run: ./gradlew test integrationTest jacocoTestReport --no-daemon --stacktrace -PtestJavaVersion=21
+
+      - name: Authenticate to SonarQube Cloud
+        uses: SonarSource/sonarqube-auth-action@v1.2
+
+      - name: SonarQube Cloud analysis
+        uses: SonarSource/sonarqube-scan-action@v8.5.1
+
