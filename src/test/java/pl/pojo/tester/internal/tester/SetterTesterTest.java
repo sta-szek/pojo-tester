@@ -99,7 +99,7 @@ class SetterTesterTest {
             this.qp = qp;
         }
 
-        public void setDb(final int db) {
+        public void setDb(final int db) { // NOSONAR java:S1172 the ignored parameter is the bug
             this.db = qp;
         }
     }
@@ -119,7 +119,7 @@ class SetterTesterTest {
 
         private int value;
 
-        public void setValue(final int value) {
+        public void setValue(final int value) { // NOSONAR java:S1172 the ignored parameter is the bug
             // intentionally empty
         }
     }

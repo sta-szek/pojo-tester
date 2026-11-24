@@ -222,7 +222,7 @@ class MethodUtilsTest {
         private String name;
         private String otherName;
         private Double xCoordinate;
-        private String URL;
+        private String URL; // NOSONAR java:S116 the JavaBeans name exercised by getURL/setURL
         private int fluent;
 
         public void setOtherId(final int otherId) {
@@ -316,7 +316,7 @@ class MethodUtilsTest {
         private String name;
         private String otherName;
         private Double xCoordinate;
-        private String URL;
+        private String URL; // NOSONAR java:S116 the JavaBeans name exercised by getURL/setURL
 
         public String getOtherName() {
             return otherName;

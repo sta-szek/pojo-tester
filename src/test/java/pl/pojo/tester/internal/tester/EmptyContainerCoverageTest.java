@@ -41,7 +41,7 @@ class EmptyContainerCoverageTest {
     static class Containers {
         private Map<String, String> labels;
         private String[] codes;
-        private String[] tags = new String[]{"kept"};
+        private String[] tags = {"kept"};
         private Set<String> roles = Collections.singleton("admin");
 
         @Override
