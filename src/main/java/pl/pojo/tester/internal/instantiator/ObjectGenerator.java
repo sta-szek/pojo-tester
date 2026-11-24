@@ -172,7 +172,7 @@ public class ObjectGenerator {
             if (increased != null && (permutationField.getType().isPrimitive()
                     || permutationField.getType().isInstance(increased))) {
                 newFieldTypeInstance = increased;
-            } else if (current != null && !permutationField.getType().isPrimitive()) {
+            } else if (current != null) {
                 newFieldTypeInstance = null;
             }
         }
