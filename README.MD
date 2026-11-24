@@ -50,7 +50,7 @@ import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
 assertPojoMethodsFor(Order.class).areWellImplemented();
 ```
 
-The user guide in this repository describes the current line. [pojo.pl](http://pojo.pl) still documents `0.7.6`.
+The user guide is [docs/](docs/index.md). The [changelog](CHANGELOG.md) is the same text the site publishes. [pojo.pl](https://www.pojo.pl/) is rebuilt from `master` by the Docs workflow, and again after a release.
 
 ## What `0.8.0-SNAPSHOT` accepts
 

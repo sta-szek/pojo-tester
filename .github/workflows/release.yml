@@ -212,3 +212,14 @@ jobs:
             --title "Set version to ${next}" \
             --body "Published \`${VERSION}\`. This moves the snapshot line forward.")
           gh pr merge --auto --squash "$pr"
+
+  docs:
+    name: Publish documentation
+    needs: [prepare, release]
+    if: needs.release.result == 'success'
+    uses: ./.github/workflows/docs.yml
+    permissions:
+      contents: write
+    with:
+      sha: ${{ needs.prepare.outputs.sha }}
+
