@@ -10,8 +10,10 @@ import pl.pojo.tester.internal.field.AbstractFieldValueChanger;
 import pl.pojo.tester.internal.utils.FieldUtils;
 import pl.pojo.tester.internal.utils.Permutator;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -159,11 +161,46 @@ public class ObjectGenerator {
 
     private void setNewValue(final Object baseObjectCopy, final Field permutationField) {
         Object newFieldTypeInstance = createNewInstance(permutationField.getType());
-        if (Objects.deepEquals(newFieldTypeInstance, FieldUtils.getValue(baseObjectCopy, permutationField))) {
-            newFieldTypeInstance = abstractFieldValueChanger.increaseValue(newFieldTypeInstance);
+        final Object current = FieldUtils.getValue(baseObjectCopy, permutationField);
+        if (indistinguishable(current, newFieldTypeInstance)) {
+            Object increased = null;
+            try {
+                increased = abstractFieldValueChanger.increaseValue(newFieldTypeInstance);
+            } catch (final RuntimeException incompatibleChanger) {
+                increased = null;
+            }
+            if (increased != null && (permutationField.getType().isPrimitive()
+                    || permutationField.getType().isInstance(increased))) {
+                newFieldTypeInstance = increased;
+            } else if (current != null && !permutationField.getType().isPrimitive()) {
+                newFieldTypeInstance = null;
+            }
         }
 
         FieldUtils.setValue(baseObjectCopy, permutationField, newFieldTypeInstance);
+    }
+
+    /**
+     * {@code null} and an empty collection, map or array have the same hash for
+     * {@code Objects.hash} and for Apache's builders. A freshly created empty
+     * container is therefore not a different value.
+     */
+    private static boolean indistinguishable(final Object current, final Object created) {
+        return Objects.deepEquals(current, created)
+                || (isEmptyContainer(current) && isEmptyContainer(created));
+    }
+
+    private static boolean isEmptyContainer(final Object value) {
+        if (value == null) {
+            return true;
+        }
+        if (value instanceof Collection) {
+            return ((Collection<?>) value).isEmpty();
+        }
+        if (value instanceof Map) {
+            return ((Map<?, ?>) value).isEmpty();
+        }
+        return value.getClass().isArray() && Array.getLength(value) == 0;
     }
 
     private List<Object> generateNestedObjects(final int level,
