@@ -350,6 +350,7 @@ class LombokPojoTest {
     static class LockedMethod {
         @lombok.Locked
         void locked() {
+            // Empty on purpose: @Locked is the annotation under test, not the body.
         }
     }
 }
