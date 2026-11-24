@@ -193,8 +193,29 @@ jobs:
       - name: Unit tests, integration tests and JaCoCo
         run: ./gradlew test integrationTest jacocoTestReport --no-daemon --stacktrace -PtestJavaVersion=21
 
+      - name: Require unit and integration coverage data
+        run: |
+          test -s build/jacoco/test.exec
+          test -s build/jacoco/integrationTest.exec
+          test -s build/reports/jacoco/test/jacocoTestReport.xml
+          echo "JaCoCo unit exec $(wc -c < build/jacoco/test.exec) bytes, integration exec $(wc -c < build/jacoco/integrationTest.exec) bytes"
+
       - name: Authenticate to SonarQube Cloud
         uses: SonarSource/sonarqube-auth-action@v1.2
+
+      - name: Turn off Automatic Analysis
+        run: |
+          http=$(curl -sS -o /tmp/autoscan-body.txt -w "%{http_code}" \
+            -u "${SONAR_TOKEN}:" \
+            -X POST "https://sonarcloud.io/api/autoscan/activation" \
+            --data-urlencode "enable=false" \
+            --data-urlencode "projectKey=sta-szek_pojo-tester")
+          echo "POST /api/autoscan/activation -> HTTP ${http}"
+          cat /tmp/autoscan-body.txt
+          echo
+          if [ "$http" != "204" ] && [ "$http" != "200" ]; then
+            echo "::warning::Could not turn Automatic Analysis off (HTTP ${http}). A project admin must open Administration, then Analysis Method, and switch Automatic Analysis off. CI analysis is rejected while it stays on."
+          fi
 
       - name: SonarQube Cloud analysis
         uses: SonarSource/sonarqube-scan-action@v8.5.1
