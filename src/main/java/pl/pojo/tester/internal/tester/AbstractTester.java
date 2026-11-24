@@ -33,6 +33,7 @@ public abstract class AbstractTester {
     private Map<Class<?>, Supplier<?>> instantiators = new LinkedHashMap<>();
     private boolean changeFinalFields;
     private boolean fluentAccessors;
+    private boolean allowSameHashCodeForUnequalObjects;
 
     protected AbstractTester() {
         this(DefaultFieldValueChanger.INSTANCE);
@@ -98,6 +99,14 @@ public abstract class AbstractTester {
         return fluentAccessors;
     }
 
+    public void setAllowSameHashCodeForUnequalObjects(final boolean allow) {
+        this.allowSameHashCodeForUnequalObjects = allow;
+    }
+
+    public boolean allowsSameHashCodeForUnequalObjects() {
+        return allowSameHashCodeForUnequalObjects;
+    }
+
     public void setPermutator(final Permutator permutator) {
         this.permutator = permutator;
         objectGenerator = recreateObjectGenerator();
@@ -160,6 +169,7 @@ public abstract class AbstractTester {
                                   .append(fieldValuesChanger, that.fieldValuesChanger)
                                   .append(changeFinalFields, that.changeFinalFields)
                                   .append(fluentAccessors, that.fluentAccessors)
+                                  .append(allowSameHashCodeForUnequalObjects, that.allowSameHashCodeForUnequalObjects)
                                   .isEquals();
     }
 
@@ -171,6 +181,7 @@ public abstract class AbstractTester {
                                     .append(fieldValuesChanger)
                                     .append(changeFinalFields)
                                     .append(fluentAccessors)
+                                    .append(allowSameHashCodeForUnequalObjects)
                                     .toHashCode();
     }
 

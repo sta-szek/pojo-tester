@@ -388,6 +388,16 @@ assertPojoMethodsFor(ImmutablePojo.class)
         .areWellImplemented();
 ```
 
+## Same hash code {#same-hash-code}
+
+By default, two objects that are not equal must have different hash codes. `Object.hashCode` does not require that. A constant hash code is legal, and it is also what you get when a field was forgotten. Call `allowingSameHashCodeForUnequalObjects()` only when the collision is intentional.
+
+```java
+assertPojoMethodsFor(ConstantHash.class)
+        .allowingSameHashCodeForUnequalObjects()
+        .areWellImplemented();
+```
+
 ## Create class using a supplier {#supplier}
 
 A constructor that validates its arguments, or a class that only has a builder, cannot be created from generated values. Pass a supplier. It is used for that class only in this assertion, and it must return a new instance on every call. Lombok `@Data` with `@Builder` still has a constructor, so no supplier is required. `@SuperBuilder` does need one. `@Accessors(fluent = true)` names the getter after the field; call `usingFluentAccessors()` for that shape.
