@@ -130,6 +130,11 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#increaseValue(T,java.lang.Class)" class="member-name-link">increaseValue</a><wbr>(<a href="AbstractPrimitiveValueChanger.html" title="type parameter in AbstractPrimitiveValueChanger">T</a>&nbsp;value,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;?&gt;&nbsp;type)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract <a href="AbstractPrimitiveValueChanger.html" title="type parameter in AbstractPrimitiveValueChanger">T</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#nullReplacement()" class="member-name-link">nullReplacement</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Value used when a boxed field is <code>null</code>.</div>
+</div>
 </div>
 </div>
 </div>
@@ -179,6 +184,14 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="increase(T)">
 <h3 id="increase(java.lang.Object)">increase</h3>
 <div class="member-signature"><span class="modifiers">protected abstract</span>&nbsp;<span class="return-type"><a href="AbstractPrimitiveValueChanger.html" title="type parameter in AbstractPrimitiveValueChanger">T</a></span>&nbsp;<span class="element-name">increase</span><wbr><span class="parameters">(<a href="AbstractPrimitiveValueChanger.html" title="type parameter in AbstractPrimitiveValueChanger">T</a>&nbsp;value)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="nullReplacement()">
+<h3>nullReplacement</h3>
+<div class="member-signature"><span class="modifiers">protected abstract</span>&nbsp;<span class="return-type"><a href="AbstractPrimitiveValueChanger.html" title="type parameter in AbstractPrimitiveValueChanger">T</a></span>&nbsp;<span class="element-name">nullReplacement</span>()</div>
+<div class="block">Value used when a boxed field is <code>null</code>. It must be non-null so the changed instance
+ differs from the one that still holds <code>null</code>.</div>
 </section>
 </li>
 <li>
