@@ -1,3 +1,12 @@
+pluginManagement {
+    repositories {
+        // The same plugin markers are on Maven Central. plugins.gradle.org is a separate host and
+        // drops resolution often enough to fail an otherwise unchanged build.
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
 plugins {
     id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
 }
