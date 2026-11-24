@@ -26,14 +26,18 @@ class StaticInnerClassTest {
 
     @Test
     void Should_Fail_When_Equals_Ignores_The_Nested_Value() {
-        assertThatThrownBy(() -> assertPojoMethodsFor(EqualsIgnoresAnswer.class).testing(EQUALS).areWellImplemented())
+        final AbstractAssertion assertion = assertPojoMethodsFor(EqualsIgnoresAnswer.class).testing(EQUALS);
+
+        assertThatThrownBy(assertion::areWellImplemented)
                 .isInstanceOf(AbstractEqualsAssertionError.class)
                 .hasMessageContaining("should return false");
     }
 
     @Test
     void Should_Fail_When_HashCode_Ignores_The_Nested_Value() {
-        assertThatThrownBy(() -> assertPojoMethodsFor(HashIgnoresAnswer.class).testing(HASH_CODE).areWellImplemented())
+        final AbstractAssertion assertion = assertPojoMethodsFor(HashIgnoresAnswer.class).testing(HASH_CODE);
+
+        assertThatThrownBy(assertion::areWellImplemented)
                 .isInstanceOf(AbstractHashCodeAssertionError.class)
                 .hasMessageContaining("different hash codes");
     }

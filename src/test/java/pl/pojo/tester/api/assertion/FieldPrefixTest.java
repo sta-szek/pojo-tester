@@ -18,28 +18,26 @@ class FieldPrefixTest {
 
     @Test
     void Should_Fail_When_The_Prefix_Is_Not_Applied() {
-        assertThatThrownBy(() -> assertPojoMethodsFor(Prefixed.class).testing(GETTER).areWellImplemented())
-                .isInstanceOf(GetterNotFoundException.class);
-        assertThatThrownBy(() -> assertPojoMethodsFor(Prefixed.class).testing(SETTER).areWellImplemented())
-                .isInstanceOf(SetterNotFoundException.class);
+        final AbstractAssertion getters = assertPojoMethodsFor(Prefixed.class).testing(GETTER);
+        assertThatThrownBy(getters::areWellImplemented).isInstanceOf(GetterNotFoundException.class);
+        final AbstractAssertion setters = assertPojoMethodsFor(Prefixed.class).testing(SETTER);
+        assertThatThrownBy(setters::areWellImplemented).isInstanceOf(SetterNotFoundException.class);
     }
 
     @Test
     void Should_Fail_When_The_Getter_Still_Uses_The_Prefix() {
-        assertThatThrownBy(() -> assertPojoMethodsFor(GetterKeepsPrefix.class)
+        final AbstractAssertion assertion = assertPojoMethodsFor(GetterKeepsPrefix.class)
                 .testing(GETTER)
-                .withFieldPrefix("m")
-                .areWellImplemented())
-                .isInstanceOf(GetterNotFoundException.class);
+                .withFieldPrefix("m");
+        assertThatThrownBy(assertion::areWellImplemented).isInstanceOf(GetterNotFoundException.class);
     }
 
     @Test
     void Should_Fail_When_The_Setter_Still_Uses_The_Prefix() {
-        assertThatThrownBy(() -> assertPojoMethodsFor(SetterKeepsPrefix.class)
+        final AbstractAssertion assertion = assertPojoMethodsFor(SetterKeepsPrefix.class)
                 .testing(SETTER)
-                .withFieldPrefix("m")
-                .areWellImplemented())
-                .isInstanceOf(SetterNotFoundException.class);
+                .withFieldPrefix("m");
+        assertThatThrownBy(assertion::areWellImplemented).isInstanceOf(SetterNotFoundException.class);
     }
 
     @Test

@@ -29,6 +29,7 @@ class RecursiveTypeInstantiatorTest {
         private final Node next;
         private final int value;
 
+        @SuppressWarnings("java:S1144") // the instantiator under test calls this constructor
         private Node(final Node next, final int value) {
             this.next = next;
             this.value = value;
@@ -46,6 +47,7 @@ class RecursiveTypeInstantiatorTest {
     private static final class Left {
         private final Right right;
 
+        @SuppressWarnings("java:S1144") // the instantiator under test calls this constructor
         private Left(final Right right) {
             this.right = right;
         }
@@ -58,6 +60,7 @@ class RecursiveTypeInstantiatorTest {
     private static final class Right {
         private final Left left;
 
+        @SuppressWarnings("java:S1144") // the instantiator under test calls this constructor
         private Right(final Left left) {
             this.left = left;
         }

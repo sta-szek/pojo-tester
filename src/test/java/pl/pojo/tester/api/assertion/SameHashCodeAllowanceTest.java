@@ -13,8 +13,9 @@ class SameHashCodeAllowanceTest {
 
     @Test
     void Should_Reject_A_Constant_Hash_Code_By_Default() {
-        assertThatThrownBy(() -> assertPojoMethodsFor(ConstantHash.class).testing(HASH_CODE).areWellImplemented())
-                .isInstanceOf(NotEqualHashCodeAssertionError.class);
+        final AbstractAssertion assertion = assertPojoMethodsFor(ConstantHash.class).testing(HASH_CODE);
+
+        assertThatThrownBy(assertion::areWellImplemented).isInstanceOf(NotEqualHashCodeAssertionError.class);
     }
 
     @Test
