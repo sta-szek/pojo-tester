@@ -34,6 +34,7 @@ All notable changes to `pl.pojo:pojo-tester` are recorded here. The format follo
 ### Fixed
 
 - Nested fields are given a new value when the nested class is included in the assertion.
+- A boxed numeric, `char` or `boolean` field that holds `null` is changed to a fixed non-null value instead of throwing `NullPointerException`.
 - Empty collections, maps and arrays can be told apart from `null`.
 - Static nested classes, field prefixes and the same hash code for unequal objects are covered by regression tests.
 - `Class.newInstance()` is no longer used to construct a tester.

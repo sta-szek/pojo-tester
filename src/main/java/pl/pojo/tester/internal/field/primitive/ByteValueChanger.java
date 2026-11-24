@@ -8,4 +8,9 @@ class ByteValueChanger extends AbstractPrimitiveValueChanger<Byte> {
         return (byte) (value + 1);
     }
 
+    @Override
+    protected Byte nullReplacement() {
+        return (byte) 1;
+    }
+
 }

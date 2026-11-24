@@ -6,4 +6,9 @@ class IntegerValueChanger extends AbstractPrimitiveValueChanger<Integer> {
     protected Integer increase(final Integer value) {
         return value + 1;
     }
+
+    @Override
+    protected Integer nullReplacement() {
+        return 1;
+    }
 }
