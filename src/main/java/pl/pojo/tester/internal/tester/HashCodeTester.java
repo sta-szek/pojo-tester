@@ -46,13 +46,8 @@ public class HashCodeTester extends AbstractTester {
                                                                   final ClassAndFieldPredicatePair... nested) {
         final List<Object> differentObjects = objectGenerator.generateDifferentObjects(base, nested);
         final Object firstObject = differentObjects.remove(0);
-        differentObjects.forEach(assertHaveDifferentHashCodes(firstObject));
-    }
-
-
-    private Consumer<Object> assertHaveDifferentHashCodes(final Object object) {
-        return eachDifferentObject -> testAssertions.assertThatHashCodeMethodFor(object)
-                                                    .returnsDifferentValueFor(eachDifferentObject);
+        testAssertions.assertThatHashCodeMethodFor(firstObject)
+                      .returnsDifferentValueForAtLeastOneOf(differentObjects);
     }
 
     private void shouldHaveSameHashCodesForInversionOfUserDefinedFields(final ClassAndFieldPredicatePair base,
