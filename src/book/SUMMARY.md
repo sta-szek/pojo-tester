@@ -18,6 +18,7 @@
   * [Configure field value changer](writing-tests/README.md#configure-fvc)
   * [Create class using selected constructor](writing-tests/README.md#choose-constructor)
   * [Final fields](writing-tests/README.md#final-fields)
+  * [Field prefix](writing-tests/README.md#field-prefix)
   * [Create class using a supplier](writing-tests/README.md#supplier)
   * [Bulk pojos testing](writing-tests/README.md#bulk-testing)
   * [If testing time grows...](writing-tests/README.md#testing-time)

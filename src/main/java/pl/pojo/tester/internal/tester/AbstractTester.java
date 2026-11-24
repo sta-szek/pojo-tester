@@ -32,6 +32,7 @@ public abstract class AbstractTester {
     private Permutator permutator = new ThoroughFieldPermutator();
     private Map<Class<?>, Supplier<?>> instantiators = new LinkedHashMap<>();
     private boolean changeFinalFields;
+    private String fieldPrefix = "";
 
     protected AbstractTester() {
         this(DefaultFieldValueChanger.INSTANCE);
@@ -87,6 +88,14 @@ public abstract class AbstractTester {
     public void setChangeFinalFields(final boolean changeFinalFields) {
         this.changeFinalFields = changeFinalFields;
         objectGenerator = recreateObjectGenerator();
+    }
+
+    public void setFieldPrefix(final String fieldPrefix) {
+        this.fieldPrefix = fieldPrefix == null ? "" : fieldPrefix;
+    }
+
+    public String getFieldPrefix() {
+        return fieldPrefix;
     }
 
     public void setPermutator(final Permutator permutator) {
@@ -150,6 +159,7 @@ public abstract class AbstractTester {
                                   .append(constructorParameters, that.constructorParameters)
                                   .append(fieldValuesChanger, that.fieldValuesChanger)
                                   .append(changeFinalFields, that.changeFinalFields)
+                                  .append(fieldPrefix, that.fieldPrefix)
                                   .isEquals();
     }
 
@@ -160,6 +170,7 @@ public abstract class AbstractTester {
                                     .append(constructorParameters)
                                     .append(fieldValuesChanger)
                                     .append(changeFinalFields)
+                                    .append(fieldPrefix)
                                     .toHashCode();
     }
 

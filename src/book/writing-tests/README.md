@@ -388,6 +388,16 @@ assertPojoMethodsFor(ImmutablePojo.class)
         .areWellImplemented();
 ```
 
+## Field prefix {#field-prefix}
+
+A field named `mName` or `m_name` is not a JavaBeans property called `mName`. Pass the prefix and the getter `getName` is used. A field that does not start with the prefix is matched as written.
+
+```java
+assertPojoMethodsFor(Prefixed.class)
+        .withFieldPrefix("m")
+        .areWellImplemented();
+```
+
 ## Create class using a supplier {#supplier}
 
 A constructor that validates its arguments, or a class that should be built with a builder, cannot be created from generated values. Pass a supplier. It is used for that class only in this assertion, and it must return a new instance on every call.

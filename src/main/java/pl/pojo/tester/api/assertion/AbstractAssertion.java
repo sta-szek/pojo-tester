@@ -51,6 +51,7 @@ public abstract class AbstractAssertion {
     private AbstractFieldValueChanger abstractFieldValueChanger;
     private Permutator permutator = new ThoroughFieldPermutator();
     private boolean changeFinalFields;
+    private String fieldPrefix = "";
 
     /**
      * Specifies what field values changer will be used for testing.
@@ -96,6 +97,21 @@ public abstract class AbstractAssertion {
      */
     public AbstractAssertion changingFinalFields() {
         this.changeFinalFields = true;
+        return this;
+    }
+
+    /**
+     * Strips a prefix from field names before matching getters and setters.
+     * {@code withFieldPrefix("m")} maps {@code mName} to {@code getName}.
+     * {@code withFieldPrefix("m_")} maps {@code m_name} to {@code getName}.
+     * A field that does not start with the prefix is matched as written.
+     *
+     * @param prefix prefix used on fields, never blank
+     * @return itself
+     */
+    public AbstractAssertion withFieldPrefix(final String prefix) {
+        checkNotBlank("prefix", prefix);
+        this.fieldPrefix = prefix;
         return this;
     }
 
@@ -146,6 +162,7 @@ public abstract class AbstractAssertion {
         testers.forEach(tester -> tester.setPermutator(permutator));
         testers.forEach(tester -> tester.setUserDefinedConstructors(constructorParameters));
         testers.forEach(tester -> tester.setChangeFinalFields(changeFinalFields));
+        testers.forEach(tester -> tester.setFieldPrefix(fieldPrefix));
         testers.forEach(tester -> tester.setUserDefinedInstantiators(instantiators));
 
         runAssertions();

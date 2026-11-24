@@ -13,22 +13,46 @@ public final class MethodUtils {
     }
 
     public static Method findSetterFor(final Class<?> clazz, final Field field) {
+        return findSetterFor(clazz, field, "");
+    }
+
+    public static Method findSetterFor(final Class<?> clazz, final Field field, final String fieldPrefix) {
+        final String property = propertyName(field.getName(), fieldPrefix);
         return Arrays.stream(clazz.getMethods())
                      .filter(methodHasOnlyOneParameter())
                      .filter(areParameterAndFieldTypeAssignable(field))
                      .filter(returnsVoidOrTheTestedClass(clazz))
-                     .filter(method -> prefixMatchesSettersPrefixAndHasExpectedLength(method, field.getName()))
+                     .filter(method -> prefixMatchesSettersPrefixAndHasExpectedLength(method, property))
                      .findAny()
                      .orElseThrow(() -> new SetterNotFoundException(clazz, field));
     }
 
     public static Method findGetterFor(final Class<?> clazz, final Field field) {
+        return findGetterFor(clazz, field, "");
+    }
+
+    public static Method findGetterFor(final Class<?> clazz, final Field field, final String fieldPrefix) {
+        final String property = propertyName(field.getName(), fieldPrefix);
         return Arrays.stream(clazz.getMethods())
                      .filter(hasZeroParameters())
                      .filter(areReturnAndFieldTypeAssignable(field))
-                     .filter(method -> prefixMatchesGettersPrefixAndHasExpectedLength(method, field.getName()))
+                     .filter(method -> prefixMatchesGettersPrefixAndHasExpectedLength(method, property))
                      .findAny()
                      .orElseThrow(() -> new GetterNotFoundException(clazz, field));
+    }
+
+    static String propertyName(final String fieldName, final String prefix) {
+        if (prefix == null || prefix.isEmpty() || !fieldName.startsWith(prefix) || fieldName.length() == prefix.length()) {
+            return fieldName;
+        }
+        final String rest = fieldName.substring(prefix.length());
+        if (prefix.endsWith("_")) {
+            return rest;
+        }
+        if (Character.isUpperCase(rest.charAt(0))) {
+            return Character.toLowerCase(rest.charAt(0)) + rest.substring(1);
+        }
+        return fieldName;
     }
 
     private static Predicate<Method> returnsVoidOrTheTestedClass(final Class<?> clazz) {
