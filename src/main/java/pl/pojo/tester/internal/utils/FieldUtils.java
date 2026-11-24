@@ -93,6 +93,7 @@ public final class FieldUtils {
     private static void makeModifiable(final Field field) {
         field.setAccessible(true);
         if (!isFinal(field)) {
+            // A non-final field does not need Field.modifiers. Reading it warns on JDK 9 through 11.
             return;
         }
         try {
