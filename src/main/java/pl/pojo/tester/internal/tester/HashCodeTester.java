@@ -26,7 +26,9 @@ public class HashCodeTester extends AbstractTester {
 
         shouldHaveSameHashCodes(instance);
         shouldHaveSameHashCodesWithDifferentInstance(instance);
-        shouldHaveDifferentHashCodesForUserDefinedFields(baseClassAndFieldPredicatePair, classAndFieldPredicatePairs);
+        if (!allowsSameHashCodeForUnequalObjects()) {
+            shouldHaveDifferentHashCodesForUserDefinedFields(baseClassAndFieldPredicatePair, classAndFieldPredicatePairs);
+        }
         shouldHaveSameHashCodesForInversionOfUserDefinedFields(baseClassAndFieldPredicatePair,
                                                                classAndFieldPredicatePairs);
     }
