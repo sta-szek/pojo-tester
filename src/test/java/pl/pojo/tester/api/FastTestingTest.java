@@ -1,9 +1,6 @@
 package pl.pojo.tester.api;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.DisabledOnJre;
-import org.junit.jupiter.api.condition.EnabledOnJre;
-import org.junit.jupiter.api.condition.JRE;
 import pl.pojo.tester.api.assertion.Method;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -13,25 +10,19 @@ import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
 class FastTestingTest {
 
     @Test
-    @DisabledOnJre(JRE.JAVA_11)
     void ShouldCompleteInReasonableTime() {
-        assertCompletesWithin(500L);
-    }
+        check();
 
-    @Test
-    @EnabledOnJre(JRE.JAVA_11)
-    void ShouldCompleteInReasonableTimeOnJava11() {
-        // The Java 11 runner has been slower than the bound that holds on the other jobs.
-        assertCompletesWithin(2_000L);
-    }
-
-    private static void assertCompletesWithin(final long limitMillis) {
         final long start = System.currentTimeMillis();
+        check();
+        assertThat(System.currentTimeMillis() - start).isLessThan(500L);
+    }
+
+    private static void check() {
         assertPojoMethodsFor(Medium.class)
                 .testing(Method.EQUALS, Method.HASH_CODE)
                 .quickly()
                 .areWellImplemented();
-        assertThat(System.currentTimeMillis() - start).isLessThan(limitMillis);
     }
 }
 
