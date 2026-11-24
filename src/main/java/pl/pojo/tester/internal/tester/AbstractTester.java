@@ -32,6 +32,8 @@ public abstract class AbstractTester {
     private Permutator permutator = new ThoroughFieldPermutator();
     private Map<Class<?>, Supplier<?>> instantiators = new LinkedHashMap<>();
     private boolean changeFinalFields;
+    private boolean fluentAccessors;
+    private boolean allowSameHashCodeForUnequalObjects;
 
     protected AbstractTester() {
         this(DefaultFieldValueChanger.INSTANCE);
@@ -87,6 +89,22 @@ public abstract class AbstractTester {
     public void setChangeFinalFields(final boolean changeFinalFields) {
         this.changeFinalFields = changeFinalFields;
         objectGenerator = recreateObjectGenerator();
+    }
+
+    public void setFluentAccessors(final boolean fluentAccessors) {
+        this.fluentAccessors = fluentAccessors;
+    }
+
+    public boolean isFluentAccessors() {
+        return fluentAccessors;
+    }
+
+    public void setAllowSameHashCodeForUnequalObjects(final boolean allow) {
+        this.allowSameHashCodeForUnequalObjects = allow;
+    }
+
+    public boolean allowsSameHashCodeForUnequalObjects() {
+        return allowSameHashCodeForUnequalObjects;
     }
 
     public void setPermutator(final Permutator permutator) {
@@ -150,6 +168,8 @@ public abstract class AbstractTester {
                                   .append(constructorParameters, that.constructorParameters)
                                   .append(fieldValuesChanger, that.fieldValuesChanger)
                                   .append(changeFinalFields, that.changeFinalFields)
+                                  .append(fluentAccessors, that.fluentAccessors)
+                                  .append(allowSameHashCodeForUnequalObjects, that.allowSameHashCodeForUnequalObjects)
                                   .isEquals();
     }
 
@@ -160,6 +180,8 @@ public abstract class AbstractTester {
                                     .append(constructorParameters)
                                     .append(fieldValuesChanger)
                                     .append(changeFinalFields)
+                                    .append(fluentAccessors)
+                                    .append(allowSameHashCodeForUnequalObjects)
                                     .toHashCode();
     }
 
