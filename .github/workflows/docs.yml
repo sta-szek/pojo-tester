@@ -1,0 +1,79 @@
+name: Docs
+
+# Publishes the VitePress guide and the Javadoc to the gh-pages branch,
+# which GitHub Pages serves at https://www.pojo.pl/.
+# Runs on its own, on a push to master that changes the guide, and after a release.
+
+on:
+  workflow_dispatch:
+  workflow_call:
+    inputs:
+      sha:
+        description: Commit to publish. Defaults to the commit that started the workflow.
+        type: string
+        required: false
+  push:
+    branches:
+      - master
+    paths:
+      - 'docs/**'
+      - 'CHANGELOG.md'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'src/main/**'
+      - '.github/workflows/docs.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: docs-gh-pages
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    name: Publish pojo.pl
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.sha || github.sha }}
+
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: gradle/actions/setup-gradle@v6
+
+      - name: Install the site tooling
+        run: npm ci
+
+      - name: Javadoc
+        run: ./gradlew javadoc --no-daemon
+
+      - name: Build the site
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: npm run docs:build
+
+      - name: Add the Javadoc
+        run: cp -a build/docs/javadoc docs/.vitepress/dist/javadoc
+
+      - name: Publish to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs/.vitepress/dist
+          cname: www.pojo.pl
+          enable_jekyll: false
+          user_name: github-actions[bot]
+          user_email: 41898282+github-actions[bot]@users.noreply.github.com
+          commit_message: "Publish the documentation."
