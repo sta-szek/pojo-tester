@@ -37,6 +37,7 @@ All notable changes to `pl.pojo:pojo-tester` are recorded here. The format follo
 - A boxed numeric, `char` or `boolean` field that holds `null` is changed to a fixed non-null value instead of throwing `NullPointerException`.
 - A field typed as raw `java.lang.Enum` is set to `RoundingMode.UP`. `Enum(String, int)` is not called.
 - A non-public constructor whose only parameter is the class's own builder type is not called. A public constructor on that class still is.
+- Fields declared on a `java.*` superclass are not read. `Throwable.backtrace` is one of them.
 - A class with more than 12 fields, including a nested one, is checked with the linear strategy instead of every field combination. A warning names the class. Classes with 12 fields or fewer are unchanged.
 - Empty collections, maps and arrays can be told apart from `null`.
 - Static nested classes, field prefixes and the same hash code for unequal objects are covered by regression tests.

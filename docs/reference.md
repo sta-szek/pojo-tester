@@ -82,7 +82,7 @@ A `final` field keeps the value it was given at construction. `equals`, `hashCod
 
 `using` replaces that chain. A custom changer extends `AbstractFieldValueChanger` and implements `canChange` and `increaseValue`. Attach it with `DefaultFieldValueChanger.INSTANCE.attachNext(...)` so the built-in types still change.
 
-An empty collection, map or array is a different value from `null`. A boxed number, `char` or `boolean` that is `null` becomes `1`, `'a'` or `true`. The value already stored in a non-null field is changed as before.
+An empty collection, map or array is a different value from `null`. A boxed number, `char` or `boolean` that is `null` becomes `1`, `'a'` or `true`. The value already stored in a non-null field is changed as before. Fields declared on a `java.*` superclass are not read or written.
 
 ## What this does not do
 

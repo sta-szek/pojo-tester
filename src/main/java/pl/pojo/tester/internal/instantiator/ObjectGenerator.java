@@ -336,12 +336,15 @@ public class ObjectGenerator {
                          .collect(Collectors.toList());
     }
 
-    private List<Field> getAllFields(final Object object) {
-        Class<?> parent = object.getClass();
+    List<Field> getAllFields(final Object object) {
         final List<Field> allFields = new ArrayList<>();
-        do {
-            allFields.addAll(FieldUtils.getAllFields(parent));
-        } while ((parent = parent.getSuperclass()) != null);
+        for (Class<?> type = object.getClass(); !isJdkType(type); type = type.getSuperclass()) {
+            allFields.addAll(FieldUtils.getAllFields(type));
+        }
         return allFields;
+    }
+
+    private static boolean isJdkType(final Class<?> type) {
+        return type.getName().startsWith("java.");
     }
 }
