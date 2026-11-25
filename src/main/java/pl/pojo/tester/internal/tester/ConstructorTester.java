@@ -37,7 +37,9 @@ public class ConstructorTester extends AbstractTester {
         }
         final List<Constructor<?>> declaredConstructors = getNotSyntheticConstructorFromClass(testedClass);
 
-        declaredConstructors.forEach(this::tryInstantiate);
+        declaredConstructors.stream()
+                            .filter(constructor -> !isGeneratedBuilderConstructor(constructor))
+                            .forEach(this::tryInstantiate);
     }
 
     private List<Constructor<?>> getNotSyntheticConstructorFromClass(final Class<?> testedClass) {
@@ -48,6 +50,23 @@ public class ConstructorTester extends AbstractTester {
 
     private boolean isNotSynthetic(final Constructor<?> constructor) {
         return !constructor.isSynthetic();
+    }
+
+    /**
+     * Lombok {@code @SuperBuilder} adds {@code protected Type(TypeBuilder)}.
+     * That constructor is not a way to build the class. A public constructor on the same class is still called.
+     */
+    private boolean isGeneratedBuilderConstructor(final Constructor<?> constructor) {
+        if (Modifier.isPublic(constructor.getModifiers())) {
+            return false;
+        }
+        final Class<?>[] parameterTypes = constructor.getParameterTypes();
+        if (parameterTypes.length != 1 || !parameterTypes[0].getSimpleName().endsWith("Builder")) {
+            return false;
+        }
+        final Class<?> parameter = parameterTypes[0];
+        final Class<?> owner = constructor.getDeclaringClass();
+        return parameter.getEnclosingClass() == owner;
     }
 
     private void tryInstantiate(final Constructor<?> constructor) {

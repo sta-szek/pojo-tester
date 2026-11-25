@@ -52,9 +52,9 @@ An enum is not tested for setters. A setter of an enum-typed field on an ordinar
 
 ## Constructors
 
-Each non-synthetic constructor is called. Arguments come from the same value changers as fields. Pass `create` when the constructor rejects those values. The constructor is chosen by the argument types.
+Each non-synthetic constructor is called, except a non-public constructor whose only parameter is a builder type nested in the same class. That is the constructor Lombok `@SuperBuilder` generates. A public constructor on the same class, including a public no-arg constructor, is still called. Arguments come from the same value changers as fields. Pass `create` when the constructor rejects those values. The constructor is chosen by the argument types.
 
-`create(Class, Supplier)` replaces construction for that class only. The supplier must return a new instance on every call. Use it for a builder, or for a type that has no constructor the library can call. Lombok `@Data` with `@Builder` still has a constructor. `@SuperBuilder` does not have one the library can call.
+`create(Class, Supplier)` replaces construction for that class only. The supplier must return a new instance on every call. Use it for a builder, or for a type that has no constructor the library can call. Lombok `@Data` with `@Builder` still has a constructor. `@SuperBuilder` together with a public no-arg constructor is tested through that constructor. The protected builder constructor is skipped.
 
 This form does not apply to an abstract class. An abstract class can still be tested when a concrete subclass is what gets constructed, or when the abstract type only appears as a field.
 
