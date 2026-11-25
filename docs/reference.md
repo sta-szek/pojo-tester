@@ -48,7 +48,7 @@ JavaBeans names are used. `xCoordinate` matches `getxCoordinate`. `URL` matches 
 
 `usingFluentAccessors()` also accepts a getter or setter whose name is the field name. That is the shape of Lombok `@Accessors(fluent = true)`. It is off by default.
 
-An enum is not tested for setters. A setter of an enum-typed field on an ordinary class still is.
+An enum is not tested for setters. A setter of an enum-typed field on an ordinary class still is. A field whose type is the raw class `java.lang.Enum` is set to `RoundingMode.UP`. The `Enum` constructor is not called.
 
 ## Constructors
 

@@ -4,6 +4,7 @@ package pl.pojo.tester.internal.instantiator;
 import org.apache.commons.collections4.MultiValuedMap;
 import pl.pojo.tester.api.ConstructorParameters;
 
+import java.math.RoundingMode;
 import java.util.concurrent.ThreadLocalRandom;
 
 class EnumInstantiator extends AbstractObjectInstantiator {
@@ -15,6 +16,9 @@ class EnumInstantiator extends AbstractObjectInstantiator {
 
     @Override
     public Object instantiate() {
+        if (clazz == Enum.class) {
+            return RoundingMode.UP;
+        }
         final Object[] enumConstants = clazz.getEnumConstants();
         final int length = enumConstants.length;
 
@@ -27,6 +31,6 @@ class EnumInstantiator extends AbstractObjectInstantiator {
 
     @Override
     public boolean canInstantiate() {
-        return clazz.isEnum();
+        return clazz.isEnum() || clazz == Enum.class;
     }
 }
