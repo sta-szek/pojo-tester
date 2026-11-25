@@ -139,6 +139,29 @@ class ConstructorTesterTest {
         verify(parameters, never()).getParameters();
     }
 
+    @Test
+    void Should_Still_Call_A_Constructor_Whose_Parameter_Only_Looks_Like_A_Builder() {
+        final ConstructorTester constructorTester = new ConstructorTester();
+
+        final Throwable result = catchThrowable(() -> constructorTester.testAll(new Class[]{ LooksLikeBuilder.class }));
+
+        assertThat(result).isNull();
+    }
+
+    private static class ForeignBuilder {
+    }
+
+    private static class LooksLikeBuilder {
+        LooksLikeBuilder() {
+        }
+
+        LooksLikeBuilder(final ForeignBuilder builder) {
+        }
+
+        public LooksLikeBuilder(final String name) {
+        }
+    }
+
     private static class Pojo {
         Pojo() {
         }
