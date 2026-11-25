@@ -37,7 +37,8 @@ public final class MethodUtils {
                                              .filter(returnsVoidOrTheTestedClass(clazz))
                                              .collect(Collectors.toList());
         return candidates.stream()
-                         .filter(method -> prefixMatchesSettersPrefixAndHasExpectedLength(method, property))
+                         .filter(method -> prefixMatchesSettersPrefixAndHasExpectedLength(method, property)
+                                           || isCapitalizedAccessor(method.getName(), "set", property))
                          .findAny()
                          .orElseGet(() -> fluentAccessor(clazz, field, candidates, property, fluent, false));
     }
@@ -64,7 +65,8 @@ public final class MethodUtils {
                                              .filter(areReturnAndFieldTypeAssignable(field))
                                              .collect(Collectors.toList());
         return candidates.stream()
-                         .filter(method -> prefixMatchesGettersPrefixAndHasExpectedLength(method, property))
+                         .filter(method -> prefixMatchesGettersPrefixAndHasExpectedLength(method, property)
+                                           || isCapitalizedAccessor(method.getName(), "get", property))
                          .findAny()
                          .orElseGet(() -> fluentAccessor(clazz, field, candidates, property, fluent, true));
     }
@@ -136,14 +138,11 @@ public final class MethodUtils {
                     || methodName.startsWith("has") && methodName.length() == fieldNameLength + 3
                     || methodName.startsWith("get") && methodName.length() == fieldNameLength + 3
                     || methodName.startsWith("have") && methodName.length() == fieldNameLength + 4
-                    || methodName.startsWith("contains") && methodName.length() == fieldNameLength + 8))
-                    || isCapitalizedAccessor(methodName, "get", fieldName)
-                    || isCapitalizedAccessor(methodName, "is", fieldName);
+                    || methodName.startsWith("contains") && methodName.length() == fieldNameLength + 8));
         } else {
             return methodName.startsWith("get")
                    && methodName.length() == fieldNameLength + 3
-                   && methodName.endsWith(propertySuffix)
-                   || isCapitalizedAccessor(methodName, "get", fieldName);
+                   && methodName.endsWith(propertySuffix);
         }
     }
 
@@ -161,8 +160,7 @@ public final class MethodUtils {
         } else {
             return methodName.startsWith("set")
                    && methodName.length() == fieldNameLength + 3
-                   && methodName.endsWith(propertySuffix)
-                   || isCapitalizedAccessor(methodName, "set", fieldName);
+                   && methodName.endsWith(propertySuffix);
         }
     }
 
