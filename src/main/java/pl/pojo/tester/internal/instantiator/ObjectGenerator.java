@@ -337,11 +337,9 @@ public class ObjectGenerator {
     }
 
     List<Field> getAllFields(final Object object) {
-        Class<?> type = object.getClass();
         final List<Field> allFields = new ArrayList<>();
-        while (type != null && !isJdkType(type)) {
+        for (Class<?> type = object.getClass(); !isJdkType(type); type = type.getSuperclass()) {
             allFields.addAll(FieldUtils.getAllFields(type));
-            type = type.getSuperclass();
         }
         return allFields;
     }
