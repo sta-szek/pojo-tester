@@ -37,7 +37,8 @@ public final class MethodUtils {
                                              .filter(returnsVoidOrTheTestedClass(clazz))
                                              .collect(Collectors.toList());
         return candidates.stream()
-                         .filter(method -> prefixMatchesSettersPrefixAndHasExpectedLength(method, property))
+                         .filter(method -> prefixMatchesSettersPrefixAndHasExpectedLength(method, property)
+                                           || isCapitalizedAccessor(method.getName(), "set", property))
                          .findAny()
                          .orElseGet(() -> fluentAccessor(clazz, field, candidates, property, fluent, false));
     }
@@ -64,7 +65,8 @@ public final class MethodUtils {
                                              .filter(areReturnAndFieldTypeAssignable(field))
                                              .collect(Collectors.toList());
         return candidates.stream()
-                         .filter(method -> prefixMatchesGettersPrefixAndHasExpectedLength(method, property))
+                         .filter(method -> prefixMatchesGettersPrefixAndHasExpectedLength(method, property)
+                                           || isCapitalizedAccessor(method.getName(), "get", property))
                          .findAny()
                          .orElseGet(() -> fluentAccessor(clazz, field, candidates, property, fluent, true));
     }
@@ -160,6 +162,10 @@ public final class MethodUtils {
                    && methodName.length() == fieldNameLength + 3
                    && methodName.endsWith(propertySuffix);
         }
+    }
+
+    private static boolean isCapitalizedAccessor(final String methodName, final String prefix, final String fieldName) {
+        return methodName.equals(prefix + upperCaseFirstLetter(fieldName));
     }
 
     private static String beanPropertySuffix(final String fieldName) {

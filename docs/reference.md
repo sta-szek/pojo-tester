@@ -42,7 +42,7 @@ A getter must return the value held in the field. A setter must write the value 
 
 A setter may return the class under test (`return this`). A method that returns `Object` is not a setter. A setter of a `final` field is not called.
 
-JavaBeans names are used. `xCoordinate` matches `getxCoordinate`. `URL` matches `getURL`. A `boolean` may use `is`.
+JavaBeans names are used. `xCoordinate` matches `getxCoordinate`. `URL` matches `getURL`. `tRow` matches `getTRow` and `setTRow`. A `boolean` may use `is`.
 
 `withFieldPrefix("m")` maps `mName` to `getName` and `setName`. `withFieldPrefix("m_")` maps `m_name` the same way. A field that does not start with the prefix is matched as written.
 
