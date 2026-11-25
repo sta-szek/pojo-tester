@@ -1,8 +1,13 @@
 pluginManagement {
     repositories {
-        // The same plugin markers are on Maven Central. plugins.gradle.org is a separate host and
-        // drops resolution often enough to fail an otherwise unchanged build.
+        // repo.maven.apache.org answers 429 to GitHub runners. This mirror has the same content.
+        maven {
+            name = 'google-maven-central'
+            url = 'https://maven-central.storage-download.googleapis.com/maven2/'
+        }
         mavenCentral()
+        // plugins.gradle.org is a separate host and drops resolution often enough to fail an
+        // otherwise unchanged build. The markers are already on Maven Central.
         gradlePluginPortal()
     }
 }
