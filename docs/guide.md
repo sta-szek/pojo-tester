@@ -133,7 +133,7 @@ assertPojoMethodsFor(ConstantHash.class)
 
 ## How many objects
 
-The default, `thoroughly()`, builds a combination of the included fields. `quickly()` changes one field at a time. Use it when the combination is too large. Coverage of the class under test will be lower.
+The default, `thoroughly()`, builds a combination of the included fields. A class with more than 12 fields is not combined that way: that class, including one reached as a nested field, is checked with the linear strategy and a warning names it. Smaller classes are unchanged. `quickly()` uses the linear strategy for every class. Use it when you want that strategy without the warning. Coverage of a class checked linearly is lower.
 
 ```java
 assertPojoMethodsFor(Wide.class).quickly().areWellImplemented();

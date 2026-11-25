@@ -11,21 +11,18 @@ class FastTestingTest {
 
     @Test
     void ShouldCompleteInReasonableTime() {
+        check();
+
         final long start = System.currentTimeMillis();
-        {
-            // given
-            final Class<?> classUnderTest = Medium.class;
+        check();
+        assertThat(System.currentTimeMillis() - start).isLessThan(500L);
+    }
 
-            // when
-
-            // then
-            assertPojoMethodsFor(classUnderTest)
-                    .testing(Method.EQUALS, Method.HASH_CODE)
-                    .quickly()
-                    .areWellImplemented();
-        }
-        final long end = System.currentTimeMillis();
-        assertThat(end - start).isLessThan(500L);
+    private static void check() {
+        assertPojoMethodsFor(Medium.class)
+                .testing(Method.EQUALS, Method.HASH_CODE)
+                .quickly()
+                .areWellImplemented();
     }
 }
 
