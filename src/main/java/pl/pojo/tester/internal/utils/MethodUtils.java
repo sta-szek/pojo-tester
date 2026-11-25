@@ -136,11 +136,14 @@ public final class MethodUtils {
                     || methodName.startsWith("has") && methodName.length() == fieldNameLength + 3
                     || methodName.startsWith("get") && methodName.length() == fieldNameLength + 3
                     || methodName.startsWith("have") && methodName.length() == fieldNameLength + 4
-                    || methodName.startsWith("contains") && methodName.length() == fieldNameLength + 8));
+                    || methodName.startsWith("contains") && methodName.length() == fieldNameLength + 8))
+                    || isCapitalizedAccessor(methodName, "get", fieldName)
+                    || isCapitalizedAccessor(methodName, "is", fieldName);
         } else {
             return methodName.startsWith("get")
                    && methodName.length() == fieldNameLength + 3
-                   && methodName.endsWith(propertySuffix);
+                   && methodName.endsWith(propertySuffix)
+                   || isCapitalizedAccessor(methodName, "get", fieldName);
         }
     }
 
@@ -158,8 +161,13 @@ public final class MethodUtils {
         } else {
             return methodName.startsWith("set")
                    && methodName.length() == fieldNameLength + 3
-                   && methodName.endsWith(propertySuffix);
+                   && methodName.endsWith(propertySuffix)
+                   || isCapitalizedAccessor(methodName, "set", fieldName);
         }
+    }
+
+    private static boolean isCapitalizedAccessor(final String methodName, final String prefix, final String fieldName) {
+        return methodName.equals(prefix + upperCaseFirstLetter(fieldName));
     }
 
     private static String beanPropertySuffix(final String fieldName) {
