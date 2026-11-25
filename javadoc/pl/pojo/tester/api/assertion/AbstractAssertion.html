@@ -269,7 +269,9 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="thoroughly()">
 <h3>thoroughly</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="AbstractAssertion.html" title="class in pl.pojo.tester.api.assertion">AbstractAssertion</a></span>&nbsp;<span class="element-name">thoroughly</span>()</div>
-<div class="block">Specifies generation of O(2^N) test objects for N fields.</div>
+<div class="block">Specifies generation of O(2^N) test objects for N fields. A class with more than
+ <a href="../../internal/utils/ThoroughFieldPermutator.html#MAX_FIELDS"><code>ThoroughFieldPermutator.MAX_FIELDS</code></a> fields, including a
+ nested one, uses the linear strategy instead. A warning names that class.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>itself</dd>
