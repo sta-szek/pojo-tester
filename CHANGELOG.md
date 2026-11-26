@@ -30,6 +30,7 @@ All notable changes to `pl.pojo:pojo-tester` are recorded here. The format follo
 - This site is built with VitePress from `docs/` and published to `gh-pages`.
 - Coverage reports use JaCoCo 0.8.16.
 - Tests no longer use PowerMock. Field access in tests goes through `helpers.Fields`.
+- Tests no longer use Logback. The library still logs through SLF4J.
 
 ### Fixed
 
