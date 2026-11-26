@@ -30,6 +30,7 @@ All notable changes to `pl.pojo:pojo-tester` are recorded here. The format follo
 - This site is built with VitePress from `docs/` and published to `gh-pages`.
 - Coverage reports use JaCoCo 0.8.16.
 - Tests no longer use PowerMock. Field access in tests goes through `helpers.Fields`.
+- The test runtime uses Logback 1.3.16. That is the last Java 8 line and closes the medium `logback-core` alert. The three low alerts are fixed only in 1.5.x, which needs Java 11.
 
 ### Fixed
 
