@@ -30,7 +30,6 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.14.4'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.14.4'
     testImplementation 'org.assertj:assertj-core:3.27.7'
-    testRuntimeOnly 'org.slf4j:slf4j-nop:2.0.20'
 
     // Mockito 5 does not run on Java 8. Each CI job compiles tests against the version it executes.
     if (testJavaVersion <= 8) {
@@ -50,7 +49,6 @@ testing {
                 compileOnly 'org.projectlombok:lombok:1.18.48'
                 annotationProcessor 'org.projectlombok:lombok:1.18.48'
                 runtimeOnly 'org.junit.platform:junit-platform-launcher:1.14.4'
-                runtimeOnly 'org.slf4j:slf4j-nop:2.0.20'
             }
         }
     }
